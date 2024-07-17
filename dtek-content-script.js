@@ -1,46 +1,60 @@
 (function() {
   'use strict';
 
-  function setCity() {
-    console.log("setCity");
-    const cityInput = document.querySelector("#city");
-    if (cityInput?.classList.contains("active")) {
-      cityInput.value = "Обухів (Обухівський)";
+  let cityInput = document.querySelector("#city");
+  let streetInput = document.querySelector("#street");
+  let houseInput = document.querySelector("#house_num");
+  let setAddressTimeout;
+  
+  //cityInput.addEventListener("change", () => saveAddress());
+  //streetInput.addEventListener("change", () => saveAddress());
+  //houseInput.addEventListener("change", () => saveAddress());
+
+  function saveAddress() {
+    console.log("saveAddress");
+  }
+
+  function setAddress(address) {
+    if (setAddressTimeout) clearTimeout(setAddressTimeout);
+    
+    if (typeof address.city !== "undefined" && cityInput.value != address.city) {
+      if (! cityInput.classList.contains("active")) {
+        setAddressTimeout = setTimeout(() => { setAddress(address) }, 100);
+        return;
+      }
+      console.log("setCity");
+      cityInput.value = address.city;
       cityInput.dispatchEvent(new KeyboardEvent('keyup', {'key': ''}));
       cityInput.dispatchEvent(new MouseEvent("click", { bubbles: true }));
-      document.querySelectorAll("#cityautocomplete-list div").forEach(e => {
-        if (e.innerText == "Обухів (Обухівський)") e.dispatchEvent(new MouseEvent("click", { bubbles: true }));
-      });
-      setSreet();
+      let cityItem = Array.from(document.querySelectorAll("#cityautocomplete-list div")).find(e => e.innerText == address.city);
+      if (cityItem) cityItem.dispatchEvent(new MouseEvent("click", { bubbles: true }));
     }
-    else setTimeout(() => { setCity() }, 200);
-  }
-  function setSreet() {
-    console.log("setSreet");
-    const streetInput = document.querySelector("#street");
-    if (streetInput?.classList.contains("active")) {
-      streetInput.value = "Миру";
+
+    if (typeof address.street !== "undefined" && streetInput.value != address.street) {
+      if (! cityInput.classList.contains("active")) {
+        setAddressTimeout = setTimeout(() => { setAddress(address) }, 100);
+        return;
+      }
+      console.log("setSreet");
+      streetInput.value = address.street;
       streetInput.dispatchEvent(new KeyboardEvent('keyup', {'key': ''}));
       streetInput.dispatchEvent(new MouseEvent("click", { bubbles: true }));
-      document.querySelectorAll("#streetautocomplete-list div").forEach(e => {
-        if (e.innerText == "Миру") e.dispatchEvent(new MouseEvent("click", { bubbles: true }));
-      });
-      setHouse();
+      let streetItem = Array.from(document.querySelectorAll("#streetautocomplete-list div")).find(e => e.innerText == address.street);
+      if (streetItem) streetItem.dispatchEvent(new MouseEvent("click", { bubbles: true }));
     }
-    else setTimeout(() => { setSreet() }, 200);
-  }
-  function setHouse() {
-    console.log("setHouse");
-    const houseInput = document.querySelector("#house_num");
-    if (houseInput?.classList.contains("active")) {
-      houseInput.value = "1";
+
+    if (typeof address.house !== "undefined" && streetInput.value != address.house) {
+      if (! houseInput.classList.contains("active")) {
+        setAddressTimeout = setTimeout(() => { setAddress(address) }, 100);
+        return;
+      }
+      console.log("setHouse");
+      houseInput.value = address.house;
       houseInput.dispatchEvent(new KeyboardEvent('keyup', {'key': ''}));
       houseInput.dispatchEvent(new MouseEvent("click", { bubbles: true }));
-      document.querySelectorAll("#house_numautocomplete-list div").forEach(e => {
-        if (e.innerText == "1") e.dispatchEvent(new MouseEvent("click", { bubbles: true }));
-      });
+      let houseItem = Array.from(document.querySelectorAll("#house_numautocomplete-list div")).find(e => e.innerText == address.house);
+      if (houseItem) houseItem.dispatchEvent(new MouseEvent("click", { bubbles: true }));
     }
-    else setTimeout(() => { setHouse() }, 200);
   }
-  setCity();
+  setAddress({ city: "Обухів (Обухівський)", street: "Миру", house: "1" });
 })();
