@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Налаштування — UA Shutdowns</title>
+  <link rel="stylesheet" href="popup.css">
+  <script src="address-settings.js" defer></script>
+  <script src="popup.js" defer></script>
+</head>
+<body>
+  <main>
+    <header>
+      <img src="images/icon-48.png" width="32" height="32" alt="">
+      <div><p class="brand">UA Shutdowns</p><h1>Налаштування</h1></div>
+    </header>
+    <form id="address-form">
+      <fieldset id="address-fields" disabled>
+        <label for="city">Місто / населений пункт</label>
+        <input id="city" name="city" type="text" required autocomplete="address-level2" placeholder="Введіть населений пункт">
+        <label for="street">Вулиця</label>
+        <input id="street" name="street" type="text" required autocomplete="address-line1" placeholder="Введіть назву вулиці">
+        <label for="house">Будинок</label>
+        <input id="house" name="house" type="text" required placeholder="Введіть номер будинку">
+        <label class="checkbox-row" for="auto-close-popups">
+          <input id="auto-close-popups" name="autoClosePopups" type="checkbox">
+          <span>Автоматично закривати спливаючі вікна</span>
+        </label>
+        <button type="submit">Зберегти налаштування</button>
+      </fieldset>
+      <p id="status" role="status" aria-live="polite">Завантаження налаштувань…</p>
+    </form>
+    <p class="hint">Після збереження перезавантажте сторінку графіка ДТЕК, щоб обрати нову адресу.</p>
+  </main>
+</body>
+</html>

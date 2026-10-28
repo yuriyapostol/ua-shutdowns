@@ -1,9 +1,14 @@
 {
   "manifest_version": 3,
   "name": "__MSG_extName__",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "__MSG_extDescription__",
   "default_locale": "en",
+  "permissions": ["storage"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "__MSG_extName__"
+  },
   "icons": {
     "16": "images/icon-16.png",
     "48": "images/icon-48.png",
@@ -12,10 +17,15 @@
   "content_scripts": [
     {
       "js": [
+        "address-settings.js",
+        "dtek-popup-closer.js",
         "dtek-content-script.js"
       ],
       "matches": [
-        "https://www.dtek-krem.com.ua/ua/shutdowns"
+        "https://www.dtek-krem.com.ua/ua/shutdowns",
+        "https://www.dtek-krem.com.ua/ua/shutdowns?*",
+        "https://www.dtek-krem.com.ua/ua/shutdowns/",
+        "https://www.dtek-krem.com.ua/ua/shutdowns/?*"
       ]
     }
   ]
