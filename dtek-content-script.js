@@ -173,8 +173,12 @@
     try {
       const address = await AddressSettings.load();
       if (!address) return;
+      // Kyiv's site has only street and house fields; the settlement is fixed.
+      // Do not apply an address from another city to similarly named Kyiv streets.
+      const isKyiv = /^(www\.)?dtek-kem\.com\.ua$/.test(location.hostname);
+      if (isKyiv && normalize(address.city) !== normalize('Київ')) return;
       const fields = [
-        { id: 'city', value: address.city },
+        ...(isKyiv ? [] : [{ id: 'city', value: address.city }]),
         { id: 'street', value: address.street },
         { id: 'house_num', value: address.house, house: true }
       ];

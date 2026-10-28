@@ -9,6 +9,7 @@ const settingsSource = readFileSync(require.resolve('../address-settings.js'), '
 // A deterministic model of DTEK's substring autocomplete and dependent fields.
 function page({ cities = ['м. Обухів'], streets = ['вул. Миру'],
   houses = ['17А'], delay = 0, readyAt = 0, limit = Infinity, storageDelay = 0, storageError = false,
+  hostname = 'www.dtek-krem.com.ua',
   address = { city: 'Обухів', street: 'Миру', house: '17 А' } } = {}) {
   let now = 0;
   let timerId = 0;
@@ -19,13 +20,14 @@ function page({ cities = ['м. Обухів'], streets = ['вул. Миру'],
   const searches = [];
   const warnings = [];
   const ids = ['city', 'street', 'house_num'];
+  const isKyiv = /^(www\.)?dtek-kem\.com\.ua$/.test(hostname);
   const choices = [cities, streets, houses];
   const schedule = (callback, ms) => {
     timers.set(++timerId, { at: now + ms, callback });
     return timerId;
   };
   const inputs = ids.map((id, index) => ({
-    id, value: '', disabled: index > 0,
+    id, value: '', disabled: index > (isKyiv ? 1 : 0),
     classList: { contains: () => !inputs[index].disabled },
     oninput() {},
     dispatchEvent(event) {
@@ -52,6 +54,7 @@ function page({ cities = ['м. Обухів'], streets = ['вул. Миру'],
   const document = {
     getElementById(id) {
       if (now < readyAt) return null;
+      if (isKyiv && id === 'city') return null;
       return inputs.find(input => input.id === id) || lists.get(id);
     },
     addEventListener(type, callback, { signal }) {
@@ -66,6 +69,7 @@ function page({ cities = ['м. Обухів'], streets = ['вул. Миру'],
       return { address };
     } } } },
     document, AbortController, Event, KeyboardEvent: Event, MouseEvent: Event,
+    location: { hostname },
     setTimeout: schedule, clearTimeout: id => timers.delete(id),
     Date: class extends Date { static now() { return now; } },
     console: { warn: (...args) => warnings.push(args) }
@@ -109,6 +113,31 @@ test('does not search or change fields when no address has been saved', async ()
   assert.deepEqual(p.clicks, []);
   assert.deepEqual(p.inputs.map(input => input.value), ['', '', '']);
   assert.equal(p.warnings.length, 0);
+  assert.equal(p.listeners.size, 0);
+});
+
+for (const hostname of ['www.dtek-krem.com.ua', 'www.dtek-dnem.com.ua', 'www.dtek-oem.com.ua', 'www.dtek-dem.com.ua']) {
+  test(`selects city, street and house on ${hostname}`, async () => {
+    const p = page({ hostname });
+    await p.finish();
+    assert.deepEqual(p.clicks.map(([id]) => id), ['city', 'street', 'house_num']);
+  });
+}
+
+for (const hostname of ['www.dtek-kem.com.ua', 'dtek-kem.com.ua']) {
+  test(`selects street and house without a city input on ${hostname}`, async () => {
+    const p = page({ hostname, address: { city: 'м. Київ', street: 'Миру', house: '17 А' } });
+    await p.finish();
+    assert.deepEqual(p.clicks, [['street', 'вул. Миру'], ['house_num', '17А']]);
+    assert.equal(p.warnings.length, 0);
+  });
+}
+
+test('does not substitute another settlement with similarly named streets in Kyiv', async () => {
+  const p = page({ hostname: 'www.dtek-kem.com.ua' });
+  await p.finish();
+  assert.deepEqual(p.searches, []);
+  assert.deepEqual(p.clicks, []);
   assert.equal(p.listeners.size, 0);
 });
 
