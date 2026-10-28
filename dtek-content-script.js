@@ -171,7 +171,7 @@
 
   async function setAddress() {
     try {
-      const address = await AddressSettings.load();
+      const address = await AddressSettings.forPage(location.href);
       if (!address) return;
       // Kyiv's site has only street and house fields; the settlement is fixed.
       // Do not apply an address from another city to similarly named Kyiv streets.

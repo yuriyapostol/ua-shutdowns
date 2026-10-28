@@ -1,10 +1,13 @@
 {
   "manifest_version": 3,
   "name": "__MSG_extName__",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "__MSG_extDescription__",
   "default_locale": "en",
-  "permissions": ["storage"],
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
   "action": {
     "default_popup": "popup.html",
     "default_title": "__MSG_extName__"
@@ -17,6 +20,7 @@
   "content_scripts": [
     {
       "js": [
+        "dtek-sites.js",
         "address-settings.js",
         "dtek-popup-closer.js",
         "dtek-content-script.js"

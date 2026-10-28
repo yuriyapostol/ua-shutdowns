@@ -19,18 +19,18 @@
   background: #fff;
 }
 * { box-sizing: border-box; }
-body { width: 380px; margin: 0; border-top: 5px solid #ffe300; }
+body { width: 420px; margin: 0; border-top: 5px solid #ffe300; }
 main { padding: 24px; }
-header { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; }
+header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 22px; }
 .brand { margin: 0 0 4px; color: #5a636b; font-size: 12px; }
-h1 { margin: 0; color: #001018; font-size: 22px; font-weight: 700; line-height: 26px; }
+h1 { max-width: 310px; margin: 0; color: #001018; font-size: 22px; font-weight: 700; line-height: 26px; }
 fieldset { padding: 0; margin: 0; border: 0; min-width: 0; }
 label { display: block; margin-bottom: 10px; color: #001018; font-size: 17px; line-height: 20px; }
 input[type='text'] {
   display: block;
   width: 100%;
   min-height: 42px;
-  margin: 0 0 20px;
+  margin: 0 0 16px;
   padding: 8px 10px;
   border: 1px solid #cfcfcf;
   border-radius: 10px;
@@ -49,7 +49,7 @@ button {
   border-radius: 60px;
   background: #ffe300;
   color: #001018;
-  font: 700 18px/24px Roboto, Arial, sans-serif;
+  font: 700 16px/24px Roboto, Arial, sans-serif;
   cursor: pointer;
   transition: background-color .2s, color .2s;
 }
@@ -105,3 +105,29 @@ fieldset:disabled button, fieldset:disabled input { cursor: wait; }
   .checkbox-row input { appearance: auto; }
   .checkbox-row input:checked::after { content: none; }
 }
+
+[hidden] { display: none !important; }
+select { width: 100%; min-height: 42px; margin: 0 0 18px; padding: 8px 10px; border: 1px solid #cfcfcf; border-radius: 10px; color: #5a636b; background: #fff; font: 400 14px/20px Roboto, Arial, sans-serif; }
+input[readonly] { background: #f6f6f6; }
+button:disabled { opacity: .6; cursor: wait; }
+.secondary { background: #f6f6f6; border: 1px solid #cfcfcf; font-weight: 400; }
+.back { width: auto; min-height: 32px; padding: 4px 0; margin: -8px 0 18px; border-radius: 0; background: transparent; color: #0068a6; font-size: 14px; font-weight: 400; }
+.back:hover { background: transparent; color: #001018; text-decoration: underline; }
+.home-actions { display: grid; gap: 10px; margin-top: 22px; }
+.empty { margin: 22px 0 28px; line-height: 22px; }
+.address-group { margin-bottom: 22px; }
+.address-group h2 { margin: 0 0 10px; color: #001018; font-size: 17px; font-weight: 700; }
+.address-card { display: flex; align-items: stretch; margin-bottom: 8px; border: 1px solid #cfcfcf; border-radius: 10px; overflow: hidden; }
+.address-open { flex: 1; min-width: 0; text-align: left; border-radius: 0; padding: 12px; color: #001018; background: #fff; font-weight: 400; }
+.address-open:hover { color: #001018; background: #fffbe0; }
+.address-open strong { display: block; font-size: 16px; overflow-wrap: anywhere; }
+.address-open span { display: block; margin-top: 4px; font-size: 13px; color: #5a636b; overflow-wrap: anywhere; }
+.edit-address { width: auto; min-height: 0; flex: 0 0 auto; padding: 10px; border-radius: 0; border-left: 1px solid #eee; background: #fafafa; color: #0068a6; font-size: 12px; font-weight: 400; }
+.danger { margin-top: 16px; background: #fff; border: 1px solid #c62828; color: #c62828; }
+.danger:hover { background: #c62828; color: #fff; }
+.confirmation { margin-top: 16px; padding: 12px; border: 1px solid #cfcfcf; border-radius: 10px; }
+.confirmation p { margin: 0 0 12px; }
+.button-row { display: flex; gap: 8px; }
+.button-row button { min-height: 40px; margin: 0; padding: 8px; font-size: 14px; }
+.migration-note { margin: 0 0 12px; font-size: 13px; line-height: 18px; }
+h1:focus { outline: none; }

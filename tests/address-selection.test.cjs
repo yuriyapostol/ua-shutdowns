@@ -4,12 +4,13 @@ const { readFileSync } = require('node:fs');
 const vm = require('node:vm');
 
 const source = readFileSync(require.resolve('../dtek-content-script.js'), 'utf8');
+const sitesSource = readFileSync(require.resolve('../dtek-sites.js'), 'utf8');
 const settingsSource = readFileSync(require.resolve('../address-settings.js'), 'utf8');
 
 // A deterministic model of DTEK's substring autocomplete and dependent fields.
 function page({ cities = ['м. Обухів'], streets = ['вул. Миру'],
   houses = ['17А'], delay = 0, readyAt = 0, limit = Infinity, storageDelay = 0, storageError = false,
-  hostname = 'www.dtek-krem.com.ua',
+  hostname = 'www.dtek-krem.com.ua', fragment = '', savedAddresses,
   address = { city: 'Обухів', street: 'Миру', house: '17 А' } } = {}) {
   let now = 0;
   let timerId = 0;
@@ -62,14 +63,15 @@ function page({ cities = ['м. Обухів'], streets = ['вул. Миру'],
       signal.addEventListener('abort', () => listeners.delete(type), { once: true });
     }
   };
-  vm.runInNewContext(settingsSource + '\n' + source, {
+  vm.runInNewContext(sitesSource + '\n' + settingsSource + '\n' + source, {
     chrome: { storage: { local: { async get() {
       if (storageDelay) await new Promise(resolve => schedule(resolve, storageDelay));
       if (storageError) throw new Error('Storage unavailable');
-      return { address };
+      const region = isKyiv && !['Київ', 'м. Київ'].includes(address?.city) ? 'krem' : hostname.match(/dtek-([^.]+)/)[1];
+      return { addresses: savedAddresses || (address ? [{ id: 'fixture-address', region, ...address }] : []) };
     } } } },
     document, AbortController, Event, KeyboardEvent: Event, MouseEvent: Event,
-    location: { hostname },
+    location: { hostname, href: `https://${hostname}/ua/shutdowns${fragment}` }, URL, URLSearchParams,
     setTimeout: schedule, clearTimeout: id => timers.delete(id),
     Date: class extends Date { static now() { return now; } },
     console: { warn: (...args) => warnings.push(args) }
@@ -260,4 +262,20 @@ test('a field that never becomes ready times out and releases listeners', async 
   await p.finish();
   assert.deepEqual(p.clicks, []);
   assert.equal(p.listeners.size, 0);
+});
+
+
+test('a tab-specific address ID selects the intended house among multiple saved addresses', async () => {
+  const p = page({ houses: ['17 А', '23'], fragment: '#ua-shutdowns-address=second', savedAddresses: [
+    { id: 'first', region: 'krem', city: 'Обухів', street: 'Миру', house: '17 А' },
+    { id: 'second', region: 'krem', city: 'Обухів', street: 'Миру', house: '23' }
+  ] });
+  await p.finish();
+  assert.equal(p.inputs[2].value, '23');
+});
+
+test('a deleted tab-specific ID does not fall back to a different house', async () => {
+  const p = page({ fragment: '#ua-shutdowns-address=deleted' });
+  await p.finish();
+  assert.deepEqual(p.clicks, []);
 });
