@@ -1,0 +1,56 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Run tests
+        run: |
+          node tests/address-selection.test.cjs
+          node tests/address-settings.test.cjs
+          node tests/popup-closer.test.cjs
+      - name: Prepare release notes and extension ZIP
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          python3 - <<'PY'
+          import json, os, re, subprocess
+          from pathlib import Path
+
+          version = json.loads(Path('manifest.json').read_text())['version']
+          if not re.fullmatch(r'\d+\.\d+\.\d+', version) or os.environ['RELEASE_TAG'] != 'v' + version:
+              raise SystemExit('Release tag must match manifest.json version')
+          changelog = Path('CHANGELOG.md').read_text()
+          section = re.search(r'^## ' + re.escape(version) + r' — [^\n]+\n(.*?)(?=^## |\Z)', changelog, re.M | re.S)
+          if not section or not section[1].strip():
+              raise SystemExit('Missing changelog entry for release')
+          (Path(os.environ['RUNNER_TEMP']) / 'release-notes.md').write_text(section[1].strip() + '\n')
+          subprocess.run([
+              'git', 'archive', '--format=zip', '--output=ua-shutdowns-' + version + '.zip', 'HEAD',
+              'manifest.json', 'address-settings.js', 'dtek-content-script.js', 'dtek-popup-closer.js',
+              'popup.html', 'popup.css', 'popup.js', '_locales', 'images', 'fonts', 'README.md', 'CHANGELOG.md'
+          ], check=True)
+          PY
+      - name: Publish GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          gh release create "$RELEASE_TAG" "ua-shutdowns-${RELEASE_TAG#v}.zip" \
+            --verify-tag --title "UA Shutdowns ${RELEASE_TAG#v}" \
+            --notes-file "$RUNNER_TEMP/release-notes.md"
