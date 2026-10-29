@@ -54,9 +54,17 @@
         open.append(make('strong', '', `${address.street}, ${address.house}`), make('span', '', address.city));
         open.setAttribute('aria-label', `${region.id ? 'Відкрити графік' : 'Обрати регіон'}: ${address.city}, ${address.street}, ${address.house}`);
         open.addEventListener('click', () => region.id ? openAddress(address) : edit(address));
-        const button = make('button', 'edit-address', 'Редагувати');
+        const button = make('button', 'edit-address');
         button.type = 'button';
+        button.title = 'Редагувати адресу';
         button.setAttribute('aria-label', `Редагувати: ${address.city}, ${address.street}, ${address.house}`);
+        const icon = make('img');
+        icon.src = 'images/edit-square.svg';
+        icon.alt = '';
+        icon.width = 24;
+        icon.height = 24;
+        icon.setAttribute('aria-hidden', 'true');
+        button.append(icon);
         button.addEventListener('click', () => edit(address));
         row.append(open, button);
         section.append(row);

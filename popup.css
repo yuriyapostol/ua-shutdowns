@@ -122,7 +122,8 @@ button:disabled { opacity: .6; cursor: wait; }
 .address-open:hover { color: #001018; background: #fffbe0; }
 .address-open strong { display: block; font-size: 16px; overflow-wrap: anywhere; }
 .address-open span { display: block; margin-top: 4px; font-size: 13px; color: #5a636b; overflow-wrap: anywhere; }
-.edit-address { width: auto; min-height: 0; flex: 0 0 auto; padding: 10px; border-radius: 0; border-left: 1px solid #eee; background: #fafafa; color: #0068a6; font-size: 12px; font-weight: 400; }
+.edit-address { display: flex; align-items: center; justify-content: center; width: 48px; min-height: 44px; flex: 0 0 48px; padding: 12px; border-radius: 0; border-left: 1px solid #eee; background: #fafafa; }
+.edit-address:hover { background: #fffbe0; }
 .danger { margin-top: 16px; background: #fff; border: 1px solid #c62828; color: #c62828; }
 .danger:hover { background: #c62828; color: #fff; }
 .confirmation { margin-top: 16px; padding: 12px; border: 1px solid #cfcfcf; border-radius: 10px; }
