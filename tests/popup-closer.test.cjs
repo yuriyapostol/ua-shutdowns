@@ -17,26 +17,36 @@ function modal({ open = true, button = true, overlay = true, completes = true } 
   return item;
 }
 
-async function page({ enabled = false, modals = [], loading, loadError = false } = {}) {
+async function page({ enabled = false, modals = [], loading, loadError = false, visible = true } = {}) {
   const observers = [];
   let now = 0;
   let timerId = 0;
   const timers = new Map();
   let listener;
   let onHide;
+  let onVisibility;
   const warnings = [];
+  let detections = 0;
+  let scans = 0;
+  const document = { documentElement: {}, visibilityState: visible ? 'visible' : 'hidden',
+    querySelectorAll() { scans++; return modals; },
+    addEventListener: (_type, fn) => { onVisibility = fn; } };
   vm.runInNewContext(source, {
     Date: class extends Date { static now() { return now; } },
     setTimeout(callback, delay) { timers.set(++timerId, { callback, at: now + delay }); return timerId; },
     clearTimeout(id) { timers.delete(id); },
-    document: { documentElement: {}, querySelectorAll: () => modals },
+    document,
     window: { addEventListener: (_type, fn) => { onHide = fn; } },
     MutationObserver: class {
       constructor(fn) { this.callback = fn; this.active = false; observers.push(this); }
       observe() { this.active = true; }
       disconnect() { this.active = false; }
     },
-    chrome: { storage: { onChanged: {
+    chrome: { runtime: { async sendMessage(message) {
+      assert.equal(message.type, 'popup-detected');
+      detections++;
+      return { ok: true };
+    } }, storage: { onChanged: {
       addListener(fn) { listener = fn; }, removeListener() { listener = null; }
     } } },
     AddressSettings: { async loadPreferences() {
@@ -47,7 +57,9 @@ async function page({ enabled = false, modals = [], loading, loadError = false }
     console: { warn: (...args) => warnings.push(args) }
   });
   const p = {
-    modals, warnings,
+    modals, warnings, get detections() { return detections; },
+    get scans() { return scans; },
+    get observing() { return observers.some(observer => observer.active); },
     tick(ms) {
       const deadline = now + ms;
       while (timers.size) {
@@ -62,6 +74,7 @@ async function page({ enabled = false, modals = [], loading, loadError = false }
     notify() { for (const observer of observers) if (observer.active) observer.callback(); },
     change(value, area = 'local') { listener?.({ autoClosePopups: { newValue: value } }, area); },
     hide(persisted = false) { onHide({ persisted }); },
+    visible(value = true) { document.visibilityState = value ? 'visible' : 'hidden'; onVisibility(); },
     async ready() { for (let i = 0; i < 10; i++) await Promise.resolve(); }
   };
   await p.ready();
@@ -73,12 +86,30 @@ test('does nothing when the preference is off', async () => {
   const p = await page({ modals: [item] });
   p.notify();
   assert.equal(item.clicks, 0);
+  assert.equal(p.detections, 1);
+});
+
+test('detects delayed and reopened windows once per opening when closing is disabled', async () => {
+  const item = modal({ open: false });
+  const p = await page({ modals: [item] });
+  assert.equal(p.detections, 0);
+  item.open = true;
+  p.notify();
+  p.notify();
+  assert.equal(p.detections, 1);
+  item.open = false;
+  p.notify();
+  item.open = true;
+  p.notify();
+  assert.equal(p.detections, 2);
+  assert.equal(item.clicks, 0);
 });
 
 test('closes existing, delayed and reopened popups through their dismiss controls', async () => {
   const item = modal();
   const p = await page({ enabled: true, modals: [item] });
   assert.equal(item.open, false);
+  assert.equal(p.detections, 0);
   const delayed = modal();
   p.modals.push(delayed);
   p.notify();
@@ -86,6 +117,63 @@ test('closes existing, delayed and reopened popups through their dismiss control
   item.open = true;
   p.notify();
   assert.equal(item.clicks, 2);
+});
+
+test('reports a still-open modal again when its tab becomes visible', async () => {
+  const item = modal();
+  const p = await page({ modals: [item] });
+  assert.equal(p.detections, 1);
+  p.visible();
+  assert.equal(p.detections, 2);
+  p.hide();
+  p.visible();
+  assert.equal(p.detections, 2);
+});
+
+test('does not scan or observe a background tab and scans immediately on activation', async () => {
+  for (const enabled of [false, true]) {
+    const item = modal();
+    const p = await page({ enabled, modals: [item], visible: false });
+    p.notify();
+    p.tick(1000);
+    assert.equal(p.observing, false);
+    assert.equal(p.scans, 0);
+    assert.equal(p.detections, 0);
+    assert.equal(item.clicks, 0);
+    p.visible();
+    assert.equal(p.observing, true);
+    assert.equal(p.scans, 1);
+    assert.equal(p.detections, enabled ? 0 : 1);
+    assert.equal(item.clicks, enabled ? 1 : 0);
+  }
+});
+
+test('switching away disconnects observation and cancels pending close retries', async () => {
+  const item = modal({ completes: false });
+  const p = await page({ enabled: true, modals: [item] });
+  assert.equal(item.clicks, 1);
+  p.visible(false);
+  const scans = p.scans;
+  item.completes = true;
+  p.notify();
+  p.tick(1000);
+  assert.equal(p.observing, false);
+  assert.equal(p.scans, scans);
+  assert.equal(item.clicks, 1);
+  p.visible();
+  assert.equal(item.clicks, 2);
+  assert.equal(item.open, false);
+});
+
+test('preference changes in a hidden tab apply only when it becomes visible', async () => {
+  const item = modal();
+  const p = await page({ modals: [item], visible: false });
+  p.change(true);
+  assert.equal(p.scans, 0);
+  assert.equal(p.observing, false);
+  p.visible();
+  assert.equal(item.open, false);
+  assert.equal(p.detections, 0);
 });
 
 test('preference changes take effect on the current page in both directions', async () => {

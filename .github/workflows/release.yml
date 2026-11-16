@@ -25,6 +25,8 @@ jobs:
           node tests/address-settings.test.cjs
           node tests/address-navigation.test.cjs
           node tests/popup-closer.test.cjs
+          node tests/background.test.cjs
+          node tests/dtek-schedule.test.cjs
       - name: Prepare release notes and extension ZIP
         env:
           RELEASE_TAG: ${{ github.ref_name }}
@@ -43,7 +45,7 @@ jobs:
           (Path(os.environ['RUNNER_TEMP']) / 'release-notes.md').write_text(section[1].strip() + '\n')
           subprocess.run([
               'git', 'archive', '--format=zip', '--output=ua-shutdowns-' + version + '.zip', 'HEAD',
-              'manifest.json', 'dtek-sites.js', 'address-settings.js', 'address-navigation.js', 'dtek-content-script.js', 'dtek-popup-closer.js',
+              'manifest.json', 'background.js', 'dtek-sites.js', 'dtek-schedule.js', 'address-settings.js', 'address-navigation.js', 'dtek-content-script.js', 'dtek-popup-closer.js',
               'popup.html', 'popup.css', 'popup.js', '_locales', 'images', 'fonts', 'README.md', 'CHANGELOG.md'
           ], check=True)
           PY

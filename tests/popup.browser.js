@@ -11,6 +11,12 @@ async () => {
   const set = (id, value) => { byId(id).value = value; byId(id).dispatchEvent(new Event('change', { bubbles: true })); };
   const submit = () => byId('address-form').dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
   assert(document.querySelectorAll('.address-group').length === 2, 'Addresses must be grouped by region');
+  const firstCard = document.querySelector('.address-open');
+  assert(firstCard.children[0].classList.contains('address-city') && firstCard.children[1].tagName==='STRONG' &&
+    firstCard.children[2].classList.contains('address-queue'), 'Cards must show city, address, then queue');
+  assert(getComputedStyle(document.querySelector('.address-group h2')).fontWeight==='400', 'Region titles must be regular weight');
+  assert(getComputedStyle(firstCard.querySelector('.address-city')).fontSize===
+    getComputedStyle(firstCard.querySelector('.address-queue')).fontSize, 'City and queue must use the same font size');
   byId('add-address').click();
   assert(!byId('form-view').hidden && byId('home-view').hidden, 'Add screen must be separate');
   set('region','dnem'); set('city','Тестове місто'); set('street','Тестова <b>назва</b>'); set('house','45');
@@ -37,9 +43,8 @@ async () => {
   byId('nav-back').click();
   findCard('46').querySelector('.address-open').click();
   await wait(()=>window.navigationCalls.length>0);
-  assert(window.navigationCalls[0].type==='create', 'An unrelated tab must be preserved');
-  assert(window.navigationCalls[0].url.includes('dtek-dnem.com.ua'), 'Address must open the matching regional site');
-  assert(window.navigationCalls[0].url.includes(saved.id), 'Tab must receive this exact address ID');
+  assert(window.navigationCalls[0].type==='open-address', 'Navigation must be delegated to the worker');
+  assert(window.navigationCalls[0].addressId===saved.id, 'The worker must receive this exact address ID');
   await wait(()=>!byId('add-address').disabled);
   findCard('46').querySelector('.edit-address').click();
   byId('delete-address').click();

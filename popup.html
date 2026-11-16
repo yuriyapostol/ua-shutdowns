@@ -6,6 +6,7 @@
   <title>Графік відключень світла — UA Shutdowns</title>
   <link rel="stylesheet" href="popup.css">
   <script src="dtek-sites.js" defer></script>
+  <script src="dtek-schedule.js" defer></script>
   <script src="address-settings.js" defer></script>
   <script src="address-navigation.js" defer></script>
   <script src="popup.js" defer></script>
@@ -18,8 +19,18 @@
     </header>
     <button id="nav-back" class="back" type="button" hidden>← До адрес</button>
     <section id="home-view" aria-labelledby="screen-title">
+      <div class="date-shortcuts" role="group" aria-label="Швидкий вибір дати">
+        на <button id="date-today" class="date-shortcut" type="button" aria-pressed="true" disabled>сьогодні</button>,
+        <button id="date-tomorrow" class="date-shortcut" type="button" aria-pressed="false" disabled>завтра</button>,
+        іншу <button id="date-other" class="date-shortcut" type="button" aria-pressed="false" aria-label="Вибрати іншу дату в календарі" disabled>дату</button>
+      </div>
+      <div class="schedule-date-nav" role="group" aria-label="Дата графіка">
+        <button id="date-previous" class="date-step" type="button" aria-label="Попередній день" disabled><img src="images/keyboard-arrow-left.svg" width="24" height="24" alt="" aria-hidden="true"></button>
+        <input id="schedule-date" type="date" aria-label="Дата графіка" min="0001-01-01" max="9999-12-31" disabled>
+        <button id="date-next" class="date-step" type="button" aria-label="Наступний день" disabled><img src="images/keyboard-arrow-right.svg" width="24" height="24" alt="" aria-hidden="true"></button>
+      </div>
       <div id="address-list"></div>
-      <p id="empty-state" class="empty" hidden>Додайте адресу, щоб відкривати її графік відключень одним натисканням.</p>
+      <p id="empty-state" class="empty explanation" hidden>Додайте адресу і слідкуйте за графіком відключень.</p>
       <div class="home-actions">
         <button id="add-address" type="button" disabled>Додати адресу</button>
         <button id="open-settings" class="secondary" type="button" disabled>Налаштування</button>
@@ -36,17 +47,32 @@
           <input id="street" name="street" type="text" required autocomplete="address-line1" placeholder="Введіть назву вулиці">
           <label for="house">Будинок</label>
           <input id="house" name="house" type="text" required placeholder="Введіть номер будинку">
-          <button type="submit">Зберегти адресу</button>
+          <div class="form-actions">
+            <button type="submit">Зберегти адресу</button>
+            <button id="delete-address" class="danger" type="button" hidden>Видалити адресу</button>
+          </div>
         </fieldset>
       </form>
-      <button id="delete-address" class="danger" type="button" hidden>Видалити адресу</button>
       <div id="delete-confirmation" class="confirmation" hidden>
-        <p>Видалити цю адресу зі списку?</p>
+        <p class="explanation">Видалити цю адресу зі списку?</p>
+        <label class="checkbox-row archive-delete-option" for="delete-address-archive">
+          <input id="delete-address-archive" type="checkbox" aria-describedby="archive-retention-note">
+          <span>Видалити архів даних за адресою</span>
+        </label>
+        <p id="archive-retention-note" class="explanation">Без цієї галки архів залишиться й буде доступний після повторного додавання адреси.</p>
         <div class="button-row">
           <button id="confirm-delete" class="danger" type="button">Так, видалити</button>
           <button id="cancel-delete" class="secondary" type="button">Залишити</button>
         </div>
       </div>
+    </section>
+    <section id="popup-offer-view" aria-labelledby="screen-title" hidden>
+      <p class="explanation">На сайті ДТЕК виявлено спливаюче вікно, що перекриває сторінку. Увімкнути автоматичне закриття таких вікон?</p>
+      <div class="home-actions">
+        <button id="accept-popup-offer" type="button" disabled>Увімкнути</button>
+        <button id="dismiss-popup-offer" class="secondary" type="button" disabled>Не зараз</button>
+      </div>
+      <p class="hint">Після відмови запропонуємо знову не раніше ніж через місяць. Це налаштування також доступне в «Налаштуваннях».</p>
     </section>
     <section id="settings-view" aria-labelledby="screen-title" hidden>
       <label class="checkbox-row" for="auto-close-popups">

@@ -4,6 +4,12 @@
   const controller = new AbortController();
   const { signal } = controller;
   const fieldTimeout = 10000;
+  let selectedQueue = '';
+
+  function queueFromRaw(raw) {
+    const groups = raw.split(',').map(value => value.trim().match(/^(?:GPV)?(\d+(?:\.\d+)?)$/)?.[1]);
+    return groups.length && groups.every(Boolean) ? [...new Set(groups)].join(', ') : '';
+  }
 
   // Only real interaction cancels automation; our synthetic events must not cancel it.
   function onInteraction(event) {
@@ -158,6 +164,11 @@
         option = options.find(item => optionValue(item) === best.value);
       }
       if (!option || signal.aborted) return false;
+      if (field.house) {
+        // Read the actual building option before the site's click handler removes it.
+        const raw = option.querySelector('input[type="hidden"]')?.getAttribute?.('data-key-group') || '';
+        selectedQueue = queueFromRaw(raw);
+      }
       option.dispatchEvent(new MouseEvent('click', { bubbles: true }));
       selected = true;
       return true;
@@ -169,9 +180,79 @@
     }
   }
 
+  function watchSchedule(address, fields) {
+    const root = document.getElementById('discon-fact');
+    if (!root || typeof MutationObserver !== 'function') return;
+    const chosen = fields.map(field => [field.id, document.getElementById(field.id)?.value]);
+    let timer;
+    let stopped = false;
+    let saving = false;
+    let pending = false;
+    const observer = new MutationObserver(() => {
+      clearTimeout(timer);
+      timer = setTimeout(update, 250);
+    });
+    const matchesAddress = () => chosen.every(([id, value]) => document.getElementById(id)?.value === value);
+    function stop() {
+      stopped = true;
+      observer.disconnect();
+      clearTimeout(timer);
+      document.removeEventListener('visibilitychange', onVisibility);
+      document.removeEventListener('input', onManualInput, true);
+      document.removeEventListener('change', onManualInput, true);
+      window.removeEventListener('pagehide', onPageHide);
+    }
+    async function update() {
+      if (stopped || document.visibilityState !== 'visible') return;
+      if (!matchesAddress()) { stop(); return; }
+      if (saving) { pending = true; return; }
+      const schedules = DtekSchedule.readAll(document);
+      if (!schedules.length) return;
+      saving = true;
+      try {
+        const raw = document.getElementById('house_num')?.getAttribute('data-key-group');
+        const queue = raw == null ? selectedQueue : queueFromRaw(raw);
+        const response = await chrome.runtime.sendMessage({ type: 'save-address-queue', address, queue, schedules });
+        if (!response?.ok) console.warn('UA Shutdowns: schedule update could not be saved.');
+      } catch (error) {
+        console.warn('UA Shutdowns: schedule update could not be saved.', error);
+      } finally {
+        saving = false;
+        if (pending) { pending = false; void update(); }
+      }
+    }
+    function onVisibility() {
+      observer.disconnect();
+      clearTimeout(timer);
+      if (stopped || document.visibilityState !== 'visible') return;
+      if (!matchesAddress()) { stop(); return; }
+      observer.observe(root, { subtree: true, childList: true, attributes: true, characterData: true });
+      void update();
+    }
+    function onManualInput(event) {
+      if (event.isTrusted && chosen.some(([id]) => event.target.id === id)) stop();
+    }
+    function onPageHide(event) { if (!event.persisted) stop(); }
+    document.addEventListener('visibilitychange', onVisibility);
+    document.addEventListener('input', onManualInput, true);
+    document.addEventListener('change', onManualInput, true);
+    window.addEventListener('pagehide', onPageHide);
+    onVisibility();
+  }
+
   async function setAddress() {
     try {
-      const address = await AddressSettings.forPage(location.href);
+      const url = new URL(location.href);
+      const fragment = new URLSearchParams(url.hash.slice(1));
+      const legacyAddressId = fragment.get('ua-shutdowns-address');
+      const response = await chrome.runtime.sendMessage({ type: 'get-page-address', legacyAddressId });
+      if (!response?.ok) throw new Error(response?.error || 'Не вдалося завантажити адресу.');
+      if (legacyAddressId !== null) {
+        fragment.delete('ua-shutdowns-address');
+        url.hash = fragment.toString();
+        history.replaceState(history.state, '', url.href);
+      }
+      const address = response.address;
       if (!address) return;
       // Kyiv's site has only street and house fields; the settlement is fixed.
       // Do not apply an address from another city to similarly named Kyiv streets.
@@ -183,7 +264,15 @@
         { id: 'house_num', value: address.house, house: true }
       ];
       for (const field of fields) {
-        if (signal.aborted || !await selectField(field)) break;
+        if (signal.aborted || !await selectField(field)) return;
+      }
+      if (!signal.aborted) {
+        const schedule = await waitFor(() => DtekSchedule.read(document), Date.now() + 3000);
+        if (signal.aborted) return;
+        const schedules = DtekSchedule.readAll(document);
+        const saved = await chrome.runtime.sendMessage({ type: 'save-address-queue', address, queue: selectedQueue, schedule, schedules });
+        if (!saved?.ok) throw new Error(saved?.error || 'Не вдалося зберегти чергу.');
+        watchSchedule(address, fields);
       }
     } catch (error) {
       console.warn('UA Shutdowns: automatic address selection stopped.', error);

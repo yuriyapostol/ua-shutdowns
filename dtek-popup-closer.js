@@ -5,21 +5,38 @@
   let retryTimer;
   let revision = 0;
   let disposed = false;
+  let autoClosePopups;
 
   function configure(enabled) {
+    autoClosePopups = enabled;
     observer?.disconnect();
     observer = null;
     clearTimeout(retryTimer);
     retryTimer = null;
-    if (!enabled || disposed) return;
+    if (disposed || document.visibilityState !== 'visible') return;
 
     const attempted = new WeakMap();
+    const detected = new WeakSet();
     function closePopups() {
+      if (disposed || document.visibilityState !== 'visible') return;
       let retry = false;
       for (const modal of document.querySelectorAll('.micromodal-slide')) {
         const open = modal.classList.contains('is-open') || modal.getAttribute('aria-hidden') === 'false';
         if (!open) {
           attempted.delete(modal);
+          detected.delete(modal);
+          continue;
+        }
+        if (!enabled) {
+          if (!detected.has(modal)) {
+            detected.add(modal);
+            chrome.runtime.sendMessage({ type: 'popup-detected' }).then(response => {
+              if (!response?.ok) detected.delete(modal);
+            }).catch(error => {
+              detected.delete(modal);
+              console.warn('UA Shutdowns: popup detection could not be saved.', error);
+            });
+          }
           continue;
         }
         // The modal can appear before its dismiss listener is installed. Retry
@@ -67,6 +84,10 @@
   }
 
   chrome.storage.onChanged.addListener(onChanged);
+  document.addEventListener('visibilitychange', () => {
+    // Disconnect entirely in background tabs; scan immediately on returning.
+    if (!disposed && autoClosePopups !== undefined) configure(autoClosePopups);
+  });
   AddressSettings.loadPreferences().then(preferences => {
     if (revision === 0) configure(preferences.autoClosePopups);
   }).catch(error => {

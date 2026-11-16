@@ -22,6 +22,7 @@
 body { width: 420px; margin: 0; border-top: 5px solid #ffe300; }
 main { padding: 24px; }
 header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 22px; }
+header:has(~ #home-view:not([hidden])) { margin-bottom: 16px; }
 .brand { margin: 0 0 4px; color: #5a636b; font-size: 12px; }
 h1 { max-width: 310px; margin: 0; color: #001018; font-size: 22px; font-weight: 700; line-height: 26px; }
 fieldset { padding: 0; margin: 0; border: 0; min-width: 0; }
@@ -42,7 +43,7 @@ input::placeholder { color: #899096; opacity: 1; }
 input[type='text']:hover { border-color: #899096; }
 input[type='text']:focus { border-color: #0068a6; }
 button {
-  width: 100%;
+  width: auto;
   min-height: 50px;
   padding: 12px 20px;
   border: 0;
@@ -53,8 +54,8 @@ button {
   cursor: pointer;
   transition: background-color .2s, color .2s;
 }
-button:hover { background: #001018; color: #fff; }
-button:active { background: #343e43; }
+button:where(:not(:disabled)):hover { background: #001018; color: #fff; }
+button:where(:not(:disabled)):active { background: #343e43; }
 .checkbox-row {
   display: flex;
   align-items: center;
@@ -97,7 +98,8 @@ fieldset:disabled { opacity: .6; }
 fieldset:disabled button, fieldset:disabled input { cursor: wait; }
 #status { min-height: 18px; margin: 12px 0 0; color: #5a636b; font-size: 13px; line-height: 18px; }
 #status[data-error='true'] { color: #c62828; }
-.hint { margin: 12px 0 0; padding-top: 16px; border-top: 1px solid #eee; color: #5a636b; font-size: 12px; line-height: 17px; }
+.explanation, .hint, .migration-note { font-size: 12px; line-height: 17px; }
+.hint { margin: 12px 0 0; padding-top: 16px; border-top: 1px solid #eee; color: #5a636b; }
 @media (prefers-reduced-motion: reduce) {
   button { transition: none; }
 }
@@ -113,22 +115,34 @@ button:disabled { opacity: .6; cursor: wait; }
 .secondary { background: #f6f6f6; border: 1px solid #cfcfcf; font-weight: 400; }
 .back { width: auto; min-height: 32px; padding: 4px 0; margin: -8px 0 18px; border-radius: 0; background: transparent; color: #0068a6; font-size: 14px; font-weight: 400; }
 .back:hover { background: transparent; color: #001018; text-decoration: underline; }
-.home-actions { display: grid; gap: 10px; margin-top: 22px; }
-.empty { margin: 22px 0 28px; line-height: 22px; }
+.home-actions, .form-actions, .button-row { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 12px; }
+.home-actions, .form-actions { margin-top: 22px; }
+#house { margin-bottom: 0; }
+.empty { margin: 22px 0 28px; }
+.date-shortcuts { margin: 0 0 10px; text-align: center; font-size: 14px; line-height: 20px; }
+.date-shortcut { display: inline-block; min-height: 0; padding: 2px 6px; border-radius: 12px; background: #ebebec; color: #001018; font: inherit; vertical-align: baseline; }
+.date-shortcut:not(:disabled):hover, .date-shortcut:not(:disabled):active, .date-shortcut[aria-pressed='true'] { background: #ffe300; color: #001018; }
+.schedule-date-nav { display: flex; justify-content: center; align-items: center; gap: 8px; margin-bottom: 18px; }
+#schedule-date { flex: 0 0 auto; width: auto; min-width: 0; height: 38px; padding: 6px 10px; border: 1px solid #cfcfcf; border-radius: 8px; background: #fff; color: #000; font: 400 14px/20px Roboto, Arial, sans-serif; text-align: center; }
 .address-group { margin-bottom: 22px; }
-.address-group h2 { margin: 0 0 10px; color: #001018; font-size: 17px; font-weight: 700; }
+.address-group h2 { margin: 0 0 10px; color: #5a636b; font-size: 14px; font-weight: 400; }
 .address-card { display: flex; align-items: stretch; margin-bottom: 8px; border: 1px solid #cfcfcf; border-radius: 10px; overflow: hidden; }
 .address-open { flex: 1; min-width: 0; text-align: left; border-radius: 0; padding: 12px; color: #001018; background: #fff; font-weight: 400; }
 .address-open:hover { color: #001018; background: #fffbe0; }
-.address-open strong { display: block; font-size: 16px; overflow-wrap: anywhere; }
-.address-open span { display: block; margin-top: 4px; font-size: 13px; color: #5a636b; overflow-wrap: anywhere; }
-.edit-address { display: flex; align-items: center; justify-content: center; width: 48px; min-height: 44px; flex: 0 0 48px; padding: 12px; border-radius: 0; border-left: 1px solid #eee; background: #fafafa; }
-.edit-address:hover { background: #fffbe0; }
-.danger { margin-top: 16px; background: #fff; border: 1px solid #c62828; color: #c62828; }
+.address-open strong { display: block; margin-top: 4px; font-size: 16px; overflow-wrap: anywhere; }
+.address-open span { display: block; font-size: 14px; line-height: 18px; color: #5a636b; overflow-wrap: anywhere; }
+.address-queue { margin-top: 4px; }
+.address-outages { flex: 0 0 126px; display: flex; flex-direction: column; justify-content: center; gap: 4px; padding: 12px 8px; border-left: 1px solid #eee; color: #5a636b; font-size: 12px; line-height: 18px; }
+.outage-interval { color: #000; font-size: 14px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.outage-line { font-weight: 700; }
+.address-actions { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; flex: 0 0 48px; padding: 5px; border-left: 1px solid #eee; }
+.date-step, .copy-schedule, .edit-address { display: inline-flex; align-items: center; justify-content: center; flex: 0 0 38px; width: 38px; height: 38px; min-height: 38px; padding: 7px; border-radius: 50%; background: #ebebec; }
+.date-step:not(:disabled):hover, .copy-schedule:not(:disabled):hover, .edit-address:not(:disabled):hover { background: #ffe300; color: #001018; }
+.date-step:not(:disabled):active, .copy-schedule:not(:disabled):active, .edit-address:not(:disabled):active { background: #ffe500; }
+.danger { background: #fff; border: 1px solid #c62828; color: #c62828; }
 .danger:hover { background: #c62828; color: #fff; }
-.confirmation { margin-top: 16px; padding: 12px; border: 1px solid #cfcfcf; border-radius: 10px; }
+.confirmation { margin-top: 22px; padding: 12px; border: 1px solid #cfcfcf; border-radius: 10px; }
 .confirmation p { margin: 0 0 12px; }
-.button-row { display: flex; gap: 8px; }
-.button-row button { min-height: 40px; margin: 0; padding: 8px; font-size: 14px; }
-.migration-note { margin: 0 0 12px; font-size: 13px; line-height: 18px; }
+.archive-delete-option { margin: 12px 0; font-size: 14px; line-height: 18px; }
+.migration-note { margin: 0 0 12px; }
 h1:focus { outline: none; }

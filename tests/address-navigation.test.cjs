@@ -2,144 +2,160 @@ const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const { readFileSync } = require('node:fs');
 const vm = require('node:vm');
-const source = ['dtek-sites.js', 'address-navigation.js'].map(file=>readFileSync(require.resolve('../'+file),'utf8')).join('\n');
-const address = { id: 'opaque-local-id', region: 'oem', city: 'Тестове місто', street: 'Тестова', house: '12' };
-function page(tab) {
+const source = ['dtek-sites.js', 'dtek-schedule.js', 'address-settings.js', 'address-navigation.js']
+  .map(file => readFileSync(require.resolve('../' + file), 'utf8')).join('\n');
+const address = { id: 'second', region: 'oem', city: 'Тестове місто', street: 'Тестова', house: '12' };
+const first = { ...address, id: 'first', house: '1' };
+const target = 'https://www.dtek-oem.com.ua/ua/shutdowns';
+const key = id => `address-for-tab:${id}`;
+
+function page(tab, initial = {}) {
   const calls = [];
-  const listeners = new Set();
-  const api = vm.runInNewContext(source + '\nAddressNavigation;', { URL, URLSearchParams, chrome: { tabs: {
+  const session = structuredClone(initial);
+  const addresses = [first, address];
+  const selected = [];
+  const chrome = { storage: {
+    local: { async get() { return { addresses }; } },
+    session: {
+      async get() { return structuredClone(session); },
+      async set(value) { Object.assign(session, structuredClone(value)); },
+      async remove(name) { delete session[name]; }
+    }
+  }, runtime: { async sendMessage(message) { calls.push(message); return { ok: true }; } }, tabs: {
     async query() { return tab ? [tab] : []; },
-    onUpdated: { addListener(fn) { listeners.add(fn); }, removeListener(fn) { listeners.delete(fn); } },
+    async create(options) { calls.push({ type: 'create', ...options }); return { id: 9 }; },
     async update(id, options) {
       calls.push({ type: 'update', id, ...options });
-      for (const listener of listeners) listener(id, { url: options.url }, { ...tab, ...options });
+      selected.push(await api.forTab(id, options.url));
     },
-    async create(options) { calls.push({ type: 'create', ...options }); },
-    async reload(id) { calls.push({ type: 'reload', id }); }
-  } }, setTimeout, clearTimeout });
-  return { api, calls };
+    async reload(id) {
+      calls.push({ type: 'reload', id });
+      selected.push(await api.forTab(id, tab.url));
+    },
+    async remove(id) { calls.push({ type: 'remove', id }); }
+  } };
+  const api = vm.runInNewContext(source + '\nAddressNavigation;', { URL, chrome, console });
+  return { api, calls, session, selected, chrome, addresses };
 }
-test('opens a new tab from an unrelated site and puts only an opaque ID in its URL', async () => {
-  const { api, calls } = page({ id: 1, url: 'https://example.com' });
-  await api.open(address);
-  assert.equal(calls[0].type, 'create');
-  const url = new URL(calls[0].url);
-  assert.equal(url.hostname, 'www.dtek-oem.com.ua');
-  assert.equal(url.search, '');
-  assert.equal(new URLSearchParams(url.hash.slice(1)).get('ua-shutdowns-address'), address.id);
-  assert.ok(!decodeURIComponent(url.href).includes(address.street));
+
+test('opens a clean URL and stores the selection before a new page can read it', async () => {
+  const p = page({ id: 1, url: 'https://example.com' });
+  await p.api.navigate(address);
+  assert.deepEqual(p.calls, [
+    { type: 'create', url: 'about:blank' }, { type: 'update', id: 9, url: target }
+  ]);
+  assert.equal(p.selected[0].id, address.id);
+  assert.deepEqual(p.session[key(9)], { id: address.id, region: address.region });
+  assert.equal(new URL(p.calls[1].url).hash, '');
+  assert.equal(new URL(p.calls[1].url).search, '');
 });
+
 test('reuses a current DTEK tab even for a different region', async () => {
-  const { api, calls } = page({ id: 4, url: 'https://www.dtek-krem.com.ua/ua/shutdowns' });
-  await api.open(address);
-  assert.equal(calls.length, 1);
-  assert.equal(calls[0].type, 'update');
-  assert.equal(calls[0].id, 4);
+  const p = page({ id: 4, url: 'https://www.dtek-krem.com.ua/ua/shutdowns' });
+  await p.api.navigate(address);
+  assert.deepEqual(p.calls, [{ type: 'update', id: 4, url: target }]);
+  assert.equal(p.selected[0].id, address.id);
 });
-test('reloads the same document so a fragment change restarts automatic selection', async () => {
-  const { api, calls } = page({ id: 4, url: 'https://www.dtek-oem.com.ua/ua/shutdowns#ua-shutdowns-address=previous' });
-  await api.open(address);
-  assert.deepEqual(calls.map(c=>c.type), ['update', 'reload']);
+
+test('selecting another address on the same clean URL stores it before reloading', async () => {
+  const p = page({ id: 4, url: target }, { [key(4)]: { id: first.id, region: first.region } });
+  await p.api.navigate(address);
+  assert.deepEqual(p.calls, [{ type: 'reload', id: 4 }]);
+  assert.equal(p.selected[0].id, address.id);
+  assert.equal((await p.api.forTab(4, target)).id, address.id);
 });
-test('also reloads when the very same address is clicked again', async () => {
-  const { api, calls } = page({ id: 4, url: 'https://www.dtek-oem.com.ua/ua/shutdowns#ua-shutdowns-address=opaque-local-id' });
-  await api.open(address);
-  assert.deepEqual(calls.map(c=>c.type), ['reload']);
+
+test('clicking the same address again reloads the page with its selection', async () => {
+  const p = page({ id: 4, url: target }, { [key(4)]: { id: address.id, region: address.region } });
+  await p.api.navigate(address);
+  assert.deepEqual(p.calls, [{ type: 'reload', id: 4 }]);
+  assert.equal(p.selected[0].id, address.id);
 });
+
+test('old service fragments still trigger a reload rather than a fragment-only navigation', async () => {
+  const p = page({ id: 4, url: target + '#ua-shutdowns-address=first' });
+  await p.api.navigate(address);
+  assert.deepEqual(p.calls, [{ type: 'reload', id: 4 }]);
+  assert.equal(p.selected[0].id, address.id);
+});
+
 test('reuses non-www DTEK tabs and other pages of the regional site', async () => {
-  const { api, calls } = page({ id: 4, url: 'https://dtek-dem.com.ua/ua' });
-  await api.open(address);
-  assert.equal(calls[0].type, 'update');
-  assert.equal(calls.length, 1);
+  const p = page({ id: 4, url: 'https://dtek-dem.com.ua/ua' });
+  await p.api.navigate(address);
+  assert.deepEqual(p.calls, [{ type: 'update', id: 4, url: target }]);
 });
-test('does not navigate unrelated similarly named hosts', async () => {
-  const { api, calls } = page({ id: 4, url: 'https://www.dtek-oem.com.ua.evil.example' });
-  await api.open(address);
-  assert.equal(calls[0].type, 'create');
+
+test('preserves unrelated tabs, lookalike hosts and tabs with unavailable URLs', async () => {
+  for (const tab of [{ id: 4, url: 'https://www.dtek-oem.com.ua.evil.example' }, { id: 4 }, undefined]) {
+    const p = page(tab);
+    await p.api.navigate(address);
+    assert.equal(p.calls[0].type, 'create');
+    assert.equal(p.calls[1].id, 9);
+  }
 });
-test('opens a new tab when the current URL is unavailable', async () => {
-  const { api, calls } = page({ id: 4 });
-  await api.open(address);
-  assert.equal(calls[0].type, 'create');
-});
+
 test('an unassigned legacy address cannot open a guessed operator site', async () => {
-  const { api, calls } = page();
-  await assert.rejects(api.open({ ...address, region: '' }), /оберіть регіон/);
-  assert.equal(calls.length, 0);
+  const p = page();
+  await assert.rejects(p.api.navigate({ ...address, region: '' }), /оберіть регіон/);
+  assert.equal(p.calls.length, 0);
 });
 
-test('waits for the selected address URL to commit before reloading the current tab', async () => {
-  const settingsSource = readFileSync(require.resolve('../address-settings.js'), 'utf8');
-  const listeners = new Set();
-  const actualTab = { id: 4, url: 'https://www.dtek-oem.com.ua/ua/shutdowns#ua-shutdowns-address=first' };
-  const addresses = [
-    { ...address, id: 'first', house: '1' },
-    { ...address, id: 'second', house: '2' }
-  ];
-  let selectedOnReload;
-  let reads = 0;
-  let api;
-  const chrome = {
-    storage: { local: { async get() { reads++; return { addresses }; } } },
-    tabs: {
-      async query() { return [{ ...actualTab }]; },
-      onUpdated: { addListener(fn) { listeners.add(fn); }, removeListener(fn) { listeners.delete(fn); } },
-      async update(id, options) {
-        // Chrome can resolve tabs.update before the same-document URL is committed.
-        setTimeout(() => {
-          actualTab.url = options.url;
-          for (const listener of listeners) listener(id, { url: actualTab.url }, { ...actualTab });
-        }, 0);
-        return { ...actualTab };
-      },
-      async reload() { selectedOnReload = await api.settings.forPage(actualTab.url); }
-    }
-  };
-  const sitesSource = readFileSync(require.resolve('../dtek-sites.js'), 'utf8');
-  const navigationSource = readFileSync(require.resolve('../address-navigation.js'), 'utf8');
-  api = vm.runInNewContext(sitesSource + '\n' + settingsSource + '\n' + navigationSource +
-    '\n({ settings: AddressSettings, navigation: AddressNavigation });', { chrome, URL, URLSearchParams, setTimeout, clearTimeout });
-  await api.navigation.open(addresses[1]);
-  assert.equal(selectedOnReload.id, 'second');
-  assert.equal(selectedOnReload.house, '2');
-  assert.equal(reads, 1);
-  assert.equal(listeners.size, 0);
-});
-
-test('failed navigation releases its listener without reloading the previous address', async () => {
-  const listeners = new Set();
-  let reloads = 0;
-  const api = vm.runInNewContext(source + '\nAddressNavigation;', { URL, URLSearchParams, setTimeout, clearTimeout,
-    chrome: { tabs: {
-      async query() { return [{ id: 4, url: 'https://www.dtek-oem.com.ua/ua/shutdowns#ua-shutdowns-address=first' }]; },
-      onUpdated: { addListener(fn) { listeners.add(fn); }, removeListener(fn) { listeners.delete(fn); } },
-      async update() { throw new Error('Navigation failed'); },
-      async reload() { reloads++; }
-    } }
+test('multiple tabs keep independent selections and deleted selections never fall back', async () => {
+  const p = page(null, {
+    [key(4)]: { id: first.id, region: first.region },
+    [key(5)]: { id: address.id, region: address.region }
   });
-  await assert.rejects(api.open(address), /Navigation failed/);
-  assert.equal(reloads, 0);
-  assert.equal(listeners.size, 0);
+  assert.equal((await p.api.forTab(4, target)).id, first.id);
+  assert.equal((await p.api.forTab(5, target)).id, address.id);
+  p.addresses.pop();
+  assert.equal(await p.api.forTab(5, target), null);
+  assert.equal((await p.api.forTab(4, target)).id, first.id);
 });
 
-test('a missing URL commit times out without reloading a stale address', async () => {
-  const listeners = new Set();
-  let reloads = 0;
-  const api = vm.runInNewContext(source + '\nAddressNavigation;', { URL, URLSearchParams,
-    setTimeout: callback => setTimeout(callback, 0), clearTimeout,
-    chrome: { tabs: {
-      async query() { return [{ id: 4, url: 'https://www.dtek-oem.com.ua/ua/shutdowns#ua-shutdowns-address=first' }]; },
-      onUpdated: { addListener(fn) { listeners.add(fn); }, removeListener(fn) { listeners.delete(fn); } },
-      async update() {
-        for (const listener of listeners) {
-          listener(99, { url: 'https://www.dtek-oem.com.ua/ua/shutdowns#ua-shutdowns-address=opaque-local-id' });
-          listener(4, { url: 'https://www.dtek-oem.com.ua/ua/shutdowns#ua-shutdowns-address=first' });
-        }
-      },
-      async reload() { reloads++; }
-    } }
-  });
-  await assert.rejects(api.open(address), /підтвердити перехід/);
-  assert.equal(reloads, 0);
-  assert.equal(listeners.size, 0);
+test('manual pages use the regional default and region mismatches never use another region address', async () => {
+  const p = page(null, { [key(4)]: { id: 'different', region: 'krem' } });
+  assert.equal((await p.api.forTab(4, target)).id, first.id);
+  assert.equal((await p.api.forTab(5, target)).id, first.id);
+  assert.equal(await p.api.forTab(5, 'https://example.com'), null);
+});
+
+test('migrates old link selections once and keeps a newer internal selection', async () => {
+  const p = page();
+  assert.equal((await p.api.forTab(4, target, address.id)).id, address.id);
+  assert.equal((await p.api.forTab(4, target, first.id)).id, address.id);
+  assert.equal((await p.api.forTab(4, target)).id, address.id);
+  assert.equal(await p.api.forTab(5, target, 'deleted'), null);
+});
+
+test('failed navigation restores the old selection without changing another tab', async () => {
+  const initial = { [key(4)]: { id: first.id, region: first.region }, [key(8)]: { id: 'other', region: 'kem' } };
+  const p = page({ id: 4, url: target }, initial);
+  p.chrome.tabs.reload = async () => { throw new Error('Reload failed'); };
+  await assert.rejects(p.api.navigate(address), /Reload failed/);
+  assert.deepEqual(p.session, initial);
+});
+
+test('storage failures prevent page loading and close only a newly created blank tab', async () => {
+  for (const tab of [undefined, { id: 4, url: target }]) {
+    const p = page(tab);
+    p.chrome.storage.session.set = async () => { throw new Error('Storage unavailable'); };
+    await assert.rejects(p.api.navigate(address), /Storage unavailable/);
+    assert.deepEqual(p.calls.map(c => c.type), tab ? [] : ['create', 'remove']);
+  }
+});
+
+test('closed tab cleanup removes only that tab selection', async () => {
+  const p = page(null, { [key(4)]: { id: first.id }, [key(5)]: { id: address.id } });
+  await p.api.forget(4);
+  assert.equal(p.session[key(4)], undefined);
+  assert.equal(p.session[key(5)].id, address.id);
+});
+
+test('popup delegates opening to the worker and reports its errors', async () => {
+  const p = page();
+  await p.api.open(address);
+  assert.equal(p.calls[0].type, 'open-address');
+  assert.equal(p.calls[0].addressId, address.id);
+  p.chrome.runtime.sendMessage = async () => ({ ok: false, error: 'Worker navigation failed' });
+  await assert.rejects(p.api.open(address), /Worker navigation failed/);
 });

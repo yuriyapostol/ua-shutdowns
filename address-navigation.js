@@ -2,51 +2,58 @@
 
 const AddressNavigation = {
   async open(address) {
+    const response = await chrome.runtime.sendMessage({ type: 'open-address', addressId: address.id });
+    if (!response?.ok) throw new Error(response?.error || 'Не вдалося відкрити графік.');
+  },
+  key: tabId => `address-for-tab:${tabId}`,
+  async forTab(tabId, url, legacyAddressId = null) {
+    const region = DtekSites.forUrl(url);
+    if (!region) return null;
+    const key = this.key(tabId);
+    let selection = (await chrome.storage.session.get(key))[key];
+    if (!selection && typeof legacyAddressId === 'string') {
+      selection = { id: legacyAddressId, region: region.id };
+      await chrome.storage.session.set({ [key]: selection });
+    }
+    return AddressSettings.forPage(url, selection?.region === region.id ? selection.id : null);
+  },
+  async forget(tabId) {
+    await chrome.storage.session.remove(this.key(tabId));
+  },
+  async navigate(address) {
     const region = DtekSites.get(address.region);
     if (!region) throw new Error('Спочатку оберіть регіон для цієї адреси.');
-    const target = new URL(region.url);
-    // Keep address text out of the URL; the random local ID stays in the fragment.
-    target.hash = new URLSearchParams({ 'ua-shutdowns-address': address.id }).toString();
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-    const currentRegion = DtekSites.forUrl(tab?.url);
-    if (tab?.id != null && currentRegion) {
-      const current = new URL(tab.url);
-      const sameDocument = current.origin === target.origin && current.pathname === target.pathname && current.search === target.search;
-      if (sameDocument && current.href !== target.href) {
-        // tabs.update can resolve while the tab still has the previous fragment.
-        // Reload only after Chrome confirms that this exact URL has committed.
-        await new Promise((resolve, reject) => {
-          let updated = false;
-          let committed = false;
-          function finish(error) {
-            if (!error && (!updated || !committed)) return;
-            clearTimeout(timer);
-            chrome.tabs.onUpdated.removeListener(onUpdated);
-            if (error) reject(error); else resolve();
-          }
-          function onUpdated(id, change) {
-            if (id === tab.id && change.url === target.href) {
-              committed = true;
-              finish();
-            }
-          }
-          const timer = setTimeout(() => finish(new Error('Не вдалося підтвердити перехід до вибраної адреси.')), 5000);
-          chrome.tabs.onUpdated.addListener(onUpdated);
-          chrome.tabs.update(tab.id, { url: target.href }).then(() => {
-            updated = true;
-            finish();
-          }, finish);
-        });
-      } else if (!sameDocument) {
-        await chrome.tabs.update(tab.id, { url: target.href });
+    const reuse = tab?.id != null && DtekSites.forUrl(tab.url);
+    // Initialize state before loading DTEK, so the content script cannot read
+    // a default address while a newly created tab's selection is still saving.
+    const targetTab = reuse ? tab : await chrome.tabs.create({ url: 'about:blank' });
+    const key = this.key(targetTab.id);
+    let previous;
+    let stored = false;
+    try {
+      previous = (await chrome.storage.session.get(key))[key];
+      await chrome.storage.session.set({ [key]: { id: address.id, region: region.id } });
+      stored = true;
+      const current = reuse ? new URL(tab.url) : null;
+      const target = new URL(region.url);
+      const sameDocument = current && current.origin === target.origin &&
+        current.pathname === target.pathname && current.search === target.search;
+      // Reload even when an old fragment is present: changing only a fragment
+      // would not restart selection. The content script cleans legacy markers.
+      if (sameDocument) await chrome.tabs.reload(tab.id);
+      else await chrome.tabs.update(targetTab.id, { url: region.url });
+    } catch (error) {
+      try {
+        if (stored) {
+          if (previous) await chrome.storage.session.set({ [key]: previous });
+          else await this.forget(targetTab.id);
+        }
+        if (!reuse) await chrome.tabs.remove(targetTab.id);
+      } catch (cleanupError) {
+        console.warn('UA Shutdowns: failed navigation cleanup stopped.', cleanupError);
       }
-      // A fragment change does not reinject the content script. An unchanged
-      // URL can be reloaded immediately; it already identifies the right address.
-      if (sameDocument) {
-        await chrome.tabs.reload(tab.id);
-      }
-    } else {
-      await chrome.tabs.create({ url: target.href });
+      throw error;
     }
   }
 };
