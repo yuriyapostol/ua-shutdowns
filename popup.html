@@ -15,14 +15,19 @@
   <main>
     <header>
       <img src="images/icon-48.png" width="32" height="32" alt="">
-      <div><p class="brand">UA Shutdowns</p><h1 id="screen-title">Графік відключень світла</h1></div>
+      <div class="header-text">
+        <p class="brand">UA Shutdowns</p>
+        <div class="screen-heading">
+          <button id="nav-back" class="back" type="button" aria-label="На головну" title="На головну" hidden><img src="images/arrow-back.svg" width="24" height="24" alt="" aria-hidden="true"></button>
+          <h1 id="screen-title">Графік відключень світла</h1>
+        </div>
+      </div>
     </header>
-    <button id="nav-back" class="back" type="button" hidden>← До адрес</button>
     <section id="home-view" aria-labelledby="screen-title">
       <div class="date-shortcuts" role="group" aria-label="Швидкий вибір дати">
         на <button id="date-today" class="date-shortcut" type="button" aria-pressed="true" disabled>сьогодні</button>,
-        <button id="date-tomorrow" class="date-shortcut" type="button" aria-pressed="false" disabled>завтра</button>,
-        іншу <button id="date-other" class="date-shortcut" type="button" aria-pressed="false" aria-label="Вибрати іншу дату в календарі" disabled>дату</button>
+        <button id="date-tomorrow" class="date-shortcut" type="button" aria-pressed="false" disabled>завтра</button>
+        або іншу <button id="date-other" class="date-shortcut" type="button" aria-pressed="false" aria-label="Вибрати іншу дату в календарі" disabled>дату</button>
       </div>
       <div class="schedule-date-nav" role="group" aria-label="Дата графіка">
         <button id="date-previous" class="date-step" type="button" aria-label="Попередній день" disabled><img src="images/keyboard-arrow-left.svg" width="24" height="24" alt="" aria-hidden="true"></button>
@@ -32,8 +37,8 @@
       <div id="address-list"></div>
       <p id="empty-state" class="empty explanation" hidden>Додайте адресу і слідкуйте за графіком відключень.</p>
       <div class="home-actions">
-        <button id="add-address" type="button" disabled>Додати адресу</button>
-        <button id="open-settings" class="secondary" type="button" disabled>Налаштування</button>
+        <button id="add-address" class="home-action" type="button" aria-label="Додати адресу" title="Додати адресу" disabled><img src="images/add-2.svg" width="24" height="24" alt="" aria-hidden="true"></button>
+        <button id="open-settings" class="home-action" type="button" aria-label="Налаштування" title="Налаштування" disabled><img src="images/settings.svg" width="24" height="24" alt="" aria-hidden="true"></button>
       </div>
     </section>
     <section id="form-view" aria-labelledby="screen-title" hidden>
@@ -48,22 +53,21 @@
           <label for="house">Будинок</label>
           <input id="house" name="house" type="text" required placeholder="Введіть номер будинку">
           <div class="form-actions">
-            <button type="submit">Зберегти адресу</button>
-            <button id="delete-address" class="danger" type="button" hidden>Видалити адресу</button>
+            <button id="save-address" class="home-action" type="submit" aria-label="Зберегти адресу" title="Зберегти адресу" disabled><img src="images/check.svg" width="24" height="24" alt="" aria-hidden="true"></button>
+            <button id="delete-address" class="home-action" type="button" aria-label="Видалити адресу" title="Видалити адресу" hidden><img src="images/delete.svg" width="24" height="24" alt="" aria-hidden="true"></button>
           </div>
         </fieldset>
       </form>
-      <div id="delete-confirmation" class="confirmation" hidden>
-        <p class="explanation">Видалити цю адресу зі списку?</p>
-        <label class="checkbox-row archive-delete-option" for="delete-address-archive">
-          <input id="delete-address-archive" type="checkbox" aria-describedby="archive-retention-note">
-          <span>Видалити архів даних за адресою</span>
-        </label>
-        <p id="archive-retention-note" class="explanation">Без цієї галки архів залишиться й буде доступний після повторного додавання адреси.</p>
-        <div class="button-row">
-          <button id="confirm-delete" class="danger" type="button">Так, видалити</button>
-          <button id="cancel-delete" class="secondary" type="button">Залишити</button>
-        </div>
+    </section>
+    <section id="delete-view" aria-labelledby="screen-title" hidden>
+      <p id="delete-address-summary"></p>
+      <label class="checkbox-row archive-delete-option" for="delete-address-archive">
+        <input id="delete-address-archive" type="checkbox" aria-describedby="archive-retention-note">
+        <span>Видалити архів даних за адресою</span>
+      </label>
+      <p id="archive-retention-note" class="explanation">Якщо не вибрати, архів відновиться після повторного додавання адреси.</p>
+      <div class="form-actions">
+        <button id="confirm-delete" class="delete-confirm-action" type="button"><img src="images/delete.svg" width="24" height="24" alt="" aria-hidden="true"><span>Видалити</span></button>
       </div>
     </section>
     <section id="popup-offer-view" aria-labelledby="screen-title" hidden>

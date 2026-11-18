@@ -3,9 +3,10 @@
 
   const byId = id => document.getElementById(id);
   const fields = Object.fromEntries(['region', 'city', 'street', 'house'].map(field => [field, byId(field)]));
-  const views = ['home', 'form', 'settings', 'popup-offer'];
+  const views = ['home', 'form', 'delete', 'settings', 'popup-offer'];
   let addresses = [];
   let editingId = null;
+  let initialFields = {};
   let busy = true;
   let cityBeforeKyiv = '';
   let selectedDate = DtekSchedule.dateKey();
@@ -19,13 +20,24 @@
     for (const control of document.querySelectorAll('button, input, select, fieldset')) {
       control.disabled = value || control.dataset.available === 'false';
     }
+    updateSaveButton();
+  }
+  function hasAddressChanges() {
+    return Object.entries(fields).some(([name, input]) => input.value !== initialFields[name]);
+  }
+  function updateSaveButton() {
+    const changed = hasAddressChanges();
+    byId('save-address').disabled = busy || (editingId !== null && !changed);
+    byId('save-address').dataset.current = String(!busy && editingId !== null && !changed);
   }
   function show(view, title) {
     for (const name of views) byId(name + '-view').hidden = name !== view;
     byId('nav-back').hidden = view === 'home';
+    const backLabel = view === 'delete' ? 'До редагування адреси' : 'На головну';
+    byId('nav-back').setAttribute('aria-label', backLabel);
+    byId('nav-back').title = backLabel;
     byId('screen-title').textContent = title;
     document.title = title + ' — UA Shutdowns';
-    byId('delete-confirmation').hidden = true;
     status();
     byId('screen-title').tabIndex = -1;
     byId('screen-title').focus();
@@ -172,6 +184,8 @@
     for (const field of Object.keys(fields)) fields[field].value = address?.[field] || '';
     cityBeforeKyiv = fields.city.value;
     regionChanged();
+    initialFields = Object.fromEntries(Object.entries(fields).map(([name, input]) => [name, input.value]));
+    updateSaveButton();
     byId('delete-address').hidden = !editingId;
     show('form', editingId ? 'Редагування адреси' : 'Додавання адреси');
   }
@@ -205,6 +219,7 @@
   byId('nav-back').addEventListener('click', () => {
     if (busy) return;
     if (!byId('popup-offer-view').hidden) void dismissPopupOffer();
+    else if (!byId('delete-view').hidden) show('form', 'Редагування адреси');
     else home();
   });
   byId('dismiss-popup-offer').addEventListener('click', dismissPopupOffer);
@@ -223,9 +238,13 @@
   byId('add-address').addEventListener('click', () => edit());
   byId('open-settings').addEventListener('click', () => { if (!busy) show('settings', 'Налаштування'); });
   fields.region.addEventListener('change', regionChanged);
+  for (const input of Object.values(fields)) {
+    input.addEventListener('input', updateSaveButton);
+    input.addEventListener('change', updateSaveButton);
+  }
   byId('address-form').addEventListener('submit', async event => {
     event.preventDefault();
-    if (busy) return;
+    if (busy || (editingId !== null && !hasAddressChanges())) return;
     setBusy(true);
     status('Збереження…');
     try {
@@ -238,13 +257,15 @@
     } finally { setBusy(false); }
   });
   byId('delete-address').addEventListener('click', () => {
-    if (busy) return;
-    byId('delete-address-archive').checked = false;
-    byId('delete-confirmation').hidden = false;
-  });
-  byId('cancel-delete').addEventListener('click', () => { byId('delete-confirmation').hidden = true; });
-  byId('confirm-delete').addEventListener('click', async () => {
     if (busy || !editingId) return;
+    const address = addresses.find(item => item.id === editingId);
+    if (!address) return;
+    byId('delete-address-archive').checked = false;
+    byId('delete-address-summary').textContent = `Видалити адресу "${address.city}, ${address.street}, ${address.house}" зі списку?`;
+    show('delete', 'Видалення адреси');
+  });
+  byId('confirm-delete').addEventListener('click', async () => {
+    if (busy || !editingId || byId('delete-view').hidden) return;
     setBusy(true);
     try {
       const deleteArchive = byId('delete-address-archive').checked;

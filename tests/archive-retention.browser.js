@@ -16,7 +16,7 @@ async () => {
   byId('delete-address').click();
   assert(!byId('delete-address-archive').checked, 'Archive deletion must default to off');
   byId('delete-address-archive').click();
-  byId('cancel-delete').click();
+  byId('nav-back').click();
   assert((await AddressSettings.list()).some(item => item.id === original.id), 'Cancel must preserve the address');
   byId('delete-address').click();
   assert(!byId('delete-address-archive').checked, 'Reopening confirmation must reset destructive consent');
@@ -38,6 +38,7 @@ async () => {
   chrome.storage.local.set = async () => { throw new Error('Storage unavailable'); };
   byId('confirm-delete').click();
   await wait(() => byId('status').dataset.error === 'true' && !byId('confirm-delete').disabled);
+  assert(!byId('delete-view').hidden && byId('form-view').hidden, 'A failed purge must stay on the deletion screen');
   assert(JSON.stringify(previewData) === before, 'A failed purge must preserve the profile and archive');
   assert(byId('delete-address-archive').checked, 'A failed purge must preserve the selected option for retry');
   chrome.storage.local.set = write;
