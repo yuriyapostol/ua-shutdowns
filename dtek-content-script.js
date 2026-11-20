@@ -181,14 +181,18 @@
   }
 
   function watchSchedule(address, fields) {
-    const root = document.getElementById('discon-fact');
+    // The site may replace or insert the schedule container after selection.
+    const root = document.body || document.getElementById('discon-fact');
     if (!root || typeof MutationObserver !== 'function') return;
     const chosen = fields.map(field => [field.id, document.getElementById(field.id)?.value]);
     let timer;
     let stopped = false;
-    let saving = false;
-    let pending = false;
-    const observer = new MutationObserver(() => {
+    let saving = Promise.resolve();
+    const isScheduleNode = node => node?.id === 'discon-fact' ||
+      node?.closest?.('#discon-fact') || node?.querySelector?.('#discon-fact');
+    const observer = new MutationObserver(records => {
+      if (!records.some(record => isScheduleNode(record.target) ||
+          [...record.addedNodes, ...record.removedNodes].some(isScheduleNode))) return;
       clearTimeout(timer);
       timer = setTimeout(update, 250);
     });
@@ -201,25 +205,33 @@
       document.removeEventListener('input', onManualInput, true);
       document.removeEventListener('change', onManualInput, true);
       window.removeEventListener('pagehide', onPageHide);
+      chrome.runtime.onMessage.removeListener(onRefresh);
     }
-    async function update() {
-      if (stopped || document.visibilityState !== 'visible') return;
-      if (!matchesAddress()) { stop(); return; }
-      if (saving) { pending = true; return; }
-      const schedules = DtekSchedule.readAll(document);
-      if (!schedules.length) return;
-      saving = true;
-      try {
+    function update() {
+      // A popup refresh must wait for the latest read and its storage write,
+      // including when an observer-triggered save is already in progress.
+      saving = saving.then(async () => {
+        if (stopped || document.visibilityState !== 'visible') return { ok: false };
+        if (!matchesAddress()) { stop(); return { ok: false }; }
+        const schedules = DtekSchedule.readAll(document);
+        if (!schedules.length) return { ok: false };
         const raw = document.getElementById('house_num')?.getAttribute('data-key-group');
         const queue = raw == null ? selectedQueue : queueFromRaw(raw);
         const response = await chrome.runtime.sendMessage({ type: 'save-address-queue', address, queue, schedules });
-        if (!response?.ok) console.warn('UA Shutdowns: schedule update could not be saved.');
-      } catch (error) {
+        if (!response?.ok) throw new Error(response?.error || 'Не вдалося зберегти графік.');
+        return { ok: true };
+      }).catch(error => {
         console.warn('UA Shutdowns: schedule update could not be saved.', error);
-      } finally {
-        saving = false;
-        if (pending) { pending = false; void update(); }
-      }
+        return { ok: false };
+      });
+      return saving;
+    }
+    function onRefresh(message, sender, sendResponse) {
+      if (message?.type !== 'refresh-address-schedule' ||
+          sender.url !== chrome.runtime.getURL('popup.html')) return;
+      clearTimeout(timer);
+      update().then(sendResponse);
+      return true;
     }
     function onVisibility() {
       observer.disconnect();
@@ -237,6 +249,7 @@
     document.addEventListener('input', onManualInput, true);
     document.addEventListener('change', onManualInput, true);
     window.addEventListener('pagehide', onPageHide);
+    chrome.runtime.onMessage.addListener(onRefresh);
     onVisibility();
   }
 
@@ -267,12 +280,12 @@
         if (signal.aborted || !await selectField(field)) return;
       }
       if (!signal.aborted) {
+        watchSchedule(address, fields);
         const schedule = await waitFor(() => DtekSchedule.read(document), Date.now() + 3000);
         if (signal.aborted) return;
         const schedules = DtekSchedule.readAll(document);
         const saved = await chrome.runtime.sendMessage({ type: 'save-address-queue', address, queue: selectedQueue, schedule, schedules });
         if (!saved?.ok) throw new Error(saved?.error || 'Не вдалося зберегти чергу.');
-        watchSchedule(address, fields);
       }
     } catch (error) {
       console.warn('UA Shutdowns: automatic address selection stopped.', error);

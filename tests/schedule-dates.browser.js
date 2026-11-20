@@ -35,9 +35,13 @@ async () => {
   assert(card().querySelector('.outage-interval').textContent === '01:00 – 02:00', 'Yesterday must show its archived intervals');
   assert(card().querySelector('.address-queue').textContent === 'Черга: 4.2', 'Yesterday must show its historical queue');
   const count = copiedSchedules.length;
-  card().querySelector('.copy-schedule').click();
+  card().querySelector('.share-schedule').click();
+  assert(!byId('share-view').hidden, 'Sharing must open for the selected historical day');
+  byId('copy-shared-schedule').click();
   await wait(() => copiedSchedules.length === count + 1);
   assert(copiedSchedules[count] === DtekSchedule.toText(address, DtekSites.get(address.region), address.schedules[yesterday]), 'Historical copy must use the selected day');
+  byId('nav-back').click();
+  assert(date.value === yesterday, 'Returning from sharing must preserve the selected date');
   byId('date-next').click();
   assert(date.value === today, 'Next must return to today');
   assert(selectedShortcut() === 'date-today', 'Arrow navigation must synchronize the today shortcut');
@@ -46,7 +50,7 @@ async () => {
   assert(selectedShortcut() === 'date-tomorrow', 'Calendar selection must synchronize the tomorrow shortcut');
   choose(DtekSchedule.shiftDate(today, -10));
   assert(card().querySelector('.outage-note').textContent === 'Графік не збережено', 'Unknown historical data must not show another day');
-  assert(card().querySelector('.copy-schedule').disabled, 'Missing historical data cannot be copied');
+  assert(card().querySelector('.share-schedule').disabled, 'Missing historical data cannot be shared');
   assert(selectedShortcut() === 'date-other', 'A calendar date outside today/tomorrow must select other');
   choose(yesterday);
   const original = structuredClone(address.schedules[yesterday]);

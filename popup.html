@@ -41,17 +41,29 @@
         <button id="open-settings" class="home-action" type="button" aria-label="Налаштування" title="Налаштування" disabled><img src="images/settings.svg" width="24" height="24" alt="" aria-hidden="true"></button>
       </div>
     </section>
+    <section id="share-view" aria-labelledby="screen-title" hidden>
+      <div id="share-message" class="share-message">
+        <textarea id="share-text" class="share-text" rows="3" aria-label="Текст графіка для поширення" spellcheck="false"></textarea>
+        <button id="copy-shared-schedule" class="share-copy" type="button" aria-label="Копіювати графік відключень" title="Копіювати графік відключень"><img src="images/content-copy.svg" width="24" height="24" alt="" aria-hidden="true"></button>
+      </div>
+      <div id="share-qr" class="share-qr"></div>
+      <p id="share-qr-status" class="explanation" role="status" hidden></p>
+      <p class="share-hint">Відскануйте QR-код камерою телефона, щоб отримати текст графіка.</p>
+    </section>
     <section id="form-view" aria-labelledby="screen-title" hidden>
       <form id="address-form">
         <fieldset id="address-fields" disabled>
-          <label for="region">Регіональне представництво</label>
-          <select id="region" name="region" required><option value="">Оберіть представництво</option></select>
-          <label for="city">Місто / населений пункт</label>
-          <input id="city" name="city" type="text" required autocomplete="address-level2" placeholder="Введіть населений пункт">
-          <label for="street">Вулиця</label>
-          <input id="street" name="street" type="text" required autocomplete="address-line1" placeholder="Введіть назву вулиці">
-          <label for="house">Будинок</label>
-          <input id="house" name="house" type="text" required placeholder="Введіть номер будинку">
+          <div class="field-title">Регіональне представництво</div>
+          <div class="select-field">
+            <select id="region" name="region" aria-label="Регіональне представництво" required><option value="">Не задане</option></select>
+            <span class="select-placeholder" aria-hidden="true">Виберіть представництво</span>
+          </div>
+          <div class="field-title">Місто / населений пункт</div>
+          <input id="city" name="city" type="text" aria-label="Місто / населений пункт" required autocomplete="address-level2" placeholder="Введіть населений пункт">
+          <div class="field-title">Вулиця</div>
+          <input id="street" name="street" type="text" aria-label="Вулиця" required autocomplete="address-line1" placeholder="Введіть назву вулиці">
+          <div class="field-title">Будинок</div>
+          <input id="house" name="house" type="text" aria-label="Будинок" required placeholder="Введіть номер будинку">
           <div class="form-actions">
             <button id="save-address" class="home-action" type="submit" aria-label="Зберегти адресу" title="Зберегти адресу" disabled><img src="images/check.svg" width="24" height="24" alt="" aria-hidden="true"></button>
             <button id="delete-address" class="home-action" type="button" aria-label="Видалити адресу" title="Видалити адресу" hidden><img src="images/delete.svg" width="24" height="24" alt="" aria-hidden="true"></button>

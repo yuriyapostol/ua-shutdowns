@@ -3,13 +3,16 @@
 
   const byId = id => document.getElementById(id);
   const fields = Object.fromEntries(['region', 'city', 'street', 'house'].map(field => [field, byId(field)]));
-  const views = ['home', 'form', 'delete', 'settings', 'popup-offer'];
+  const views = ['home', 'form', 'delete', 'settings', 'popup-offer', 'share'];
   let addresses = [];
   let editingId = null;
   let initialFields = {};
   let busy = true;
   let cityBeforeKyiv = '';
   let selectedDate = DtekSchedule.dateKey();
+  let sharingText = '';
+  let shareRequest = 0;
+  let shareQrTimer;
 
   function status(message = '', error = false) {
     byId('status').textContent = message;
@@ -17,7 +20,7 @@
   }
   function setBusy(value) {
     busy = value;
-    for (const control of document.querySelectorAll('button, input, select, fieldset')) {
+    for (const control of document.querySelectorAll('button, input, select, textarea, fieldset')) {
       control.disabled = value || control.dataset.available === 'false';
     }
     updateSaveButton();
@@ -31,6 +34,7 @@
     byId('save-address').dataset.current = String(!busy && editingId !== null && !changed);
   }
   function show(view, title) {
+    if (view !== 'share') { sharingText = ''; shareRequest++; clearTimeout(shareQrTimer); }
     for (const name of views) byId(name + '-view').hidden = name !== view;
     byId('nav-back').hidden = view === 'home';
     const backLabel = view === 'delete' ? 'До редагування адреси' : 'На головну';
@@ -111,30 +115,21 @@
           });
         } else outages.append(make('span', 'outage-note', selectedDate < DtekSchedule.dateKey() ? 'Графік не збережено' : 'Графік не отримано'));
         const actions = make('div', 'address-actions');
-        const copy = make('button', 'copy-schedule');
-        copy.type = 'button';
-        copy.dataset.available = String(available === true);
-        copy.disabled = !available;
-        copy.title = available ? 'Копіювати графік відключень' : 'За вибрану дату графіка ще немає';
-        copy.setAttribute('aria-label', `Копіювати графік на ${selectedDate}: ${address.city}, ${address.street}, ${address.house}`);
-        const copyIcon = make('img');
-        copyIcon.src = 'images/content-copy.svg';
-        copyIcon.alt = '';
-        copyIcon.width = 24;
-        copyIcon.height = 24;
-        copyIcon.setAttribute('aria-hidden', 'true');
-        copy.append(copyIcon);
-        copy.addEventListener('click', async () => {
-          if (busy) return;
-          try {
-            const text = DtekSchedule.toText(address, region, schedule);
-            await navigator.clipboard.writeText(text);
-            status('Графік скопійовано.');
-          } catch {
-            status('Не вдалося скопіювати графік. Спробуйте ще раз.', true);
-          }
-        });
-        actions.append(copy, button);
+        const share = make('button', 'share-schedule');
+        share.type = 'button';
+        share.dataset.available = String(available === true);
+        share.disabled = !available;
+        share.title = available ? 'Поділитись графіком' : 'За вибрану дату графіка ще немає';
+        share.setAttribute('aria-label', `Поділитись графіком на ${selectedDate}: ${address.city}, ${address.street}, ${address.house}`);
+        const shareIcon = make('img');
+        shareIcon.src = 'images/share.svg';
+        shareIcon.alt = '';
+        shareIcon.width = 24;
+        shareIcon.height = 24;
+        shareIcon.setAttribute('aria-hidden', 'true');
+        share.append(shareIcon);
+        share.addEventListener('click', () => { void shareSchedule(address, region, schedule); });
+        actions.append(share, button);
         row.append(open, outages, actions);
         section.append(row);
       }
@@ -142,6 +137,67 @@
     }
     byId('empty-state').hidden = addresses.length > 0;
   }
+  function shareSchedule(address, region, schedule) {
+    if (busy) return;
+    try {
+      sharingText = DtekSchedule.toText(address, region, schedule);
+    } catch {
+      status('Графік ще не отримано.', true);
+      return;
+    }
+    byId('share-text').value = sharingText;
+    show('share', 'Поділитись графіком');
+    resizeShareText();
+    updateShareQr();
+  }
+  function resizeShareText() {
+    const input = byId('share-text');
+    input.style.height = 'auto';
+    input.style.height = `${input.scrollHeight}px`;
+  }
+  function updateShareQr(delay = 0) {
+    sharingText = byId('share-text').value;
+    const text = sharingText;
+    const request = ++shareRequest;
+    clearTimeout(shareQrTimer);
+    byId('copy-shared-schedule').dataset.available = String(Boolean(text));
+    byId('copy-shared-schedule').disabled = busy || !text;
+    if (!text || !delay) byId('share-qr').replaceChildren();
+    byId('share-qr-status').textContent = text ? 'Генеруємо QR-код…' : 'Введіть текст, щоб створити QR-код.';
+    byId('share-qr-status').hidden = false;
+    if (!text) return;
+    if (delay) shareQrTimer = setTimeout(() => { void renderShareQr(text, request); }, delay);
+    else void renderShareQr(text, request);
+  }
+  async function renderShareQr(text, request) {
+    try {
+      const { scheduleQrSvg } = await import('./schedule-sharing.mjs');
+      if (request !== shareRequest) return;
+      byId('share-qr').innerHTML = scheduleQrSvg(text);
+      byId('share-qr-status').hidden = true;
+    } catch {
+      if (request !== shareRequest) return;
+      byId('share-qr').replaceChildren();
+      byId('share-qr-status').textContent = 'Не вдалося створити QR-код. Скористайтесь кнопкою копіювання.';
+    }
+  }
+  byId('share-message').addEventListener('click', event => {
+    if (event.target === event.currentTarget) byId('share-text').focus();
+  });
+  byId('share-text').addEventListener('input', () => {
+    resizeShareText();
+    status();
+    updateShareQr(500);
+  });
+  byId('copy-shared-schedule').addEventListener('click', async () => {
+    if (busy || !sharingText || byId('share-view').hidden) return;
+    try {
+      await navigator.clipboard.writeText(sharingText);
+      status('Графік скопійовано.');
+    } catch {
+      status('Не вдалося скопіювати графік. Спробуйте ще раз.', true);
+    }
+  });
   function selectDate(date) {
     if (busy) return;
     if (!DtekSchedule.validDate(date)) {
@@ -291,6 +347,17 @@
 
   async function load() {
     try {
+      // Re-read the visible table before loading the archive, even if its DOM
+      // update was missed while the popup was closed.
+      try {
+        const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+        if (tab?.id != null && DtekSites.forUrl(tab.url) &&
+            new URL(tab.url).pathname.startsWith('/ua/shutdowns')) {
+          await chrome.tabs.sendMessage(tab.id, { type: 'refresh-address-schedule' }, { frameId: 0 });
+        }
+      } catch {
+        // An absent content script or a closed tab must not block the archive.
+      }
       const [saved, preferences, offer] = await Promise.all([
         AddressSettings.list(), AddressSettings.loadPreferences(), AddressSettings.shouldOfferPopupClosing()
       ]);

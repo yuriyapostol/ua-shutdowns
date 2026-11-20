@@ -12,7 +12,7 @@ const settingsSource = readFileSync(require.resolve('../address-settings.js'), '
 function page({ cities = ['м. Обухів'], streets = ['вул. Миру'],
   houses = ['17А'], delay = 0, readyAt = 0, limit = Infinity, storageDelay = 0, storageError = false,
   hostname = 'www.dtek-krem.com.ua', fragment = '', savedAddresses, selectedId = null, queue = 'GPV1.1',
-  watch = false, scheduleDays = [],
+  watch = false, scheduleDays = [], rootReady = true, saveDelay = 0, failFirstSave = false,
   address = { city: 'Обухів', street: 'Миру', house: '17 А' } } = {}) {
   let now = watch ? Date.UTC(2026, 10, 15, 12) : 0;
   let timerId = 0;
@@ -26,6 +26,10 @@ function page({ cities = ['м. Обухів'], streets = ['вул. Миру'],
   const lifecycle = new Map();
   const windowListeners = new Map();
   const observers = [];
+  const receivers = new Set();
+  let scheduleRoot = rootReady ? { id: 'discon-fact' } : null;
+  const body = {};
+  let saveCount = 0;
   const location = { hostname, href: `https://${hostname}/ua/shutdowns${fragment}` };
   const history = { state: { fixture: true }, replaceState(state, _title, url) {
     assert.equal(state, this.state);
@@ -65,9 +69,10 @@ function page({ cities = ['м. Обухів'], streets = ['вул. Миру'],
     }
   }));
   const document = {
+    body,
     visibilityState: 'visible',
     getElementById(id) {
-      if (id === 'discon-fact') return watch ? {} : null;
+      if (id === 'discon-fact') return watch ? scheduleRoot : null;
       if (now < readyAt) return null;
       if (isKyiv && id === 'city') return null;
       return inputs.find(input => input.id === id) || lists.get(id);
@@ -83,9 +88,16 @@ function page({ cities = ['м. Обухів'], streets = ['вул. Миру'],
     }
   };
   const context = vm.createContext({
-    chrome: { runtime: { async sendMessage(message) {
+    chrome: { runtime: {
+      getURL: path => 'chrome-extension://fixture/' + path,
+      onMessage: { addListener: fn => receivers.add(fn), removeListener: fn => receivers.delete(fn) },
+      async sendMessage(message) {
       messages.push(message);
-      if (message.type === 'save-address-queue') return { ok: true };
+      if (message.type === 'save-address-queue') {
+        const failed = failFirstSave && ++saveCount === 1;
+        if (saveDelay) await new Promise(resolve => schedule(resolve, saveDelay));
+        return failed ? { ok: false, error: 'Temporary storage failure' } : { ok: true };
+      }
       assert.equal(message.type, 'get-page-address');
       return { ok: true, address: await context.AddressSettings.forPage(location.href, selectedId ?? message.legacyAddressId) };
     } }, storage: { local: { async get() {
@@ -100,7 +112,7 @@ function page({ cities = ['м. Обухів'], streets = ['вул. Миру'],
       removeEventListener: type => windowListeners.delete(type) },
     MutationObserver: watch ? class {
       constructor(callback) { this.callback = callback; this.active = false; observers.push(this); }
-      observe() { this.active = true; }
+      observe(target) { this.active = true; this.target = target; }
       disconnect() { this.active = false; }
     } : undefined,
     location, history, URL, URLSearchParams,
@@ -114,7 +126,27 @@ function page({ cities = ['м. Обухів'], streets = ['вул. Миру'],
     inputs, clicks, searches, warnings, listeners, location, messages,
     schedule,
     replaceSchedules(days) { scheduleDays = days; },
-    notifySchedule() { for (const observer of observers) if (observer.active) observer.callback(); },
+    notifySchedule() {
+      for (const observer of observers) if (observer.active &&
+          (observer.target === body || observer.target === scheduleRoot)) {
+        observer.callback([{ target: scheduleRoot, addedNodes: [], removedNodes: [] }]);
+      }
+    },
+    replaceRoot() {
+      const previous = scheduleRoot;
+      scheduleRoot = { id: 'discon-fact' };
+      for (const observer of observers) if (observer.active && observer.target === body) {
+        observer.callback([{ target: body, addedNodes: [scheduleRoot], removedNodes: previous ? [previous] : [] }]);
+      }
+    },
+    refresh(sender = { url: 'chrome-extension://fixture/popup.html' }) {
+      return new Promise(resolve => {
+        for (const receiver of receivers) {
+          if (receiver({ type: 'refresh-address-schedule' }, sender, resolve) === true) return;
+        }
+        resolve(null);
+      });
+    },
     get watching() { return observers.some(observer => observer.active); },
     visible(value) { document.visibilityState = value ? 'visible' : 'hidden'; lifecycle.get('visibilitychange')?.(); },
     pageHide() { windowListeners.get('pagehide')?.({ persisted: false }); },
@@ -429,4 +461,64 @@ test('unloading the page disconnects schedule observation', async () => {
   await p.finish();
   p.pageHide();
   assert.equal(p.watching, false);
+});
+
+test('popup refresh reads changed table data even when no mutation was observed', async () => {
+  const today = { date: '2026-11-15', lines: [[[60, 120]]] };
+  const updated = { ...today, lines: [[[180, 810]]] };
+  const p = page({ watch: true, scheduleDays: [today] });
+  await p.finish();
+  p.replaceSchedules([updated]);
+  const refresh = p.refresh();
+  await p.finish();
+  assert.equal((await refresh).ok, true);
+  assert.deepEqual(p.messages.at(-1).schedules, [updated]);
+  assert.equal(p.clicks.length, 3);
+  assert.equal(await p.refresh({ url: 'https://www.dtek-krem.com.ua/ua/shutdowns' }), null);
+  p.interact(2, '99');
+  assert.equal(await p.refresh(), null);
+});
+
+test('popup refresh waits for its save when an earlier save is still pending', async () => {
+  const today = { date: '2026-11-15', lines: [[]] };
+  const p = page({ watch: true, scheduleDays: [today], saveDelay: 700 });
+  await p.finish();
+  p.replaceSchedules([{ ...today, lines: [[[0, 60]]] }]);
+  p.notifySchedule();
+  let completed = false;
+  let refresh;
+  const updated = { ...today, lines: [[[240, 420]]] };
+  p.schedule(() => {
+    p.replaceSchedules([updated]);
+    refresh = p.refresh().then(result => { completed = true; return result; });
+  }, 300);
+  p.schedule(() => assert.equal(completed, false), 1000);
+  await p.finish();
+  assert.equal((await refresh).ok, true);
+  assert.deepEqual(p.messages.at(-1).schedules, [updated]);
+});
+
+test('continues observing when the site replaces or inserts the schedule container', async () => {
+  for (const rootReady of [true, false]) {
+    const p = page({ watch: true, rootReady });
+    await p.finish();
+    const updated = { date: '2026-11-15', lines: [[[180, 810]]] };
+    p.replaceSchedules([updated]);
+    p.replaceRoot();
+    await p.finish();
+    assert.deepEqual(p.messages.at(-1).schedules, [updated]);
+    assert.equal(p.watching, true);
+  }
+});
+
+test('an initial save failure does not prevent later schedule synchronization', async () => {
+  const today = { date: '2026-11-15', lines: [[]] };
+  const p = page({ watch: true, scheduleDays: [today], failFirstSave: true });
+  await p.finish();
+  assert.equal(p.watching, true);
+  const updated = { ...today, lines: [[[120, 240]]] };
+  p.replaceSchedules([updated]);
+  p.notifySchedule();
+  await p.finish();
+  assert.deepEqual(p.messages.at(-1).schedules, [updated]);
 });
