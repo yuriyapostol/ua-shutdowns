@@ -34,7 +34,7 @@
           <button id="date-previous" class="date-step" type="button" aria-label="Попередній день" disabled><img src="images/keyboard-arrow-left.svg" width="24" height="24" alt="" aria-hidden="true"></button>
           <div id="schedule-date-control" class="schedule-date-field">
             <input id="schedule-date" type="text" aria-expanded="false" aria-controls="date-calendar" inputmode="numeric" aria-label="Дата графіка, ДД.ММ.РРРР" placeholder="ДД.ММ.РРРР" autocomplete="off" spellcheck="false" disabled>
-            <button id="date-picker-toggle" type="button" aria-label="Відкрити календар" aria-expanded="false" aria-controls="date-calendar" disabled><img src="images/keyboard-arrow-down.svg" width="24" height="24" alt="" aria-hidden="true"></button>
+            <button id="date-picker-toggle" type="button" aria-label="Відкрити календар" aria-expanded="false" aria-controls="date-calendar" disabled><img src="images/calendar.svg" width="24" height="24" alt="" aria-hidden="true"></button>
           </div>
           <button id="date-next" class="date-step" type="button" aria-label="Наступний день" disabled><img src="images/keyboard-arrow-right.svg" width="24" height="24" alt="" aria-hidden="true"></button>
         </div>
@@ -42,12 +42,12 @@
           <div class="calendar-heading">
             <div class="calendar-period">
               <button id="calendar-previous" class="date-step calendar-step" type="button" aria-label="Попередній місяць"><img src="images/keyboard-arrow-left.svg" width="24" height="24" alt="" aria-hidden="true"></button>
-              <select id="calendar-month" aria-label="Місяць"></select>
+              <select id="calendar-month" aria-label="Місяць" autocomplete="off"></select>
               <button id="calendar-next" class="date-step calendar-step" type="button" aria-label="Наступний місяць"><img src="images/keyboard-arrow-right.svg" width="24" height="24" alt="" aria-hidden="true"></button>
             </div>
             <div class="calendar-period">
               <button id="calendar-year-previous" class="date-step calendar-step" type="button" aria-label="Попередній рік"><img src="images/keyboard-arrow-left.svg" width="24" height="24" alt="" aria-hidden="true"></button>
-              <input id="calendar-year" type="number" min="1" max="9999" step="1" aria-label="Рік">
+              <input id="calendar-year" type="number" min="1" max="9999" step="1" aria-label="Рік" autocomplete="off">
               <button id="calendar-year-next" class="date-step calendar-step" type="button" aria-label="Наступний рік"><img src="images/keyboard-arrow-right.svg" width="24" height="24" alt="" aria-hidden="true"></button>
             </div>
           </div>
@@ -63,7 +63,7 @@
     </section>
     <section id="share-view" aria-labelledby="screen-title" hidden>
       <div id="share-message" class="share-message">
-        <textarea id="share-text" class="share-text" rows="3" aria-label="Текст графіка для поширення" spellcheck="false"></textarea>
+        <textarea id="share-text" class="share-text" rows="3" aria-label="Текст графіка для поширення" autocomplete="off" spellcheck="false"></textarea>
         <button id="copy-shared-schedule" class="share-copy" type="button" aria-label="Копіювати графік відключень" title="Копіювати графік відключень"><img src="images/content-copy.svg" width="24" height="24" alt="" aria-hidden="true"></button>
       </div>
       <div id="share-qr" class="share-qr"></div>
@@ -71,19 +71,19 @@
       <p class="share-hint">Відскануйте QR-код камерою телефона, щоб отримати текст графіка.</p>
     </section>
     <section id="form-view" aria-labelledby="screen-title" hidden>
-      <form id="address-form">
+      <form id="address-form" autocomplete="off">
         <fieldset id="address-fields" disabled>
           <div class="field-title">Регіональне представництво</div>
           <div class="select-field">
-            <select id="region" name="region" aria-label="Регіональне представництво" required><option value="">Не задане</option></select>
+            <select id="region" name="region" aria-label="Регіональне представництво" autocomplete="off" required><option value="">Не задане</option></select>
             <span class="select-placeholder" aria-hidden="true">Виберіть представництво</span>
           </div>
           <div class="field-title">Місто / населений пункт</div>
-          <input id="city" name="city" type="text" aria-label="Місто / населений пункт" required autocomplete="address-level2" placeholder="Введіть населений пункт">
+          <input id="city" name="city" type="text" aria-label="Місто / населений пункт" required autocomplete="off" placeholder="Введіть населений пункт">
           <div class="field-title">Вулиця</div>
-          <input id="street" name="street" type="text" aria-label="Вулиця" required autocomplete="address-line1" placeholder="Введіть назву вулиці">
+          <input id="street" name="street" type="text" aria-label="Вулиця" required autocomplete="off" placeholder="Введіть назву вулиці">
           <div class="field-title">Будинок</div>
-          <input id="house" name="house" type="text" aria-label="Будинок" required placeholder="Введіть номер будинку">
+          <input id="house" name="house" type="text" aria-label="Будинок" required autocomplete="off" placeholder="Введіть номер будинку">
           <div class="form-actions">
             <button id="save-address" class="home-action" type="submit" aria-label="Зберегти адресу" title="Зберегти адресу" disabled><img src="images/check.svg" width="24" height="24" alt="" aria-hidden="true"></button>
             <button id="delete-address" class="home-action" type="button" aria-label="Видалити адресу" title="Видалити адресу" hidden><img src="images/delete.svg" width="24" height="24" alt="" aria-hidden="true"></button>
@@ -94,7 +94,7 @@
     <section id="delete-view" aria-labelledby="screen-title" hidden>
       <p id="delete-address-summary"></p>
       <label class="checkbox-row archive-delete-option" for="delete-address-archive">
-        <input id="delete-address-archive" type="checkbox" aria-describedby="archive-retention-note">
+        <input id="delete-address-archive" type="checkbox" aria-describedby="archive-retention-note" autocomplete="off">
         <span>Видалити архів даних за адресою</span>
       </label>
       <p id="archive-retention-note" class="explanation">Якщо не вибрати, архів відновиться після повторного додавання адреси.</p>
@@ -112,12 +112,15 @@
     </section>
     <section id="settings-view" aria-labelledby="screen-title" hidden>
       <label class="checkbox-row" for="auto-close-popups">
-        <input id="auto-close-popups" name="autoClosePopups" type="checkbox">
+        <input id="auto-close-popups" name="autoClosePopups" type="checkbox" autocomplete="off">
         <span>Автоматично закривати спливаючі вікна</span>
       </label>
       <p class="hint">Зміна зберігається одразу й застосовується до всіх регіональних сайтів ДТЕК.</p>
     </section>
     <p id="status" role="status" aria-live="polite">Завантаження…</p>
+    <footer class="project-footer">
+      <a href="https://github.com/yuriyapostol/ua-shutdowns" title="@yuriyapostol/ua-shutdowns" target="_blank" rel="noopener noreferrer"><img src="images/github.svg" width="18" height="18" alt="" aria-hidden="true"><span>Проєкт на GitHub</span></a>
+    </footer>
   </main>
 </body>
 </html>

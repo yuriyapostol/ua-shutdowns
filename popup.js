@@ -18,6 +18,16 @@
   let shareRequest = 0;
   let shareQrTimer;
 
+  for (const select of document.querySelectorAll('select')) {
+    select.addEventListener('pointermove', event => {
+      const bounds = select.getBoundingClientRect();
+      select.classList.toggle('over-select-arrow', event.target === select &&
+        event.clientX >= bounds.right - 30 && event.clientX <= bounds.right - 6 &&
+        event.clientY >= bounds.top + (bounds.height - 24) / 2 && event.clientY <= bounds.top + (bounds.height + 24) / 2);
+    });
+    select.addEventListener('pointerleave', () => select.classList.remove('over-select-arrow'));
+  }
+
   function status(message = '', error = false) {
     byId('status').textContent = message;
     byId('status').dataset.error = String(error);
@@ -92,7 +102,7 @@
         open.append(
           make('span', 'address-city', address.city),
           make('strong', '', `${address.street}, ${address.house}`),
-          make('span', 'address-queue', `Черга: ${queue || '—'}`)
+          make('span', 'address-queue', `Черга ${queue || '—'}`)
         );
         open.setAttribute('aria-label', `${region.id ? 'Відкрити графік' : 'Обрати регіон'}: ${address.city}, ${address.street}, ${address.house}`);
         open.addEventListener('click', () => region.id ? openAddress(address) : edit(address));
@@ -236,7 +246,36 @@
     }
     selectDate(date);
   }
-  byId('schedule-date').addEventListener('input', () => { dateDraft = true; });
+  const dateInput = byId('schedule-date');
+  let activeDatePart = null;
+  let pointingAtDate = false;
+  function datePartAtCaret(position = dateInput.selectionStart) {
+    return [...dateInput.value.matchAll(/\d+/g)].slice(0, 3).find(part =>
+      position >= part.index && position <= part.index + part[0].length);
+  }
+  function selectDatePart(onFocus = false) {
+    if (document.activeElement !== dateInput || pointingAtDate || (!onFocus && dateInput.selectionStart !== dateInput.selectionEnd)) return;
+    const part = datePartAtCaret(onFocus ? 0 : dateInput.selectionStart);
+    if (!part) return;
+    if (onFocus || activeDatePart !== part.index) {
+      activeDatePart = part.index;
+      dateInput.setSelectionRange(part.index, part.index + part[0].length);
+    }
+  }
+  dateInput.addEventListener('pointerdown', () => { pointingAtDate = true; });
+  document.addEventListener('pointerup', () => {
+    if (!pointingAtDate) return;
+    pointingAtDate = false;
+    selectDatePart();
+  });
+  document.addEventListener('pointercancel', () => { pointingAtDate = false; });
+  dateInput.addEventListener('blur', () => { activeDatePart = null; pointingAtDate = false; });
+  document.addEventListener('selectionchange', () => selectDatePart());
+  dateInput.addEventListener('input', () => {
+    dateDraft = true;
+    // Editing can move component boundaries; keep typing from triggering selection.
+    activeDatePart = datePartAtCaret()?.index ?? null;
+  });
   byId('schedule-date').addEventListener('change', commitTypedDate);
   byId('schedule-date').addEventListener('keydown', event => {
     if (event.key === 'Enter') {
@@ -384,9 +423,16 @@
   function toggleCalendar(event) {
     if (busy) return;
     if (!byId('date-calendar').hidden) { closeCalendar(); return; }
+    if (event.currentTarget === byId('date-picker-toggle')) {
+      dateInput.focus();
+      selectDatePart(true);
+      openCalendar(dateInput, false);
+      return;
+    }
     openCalendar(event.currentTarget);
   }
   byId('schedule-date').addEventListener('focus', () => {
+    selectDatePart(true);
     if (!restoringCalendarFocus) openCalendar(byId('schedule-date'), false);
   });
   byId('schedule-date-control').addEventListener('click', event => {
@@ -417,6 +463,18 @@
     if (!byId('date-calendar').contains(event.target)) positionCalendar();
   }, true);
   document.addEventListener('keydown', event => {
+    if (event.key === 'Tab' && !event.altKey && !event.ctrlKey && !event.metaKey && !byId('date-calendar').hidden) {
+      const controls = [...byId('date-calendar').querySelectorAll('button:not(:disabled), input:not(:disabled), select:not(:disabled)')]
+        .filter(control => control.tabIndex >= 0);
+      let target;
+      if (!event.shiftKey && (event.target === dateInput || event.target === byId('date-picker-toggle'))) target = controls[0];
+      else if (event.shiftKey && event.target === controls[0]) target = byId('date-picker-toggle');
+      else if (!event.shiftKey && event.target === controls.at(-1) && !byId('date-next').disabled) target = byId('date-next');
+      if (target) {
+        event.preventDefault();
+        target.focus();
+      }
+    }
     if (event.key === 'Escape' && !byId('date-calendar').hidden) {
       event.preventDefault();
       closeCalendar();

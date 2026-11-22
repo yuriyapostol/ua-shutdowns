@@ -49,8 +49,59 @@ async () => {
   byId('date-today').click();
   date.focus();
   assert(!byId('date-calendar').hidden && document.activeElement === date, 'Focusing the date input must open the calendar and preserve text editing');
+  assert(picker.querySelector('img').getAttribute('src') === 'images/calendar.svg' &&
+    getComputedStyle(picker.querySelector('img')).transform === 'none', 'The calendar icon must stay upright while open');
+  const settleSelection = () => new Promise(resolve => setTimeout(resolve, 20));
+  const assertSelection = (start, end, message) => assert(date.selectionStart === start && date.selectionEnd === end, message);
+  date.blur();
+  date.setSelectionRange(date.value.length, date.value.length);
+  date.focus();
+  assertSelection(0, 2, 'Focus without a pointer position must select the day even when the old caret was at the end');
+  for (const [position, start, end] of [[1, 1, 1], [4, 3, 5], [3, 3, 3], [8, 6, 10], [7, 7, 7]]) {
+    date.setSelectionRange(position, position);
+    await settleSelection();
+    assertSelection(start, end, 'Only entering another component must select it');
+  }
+  date.setSelectionRange(1, 8);
+  await settleSelection();
+  assertSelection(1, 8, 'Manual text selections must be preserved');
+  date.blur();
+  date.setSelectionRange(0, 0);
+  date.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true }));
+  date.focus();
+  date.setSelectionRange(4, 4);
+  document.dispatchEvent(new PointerEvent('pointerup', { bubbles: true }));
+  await settleSelection();
+  assertSelection(3, 5, 'Pointer focus must select the clicked component');
+  date.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true }));
+  date.setSelectionRange(4, 4);
+  document.dispatchEvent(new PointerEvent('pointerup', { bubbles: true }));
+  await settleSelection();
+  assertSelection(4, 4, 'Clicking inside the same component must preserve the caret');
+  const typedValue = date.value;
+  date.setRangeText('1', 3, 5, 'end');
+  date.dispatchEvent(new Event('input', { bubbles: true }));
+  await settleSelection();
+  assertSelection(4, 4, 'Typing must preserve the resulting caret');
+  date.value = typedValue;
   date.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
   assert(byId('date-calendar').hidden && document.activeElement === date, 'Escape must close the calendar without reopening on restored focus');
+  date.setSelectionRange(6, 10);
+  picker.focus();
+  picker.click();
+  assert(!byId('date-calendar').hidden && document.activeElement === date, 'Opening with the calendar icon must focus the date input');
+  assertSelection(0, 2, 'Opening with the calendar icon must select the day');
+  date.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true, cancelable: true }));
+  assert(document.activeElement === byId('calendar-previous') && !byId('date-calendar').hidden, 'Tab from the date input must enter the calendar');
+  document.activeElement.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', shiftKey: true, bubbles: true, cancelable: true }));
+  assert(document.activeElement === picker, 'Shift+Tab from the first calendar control must return to its icon');
+  picker.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true, cancelable: true }));
+  assert(document.activeElement === byId('calendar-previous'), 'Tab from the calendar icon must enter the calendar');
+  document.querySelector('.calendar-day[tabindex="0"]').focus();
+  document.activeElement.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true, cancelable: true }));
+  assert(document.activeElement === byId('date-next') && byId('date-calendar').hidden, 'Tab after the calendar must reach the next-day button and close the calendar');
+  picker.click();
+  date.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
   byId('schedule-date-control').click();
   assert(!byId('date-calendar').hidden && document.activeElement === date, 'Clicking the date control must open the calendar');
   document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
@@ -82,6 +133,9 @@ async () => {
   choose('0001-01-01');
   picker.click();
   assert(byId('calendar-previous').disabled && byId('calendar-year-previous').disabled, 'First supported month must disable previous');
+  date.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true, cancelable: true }));
+  assert(document.activeElement === byId('calendar-month'), 'Tab into the calendar must skip disabled controls');
+  document.querySelector('[data-date="0001-01-01"]').focus();
   document.activeElement.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }));
   assert(document.activeElement.dataset.date === '0001-01-01', 'Keyboard navigation must respect the lower boundary');
   document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
@@ -94,7 +148,7 @@ async () => {
   assert(readDate() === yesterday, 'Previous must select yesterday');
   assert(selectedShortcut() === 'date-other', 'Previous day must select the other-date shortcut');
   assert(card().querySelector('.outage-interval').textContent === '01:00 – 02:00', 'Yesterday must show its archived intervals');
-  assert(card().querySelector('.address-queue').textContent === 'Черга: 4.2', 'Yesterday must show its historical queue');
+  assert(card().querySelector('.address-queue').textContent === 'Черга 4.2', 'Yesterday must show its historical queue');
   const count = copiedSchedules.length;
   card().querySelector('.share-schedule').click();
   assert(!byId('share-view').hidden, 'Sharing must open for the selected historical day');
@@ -121,7 +175,7 @@ async () => {
   assert(JSON.stringify((await AddressSettings.list()).find(item => item.id === address.id).schedules[yesterday]) === JSON.stringify(original), 'Today updates must preserve yesterday');
   choose(today);
   await wait(() => card().querySelector('.outage-interval').textContent === '03:00 – 04:00');
-  assert(card().querySelector('.address-queue').textContent === 'Черга: 6.1', 'Today must show its new queue');
+  assert(card().querySelector('.address-queue').textContent === 'Черга 6.1', 'Today must show its new queue');
   picker.click();
   byId('calendar-year').value = '';
   byId('calendar-year').dispatchEvent(new Event('change', { bubbles: true }));
@@ -129,5 +183,5 @@ async () => {
   byId('open-settings').click();
   assert(byId('date-calendar').hidden, 'Leaving home must close the calendar');
   byId('nav-back').click();
-  return { passed: true, checks: 'arrows, calendar, history, historical queue/copy, missing days, live updates' };
+  return { passed: true, checks: 'date component selection, calendar icon, arrows, calendar, history, historical queue/copy, missing days, live updates' };
 }
