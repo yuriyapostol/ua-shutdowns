@@ -7,7 +7,7 @@ async () => {
     throw new Error('Copy operation did not finish');
   };
   const cards = [...document.querySelectorAll('.address-card')];
-  const selectedDate = document.getElementById('schedule-date').value;
+  const selectedDate = document.getElementById('schedule-date').value.split('.').reverse().join('-');
   const address = (await AddressSettings.list()).find(item => DtekSchedule.forDate(item, selectedDate));
   const card = cards.find(item => item.querySelector('strong').textContent === `${address.street}, ${address.house}`);
   const share = card.querySelector('.share-schedule');
@@ -52,7 +52,7 @@ async () => {
   editor.dispatchEvent(new Event('input', { bubbles: true }));
   assert(copy.disabled && !document.querySelector('#share-qr svg'), 'Empty text must disable copying and clear the QR');
   document.getElementById('nav-back').click();
-  assert(!document.getElementById('home-view').hidden && document.getElementById('schedule-date').value === selectedDate, 'Back must restore home and the selected day');
+  assert(!document.getElementById('home-view').hidden && document.getElementById('schedule-date').value.split('.').reverse().join('-') === selectedDate, 'Back must restore home and the selected day');
   const unavailable = cards.find(item => item.querySelector('.share-schedule').disabled);
   assert(unavailable, 'Missing/stale schedules must not be copied');
   document.getElementById('open-settings').click();

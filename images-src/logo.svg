@@ -7,7 +7,7 @@
    viewBox="0 0 210 297"
    version="1.1"
    id="svg1"
-   inkscape:version="1.3.2 (091e20e, 2023-11-25)"
+   inkscape:version="1.4.4 (1:1.4.4+202605061432+dcaf3e7d9e)"
    sodipodi:docname="logo.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -25,8 +25,8 @@
      inkscape:document-units="mm"
      showguides="false"
      inkscape:zoom="1"
-     inkscape:cx="331"
-     inkscape:cy="386"
+     inkscape:cx="216.5"
+     inkscape:cy="359.5"
      inkscape:window-width="1858"
      inkscape:window-height="1016"
      inkscape:window-x="0"
@@ -73,6 +73,21 @@
        orientation="1,0"
        id="guide8"
        inkscape:locked="false" />
+    <sodipodi:guide
+       position="44.054152,197.97868"
+       orientation="1,0"
+       id="guide17"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="46.535244,180.16203"
+       orientation="0.2588174,-0.96592627"
+       id="guide18"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="42.0037,190.32629"
+       orientation="0.96592583,-0.25881903"
+       id="guide21"
+       inkscape:locked="false" />
   </sodipodi:namedview>
   <defs
      id="defs1" />
@@ -80,6 +95,11 @@
      inkscape:label="Шар 1"
      inkscape:groupmode="layer"
      id="layer1">
+    <path
+       id="path17"
+       style="fill:#ffe300;stroke-width:1.10509;stroke-linecap:square;stroke-miterlimit:22.926"
+       d="m 31.720439,95.716516 c 1.33667,-4.988522 5.546736,-8.680651 10.667051,-9.354754 5.120315,-0.674102 10.14252,1.802575 12.724769,6.275161 2.58225,4.472587 2.216013,10.060287 -0.927935,14.157557 -1.388107,1.80902 -3.196998,3.1702 -5.213866,4.01131 -2.551172,1.06394 -7.412033,2.12761 -11.329967,2.46749 2.826613,-1.99537 3.84915,-4.68107 4.517569,-7.17564 l 1.896093,-7.076316 z"
+       sodipodi:nodetypes="csssscscc" />
     <path
        id="path5"
        style="fill:#ffcc00;stroke-width:3.17601;stroke-linecap:round;stroke-linejoin:round"
@@ -113,7 +133,7 @@
    style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Light'"
    id="tspan11">UA </tspan>Power<tspan
    style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Light'"
-   id="tspan13"></tspan></tspan><tspan
+   id="tspan13" /></tspan><tspan
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;line-height:0.9;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Medium';fill:#000000;stroke-width:8.51146"
          x="65.409668"
@@ -121,5 +141,51 @@
          id="tspan14"><tspan
            style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Light'"
            id="tspan15">Tracker</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12.7632px;line-height:0.9;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;fill:#000000;stroke:none;stroke-width:8.51149;stroke-linecap:butt;stroke-linejoin:round;stroke-dasharray:none"
+       x="65.409668"
+       y="106.05574"
+       id="text17"><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;line-height:0.9;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Medium';fill:#000000;stroke-width:8.51146"
+         x="65.409668"
+         y="106.05574"
+         id="tspan12"><tspan
+   style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Light'"
+   id="tspan8">UA</tspan></tspan><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;line-height:0.9;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Medium';fill:#000000;stroke-width:8.51146"
+         x="65.409668"
+         y="117.94769"
+         id="tspan21">Shutdowns</tspan><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;line-height:0.9;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Medium';fill:#000000;stroke-width:8.51146"
+         x="65.409668"
+         y="117.94769"
+         id="tspan17"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Light'"
+           id="tspan16" /></tspan></text>
+    <path
+       id="path18"
+       style="fill:none;stroke:#000000;stroke-width:3.176;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:22.926;stroke-dasharray:none"
+       d="m 31.720439,95.716516 c 1.33667,-4.988522 5.546736,-8.680651 10.667051,-9.354754 5.120315,-0.674102 10.14252,1.802575 12.724769,6.275161 2.58225,4.472587 2.216012,10.060287 -0.927935,14.157557 -1.388061,1.80896 -3.19688,3.17011 -5.213668,4.01123 -3.448204,1.4381 -6.351617,0.96497 -10.470269,3.79048"
+       sodipodi:nodetypes="cssssc" />
+    <circle
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:2.79831;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:22.926;stroke-dasharray:none"
+       id="path20"
+       cx="44.054153"
+       cy="122.10525"
+       r="2.7974179" />
+    <path
+       id="path21"
+       style="fill:none;stroke:#ffffff;stroke-width:3.176;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:22.926;stroke-dasharray:none"
+       d="m 48.970656,117.94946 c -3.448204,1.4381 -6.351617,0.96497 -10.470269,3.79048"
+       sodipodi:nodetypes="cc" />
+    <path
+       id="path19"
+       style="fill:none;stroke:#000000;stroke-width:3.176;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:22.926;stroke-dasharray:none"
+       d="m 48.970656,116.09737 c -3.448204,1.4381 -6.351617,0.96497 -10.470269,3.79048"
+       sodipodi:nodetypes="cc" />
   </g>
 </svg>

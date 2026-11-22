@@ -10,6 +10,10 @@
   let busy = true;
   let cityBeforeKyiv = '';
   let selectedDate = DtekSchedule.dateKey();
+  let dateDraft = false;
+  let calendarDate = selectedDate;
+  let calendarOpener;
+  let restoringCalendarFocus = false;
   let sharingText = '';
   let shareRequest = 0;
   let shareQrTimer;
@@ -20,6 +24,7 @@
   }
   function setBusy(value) {
     busy = value;
+    if (value) closeCalendar(false);
     for (const control of document.querySelectorAll('button, input, select, textarea, fieldset')) {
       control.disabled = value || control.dataset.available === 'false';
     }
@@ -34,6 +39,7 @@
     byId('save-address').dataset.current = String(!busy && editingId !== null && !changed);
   }
   function show(view, title) {
+    closeCalendar(false);
     if (view !== 'share') { sharingText = ''; shareRequest++; clearTimeout(shareQrTimer); }
     for (const name of views) byId(name + '-view').hidden = name !== view;
     byId('nav-back').hidden = view === 'home';
@@ -57,7 +63,7 @@
     return element;
   }
   function render() {
-    byId('schedule-date').value = selectedDate;
+    if (!dateDraft) byId('schedule-date').value = selectedDate.split('-').reverse().join('.');
     const today = DtekSchedule.dateKey();
     const shortcut = selectedDate === today ? 'today' : selectedDate === DtekSchedule.shiftDate(today, 1) ? 'tomorrow' : 'other';
     for (const name of ['today', 'tomorrow', 'other']) {
@@ -173,7 +179,14 @@
     try {
       const { scheduleQrSvg } = await import('./schedule-sharing.mjs');
       if (request !== shareRequest) return;
-      byId('share-qr').innerHTML = scheduleQrSvg(text);
+      const frame = make('div', 'share-qr-frame');
+      frame.innerHTML = scheduleQrSvg(text);
+      for (const position of ['top-left', 'top-right', 'bottom-left', 'bottom-right']) {
+        const corner = make('span', `qr-corner qr-corner-${position}`);
+        corner.setAttribute('aria-hidden', 'true');
+        frame.append(corner);
+      }
+      byId('share-qr').replaceChildren(frame);
       byId('share-qr-status').hidden = true;
     } catch {
       if (request !== shareRequest) return;
@@ -201,26 +214,219 @@
   function selectDate(date) {
     if (busy) return;
     if (!DtekSchedule.validDate(date)) {
-      byId('schedule-date').value = selectedDate;
+      byId('schedule-date').value = selectedDate.split('-').reverse().join('.');
       return;
     }
+    dateDraft = false;
+    byId('schedule-date').removeAttribute('aria-invalid');
     selectedDate = date;
+    closeCalendar(false);
     render();
     status();
   }
+  function commitTypedDate() {
+    if (busy || !dateDraft) return;
+    const input = byId('schedule-date');
+    const match = input.value.trim().match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/);
+    const date = match && `${match[3]}-${match[2].padStart(2, '0')}-${match[1].padStart(2, '0')}`;
+    if (!DtekSchedule.validDate(date)) {
+      input.setAttribute('aria-invalid', 'true');
+      status('Введіть дійсну дату у форматі ДД.ММ.РРРР.', true);
+      return;
+    }
+    selectDate(date);
+  }
+  byId('schedule-date').addEventListener('input', () => { dateDraft = true; });
+  byId('schedule-date').addEventListener('change', commitTypedDate);
+  byId('schedule-date').addEventListener('keydown', event => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      commitTypedDate();
+    } else if (event.key === 'Escape') {
+      dateDraft = false;
+      byId('schedule-date').value = selectedDate.split('-').reverse().join('.');
+      byId('schedule-date').removeAttribute('aria-invalid');
+      status();
+    } else if (event.altKey && event.key === 'ArrowDown') {
+      event.preventDefault();
+      toggleCalendar(event);
+    }
+  });
   byId('date-previous').addEventListener('click', () => selectDate(DtekSchedule.shiftDate(selectedDate, -1)));
   byId('date-next').addEventListener('click', () => selectDate(DtekSchedule.shiftDate(selectedDate, 1)));
-  byId('schedule-date').addEventListener('change', event => selectDate(event.target.value));
   byId('date-today').addEventListener('click', () => selectDate(DtekSchedule.dateKey()));
   byId('date-tomorrow').addEventListener('click', () => selectDate(DtekSchedule.shiftDate(DtekSchedule.dateKey(), 1)));
-  byId('date-other').addEventListener('click', () => {
+  const monthNames = ['Січень', 'Лютий', 'Березень', 'Квітень', 'Травень', 'Червень',
+    'Липень', 'Серпень', 'Вересень', 'Жовтень', 'Листопад', 'Грудень'];
+  monthNames.forEach((name, index) => {
+    const option = make('option', '', name);
+    option.value = index + 1;
+    byId('calendar-month').append(option);
+  });
+  const calendarKey = (year, month, day) => `${String(year).padStart(4, '0')}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+  const calendarDay = key => new Date(key + 'T12:00:00Z');
+  const daysInMonth = (year, month) => {
+    const date = calendarDay(calendarKey(year, month, 1));
+    date.setUTCMonth(date.getUTCMonth() + 1, 0);
+    return date.getUTCDate();
+  };
+  function closeCalendar(restoreFocus = true) {
+    byId('date-calendar').hidden = true;
+    for (const id of ['schedule-date', 'date-picker-toggle', 'date-other']) byId(id).setAttribute('aria-expanded', 'false');
+    if (restoreFocus) {
+      restoringCalendarFocus = true;
+      try { calendarOpener?.focus(); }
+      finally { restoringCalendarFocus = false; }
+    }
+  }
+  function positionCalendar() {
+    const panel = byId('date-calendar');
+    if (panel.hidden) return;
+    const viewport = document.documentElement;
+    const anchor = byId('schedule-date-control').getBoundingClientRect();
+    const gap = 3;
+    const inset = 16;
+    const below = Math.max(0, viewport.clientHeight - anchor.bottom - gap - inset);
+    const above = Math.max(0, anchor.top - gap - inset);
+    const openAbove = below < Math.min(panel.scrollHeight + 2, 220) && above > below;
+    const available = openAbove ? above : below;
+    panel.style.maxHeight = `${available}px`;
+    const bounds = panel.getBoundingClientRect();
+    panel.style.top = `${openAbove ? anchor.top - gap - bounds.height : anchor.bottom + gap}px`;
+    panel.style.left = `${Math.max(inset, Math.min((anchor.left + anchor.right - bounds.width) / 2, viewport.clientWidth - bounds.width - inset))}px`;
+  }
+  function renderCalendar(focus = false) {
+    const [year, month] = calendarDate.split('-').map(Number);
+    byId('calendar-month').value = month;
+    byId('calendar-year').value = year;
+    byId('calendar-previous').disabled = year === 1 && month === 1;
+    byId('calendar-next').disabled = year === 9999 && month === 12;
+    byId('calendar-year-previous').disabled = year === 1;
+    byId('calendar-year-next').disabled = year === 9999;
+    const grid = byId('calendar-grid');
+    grid.setAttribute('aria-label', `${monthNames[month - 1]}, ${year}`);
+    grid.replaceChildren();
+    const headers = make('div');
+    headers.setAttribute('role', 'row');
+    for (const name of ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд']) {
+      const header = make('span', '', name);
+      header.setAttribute('role', 'columnheader');
+      headers.append(header);
+    }
+    grid.append(headers);
+    const offset = (calendarDay(calendarKey(year, month, 1)).getUTCDay() + 6) % 7;
+    const count = daysInMonth(year, month);
+    const today = DtekSchedule.dateKey();
+    let row;
+    let focused;
+    for (let slot = 0; slot < Math.ceil((offset + count) / 7) * 7; slot++) {
+      if (slot % 7 === 0) {
+        row = make('div');
+        row.setAttribute('role', 'row');
+        grid.append(row);
+      }
+      const cell = make('div');
+      cell.setAttribute('role', 'gridcell');
+      row.append(cell);
+      const day = slot - offset + 1;
+      if (day < 1 || day > count) continue;
+      const key = calendarKey(year, month, day);
+      cell.setAttribute('aria-selected', String(key === selectedDate));
+      const button = make('button', 'calendar-day', day);
+      button.type = 'button';
+      button.dataset.date = key;
+      button.tabIndex = key === calendarDate ? 0 : -1;
+      button.setAttribute('aria-label', new Intl.DateTimeFormat('uk-UA', {
+        timeZone: 'UTC', dateStyle: 'full'
+      }).format(calendarDay(key)));
+      if (key === today) button.setAttribute('aria-current', 'date');
+      button.addEventListener('click', () => { selectDate(key); closeCalendar(); });
+      button.addEventListener('focus', () => {
+        calendarDate = key;
+        for (const item of grid.querySelectorAll('button')) item.tabIndex = item === button ? 0 : -1;
+      });
+      button.addEventListener('keydown', event => calendarKeydown(event, key));
+      cell.append(button);
+      if (key === calendarDate) focused = button;
+    }
+    positionCalendar();
+    if (focus) focused?.focus();
+  }
+  function moveCalendarMonth(offset, focus = false) {
+    const [year, month, day] = calendarDate.split('-').map(Number);
+    const index = (year - 1) * 12 + month - 1 + offset;
+    if (index < 0 || index >= 9999 * 12) return;
+    const nextYear = Math.floor(index / 12) + 1;
+    const nextMonth = index % 12 + 1;
+    calendarDate = calendarKey(nextYear, nextMonth, Math.min(day, daysInMonth(nextYear, nextMonth)));
+    renderCalendar(focus);
+  }
+  function calendarKeydown(event, key) {
+    const weekday = (calendarDay(key).getUTCDay() + 6) % 7;
+    const offsets = { ArrowLeft: -1, ArrowRight: 1, ArrowUp: -7, ArrowDown: 7, Home: -weekday, End: 6 - weekday };
+    if (Object.hasOwn(offsets, event.key)) {
+      event.preventDefault();
+      calendarDate = DtekSchedule.shiftDate(key, offsets[event.key]) || key;
+      renderCalendar(true);
+    } else if (event.key === 'PageUp' || event.key === 'PageDown') {
+      event.preventDefault();
+      moveCalendarMonth((event.key === 'PageUp' ? -1 : 1) * (event.shiftKey ? 12 : 1), true);
+    }
+  }
+  function openCalendar(opener, focusDays = true) {
+    if (busy || !byId('date-calendar').hidden) return;
+    calendarOpener = opener;
+    calendarDate = selectedDate;
+    byId('date-calendar').hidden = false;
+    for (const id of ['schedule-date', 'date-picker-toggle', 'date-other']) byId(id).setAttribute('aria-expanded', 'true');
+    renderCalendar(focusDays);
+  }
+  function toggleCalendar(event) {
     if (busy) return;
-    const input = byId('schedule-date');
-    input.focus();
-    try {
-      if (typeof input.showPicker === 'function') input.showPicker();
-      else input.click();
-    } catch { input.click(); }
+    if (!byId('date-calendar').hidden) { closeCalendar(); return; }
+    openCalendar(event.currentTarget);
+  }
+  byId('schedule-date').addEventListener('focus', () => {
+    if (!restoringCalendarFocus) openCalendar(byId('schedule-date'), false);
+  });
+  byId('schedule-date-control').addEventListener('click', event => {
+    if (busy || event.target.closest('#date-picker-toggle')) return;
+    byId('schedule-date').focus();
+    openCalendar(byId('schedule-date'), false);
+  });
+  byId('date-other').setAttribute('aria-controls', 'date-calendar');
+  byId('date-other').setAttribute('aria-expanded', 'false');
+  byId('date-other').addEventListener('click', toggleCalendar);
+  byId('date-picker-toggle').addEventListener('click', toggleCalendar);
+  byId('calendar-previous').addEventListener('click', () => moveCalendarMonth(-1));
+  byId('calendar-next').addEventListener('click', () => moveCalendarMonth(1));
+  byId('calendar-year-previous').addEventListener('click', () => moveCalendarMonth(-12));
+  byId('calendar-year-next').addEventListener('click', () => moveCalendarMonth(12));
+  function changeCalendarMonth() {
+    const year = Number(byId('calendar-year').value);
+    const month = Number(byId('calendar-month').value);
+    if (!Number.isInteger(year) || year < 1 || year > 9999) { renderCalendar(); return; }
+    const day = Number(calendarDate.slice(-2));
+    calendarDate = calendarKey(year, month, Math.min(day, daysInMonth(year, month)));
+    renderCalendar();
+  }
+  byId('calendar-month').addEventListener('change', changeCalendarMonth);
+  byId('calendar-year').addEventListener('change', changeCalendarMonth);
+  document.defaultView?.addEventListener('resize', positionCalendar);
+  document.addEventListener('scroll', event => {
+    if (!byId('date-calendar').contains(event.target)) positionCalendar();
+  }, true);
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && !byId('date-calendar').hidden) {
+      event.preventDefault();
+      closeCalendar();
+    }
+  });
+  document.addEventListener('click', event => {
+    if (!byId('date-calendar').hidden && !event.target.closest('#date-calendar, #schedule-date-control, #date-other')) closeCalendar(false);
+  });
+  document.addEventListener('focusin', event => {
+    if (!byId('date-calendar').hidden && !event.target.closest('#date-calendar, #schedule-date-control, #date-other')) closeCalendar(false);
   });
   function regionChanged() {
     const region = DtekSites.get(fields.region.value);

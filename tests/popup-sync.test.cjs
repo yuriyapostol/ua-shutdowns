@@ -18,6 +18,7 @@ async function popup({ url = 'https://www.dtek-krem.com.ua/ua/shutdowns', unavai
       if (!elements.has(id)) elements.set(id, new Element());
       return elements.get(id);
     },
+    addEventListener() {},
     createElement: () => new Element(),
     querySelectorAll: () => []
   };

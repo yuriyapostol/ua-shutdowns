@@ -14,7 +14,7 @@
 <body>
   <main>
     <header>
-      <img src="images/icon-48.png" width="32" height="32" alt="">
+      <img src="images/icon-48.png" width="36" height="36" alt="">
       <div class="header-text">
         <p class="brand">UA Shutdowns</p>
         <div class="screen-heading">
@@ -29,10 +29,30 @@
         <button id="date-tomorrow" class="date-shortcut" type="button" aria-pressed="false" disabled>завтра</button>
         або іншу <button id="date-other" class="date-shortcut" type="button" aria-pressed="false" aria-label="Вибрати іншу дату в календарі" disabled>дату</button>
       </div>
-      <div class="schedule-date-nav" role="group" aria-label="Дата графіка">
-        <button id="date-previous" class="date-step" type="button" aria-label="Попередній день" disabled><img src="images/keyboard-arrow-left.svg" width="24" height="24" alt="" aria-hidden="true"></button>
-        <input id="schedule-date" type="date" aria-label="Дата графіка" min="0001-01-01" max="9999-12-31" disabled>
-        <button id="date-next" class="date-step" type="button" aria-label="Наступний день" disabled><img src="images/keyboard-arrow-right.svg" width="24" height="24" alt="" aria-hidden="true"></button>
+      <div class="date-picker">
+        <div class="schedule-date-nav" role="group" aria-label="Дата графіка">
+          <button id="date-previous" class="date-step" type="button" aria-label="Попередній день" disabled><img src="images/keyboard-arrow-left.svg" width="24" height="24" alt="" aria-hidden="true"></button>
+          <div id="schedule-date-control" class="schedule-date-field">
+            <input id="schedule-date" type="text" aria-expanded="false" aria-controls="date-calendar" inputmode="numeric" aria-label="Дата графіка, ДД.ММ.РРРР" placeholder="ДД.ММ.РРРР" autocomplete="off" spellcheck="false" disabled>
+            <button id="date-picker-toggle" type="button" aria-label="Відкрити календар" aria-expanded="false" aria-controls="date-calendar" disabled><img src="images/keyboard-arrow-down.svg" width="24" height="24" alt="" aria-hidden="true"></button>
+          </div>
+          <button id="date-next" class="date-step" type="button" aria-label="Наступний день" disabled><img src="images/keyboard-arrow-right.svg" width="24" height="24" alt="" aria-hidden="true"></button>
+        </div>
+        <section id="date-calendar" class="date-calendar" aria-label="Вибір дати графіка" hidden>
+          <div class="calendar-heading">
+            <div class="calendar-period">
+              <button id="calendar-previous" class="date-step calendar-step" type="button" aria-label="Попередній місяць"><img src="images/keyboard-arrow-left.svg" width="24" height="24" alt="" aria-hidden="true"></button>
+              <select id="calendar-month" aria-label="Місяць"></select>
+              <button id="calendar-next" class="date-step calendar-step" type="button" aria-label="Наступний місяць"><img src="images/keyboard-arrow-right.svg" width="24" height="24" alt="" aria-hidden="true"></button>
+            </div>
+            <div class="calendar-period">
+              <button id="calendar-year-previous" class="date-step calendar-step" type="button" aria-label="Попередній рік"><img src="images/keyboard-arrow-left.svg" width="24" height="24" alt="" aria-hidden="true"></button>
+              <input id="calendar-year" type="number" min="1" max="9999" step="1" aria-label="Рік">
+              <button id="calendar-year-next" class="date-step calendar-step" type="button" aria-label="Наступний рік"><img src="images/keyboard-arrow-right.svg" width="24" height="24" alt="" aria-hidden="true"></button>
+            </div>
+          </div>
+          <div id="calendar-grid" class="calendar-grid" role="grid" aria-label="Дні місяця"></div>
+        </section>
       </div>
       <div id="address-list"></div>
       <p id="empty-state" class="empty explanation" hidden>Додайте адресу і слідкуйте за графіком відключень.</p>
