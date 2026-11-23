@@ -101,15 +101,27 @@
 
 Для встановлення з вихідного коду виберіть папку репозиторію на кроці «Завантажити розпаковане розширення».
 
-Перевірки без додаткових залежностей:
+Для QR-кодів використовується [qrcode-generator v3.4.0](https://github.com/yuriyapostol/qrcode-generator/tree/v3.4.0), оголошений у `package.json`. Потрібні модулі зберігаються у `vendor/`, тому встановлення розширення не потребує npm або збірки.
+
+Перевірки для розробки:
 
 ```sh
-node --test tests/*.test.cjs
-python3 tests/release-notes.test.py
+npm ci --ignore-scripts
+npm run vendor:check
+npm test
 ```
+
+Для оновлення бібліотеки замініть `<version>` на номер її версії:
+
+```sh
+npm install --ignore-scripts --save-exact "qrcode-generator@github:yuriyapostol/qrcode-generator#v<version>"
+npm run vendor:sync
+npm run vendor:check
+npm test
+```
+
+Додавайте до коміту зміни `package.json`, `package-lock.json` і `vendor/` разом. CI перевіряє відповідність локальних модулів зафіксованій залежності.
 
 Для нового релізу оновіть версію в `manifest.json`, додайте відповідні розділи в обох мовних версіях історії змін та опублікуйте тег `v<версія>`. GitHub Actions запустить перевірки та створить Release із ZIP для встановлення й двомовним описом змін: спочатку українською, потім англійською.
 
 Щоб додати мову інтерфейсу або Chrome Web Store, скористайтеся [інструкцією для перекладачів](TRANSLATING.uk.md). Словники містять контекст та іменовані підстановки; перевірки автоматично знаходять усі мови. Готові повні описи магазину зберігаються в `store/<мова>/description.txt`. Документація залишається двомовною.
-
-QR-коди генеруються локально пакетом [yuriyapostol/qrcode-generator](https://github.com/yuriyapostol/qrcode-generator).

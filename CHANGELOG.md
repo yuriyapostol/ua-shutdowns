@@ -2,6 +2,13 @@
 
 **English** · [Українська](CHANGELOG.uk.md)
 
+## 0.6.1 — 2026-11-24
+
+- Declared `yuriyapostol/qrcode-generator` as a GitHub dependency pinned to the `v3.4.0` tag, with its exact source commit and transitive dependencies recorded in `package-lock.json`.
+- Added `npm run vendor:sync` and `npm run vendor:check` to update the required QR modules, license notice and source information, and detect differences from the locked dependency.
+- Added dependency installation, vendor verification and automated tests to CI for main-branch changes, pull requests and releases. Added tests for synchronization and UTF-8 SVG QR generation.
+- Simplified the QR library update instructions in both README versions. The library remains at version 3.4.0; installing and running the extension still requires no npm or build step.
+
 ## 0.6.0 — 2026-11-23
 
 - Clarified DTEK coverage in the extension name, description, window headers and regional operator field.

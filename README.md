@@ -1,6 +1,6 @@
 # UA Shutdowns — DTEK power outage schedules
 
-**English** · [Документація українською](README.uk.md)
+**English** · [Українською](README.uk.md)
 
 Power outage schedules for your addresses. A Google Chrome extension that makes it easier to get, view and share schedules from DTEK websites.
 
@@ -101,15 +101,27 @@ If an address appears under **Select a regional operator**, edit it, select a re
 
 To install from source, select the repository folder in the **Load unpacked** step.
 
-Run the checks without additional dependencies:
+QR codes use [qrcode-generator v3.4.0](https://github.com/yuriyapostol/qrcode-generator/tree/v3.4.0), declared in `package.json`. Required modules are committed in `vendor/`, so installing the extension needs no npm or build step.
+
+Development checks:
 
 ```sh
-node --test tests/*.test.cjs
-python3 tests/release-notes.test.py
+npm ci --ignore-scripts
+npm run vendor:check
+npm test
 ```
+
+To update the library, replace `<version>` with its version number:
+
+```sh
+npm install --ignore-scripts --save-exact "qrcode-generator@github:yuriyapostol/qrcode-generator#v<version>"
+npm run vendor:sync
+npm run vendor:check
+npm test
+```
+
+Commit `package.json`, `package-lock.json` and `vendor/` changes together. CI verifies that the local modules match the locked dependency.
 
 To prepare a new release, update the version in `manifest.json`, add matching entries to both changelogs and publish the tag `v<version>`. GitHub Actions will run the checks and create a Release with an installation ZIP and bilingual release notes, Ukrainian first and English second.
 
 To add interface or Chrome Web Store languages, see the [translation guide](TRANSLATING.md). Catalogs include translator context and named placeholders; checks automatically discover all locales. Ready-to-use detailed store descriptions are in `store/<locale>/description.txt`. Documentation stays bilingual.
-
-QR codes are generated locally using [yuriyapostol/qrcode-generator](https://github.com/yuriyapostol/qrcode-generator).

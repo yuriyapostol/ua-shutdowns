@@ -966,4 +966,3 @@ export {
   dt as stringToBytes
 };
 //# sourceMappingURL=qrcode.mjs.map
-
