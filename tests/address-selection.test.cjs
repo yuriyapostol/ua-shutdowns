@@ -1,3 +1,4 @@
+const { i18nFixtureSource } = require('./i18n-fixture.cjs');
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const { readFileSync } = require('node:fs');
@@ -120,7 +121,7 @@ function page({ cities = ['м. Обухів'], streets = ['вул. Миру'],
     Date: class extends Date { static now() { return now; } },
     console: { warn: (...args) => warnings.push(args) }
   });
-  vm.runInContext(sitesSource + '\n' + scheduleSource + '\n' + settingsSource + '\nglobalThis.AddressSettings = AddressSettings;\n' +
+  vm.runInContext(i18nFixtureSource() + '\n' + sitesSource + '\n' + scheduleSource + '\n' + settingsSource + '\nglobalThis.AddressSettings = AddressSettings;\n' +
     'if (watchFixture) { DtekSchedule.read = () => readScheduleDays().find(day => day.date === DtekSchedule.dateKey()) || null; DtekSchedule.readAll = readScheduleDays; }\n' + source, context);
   return {
     inputs, clicks, searches, warnings, listeners, location, messages,

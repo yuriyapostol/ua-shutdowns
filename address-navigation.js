@@ -3,7 +3,7 @@
 const AddressNavigation = {
   async open(address) {
     const response = await chrome.runtime.sendMessage({ type: 'open-address', addressId: address.id });
-    if (!response?.ok) throw new Error(response?.error || 'Не вдалося відкрити графік.');
+    if (!response?.ok) throw new Error(response?.error || I18n.t('address_navigation_open_error'));
   },
   key: tabId => `address-for-tab:${tabId}`,
   async forTab(tabId, url, legacyAddressId = null) {
@@ -22,7 +22,7 @@ const AddressNavigation = {
   },
   async navigate(address) {
     const region = DtekSites.get(address.region);
-    if (!region) throw new Error('Спочатку оберіть регіон для цієї адреси.');
+    if (!region) throw new Error(I18n.t('address_navigation_region_required_error'));
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     const reuse = tab?.id != null && DtekSites.forUrl(tab.url);
     // Initialize state before loading DTEK, so the content script cannot read

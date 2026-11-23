@@ -218,7 +218,7 @@
         const raw = document.getElementById('house_num')?.getAttribute('data-key-group');
         const queue = raw == null ? selectedQueue : queueFromRaw(raw);
         const response = await chrome.runtime.sendMessage({ type: 'save-address-queue', address, queue, schedules });
-        if (!response?.ok) throw new Error(response?.error || 'Не вдалося зберегти графік.');
+        if (!response?.ok) throw new Error(response?.error || I18n.t('schedule_storage_save_error'));
         return { ok: true };
       }).catch(error => {
         console.warn('UA Shutdowns: schedule update could not be saved.', error);
@@ -259,7 +259,7 @@
       const fragment = new URLSearchParams(url.hash.slice(1));
       const legacyAddressId = fragment.get('ua-shutdowns-address');
       const response = await chrome.runtime.sendMessage({ type: 'get-page-address', legacyAddressId });
-      if (!response?.ok) throw new Error(response?.error || 'Не вдалося завантажити адресу.');
+      if (!response?.ok) throw new Error(response?.error || I18n.t('address_website_load_error'));
       if (legacyAddressId !== null) {
         fragment.delete('ua-shutdowns-address');
         url.hash = fragment.toString();
@@ -285,7 +285,7 @@
         if (signal.aborted) return;
         const schedules = DtekSchedule.readAll(document);
         const saved = await chrome.runtime.sendMessage({ type: 'save-address-queue', address, queue: selectedQueue, schedule, schedules });
-        if (!saved?.ok) throw new Error(saved?.error || 'Не вдалося зберегти чергу.');
+        if (!saved?.ok) throw new Error(saved?.error || I18n.t('schedule_group_save_error'));
       }
     } catch (error) {
       console.warn('UA Shutdowns: automatic address selection stopped.', error);

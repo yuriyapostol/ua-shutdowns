@@ -1,3 +1,4 @@
+const { i18nFixtureSource } = require('./i18n-fixture.cjs');
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const { readFileSync } = require('node:fs');
@@ -12,7 +13,7 @@ function setup(initial = {}, now = Date.now()) {
   const local = { async get() { return structuredClone(data); }, async set(value) { Object.assign(data, structuredClone(value)); } };
   let queue = Promise.resolve();
   const navigator = { locks: { request(_name, work) { const operation = queue.then(work); queue = operation.catch(() => {}); return operation; } } };
-  const api = vm.runInNewContext(sitesSource + '\n' + scheduleSource + '\n' + source + '\nAddressSettings;', {
+  const api = vm.runInNewContext(i18nFixtureSource() + '\n' + sitesSource + '\n' + scheduleSource + '\n' + source + '\nAddressSettings;', {
     chrome: { storage: { local } }, crypto: webcrypto, URL, URLSearchParams, navigator,
     Date: class extends Date { static now() { return now; } }
   });

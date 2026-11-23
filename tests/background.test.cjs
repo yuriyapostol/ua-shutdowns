@@ -1,3 +1,4 @@
+const { i18nFixtureSource } = require('./i18n-fixture.cjs');
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const { readFileSync } = require('node:fs');
@@ -42,7 +43,7 @@ function setup(initial = {}, options = {}) {
   function startWorker() {
     const context = vm.createContext({ chrome, URL, URLSearchParams,
       console: { warn: (...args) => warnings.push(args) } });
-    context.importScripts = () => vm.runInContext(sites + '\n' + schedule + '\n' + settings + '\n' + navigation, context);
+    context.importScripts = () => vm.runInContext(i18nFixtureSource() + '\n' + sites + '\n' + schedule + '\n' + settings + '\n' + navigation, context);
     vm.runInContext(source, context);
   }
   startWorker();

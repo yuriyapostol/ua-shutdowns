@@ -28,6 +28,8 @@ jobs:
           node tests/background.test.cjs
           node tests/dtek-schedule.test.cjs
           node tests/popup-sync.test.cjs
+          node tests/i18n.test.cjs
+          python3 tests/release-notes.test.py
       - name: Prepare release notes and extension ZIP
         env:
           RELEASE_TAG: ${{ github.ref_name }}
@@ -35,19 +37,17 @@ jobs:
           python3 - <<'PY'
           import json, os, re, subprocess
           from pathlib import Path
+          from scripts.release_notes import render_release_notes
 
           version = json.loads(Path('manifest.json').read_text())['version']
           if not re.fullmatch(r'\d+\.\d+\.\d+', version) or os.environ['RELEASE_TAG'] != 'v' + version:
               raise SystemExit('Release tag must match manifest.json version')
-          changelog = Path('CHANGELOG.md').read_text()
-          section = re.search(r'^## ' + re.escape(version) + r' — [^\n]+\n(.*?)(?=^## |\Z)', changelog, re.M | re.S)
-          if not section or not section[1].strip():
-              raise SystemExit('Missing changelog entry for release')
-          (Path(os.environ['RUNNER_TEMP']) / 'release-notes.md').write_text(section[1].strip() + '\n')
+          notes = render_release_notes(version, Path.cwd())
+          (Path(os.environ['RUNNER_TEMP']) / 'release-notes.md').write_text(notes, encoding='utf-8')
           subprocess.run([
               'git', 'archive', '--format=zip', '--output=ua-shutdowns-' + version + '.zip', 'HEAD',
-              'manifest.json', 'background.js', 'dtek-sites.js', 'dtek-schedule.js', 'address-settings.js', 'address-navigation.js', 'dtek-content-script.js', 'dtek-popup-closer.js',
-              'popup.html', 'popup.css', 'popup.js', 'schedule-sharing.mjs', 'vendor', '_locales', 'images', 'fonts', 'README.md', 'CHANGELOG.md'
+              'manifest.json', 'i18n.js', 'background.js', 'dtek-sites.js', 'dtek-schedule.js', 'address-settings.js', 'address-navigation.js', 'dtek-content-script.js', 'dtek-popup-closer.js',
+              'popup.html', 'popup.css', 'popup.js', 'schedule-sharing.mjs', 'vendor', '_locales', 'images', 'fonts', 'README.md', 'README.uk.md', 'CHANGELOG.md', 'CHANGELOG.uk.md', 'TRANSLATING.md', 'TRANSLATING.uk.md'
           ], check=True)
           PY
       - name: Publish GitHub Release

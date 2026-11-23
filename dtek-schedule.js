@@ -109,21 +109,15 @@ const DtekSchedule = (() => {
   }
 
   function toText(address, region, schedule = address.schedule || forDate(address, dateKey())) {
-    if (!isValid(schedule) || !region) throw new Error('Графік ще не отримано.');
-    const day = new Date(schedule.date + 'T12:00:00Z');
-    const weekdays = ['неділю', 'понеділок', 'вівторок', 'середу', 'четвер', 'п’ятницю', 'суботу'];
-    const parts = new Intl.DateTimeFormat('uk-UA', {
-      day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/Kyiv'
-    }).formatToParts(day);
-    const part = name => parts.find(item => item.type === name).value;
-    const weekday = day.getUTCDay();
-    const place = [...new Set([region.name.replace(/ область$/, ' обл.'), address.city])].join(', ');
+    if (!isValid(schedule) || !region) throw new Error(I18n.t('schedule_share_schedule_missing_error'));
+    const regionName = region.id ? I18n.t('dtek_region_' + region.id + '_short') : region.name.replace(/ область$/, ' обл.');
+    const place = [...new Set([regionName, address.city])].join(', ');
     const queue = schedule.queue === undefined ? address.queue : schedule.queue;
-    const header = `Відключення світла ${weekday === 2 ? 'у' : 'в'} ${weekdays[weekday]}, ${part('day')} ${part('month')} ${part('year')} (${place}, черга ${queue || '—'}):`;
+    const header = I18n.t('schedule_share_text_header', [I18n.sharedDate(schedule.date), place, queue || '—']);
     const rows = [header];
     schedule.lines.forEach((line, index) => {
-      if (schedule.lines.length > 1) rows.push(`Лінія ${index + 1}:`);
-      if (!line.length) rows.push('Без відключень');
+      if (schedule.lines.length > 1) rows.push(I18n.t('schedule_supply_line_label', [String(index + 1)]) + ':');
+      if (!line.length) rows.push(I18n.t('schedule_no_outages'));
       for (const [start, end] of line) rows.push(`${format(start)} – ${format(end)}`);
     });
     return rows.join('\n');

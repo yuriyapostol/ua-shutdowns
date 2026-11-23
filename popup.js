@@ -1,6 +1,9 @@
 (function() {
   'use strict';
 
+  I18n.localizeDocument();
+  document.title = I18n.t('home_screen_title') + ' — UA Shutdowns: DTEK';
+
   const byId = id => document.getElementById(id);
   const fields = Object.fromEntries(['region', 'city', 'street', 'house'].map(field => [field, byId(field)]));
   const views = ['home', 'form', 'delete', 'settings', 'popup-offer', 'share'];
@@ -53,18 +56,18 @@
     if (view !== 'share') { sharingText = ''; shareRequest++; clearTimeout(shareQrTimer); }
     for (const name of views) byId(name + '-view').hidden = name !== view;
     byId('nav-back').hidden = view === 'home';
-    const backLabel = view === 'delete' ? 'До редагування адреси' : 'На головну';
+    const backLabel = view === 'delete' ? I18n.t('navigation_back_to_address_edit') : I18n.t('navigation_back_to_home');
     byId('nav-back').setAttribute('aria-label', backLabel);
     byId('nav-back').title = backLabel;
     byId('screen-title').textContent = title;
-    document.title = title + ' — UA Shutdowns';
+    document.title = title + ' — UA Shutdowns: DTEK';
     status();
     byId('screen-title').tabIndex = -1;
     byId('screen-title').focus();
   }
   function home() {
     render();
-    show('home', 'Графік відключень світла');
+    show('home', I18n.t('home_screen_title'));
   }
   function make(tag, className, text) {
     const element = document.createElement(tag);
@@ -73,7 +76,7 @@
     return element;
   }
   function render() {
-    if (!dateDraft) byId('schedule-date').value = selectedDate.split('-').reverse().join('.');
+    if (!dateDraft) byId('schedule-date').value = I18n.formatDate(selectedDate);
     const today = DtekSchedule.dateKey();
     const shortcut = selectedDate === today ? 'today' : selectedDate === DtekSchedule.shiftDate(today, 1) ? 'tomorrow' : 'other';
     for (const name of ['today', 'tomorrow', 'other']) {
@@ -86,13 +89,13 @@
     }
     const container = byId('address-list');
     container.replaceChildren();
-    const groups = [...DtekSites.regions, { id: '', name: 'Уточніть представництво' }];
+    const groups = [...DtekSites.regions, { id: '', name: I18n.t('address_list_unassigned_region_heading') }];
     for (const region of groups) {
       const items = addresses.filter(address => address.region === region.id);
       if (!items.length) continue;
       const section = make('section', 'address-group');
-      section.append(make('h2', '', region.name));
-      if (!region.id) section.append(make('p', 'migration-note', 'Для раніше збереженої адреси потрібно обрати регіон.'));
+      section.append(make('h2', '', region.id ? I18n.t('dtek_region_' + region.id + '_name') : region.name));
+      if (!region.id) section.append(make('p', 'migration-note', I18n.t('address_list_unassigned_region_hint')));
       for (const address of items) {
         const schedule = DtekSchedule.forDate(address, selectedDate);
         const queue = schedule ? (schedule.queue ?? address.queue) : address.queue;
@@ -102,14 +105,14 @@
         open.append(
           make('span', 'address-city', address.city),
           make('strong', '', `${address.street}, ${address.house}`),
-          make('span', 'address-queue', `Черга ${queue || '—'}`)
+          make('span', 'address-queue', I18n.t('address_list_outage_group_label', [queue || '—']))
         );
-        open.setAttribute('aria-label', `${region.id ? 'Відкрити графік' : 'Обрати регіон'}: ${address.city}, ${address.street}, ${address.house}`);
+        open.setAttribute('aria-label', `${region.id ? I18n.t('address_list_open_schedule_action') : I18n.t('address_list_select_region_action')}: ${address.city}, ${address.street}, ${address.house}`);
         open.addEventListener('click', () => region.id ? openAddress(address) : edit(address));
         const button = make('button', 'edit-address');
         button.type = 'button';
-        button.title = 'Редагувати адресу';
-        button.setAttribute('aria-label', `Редагувати: ${address.city}, ${address.street}, ${address.house}`);
+        button.title = I18n.t('address_list_edit_address_tooltip');
+        button.setAttribute('aria-label', I18n.t('address_list_edit_accessible_label', [`${address.city}, ${address.street}, ${address.house}`]));
         const icon = make('img');
         icon.src = 'images/edit.svg';
         icon.alt = '';
@@ -119,24 +122,24 @@
         button.append(icon);
         button.addEventListener('click', () => edit(address));
         const outages = make('div', 'address-outages');
-        outages.setAttribute('aria-label', `Відключення на ${selectedDate}`);
+        outages.setAttribute('aria-label', I18n.t('schedule_date_accessible_label', [I18n.formatDate(selectedDate)]));
         const available = DtekSchedule.isValid(schedule);
         if (available) {
           schedule.lines.forEach((line, index) => {
-            if (schedule.lines.length > 1) outages.append(make('span', 'outage-line', `Лінія ${index + 1}`));
-            if (!line.length) outages.append(make('span', 'outage-note', 'Без відключень'));
+            if (schedule.lines.length > 1) outages.append(make('span', 'outage-line', I18n.t('schedule_supply_line_label', [String(index + 1)])));
+            if (!line.length) outages.append(make('span', 'outage-note', I18n.t('schedule_no_outages')));
             for (const [start, end] of line) {
               outages.append(make('span', 'outage-interval', `${DtekSchedule.format(start)} – ${DtekSchedule.format(end)}`));
             }
           });
-        } else outages.append(make('span', 'outage-note', selectedDate < DtekSchedule.dateKey() ? 'Графік не збережено' : 'Графік не отримано'));
+        } else outages.append(make('span', 'outage-note', selectedDate < DtekSchedule.dateKey() ? I18n.t('schedule_history_date_missing') : I18n.t('schedule_selected_date_not_received')));
         const actions = make('div', 'address-actions');
         const share = make('button', 'share-schedule');
         share.type = 'button';
         share.dataset.available = String(available === true);
         share.disabled = !available;
-        share.title = available ? 'Поділитись графіком' : 'За вибрану дату графіка ще немає';
-        share.setAttribute('aria-label', `Поділитись графіком на ${selectedDate}: ${address.city}, ${address.street}, ${address.house}`);
+        share.title = available ? I18n.t('schedule_share_screen_title') : I18n.t('schedule_share_unavailable_tooltip');
+        share.setAttribute('aria-label', I18n.t('schedule_share_address_accessible_label', [I18n.formatDate(selectedDate), `${address.city}, ${address.street}, ${address.house}`]));
         const shareIcon = make('img');
         shareIcon.src = 'images/share.svg';
         shareIcon.alt = '';
@@ -158,11 +161,11 @@
     try {
       sharingText = DtekSchedule.toText(address, region, schedule);
     } catch {
-      status('Графік ще не отримано.', true);
+      status(I18n.t('schedule_share_schedule_missing_error'), true);
       return;
     }
     byId('share-text').value = sharingText;
-    show('share', 'Поділитись графіком');
+    show('share', I18n.t('schedule_share_screen_title'));
     resizeShareText();
     updateShareQr();
   }
@@ -179,7 +182,7 @@
     byId('copy-shared-schedule').dataset.available = String(Boolean(text));
     byId('copy-shared-schedule').disabled = busy || !text;
     if (!text || !delay) byId('share-qr').replaceChildren();
-    byId('share-qr-status').textContent = text ? 'Генеруємо QR-код…' : 'Введіть текст, щоб створити QR-код.';
+    byId('share-qr-status').textContent = text ? I18n.t('schedule_share_qr_generating_status') : I18n.t('schedule_share_qr_empty_text_hint');
     byId('share-qr-status').hidden = false;
     if (!text) return;
     if (delay) shareQrTimer = setTimeout(() => { void renderShareQr(text, request); }, delay);
@@ -190,7 +193,7 @@
       const { scheduleQrSvg } = await import('./schedule-sharing.mjs');
       if (request !== shareRequest) return;
       const frame = make('div', 'share-qr-frame');
-      frame.innerHTML = scheduleQrSvg(text);
+      frame.innerHTML = scheduleQrSvg(text, { title: I18n.t('home_screen_title'), alt: I18n.t('schedule_share_qr_accessible_description') });
       for (const position of ['top-left', 'top-right', 'bottom-left', 'bottom-right']) {
         const corner = make('span', `qr-corner qr-corner-${position}`);
         corner.setAttribute('aria-hidden', 'true');
@@ -201,7 +204,7 @@
     } catch {
       if (request !== shareRequest) return;
       byId('share-qr').replaceChildren();
-      byId('share-qr-status').textContent = 'Не вдалося створити QR-код. Скористайтесь кнопкою копіювання.';
+      byId('share-qr-status').textContent = I18n.t('schedule_share_qr_generation_error');
     }
   }
   byId('share-message').addEventListener('click', event => {
@@ -216,15 +219,15 @@
     if (busy || !sharingText || byId('share-view').hidden) return;
     try {
       await navigator.clipboard.writeText(sharingText);
-      status('Графік скопійовано.');
+      status(I18n.t('schedule_share_copy_success'));
     } catch {
-      status('Не вдалося скопіювати графік. Спробуйте ще раз.', true);
+      status(I18n.t('schedule_share_copy_error'), true);
     }
   });
   function selectDate(date) {
     if (busy) return;
     if (!DtekSchedule.validDate(date)) {
-      byId('schedule-date').value = selectedDate.split('-').reverse().join('.');
+      byId('schedule-date').value = I18n.formatDate(selectedDate);
       return;
     }
     dateDraft = false;
@@ -237,11 +240,10 @@
   function commitTypedDate() {
     if (busy || !dateDraft) return;
     const input = byId('schedule-date');
-    const match = input.value.trim().match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/);
-    const date = match && `${match[3]}-${match[2].padStart(2, '0')}-${match[1].padStart(2, '0')}`;
+    const date = I18n.parseDate(input.value);
     if (!DtekSchedule.validDate(date)) {
       input.setAttribute('aria-invalid', 'true');
-      status('Введіть дійсну дату у форматі ДД.ММ.РРРР.', true);
+      status(I18n.t('date_input_invalid_error', [I18n.datePlaceholder]), true);
       return;
     }
     selectDate(date);
@@ -283,7 +285,7 @@
       commitTypedDate();
     } else if (event.key === 'Escape') {
       dateDraft = false;
-      byId('schedule-date').value = selectedDate.split('-').reverse().join('.');
+      byId('schedule-date').value = I18n.formatDate(selectedDate);
       byId('schedule-date').removeAttribute('aria-invalid');
       status();
     } else if (event.altKey && event.key === 'ArrowDown') {
@@ -295,8 +297,8 @@
   byId('date-next').addEventListener('click', () => selectDate(DtekSchedule.shiftDate(selectedDate, 1)));
   byId('date-today').addEventListener('click', () => selectDate(DtekSchedule.dateKey()));
   byId('date-tomorrow').addEventListener('click', () => selectDate(DtekSchedule.shiftDate(DtekSchedule.dateKey(), 1)));
-  const monthNames = ['Січень', 'Лютий', 'Березень', 'Квітень', 'Травень', 'Червень',
-    'Липень', 'Серпень', 'Вересень', 'Жовтень', 'Листопад', 'Грудень'];
+  const monthNames = Array.from({ length: 12 }, (_, index) =>
+    new Intl.DateTimeFormat(I18n.locale, { month: 'long', timeZone: 'UTC' }).format(new Date(Date.UTC(2024, index, 1))));
   monthNames.forEach((name, index) => {
     const option = make('option', '', name);
     option.value = index + 1;
@@ -347,13 +349,15 @@
     grid.replaceChildren();
     const headers = make('div');
     headers.setAttribute('role', 'row');
-    for (const name of ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд']) {
+    for (let index = 0; index < 7; index++) {
+      const name = new Intl.DateTimeFormat(I18n.locale, { weekday: 'short', timeZone: 'UTC' })
+        .format(new Date(Date.UTC(2024, 0, 7 + (I18n.firstWeekday + index) % 7)));
       const header = make('span', '', name);
       header.setAttribute('role', 'columnheader');
       headers.append(header);
     }
     grid.append(headers);
-    const offset = (calendarDay(calendarKey(year, month, 1)).getUTCDay() + 6) % 7;
+    const offset = (calendarDay(calendarKey(year, month, 1)).getUTCDay() - I18n.firstWeekday + 7) % 7;
     const count = daysInMonth(year, month);
     const today = DtekSchedule.dateKey();
     let row;
@@ -375,7 +379,7 @@
       button.type = 'button';
       button.dataset.date = key;
       button.tabIndex = key === calendarDate ? 0 : -1;
-      button.setAttribute('aria-label', new Intl.DateTimeFormat('uk-UA', {
+      button.setAttribute('aria-label', new Intl.DateTimeFormat(I18n.locale, {
         timeZone: 'UTC', dateStyle: 'full'
       }).format(calendarDay(key)));
       if (key === today) button.setAttribute('aria-current', 'date');
@@ -401,7 +405,7 @@
     renderCalendar(focus);
   }
   function calendarKeydown(event, key) {
-    const weekday = (calendarDay(key).getUTCDay() + 6) % 7;
+    const weekday = (calendarDay(key).getUTCDay() - I18n.firstWeekday + 7) % 7;
     const offsets = { ArrowLeft: -1, ArrowRight: 1, ArrowUp: -7, ArrowDown: 7, Home: -weekday, End: 6 - weekday };
     if (Object.hasOwn(offsets, event.key)) {
       event.preventDefault();
@@ -507,22 +511,22 @@
     initialFields = Object.fromEntries(Object.entries(fields).map(([name, input]) => [name, input.value]));
     updateSaveButton();
     byId('delete-address').hidden = !editingId;
-    show('form', editingId ? 'Редагування адреси' : 'Додавання адреси');
+    show('form', editingId ? I18n.t('address_edit_screen_title') : I18n.t('address_add_screen_title'));
   }
   async function openAddress(address) {
     if (busy) return;
     setBusy(true);
-    status('Відкриття графіка…');
+    status(I18n.t('address_open_schedule_pending'));
     try {
       await AddressNavigation.open(address);
       window.close();
     } catch {
-      status('Не вдалося відкрити графік. Спробуйте ще раз.', true);
+      status(I18n.t('address_open_schedule_retry_error'), true);
     } finally { setBusy(false); }
   }
 
   for (const region of DtekSites.regions) {
-    const option = make('option', '', `${region.name} — ${region.operator}`);
+    const option = make('option', '', `${I18n.t('dtek_region_' + region.id + '_name')} — ${I18n.t('dtek_operator_' + region.id + '_name')}`);
     option.value = region.id;
     fields.region.append(option);
   }
@@ -533,13 +537,13 @@
       await AddressSettings.dismissPopupOffer();
       home();
     } catch {
-      status('Не вдалося зберегти відповідь. Спробуйте ще раз.', true);
+      status(I18n.t('popup_offer_response_save_error'), true);
     } finally { setBusy(false); }
   }
   byId('nav-back').addEventListener('click', () => {
     if (busy) return;
     if (!byId('popup-offer-view').hidden) void dismissPopupOffer();
-    else if (!byId('delete-view').hidden) show('form', 'Редагування адреси');
+    else if (!byId('delete-view').hidden) show('form', I18n.t('address_edit_screen_title'));
     else home();
   });
   byId('dismiss-popup-offer').addEventListener('click', dismissPopupOffer);
@@ -550,13 +554,13 @@
       await AddressSettings.savePreferences({ autoClosePopups: true });
       byId('auto-close-popups').checked = true;
       home();
-      status('Автоматичне закриття спливаючих вікон увімкнено.');
+      status(I18n.t('settings_popup_closing_enabled_status'));
     } catch {
-      status('Не вдалося зберегти налаштування. Спробуйте ще раз.', true);
+      status(I18n.t('settings_save_error'), true);
     } finally { setBusy(false); }
   });
   byId('add-address').addEventListener('click', () => edit());
-  byId('open-settings').addEventListener('click', () => { if (!busy) show('settings', 'Налаштування'); });
+  byId('open-settings').addEventListener('click', () => { if (!busy) show('settings', I18n.t('settings_screen_title')); });
   fields.region.addEventListener('change', regionChanged);
   for (const input of Object.values(fields)) {
     input.addEventListener('input', updateSaveButton);
@@ -566,14 +570,14 @@
     event.preventDefault();
     if (busy || (editingId !== null && !hasAddressChanges())) return;
     setBusy(true);
-    status('Збереження…');
+    status(I18n.t('address_save_pending'));
     try {
       await AddressSettings.upsert(Object.fromEntries(Object.entries(fields).map(([key, input]) => [key, input.value])), editingId);
       addresses = await AddressSettings.list();
       home();
-      status('Адресу збережено.');
+      status(I18n.t('address_save_success'));
     } catch (error) {
-      status(error.message || 'Не вдалося зберегти адресу.', true);
+      status(error.message || I18n.t('address_save_error'), true);
     } finally { setBusy(false); }
   });
   byId('delete-address').addEventListener('click', () => {
@@ -581,8 +585,8 @@
     const address = addresses.find(item => item.id === editingId);
     if (!address) return;
     byId('delete-address-archive').checked = false;
-    byId('delete-address-summary').textContent = `Видалити адресу "${address.city}, ${address.street}, ${address.house}" зі списку?`;
-    show('delete', 'Видалення адреси');
+    byId('delete-address-summary').textContent = I18n.t('address_delete_confirmation_question', [`${address.city}, ${address.street}, ${address.house}`]);
+    show('delete', I18n.t('address_delete_screen_title'));
   });
   byId('confirm-delete').addEventListener('click', async () => {
     if (busy || !editingId || byId('delete-view').hidden) return;
@@ -592,8 +596,8 @@
       await AddressSettings.remove(editingId, { deleteArchive });
       addresses = await AddressSettings.list();
       home();
-      status(deleteArchive ? 'Адресу та її архів видалено.' : 'Адресу видалено. Архів збережено.');
-    } catch { status('Не вдалося видалити адресу. Спробуйте ще раз.', true); }
+      status(deleteArchive ? I18n.t('address_delete_with_archive_success') : I18n.t('address_delete_keep_archive_success'));
+    } catch { status(I18n.t('address_delete_error'), true); }
     finally { setBusy(false); }
   });
   byId('auto-close-popups').addEventListener('change', async event => {
@@ -602,10 +606,10 @@
     setBusy(true);
     try {
       await AddressSettings.savePreferences({ autoClosePopups: checked });
-      status('Налаштування збережено.');
+      status(I18n.t('settings_save_success'));
     } catch {
       event.target.checked = !checked;
-      status('Не вдалося зберегти налаштування. Спробуйте ще раз.', true);
+      status(I18n.t('settings_save_error'), true);
     } finally { setBusy(false); }
   });
 
@@ -628,8 +632,8 @@
       addresses = saved;
       byId('auto-close-popups').checked = preferences.autoClosePopups;
       home();
-      if (offer) show('popup-offer', 'Автоматичне закриття вікон на графіку відключень');
-    } catch { status('Не вдалося завантажити адреси. Закрийте й відкрийте вікно, щоб повторити спробу.', true); }
+      if (offer) show('popup-offer', I18n.t('popup_offer_screen_title'));
+    } catch { status(I18n.t('address_list_load_error'), true); }
     finally { setBusy(false); }
   }
   chrome.storage.onChanged.addListener((changes, area) => {
@@ -637,7 +641,7 @@
     AddressSettings.list().then(saved => {
       addresses = saved;
       if (!busy && !byId('home-view').hidden) render();
-    }).catch(() => { status('Не вдалося оновити графіки. Спробуйте відкрити розширення ще раз.', true); });
+    }).catch(() => { status(I18n.t('schedule_refresh_error'), true); });
   });
   load();
 })();

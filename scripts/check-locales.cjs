@@ -1,0 +1,69 @@
+const { readdirSync, readFileSync, existsSync } = require('node:fs');
+const { join, resolve } = require('node:path');
+
+const projectRoot = resolve(__dirname, '..');
+function readCatalogs(root = projectRoot) {
+  return Object.fromEntries(readdirSync(join(root, '_locales'), { withFileTypes: true })
+    .filter(entry => entry.isDirectory())
+    .map(entry => [entry.name, JSON.parse(readFileSync(join(root, '_locales', entry.name, 'messages.json'), 'utf8'))]));
+}
+function checkLocales(root = projectRoot) {
+  const fail = message => { throw new Error(message); };
+  const catalogs = readCatalogs(root);
+  const manifest = JSON.parse(readFileSync(join(root, 'manifest.json'), 'utf8'));
+  const base = catalogs[manifest.default_locale];
+  if (!base) fail('Missing default locale catalog');
+  const keys = Object.keys(base).sort();
+  const signature = entry => Object.entries(entry.placeholders || {})
+    .map(([name, value]) => [name.toLowerCase(), value.content]).sort();
+  for (const [locale, catalog] of Object.entries(catalogs)) {
+    if (JSON.stringify(Object.keys(catalog).sort()) !== JSON.stringify(keys)) fail(`${locale}: missing or extra message keys`);
+    for (const [key, entry] of Object.entries(catalog)) {
+      const context = `${locale}/${key}`;
+      if (!/^[a-z][a-z0-9_]*$/.test(key)) fail(`${context}: use descriptive snake_case keys`);
+      if (typeof entry.message !== 'string' || !entry.message.trim()) fail(`${context}: empty message`);
+      if (typeof entry.description !== 'string' || !entry.description.trim()) fail(`${context}: missing translator description`);
+      if (Object.keys(entry).some(field => !['message', 'description', 'placeholders'].includes(field))) fail(`${context}: unsupported field`);
+      if (/\$[1-9]/.test(entry.message)) fail(`${context}: use named placeholders in message text`);
+      const placeholders = Object.fromEntries(Object.entries(entry.placeholders || {}).map(([name, value]) => [name.toLowerCase(), value]));
+      for (const [name, value] of Object.entries(placeholders)) {
+        if (!/^[a-z][a-z0-9_]*$/.test(name) || !/^\$[1-9]$/.test(value.content) || typeof value.example !== 'string' || !value.example.trim()) {
+          fail(`${context}: invalid placeholder ${name}; content must be $1–$9 with an example`);
+        }
+      }
+      for (const match of entry.message.matchAll(/\$([a-z0-9_@]+)\$/gi)) {
+        if (!placeholders[match[1].toLowerCase()]) fail(`${context}: undefined placeholder ${match[1]}`);
+      }
+      if (JSON.stringify(signature(entry)) !== JSON.stringify(signature(base[key]))) fail(`${context}: placeholder names or positions differ from the default catalog`);
+    }
+    if (catalog.extension_name.message.length > 75 || catalog.extension_description.message.length > 132) fail(`${locale}: store name or summary exceeds Chrome limits`);
+    if (new Intl.Locale(catalog.locale_language.message).baseName !== new Intl.Locale(locale.replaceAll('_', '-')).baseName) fail(`${locale}: locale_language must match its directory`);
+    if (new Intl.Locale(catalog.locale_format.message).language !== new Intl.Locale(catalog.locale_language.message).language) fail(`${locale}: locale_format must use the catalog language`);
+    if (!/^[0-6]$/.test(catalog.locale_week_first_day.message)) fail(`${locale}: invalid fallback first weekday`);
+  }
+  const sourceFiles = ['popup.js', 'address-settings.js', 'address-navigation.js', 'background.js',
+    'dtek-content-script.js', 'dtek-schedule.js', 'i18n.js'];
+  const source = sourceFiles.map(file => readFileSync(join(root, file), 'utf8')).join('\n');
+  const referenced = [...source.matchAll(/(?:I18n\.t|\bt)\('([^']+)'(?=[,)])/g)].map(match => match[1]);
+  for (const match of readFileSync(join(root, 'popup.html'), 'utf8').matchAll(/data-i18n(?:-[\w-]+)?="([^"]+)"/g)) referenced.push(match[1]);
+  for (const match of JSON.stringify(manifest).matchAll(/__MSG_([a-z0-9_]+)__/gi)) referenced.push(match[1]);
+  for (const match of readFileSync(join(root, 'dtek-sites.js'), 'utf8').matchAll(/\{ id: '([^']+)'/g)) {
+    referenced.push(`dtek_region_${match[1]}_name`, `dtek_region_${match[1]}_short`, `dtek_operator_${match[1]}_name`);
+  }
+  for (let day = 0; day < 7; day++) referenced.push('schedule_share_weekday_' + day);
+  for (const key of referenced) if (!base[key]) fail(`Unknown message key: ${key}`);
+  if (existsSync(join(root, 'store'))) {
+    for (const entry of readdirSync(join(root, 'store'), { withFileTypes: true }).filter(entry => entry.isDirectory())) {
+      if (!catalogs[entry.name]) fail(`store/${entry.name}: no corresponding interface catalog`);
+      if (!readFileSync(join(root, 'store', entry.name, 'description.txt'), 'utf8').trim()) fail(`store/${entry.name}: empty detailed description`);
+    }
+  }
+  return { languages: Object.keys(catalogs).sort(), messages: keys.length };
+}
+if (require.main === module) {
+  try {
+    const { languages, messages } = checkLocales();
+    console.log(`Validated ${messages} messages in ${languages.join(', ')}.`);
+  } catch (error) { console.error(error.message); process.exitCode = 1; }
+}
+module.exports = { readCatalogs, checkLocales };

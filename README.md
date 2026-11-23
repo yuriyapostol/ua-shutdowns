@@ -1,136 +1,115 @@
-# UA Shutdowns
+# UA Shutdowns — DTEK power outage schedules
 
-Розширення Chrome для автоматизації перевірки відключень електроенергії на регіональних сайтах ДТЕК.
+**English** · [Документація українською](README.uk.md)
 
-Головна сторінка «Графік відключень світла» містить ваші адреси за регіонами.
-У картці населений пункт показано над вулицею й будинком, а чергу — під ними.
-Черга зчитується із сайту ДТЕК заново після кожного успішного підставлення
-адреси й замінює попереднє значення, навіть якщо черга вже була збережена;
-до першого отримання показано «Черга: —».
-Над адресами можна вибрати дату графіка стрілками або в календарі.
-Рядок «на сьогодні, завтра, іншу дату» дає швидкий перехід; жовта плашка
-позначає вибрану дату й оновлюється також при перемиканні нижніми контролами.
-При відкритті розширення спочатку вибрано сьогоднішню дату.
-Між адресою та кнопкою редагування показано відключення на вибрану дату:
-кожен суцільний інтервал окремим рядком, наприклад `02:30 – 13:00`.
-Графік зчитується після підставлення адреси, з урахуванням відключень на
-половину години. Доступні таблиці на сьогодні й завтра зберігаються окремо
-за датами, разом із чергою на кожен день. Нові дані оновлюють відповідний
-день, зберігаючи історію інших днів. Уже отримані графіки можна переглядати
-й копіювати пізніше, зокрема після перезапуску браузера.
-Зміни таблиці у видимій вкладці ДТЕК також оновлюють збережені графіки,
-доки користувач не змінить адресу вручну. Для дати без даних показано,
-що графік не отримано або не збережено.
-При відкритті розширення графік додатково зчитується з активної вкладки ДТЕК:
-картки показуються після завершення запису актуальних інтервалів в архів.
-Архів зберігається окремо від списку адрес без автоматичного терміну видалення.
-Видалення адреси за замовчуванням залишає архів: повторне додавання того самого
-регіону, населеного пункту, вулиці й будинку повертає збережені графіки.
-Регістр літер і зайві пробіли не впливають на відновлення. Зміна адреси залишає
-історію за попередньою адресою. Для повного видалення позначте
-«Видалити архів даних за адресою» у підтвердженні видалення.
-Тимчасова відсутність даних на сайті не стирає останній отриманий графік.
-Дозвіл `unlimitedStorage` знімає стандартну квоту сховища для довгого архіву.
-Дані залишаються локальними; видалення самого розширення видаляє його сховище.
-Для будинків із двома лініями інтервали показано окремо для кожної лінії.
-Іконка поширення над редагуванням відкриває сторінку «Поділитись графіком».
-На ній показано текст із датою, днем тижня, областю, населеним
-пунктом, чергою та інтервалами, кнопку копіювання й QR-код для телефона.
-Текст, буфер обміну та QR-код містять той самий графік і чергу за вибраний день.
-Перед поширенням текст можна відредагувати: кнопка копіює змінений текст,
-а QR-код оновлюється автоматично. Ці правки не змінюють збережений графік.
-QR-код містить сам текст і генерується локально пакетом
-[yuriyapostol/qrcode-generator](https://github.com/yuriyapostol/qrcode-generator).
-Натисніть адресу, щоб відкрити відповідний сайт ДТЕК і автоматично обрати
-місто, вулицю та будинок. За бажанням розширення закриває спливаючі вікна,
-що перекривають графік. Адресу на сайті завжди можна змінити вручну.
+Power outage schedules for your addresses. A Google Chrome extension that makes it easier to get, view and share schedules from DTEK websites.
 
-## Можливості
+## Features
 
-- Збереження будь-якої кількості адрес.
-- Перехід до графіка з автоматичним заповненням адреси.
-- Закриття спливаючих вікон, що перекривають графік, за бажанням користувача.
+- Save multiple addresses and view the outage group and outage times for each one.
+- Open the relevant DTEK website and fill in your address automatically.
+- Keep a history of received schedules and view them by date, including offline.
+- Copy a schedule or transfer it to your phone using a QR code.
+- Optionally close popups on DTEK websites that obstruct the schedule.
 
-Адреса й налаштування зберігаються локально у браузері. До додавання адреси
-автовибір не запускається.
+## Supported regions
 
-## Підтримувані сайти
+Only schedules from the following DTEK regional websites are supported:
 
-| Регіон | Сторінка відключень |
+| Region | Schedule website |
 | --- | --- |
-| Київ | [dtek-kem.com.ua](https://www.dtek-kem.com.ua/ua/shutdowns) |
-| Київська область | [dtek-krem.com.ua](https://www.dtek-krem.com.ua/ua/shutdowns) |
-| Дніпропетровська область | [dtek-dnem.com.ua](https://www.dtek-dnem.com.ua/ua/shutdowns) |
-| Одеська область | [dtek-oem.com.ua](https://www.dtek-oem.com.ua/ua/shutdowns) |
-| Донецька область | [dtek-dem.com.ua](https://www.dtek-dem.com.ua/ua/shutdowns) |
+| Kyiv | [Kyiv Grids](https://www.dtek-kem.com.ua/ua/shutdowns) |
+| Kyiv region | [Kyiv Regional Grids](https://www.dtek-krem.com.ua/ua/shutdowns) |
+| Dnipropetrovsk region | [Dnipro Grids](https://www.dtek-dnem.com.ua/ua/shutdowns) |
+| Odesa region | [Odesa Grids](https://www.dtek-oem.com.ua/ua/shutdowns) |
+| Donetsk region | [Donetsk Grids](https://www.dtek-dem.com.ua/ua/shutdowns) |
 
-Для представництва «Київ» місто встановлюється автоматично: на цьому сайті
-обираються лише вулиця й будинок. Кожна адреса відкривається тільки на сайті
-свого представництва.
+Power outage schedules from other companies are not currently supported. We are considering adding them in the future.
 
-## Встановлення
+## Installation
 
-Потрібен Chrome 127 або новіший для автоматичного відкриття вікна розширення.
+Requires **Google Chrome 127 or later**.
 
-1. Завантажте ZIP із [останнього релізу](https://github.com/yuriyapostol/ua-shutdowns/releases/latest) та розпакуйте його в окрему папку.
-2. Відкрийте `chrome://extensions` і ввімкніть режим розробника.
-3. Натисніть «Завантажити розпаковане розширення» та виберіть папку з `manifest.json`.
+### From the Chrome Web Store — after publication
 
-Для встановлення з вихідного коду так само можна використати папку репозиторію.
+The extension has not been published in the Chrome Web Store yet. Once it is published, this will be the recommended installation method:
 
-## Користування
+1. Open the [Chrome Web Store](https://chromewebstore.google.com/) in Google Chrome and search for **UA Shutdowns**.
+2. Open the extension page and click **Add to Chrome**.
+3. Confirm installation in the browser dialog.
+4. Pin UA Shutdowns to the Chrome extensions toolbar for easy access.
 
-1. Натисніть іконку UA Shutdowns, потім «Додати адресу».
-2. Оберіть представництво, введіть адресу й збережіть її. Так можна додати кілька адрес.
-3. На головній сторінці натисніть потрібну адресу. Якщо поточна вкладка вже є сайтом ДТЕК, розширення використає її; інакше відкриє нову.
+This method does not require downloading an archive or enabling Developer mode. See [Google's extension installation guide](https://support.google.com/chrome_webstore/answer/2664769?hl=en).
 
-Іконка редагування біля адреси відкриває екран її зміни. Видалення доступне там само
-й потребує підтвердження. Галка закриття спливаючих вікон міститься в
-«Налаштуваннях» і зберігається одразу.
+### From an archive — available now
 
-Якщо автоматичне закриття вимкнено й на сайті ДТЕК з'явиться спливаюче
-вікно в активній вкладці, розширення автоматично відкриє своє вікно з
-пропозицією увімкнути цю опцію. Одна пропозиція відкривається автоматично
-лише раз; вона також доступна при відкритті розширення вручну.
-Спостереження й автозакриття працюють лише у видимій вкладці.
-При переході на вкладку ДТЕК розширення одразу перевіряє вже відкриті вікна;
-у фонових вкладках спостереження та повторні спроби закриття зупиняються.
-Кнопки «Не зараз» та «До адрес» повертають на головний екран
-і відкладають повторну пропозицію на 31 день. Після цього пропозиція
-з'явиться лише після нового виявлення спливаючого вікна.
+Until the extension is published in the store, you can install it manually from GitHub. After publication, this method will remain an alternative for manual installation and testing:
 
-Якщо сайт ДТЕК відкрити вручну, розширення використає першу збережену адресу
-цього регіону. Для гарантованого вибору конкретної адреси відкривайте її з
-дашборда. Вибір зберігається у внутрішньому стані розширення окремо для кожної
-вкладки й зберігається при перезавантаженні сторінки. Службові параметри й
-ідентифікатори до URL не додаються. Після закриття вкладки її вибір видаляється;
-після перезапуску браузера вибір потрібно зробити знову.
+1. Download the ZIP from the [latest release](https://github.com/yuriyapostol/ua-shutdowns/releases/latest) and extract it to a separate folder.
+2. Open `chrome://extensions` and enable **Developer mode**.
+3. Click **Load unpacked** and select the folder containing `manifest.json`.
+4. Pin UA Shutdowns to the Chrome extensions toolbar for easy access.
 
-Після оновлення зі старої версії адреса залишиться у списку «Уточніть
-представництво»: відкрийте її, оберіть регіон і збережіть. Раніше регіон
-окремо не зберігався, тому розширення не визначає його навмання.
+## How to use
 
-Після оновлення файлів натисніть «Оновити» на `chrome://extensions` та
-перезавантажте вже відкриті сторінки ДТЕК.
+### Add an address and get a schedule
 
-## Версії
+1. Open the extension and click **Add address**.
+2. Select a DTEK regional operator, enter your address and save it. The city is already selected for Kyiv.
+3. Click the saved address. The extension will open the DTEK website and fill in its address form.
+4. Wait for the schedule to appear on the website, then open the extension to view the received outage times.
 
-[Історія змін](CHANGELOG.md) · [Релізи та завантаження](https://github.com/yuriyapostol/ua-shutdowns/releases)
+You can add multiple addresses. Use the edit button next to an address to change or delete it. Enter city and street names as they appear on the Ukrainian DTEK website.
 
-## Розробка
+### View schedules by date
 
-Перевірки без додаткових залежностей:
+On the home screen, choose today, tomorrow or another date using the arrows or calendar. Schedules for buildings with two supply lines are displayed separately.
+
+The interface automatically uses Chrome's interface language: Ukrainian or English, with English as the fallback for other languages. The date field and calendar follow the interface locale: for example, `MM/DD/YYYY` for US English and `DD/MM/YYYY` for British English. Outage dates always refer to the time in Kyiv.
+
+The extension receives data from the active DTEK tab. To update the schedule for an address, click it and wait for the website to load its data. Only previously saved schedules are available offline.
+
+**Schedule not received** or **Schedule not saved** means there is no data for the selected date. It does not mean there will be no outages.
+
+### Share a schedule
+
+Click **Share schedule** next to an address. On the sharing screen, copy the text or scan the QR code with your phone camera.
+
+You can edit the text before copying it. The QR code will also contain the edited text; the saved schedule remains unchanged.
+
+### Close popups
+
+In **Settings**, enable automatic closing of popups on DTEK websites. The extension may also offer to enable this when it detects a popup.
+
+## Privacy and stored data
+
+Addresses, settings and schedule history are stored only locally in your browser. The extension does not send this data to the developer and does not use analytics or tracking.
+
+To retrieve a schedule, the selected address is entered into the form on the relevant DTEK website and processed by that website. Schedules are shared only when you choose to do so; QR codes are generated locally without sending their content to external services.
+
+Deleting an address retains its history by default: if you add the same address again, its saved schedules will be available. To delete those too, select **Delete the archive for this address** in the deletion confirmation screen. Uninstalling the extension removes all of its data.
+
+## Updates and help
+
+If you installed the extension from an archive, download the new release ZIP and replace the files in the installation folder. Click the extension's reload button at `chrome://extensions` and reload any open DTEK pages.
+
+If an address appears under **Select a regional operator**, edit it, select a region and save it.
+
+[Chrome Web Store](https://chromewebstore.google.com/) · [GitHub releases](https://github.com/yuriyapostol/ua-shutdowns/releases) · [Changelog](CHANGELOG.md) · [Report a problem](https://github.com/yuriyapostol/ua-shutdowns/issues)
+
+## For developers
+
+To install from source, select the repository folder in the **Load unpacked** step.
+
+Run the checks without additional dependencies:
 
 ```sh
-node tests/address-selection.test.cjs
-node tests/address-settings.test.cjs
-node tests/address-navigation.test.cjs
-node tests/popup-closer.test.cjs
-node tests/background.test.cjs
-node tests/dtek-schedule.test.cjs
-node tests/popup-sync.test.cjs
+node --test tests/*.test.cjs
+python3 tests/release-notes.test.py
 ```
 
-Для нового релізу оновіть версію в `manifest.json`, додайте відповідний розділ
-у `CHANGELOG.md` та опублікуйте тег `v<версія>`. GitHub Actions запустить
-перевірки, створить Release з описом змін і додасть ZIP для встановлення.
+To prepare a new release, update the version in `manifest.json`, add matching entries to both changelogs and publish the tag `v<version>`. GitHub Actions will run the checks and create a Release with an installation ZIP and bilingual release notes, Ukrainian first and English second.
+
+To add interface or Chrome Web Store languages, see the [translation guide](TRANSLATING.md). Catalogs include translator context and named placeholders; checks automatically discover all locales. Ready-to-use detailed store descriptions are in `store/<locale>/description.txt`. Documentation stays bilingual.
+
+QR codes are generated locally using [yuriyapostol/qrcode-generator](https://github.com/yuriyapostol/qrcode-generator).

@@ -1,91 +1,102 @@
-# Історія версій
+# Changelog
+
+**English** · [Українська](CHANGELOG.uk.md)
+
+## 0.6.0 — 2026-11-23
+
+- Clarified DTEK coverage in the extension name, description, window headers and regional operator field.
+- Added a complete English interface with automatic language selection based on Chrome's interface language. Other languages fall back to English.
+- Localized date entry, calendar month and weekday names, the first day of the week, and shared schedule text. US English uses `MM/DD/YYYY`; British English uses `DD/MM/YYYY`. Ukrainian retains `DD.MM.YYYY`.
+- Prepared the interface for additional languages without JavaScript changes: descriptive message keys, translator context, named placeholders and locale settings in each catalog. Added automatic validation of all language catalogs.
+- Reorganized the README for users, made English the main documentation language and added Ukrainian versions with language links. Documented installation, DTEK coverage, local data storage and privacy.
+- Added English and Ukrainian Chrome Web Store descriptions, including the extension's independent, unofficial status, and bilingual instructions for adding interface and store translations.
+- GitHub release notes are now generated from both changelogs, with Ukrainian first and English second. Publishing stops if either language's release entry is missing or empty. Release archives include all interface catalogs and both documentation languages.
 
 ## 0.5.2 — 2026-11-22
 
-- У полі дати автоматично виділяється день, місяць або рік при переході до іншого компонента; переміщення курсора всередині компонента й ручне виділення залишаються без втручання. При фокусі без кліку та відкритті через іконку календаря виділяється день.
-- Виправлено переходи Tab і Shift+Tab між контролом дати та відкритим календарем із пропуском недоступних елементів. Стрілку відкривання замінено компактною іконкою календаря.
-- Збільшено контраст тексту значень у полях, назв населених пунктів і черг у картках адрес; часові інтервали збільшено до 15 px, прибрано двокрапку після слова «Черга». Повідомлення про результати дій вирівняно по центру.
-- Вимкнено автозаповнення полів; над стрілками випадаючих списків додано курсор-руку.
-- Унизу головного екрана додано посилання на GitHub проєкту.
+- The date field automatically selects the day, month or year when moving to a different component. Moving the cursor within a component and manual selections remain unchanged. Focusing without clicking or opening via the calendar icon selects the day.
+- Fixed Tab and Shift+Tab navigation between the date control and the open calendar, skipping unavailable controls. Replaced the dropdown arrow with a compact calendar icon.
+- Increased text contrast for field values, city names and outage groups in address cards. Increased time intervals to 15 px and removed the colon after the group label. Centered action result messages.
+- Disabled field autofill and added a pointer cursor over dropdown arrows.
+- Added a project GitHub link at the bottom of the home screen.
 
 ## 0.5.1 — 2026-11-22
 
-- Системний вибір дати замінено власним українським календарем зі швидким перемиканням місяців і років та керуванням із клавіатури. Поточний день позначено обводкою, обраний — жовтим фоном.
-- Дату можна редагувати безпосередньо в полі у форматі ДД.ММ.РРРР: Enter або вихід із поля підтверджує введення, Escape скасовує зміни; некоректні дати позначаються помилкою.
-- Календар відкривається при активації поля поверх графіків і підлаштовується під доступний простір. Додано тіні до випадаючих панелей та прокрутку довгих списків, збільшено висоту списку регіональних представництв.
-- Уніфіковано шрифт, наведення та фокус полів; у списках селекторів галочки замінено жовтим виділенням обраного пункту, прибрано переноси назв місяців.
-- Межі QR-коду позначено заокругленими куточками. Оновлено іконки розширення та збільшено логотип у шапці вікна.
+- Replaced the system date picker with a custom Ukrainian calendar with quick month and year selection and keyboard navigation. The current day has an outline; the selected day has a yellow background.
+- Dates can be edited directly in `DD.MM.YYYY` format. Enter or leaving the field confirms input; Escape cancels changes. Invalid dates are marked as errors.
+- The calendar opens over schedules when the date field is activated and adapts to available space. Added dropdown shadows and scrolling for long lists, and increased the regional operator list height.
+- Unified field fonts, hover and focus styles. Replaced checkmarks in select lists with yellow highlighting and prevented month names from wrapping.
+- Added rounded corners around the QR code. Updated extension icons and enlarged the header logo.
 
 ## 0.5.0 — 2026-11-21
 
-- Додано сторінку «Поділитись графіком» із текстом графіка за вибраний день, кнопкою копіювання та QR-кодом для телефона. У картках адрес кнопку копіювання замінено на кнопку поширення.
-- Текст перед поширенням можна редагувати без зміни збереженого графіка. Копіювання використовує відредагований текст, а QR-код оновлюється після паузи 500 мс у введенні.
-- QR-коди генеруються локально пакетом `yuriyapostol/qrcode-generator` із підтримкою українського тексту; модулі пакета включено до архіву розширення.
-- Виправлено синхронізацію графіків: при відкритті розширення таблиця активної вкладки ДТЕК зчитується повторно, а картки показуються після завершення запису актуальних даних.
-- Спостереження за графіком зберігається після заміни або пізньої появи таблиці на сайті та помилки початкового запису.
-- Узгоджено оформлення текстових полів і селекта: спільні шрифт та ефекти наведення й фокусу, компактніші підписи, список завширшки із селектом і розворот стрілки при відкритті. Натискання на підписи більше не активує поля.
+- Added a Share schedule screen with the selected day's schedule text, a copy button and a QR code for phones. Replaced the copy button in address cards with a share button.
+- Schedule text can be edited before sharing without changing the saved schedule. Copying uses the edited text; the QR code updates after a 500 ms typing pause.
+- QR codes are generated locally using `yuriyapostol/qrcode-generator`, with Ukrainian text support. Package modules are included in the extension archive.
+- Fixed schedule synchronization: opening the extension rereads the active DTEK tab's table and displays cards after the latest data has been saved.
+- Schedule observation continues when the website replaces the table, loads it late, or the initial save fails.
+- Aligned text input and select styling: shared fonts, hover and focus effects, more compact labels, a dropdown matching the select width, and an arrow that rotates when opened. Clicking labels no longer activates fields.
 
 ## 0.4.1 — 2026-11-19
 
-- Оновлено оформлення кнопок і чекбоксів; кнопку повернення перенесено до заголовка екрана.
-- Підтвердження видалення адреси перенесено на окремий екран із поверненням до редагування без втрати введених змін.
-- У формі редагування кнопка збереження активна лише після зміни даних; для незміненої адреси вона жовта й неактивна. У формі додавання кнопка активна одразу.
+- Updated button and checkbox styling and moved the back button into the screen heading.
+- Moved address deletion confirmation to a separate screen, with a return to editing that preserves unsaved changes.
+- When editing, the save button is enabled only after changes. For an unchanged address it is yellow and disabled. When adding an address it is enabled immediately.
 
 ## 0.4.0 — 2026-11-16
 
-- Додано розпізнавання графіків ДТЕК на сьогодні й завтра: відключення на повну або половину години об’єднуються в суцільні інтервали; для двох ліній графіки показуються окремо.
-- У картках адрес відображаються черга та інтервали відключень на вибраний день. Черга й графіки оновлюються після підставлення адреси та при зміні таблиці у видимій вкладці.
-- Додано вибір дати стрілками, календарем і компактними перемикачами «сьогодні», «завтра», «іншу дату» зі спільним станом вибору.
-- Додано копіювання текстового графіка з датою, днем тижня, областю, населеним пунктом, чергою та інтервалами відключень.
-- Графіки зберігаються за датами разом з історичною чергою: поточний і майбутній дні оновлюються, попередні дні залишаються в архіві. Відсутність нових даних на сайті не стирає останній отриманий графік.
-- Архів відокремлено від списку адрес: звичайне видалення адреси зберігає історію, а повторне додавання відновлює її. Для повного очищення додано вимкнену за замовчуванням галку «Видалити архів даних за адресою»; раніше збережені графіки переносяться автоматично.
-- Для довготривалого локального архіву додано дозвіл `unlimitedStorage` без автоматичного терміну видалення даних.
-- Після виявлення спливаючого вікна на активній вкладці ДТЕК розширення автоматично пропонує ввімкнути автозакриття у своєму вікні. Відмова відкладає пропозицію на 31 день; при поверненні на вкладку перевірка відновлюється одразу.
-- Вибір адреси перенесено зі службового фрагмента URL у внутрішній стан вкладки. Старі фрагменти прибираються зі збереженням вибору; різні вкладки залишаються незалежними.
-- Оновлено оформлення списку адрес, іконки, підсвітку та компонування кнопок; додано фоновий service worker і мінімальну версію Chrome 127 для автоматичного відкриття вікна розширення.
+- Added recognition of today's and tomorrow's DTEK schedules: full-hour and half-hour outages are merged into continuous intervals. Schedules for two supply lines are displayed separately.
+- Address cards display the outage group and intervals for the selected day. Groups and schedules update after address selection and when the visible tab's table changes.
+- Added date selection with arrows, a calendar and compact today, tomorrow and other date shortcuts that share the same selection state.
+- Added copying of a text schedule with its date, weekday, region, city, outage group and intervals.
+- Schedules are stored by date with each day's outage group. Current and future days update, while past days remain in the archive. Missing website data does not erase the last received schedule.
+- Separated the archive from the address list: deleting an address normally retains its history, and adding it again restores it. An unchecked-by-default Delete the archive for this address option allows full removal. Previously saved schedules are migrated automatically.
+- Added the `unlimitedStorage` permission for long-term local archives without automatic data expiration.
+- After detecting a popup in the active DTEK tab, the extension automatically offers to enable popup closing. Declining postpones the offer for 31 days. Detection resumes immediately when returning to the tab.
+- Moved address selection from a service URL fragment into internal tab state. Old fragments are removed while preserving the selection. Different tabs remain independent.
+- Updated address list styling, icons, highlighting and button layout. Added a background service worker and a minimum Chrome version of 127 for opening the extension window automatically.
 
-Перевірено 126 автоматичними тестами та браузерними сценаріями роботи з адресами, датами, копіюванням і збереженням або видаленням архіву.
+Verified with 126 automated tests and browser scenarios covering addresses, dates, copying, and retaining or deleting archives.
 
 ## 0.3.1 — 2026-10-29
 
-- Напис «Редагувати» у списку адрес замінено на іконку з доступною назвою та підказкою.
-- Скорочено розділ «Можливості» в README.
-- Виправлено відкриття другої та наступних адрес у поточній вкладці: перезавантаження відбувається лише після підтвердження URL вибраної адреси.
-- Якщо перехід не підтверджено або завершився помилкою, попередня адреса не перезавантажується.
+- Replaced the Edit label in the address list with an icon with an accessible name and tooltip.
+- Shortened the README Features section.
+- Fixed opening second and subsequent addresses in the current tab: reloading occurs only after confirming the selected address URL.
+- If navigation is unconfirmed or fails, the previous address is not reloaded.
 
 ## 0.3.0 — 2026-10-29
 
-- Додано головну сторінку «Графік відключень світла» зі списком адрес, згрупованих за регіональними представництвами ДТЕК.
-- Додано окремі екрани додавання, редагування адрес і налаштувань; видалення адреси потребує підтвердження.
-- Натискання на адресу відкриває її графік у поточній вкладці будь-якого підтримуваного сайту ДТЕК; з інших сторінок відкривається нова вкладка.
-- Кожна вкладка отримує ідентифікатор вибраної адреси, тому різні адреси не перезаписують вибір одна одної.
-- Раніше збережена адреса переноситься до списку; перед першим відкриттям потрібно уточнити її регіон.
-- Для визначення поточного сайту додано тимчасовий дозвіл `activeTab` після натискання іконки розширення.
+- Added the Power outage schedule home screen with addresses grouped by DTEK regional operator.
+- Added separate screens for adding and editing addresses and for settings. Address deletion requires confirmation.
+- Clicking an address opens its schedule in the current tab of any supported DTEK website. From other pages, it opens a new tab.
+- Each tab receives a selected address ID so different addresses do not overwrite one another's selection.
+- Previously saved addresses are migrated to the list. Their region must be selected before first opening.
+- Added the temporary `activeTab` permission to identify the current website after clicking the extension icon.
 
-
-Перевірено 57 автоматичними тестами та браузерними сценаріями додавання, редагування, відкриття, видалення й перенесення адрес.
+Verified with 57 automated tests and browser scenarios covering adding, editing, opening, deleting and migrating addresses.
 
 ## 0.2.0 — 2026-10-29
 
-- Додано підтримку всіх п’яти регіональних сайтів ДТЕК: Київ, Київська, Дніпропетровська, Одеська та Донецька області.
-- Враховано київську форму без поля міста; адреса іншого населеного пункту в ній не підставляється.
-- Збережено автовибір адреси й закриття спливаючих вікон на всіх підтримуваних сторінках.
-- Оновлено опис розширення й документацію; додано історію версій та завантаження через GitHub Releases.
+- Added support for all five DTEK regional websites: Kyiv, Kyiv region, Dnipropetrovsk region, Odesa region and Donetsk region.
+- Accounted for Kyiv's form without a city field. Addresses from other cities are not entered into it.
+- Preserved automatic address selection and popup closing on all supported pages.
+- Updated the extension description and documentation. Added a changelog and downloads via GitHub Releases.
 
-Перевірено на живих регіональних сайтах. Пройдено 45 автоматичних тестів.
+Verified on live regional websites. All 45 automated tests passed.
 
 ## 0.1.1 — 2026-10-28
 
-- Розширення перейменовано на UA Shutdowns.
-- Додано вікно налаштувань зі збереженням адреси локально в браузері.
-- Прибрано адресу за замовчуванням: до першого збереження автовибір не запускається.
-- Пошук переведено на цілі слова з поступовим уточненням; додано порівняння близьких написань.
-- Автовибір припиняється після дії користувача, невдалого пошуку або завершення очікування.
-- Додано галку автоматичного закриття спливаючих вікон, миттєве збереження та повторні спроби закриття.
-- Оформлення вікна узгоджено зі стилем ДТЕК; шрифти працюють без мережі.
+- Renamed the extension to UA Shutdowns.
+- Added a settings window with addresses saved locally in the browser.
+- Removed the default address: automatic selection does not run until an address has been saved.
+- Changed searching to use whole words with progressive refinement and added comparison of similar spellings.
+- Automatic selection stops after user interaction, failed searches or a timeout.
+- Added an automatic popup closing checkbox, immediate saving and repeated closing attempts.
+- Aligned the window styling with DTEK's design. Fonts work offline.
 
 ## 0.1.0 — 2024-07-17
 
-- Початкова версія розширення для ДТЕК Київські регіональні електромережі.
-- Автоматичний вибір міста, вулиці й будинку з адреси, заданої в коді.
-- Додано українську й англійську локалізації.
+- Initial extension for DTEK Kyiv Regional Grids.
+- Automatically selected a city, street and building from an address specified in code.
+- Added Ukrainian and English localization.

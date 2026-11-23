@@ -1,0 +1,27 @@
+UA Shutdowns — DTEK power outage schedules
+
+Easily load power outage schedules for your addresses from DTEK websites, view them in a clear format, build an archive of past days and share schedules with others.
+
+An independent project. This is not an official DTEK extension.
+
+Features:
+• Save multiple addresses and view outage groups and times for each one.
+• Open the relevant regional website with your address filled in automatically.
+• Browse previously received schedules by date, including offline.
+• Copy schedule text or transfer it to your phone using a QR code.
+• Optionally close popups that obstruct schedules.
+
+Coverage:
+The extension supports DTEK schedules for Kyiv, Kyiv region, Dnipropetrovsk region, Odesa region and Donetsk region. Power outage schedules from other companies are not currently supported. We are considering adding them in the future.
+
+How schedules are updated:
+Open a saved address and wait for its schedule to load on the website. The extension receives data from the active website tab. Missing data does not mean there will be no outages. Only previously saved schedules are available offline.
+
+Privacy:
+Addresses, settings and schedule history are stored only locally in your browser. The extension does not send this data to the developer and does not use analytics or tracking. To retrieve a schedule, the selected address is entered into and processed by the corresponding regional website. QR codes are generated locally; schedules are shared only when you choose to do so.
+
+Help:
+https://github.com/yuriyapostol/ua-shutdowns/blob/main/README.md
+
+Change history:
+https://github.com/yuriyapostol/ua-shutdowns/blob/main/CHANGELOG.md

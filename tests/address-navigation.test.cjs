@@ -1,3 +1,4 @@
+const { i18nFixtureSource } = require('./i18n-fixture.cjs');
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const { readFileSync } = require('node:fs');
@@ -34,7 +35,7 @@ function page(tab, initial = {}) {
     },
     async remove(id) { calls.push({ type: 'remove', id }); }
   } };
-  const api = vm.runInNewContext(source + '\nAddressNavigation;', { URL, chrome, console });
+  const api = vm.runInNewContext(i18nFixtureSource() + '\n' + source + '\nAddressNavigation;', { URL, chrome, console });
   return { api, calls, session, selected, chrome, addresses };
 }
 

@@ -3,8 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Графік відключень світла — UA Shutdowns</title>
+  <title>Графік відключень світла — UA Shutdowns: DTEK</title>
   <link rel="stylesheet" href="popup.css">
+  <script src="i18n.js" defer></script>
   <script src="dtek-sites.js" defer></script>
   <script src="dtek-schedule.js" defer></script>
   <script src="address-settings.js" defer></script>
@@ -16,77 +17,77 @@
     <header>
       <img src="images/icon-48.png" width="36" height="36" alt="">
       <div class="header-text">
-        <p class="brand">UA Shutdowns</p>
+        <p class="brand">UA Shutdowns: DTEK</p>
         <div class="screen-heading">
-          <button id="nav-back" class="back" type="button" aria-label="На головну" title="На головну" hidden><img src="images/arrow-back.svg" width="24" height="24" alt="" aria-hidden="true"></button>
-          <h1 id="screen-title">Графік відключень світла</h1>
+          <button id="nav-back" class="back" type="button" aria-label="На головну" title="На головну" hidden data-i18n-title="navigation_back_to_home" data-i18n-aria-label="navigation_back_to_home"><img src="images/arrow-back.svg" width="24" height="24" alt="" aria-hidden="true"></button>
+          <h1 id="screen-title" data-i18n="home_screen_title">Графік відключень світла</h1>
         </div>
       </div>
     </header>
     <section id="home-view" aria-labelledby="screen-title">
-      <div class="date-shortcuts" role="group" aria-label="Швидкий вибір дати">
-        на <button id="date-today" class="date-shortcut" type="button" aria-pressed="true" disabled>сьогодні</button>,
-        <button id="date-tomorrow" class="date-shortcut" type="button" aria-pressed="false" disabled>завтра</button>
-        або іншу <button id="date-other" class="date-shortcut" type="button" aria-pressed="false" aria-label="Вибрати іншу дату в календарі" disabled>дату</button>
+      <div class="date-shortcuts" role="group" aria-label="Швидкий вибір дати" data-i18n-aria-label="date_shortcuts_accessible_label">
+        <span data-i18n="date_shortcuts_sentence_prefix">на </span><button id="date-today" class="date-shortcut" type="button" aria-pressed="true" disabled data-i18n="date_shortcut_today">сьогодні</button>,
+        <button id="date-tomorrow" class="date-shortcut" type="button" aria-pressed="false" disabled data-i18n="date_shortcut_tomorrow">завтра</button>
+        <span data-i18n="date_shortcuts_sentence_join">або іншу </span><button id="date-other" class="date-shortcut" type="button" aria-pressed="false" aria-label="Вибрати іншу дату в календарі" disabled data-i18n="date_shortcut_other" data-i18n-aria-label="date_shortcut_other_accessible_label">дату</button>
       </div>
       <div class="date-picker">
-        <div class="schedule-date-nav" role="group" aria-label="Дата графіка">
-          <button id="date-previous" class="date-step" type="button" aria-label="Попередній день" disabled><img src="images/keyboard-arrow-left.svg" width="24" height="24" alt="" aria-hidden="true"></button>
+        <div class="schedule-date-nav" role="group" aria-label="Дата графіка" data-i18n-aria-label="date_input_accessible_label">
+          <button id="date-previous" class="date-step" type="button" aria-label="Попередній день" disabled data-i18n-aria-label="date_previous_day_action"><img src="images/keyboard-arrow-left.svg" width="24" height="24" alt="" aria-hidden="true"></button>
           <div id="schedule-date-control" class="schedule-date-field">
             <input id="schedule-date" type="text" aria-expanded="false" aria-controls="date-calendar" inputmode="numeric" aria-label="Дата графіка, ДД.ММ.РРРР" placeholder="ДД.ММ.РРРР" autocomplete="off" spellcheck="false" disabled>
-            <button id="date-picker-toggle" type="button" aria-label="Відкрити календар" aria-expanded="false" aria-controls="date-calendar" disabled><img src="images/calendar.svg" width="24" height="24" alt="" aria-hidden="true"></button>
+            <button id="date-picker-toggle" type="button" aria-label="Відкрити календар" aria-expanded="false" aria-controls="date-calendar" disabled data-i18n-aria-label="date_calendar_open_action"><img src="images/calendar.svg" width="24" height="24" alt="" aria-hidden="true"></button>
           </div>
-          <button id="date-next" class="date-step" type="button" aria-label="Наступний день" disabled><img src="images/keyboard-arrow-right.svg" width="24" height="24" alt="" aria-hidden="true"></button>
+          <button id="date-next" class="date-step" type="button" aria-label="Наступний день" disabled data-i18n-aria-label="date_next_day_action"><img src="images/keyboard-arrow-right.svg" width="24" height="24" alt="" aria-hidden="true"></button>
         </div>
-        <section id="date-calendar" class="date-calendar" aria-label="Вибір дати графіка" hidden>
+        <section id="date-calendar" class="date-calendar" aria-label="Вибір дати графіка" hidden data-i18n-aria-label="date_calendar_accessible_label">
           <div class="calendar-heading">
             <div class="calendar-period">
-              <button id="calendar-previous" class="date-step calendar-step" type="button" aria-label="Попередній місяць"><img src="images/keyboard-arrow-left.svg" width="24" height="24" alt="" aria-hidden="true"></button>
-              <select id="calendar-month" aria-label="Місяць" autocomplete="off"></select>
-              <button id="calendar-next" class="date-step calendar-step" type="button" aria-label="Наступний місяць"><img src="images/keyboard-arrow-right.svg" width="24" height="24" alt="" aria-hidden="true"></button>
+              <button id="calendar-previous" class="date-step calendar-step" type="button" aria-label="Попередній місяць" data-i18n-aria-label="date_calendar_previous_month_action"><img src="images/keyboard-arrow-left.svg" width="24" height="24" alt="" aria-hidden="true"></button>
+              <select id="calendar-month" aria-label="Місяць" autocomplete="off" data-i18n-aria-label="date_calendar_month_label"></select>
+              <button id="calendar-next" class="date-step calendar-step" type="button" aria-label="Наступний місяць" data-i18n-aria-label="date_calendar_next_month_action"><img src="images/keyboard-arrow-right.svg" width="24" height="24" alt="" aria-hidden="true"></button>
             </div>
             <div class="calendar-period">
-              <button id="calendar-year-previous" class="date-step calendar-step" type="button" aria-label="Попередній рік"><img src="images/keyboard-arrow-left.svg" width="24" height="24" alt="" aria-hidden="true"></button>
-              <input id="calendar-year" type="number" min="1" max="9999" step="1" aria-label="Рік" autocomplete="off">
-              <button id="calendar-year-next" class="date-step calendar-step" type="button" aria-label="Наступний рік"><img src="images/keyboard-arrow-right.svg" width="24" height="24" alt="" aria-hidden="true"></button>
+              <button id="calendar-year-previous" class="date-step calendar-step" type="button" aria-label="Попередній рік" data-i18n-aria-label="date_calendar_previous_year_action"><img src="images/keyboard-arrow-left.svg" width="24" height="24" alt="" aria-hidden="true"></button>
+              <input id="calendar-year" type="number" min="1" max="9999" step="1" aria-label="Рік" autocomplete="off" data-i18n-aria-label="date_calendar_year_label">
+              <button id="calendar-year-next" class="date-step calendar-step" type="button" aria-label="Наступний рік" data-i18n-aria-label="date_calendar_next_year_action"><img src="images/keyboard-arrow-right.svg" width="24" height="24" alt="" aria-hidden="true"></button>
             </div>
           </div>
-          <div id="calendar-grid" class="calendar-grid" role="grid" aria-label="Дні місяця"></div>
+          <div id="calendar-grid" class="calendar-grid" role="grid" aria-label="Дні місяця" data-i18n-aria-label="date_calendar_days_accessible_label"></div>
         </section>
       </div>
       <div id="address-list"></div>
-      <p id="empty-state" class="empty explanation" hidden>Додайте адресу і слідкуйте за графіком відключень.</p>
+      <p id="empty-state" class="empty explanation" hidden data-i18n="address_list_empty_hint">Додайте адресу і слідкуйте за графіком відключень.</p>
       <div class="home-actions">
-        <button id="add-address" class="home-action" type="button" aria-label="Додати адресу" title="Додати адресу" disabled><img src="images/add-2.svg" width="24" height="24" alt="" aria-hidden="true"></button>
-        <button id="open-settings" class="home-action" type="button" aria-label="Налаштування" title="Налаштування" disabled><img src="images/settings.svg" width="24" height="24" alt="" aria-hidden="true"></button>
+        <button id="add-address" class="home-action" type="button" aria-label="Додати адресу" title="Додати адресу" disabled data-i18n-title="address_add_action" data-i18n-aria-label="address_add_action"><img src="images/add-2.svg" width="24" height="24" alt="" aria-hidden="true"></button>
+        <button id="open-settings" class="home-action" type="button" aria-label="Налаштування" title="Налаштування" disabled data-i18n-title="settings_screen_title" data-i18n-aria-label="settings_screen_title"><img src="images/settings.svg" width="24" height="24" alt="" aria-hidden="true"></button>
       </div>
     </section>
     <section id="share-view" aria-labelledby="screen-title" hidden>
       <div id="share-message" class="share-message">
-        <textarea id="share-text" class="share-text" rows="3" aria-label="Текст графіка для поширення" autocomplete="off" spellcheck="false"></textarea>
-        <button id="copy-shared-schedule" class="share-copy" type="button" aria-label="Копіювати графік відключень" title="Копіювати графік відключень"><img src="images/content-copy.svg" width="24" height="24" alt="" aria-hidden="true"></button>
+        <textarea id="share-text" class="share-text" rows="3" aria-label="Текст графіка для поширення" autocomplete="off" spellcheck="false" data-i18n-aria-label="schedule_share_text_accessible_label"></textarea>
+        <button id="copy-shared-schedule" class="share-copy" type="button" aria-label="Копіювати графік відключень" title="Копіювати графік відключень" data-i18n-title="schedule_share_copy_action" data-i18n-aria-label="schedule_share_copy_action"><img src="images/content-copy.svg" width="24" height="24" alt="" aria-hidden="true"></button>
       </div>
       <div id="share-qr" class="share-qr"></div>
       <p id="share-qr-status" class="explanation" role="status" hidden></p>
-      <p class="share-hint">Відскануйте QR-код камерою телефона, щоб отримати текст графіка.</p>
+      <p class="share-hint" data-i18n="schedule_share_phone_scan_hint">Відскануйте QR-код камерою телефона, щоб отримати текст графіка.</p>
     </section>
     <section id="form-view" aria-labelledby="screen-title" hidden>
       <form id="address-form" autocomplete="off">
         <fieldset id="address-fields" disabled>
-          <div class="field-title">Регіональне представництво</div>
+          <div class="field-title" data-i18n="address_form_regional_operator_label">Регіональне представництво ДТЕК</div>
           <div class="select-field">
-            <select id="region" name="region" aria-label="Регіональне представництво" autocomplete="off" required><option value="">Не задане</option></select>
-            <span class="select-placeholder" aria-hidden="true">Виберіть представництво</span>
+            <select id="region" name="region" aria-label="Регіональне представництво ДТЕК" autocomplete="off" required data-i18n-aria-label="address_form_regional_operator_label"><option value="" data-i18n="address_form_region_not_selected">Не задане</option></select>
+            <span class="select-placeholder" aria-hidden="true" data-i18n="address_form_region_placeholder">Виберіть представництво</span>
           </div>
-          <div class="field-title">Місто / населений пункт</div>
-          <input id="city" name="city" type="text" aria-label="Місто / населений пункт" required autocomplete="off" placeholder="Введіть населений пункт">
-          <div class="field-title">Вулиця</div>
-          <input id="street" name="street" type="text" aria-label="Вулиця" required autocomplete="off" placeholder="Введіть назву вулиці">
-          <div class="field-title">Будинок</div>
-          <input id="house" name="house" type="text" aria-label="Будинок" required autocomplete="off" placeholder="Введіть номер будинку">
+          <div class="field-title" data-i18n="address_form_city_label">Місто / населений пункт</div>
+          <input id="city" name="city" type="text" aria-label="Місто / населений пункт" required autocomplete="off" placeholder="Введіть населений пункт" data-i18n-aria-label="address_form_city_label" data-i18n-placeholder="address_form_city_placeholder">
+          <div class="field-title" data-i18n="address_form_street_label">Вулиця</div>
+          <input id="street" name="street" type="text" aria-label="Вулиця" required autocomplete="off" placeholder="Введіть назву вулиці" data-i18n-aria-label="address_form_street_label" data-i18n-placeholder="address_form_street_placeholder">
+          <div class="field-title" data-i18n="address_form_building_label">Будинок</div>
+          <input id="house" name="house" type="text" aria-label="Будинок" required autocomplete="off" placeholder="Введіть номер будинку" data-i18n-aria-label="address_form_building_label" data-i18n-placeholder="address_form_building_placeholder">
           <div class="form-actions">
-            <button id="save-address" class="home-action" type="submit" aria-label="Зберегти адресу" title="Зберегти адресу" disabled><img src="images/check.svg" width="24" height="24" alt="" aria-hidden="true"></button>
-            <button id="delete-address" class="home-action" type="button" aria-label="Видалити адресу" title="Видалити адресу" hidden><img src="images/delete.svg" width="24" height="24" alt="" aria-hidden="true"></button>
+            <button id="save-address" class="home-action" type="submit" aria-label="Зберегти адресу" title="Зберегти адресу" disabled data-i18n-title="address_form_save_action" data-i18n-aria-label="address_form_save_action"><img src="images/check.svg" width="24" height="24" alt="" aria-hidden="true"></button>
+            <button id="delete-address" class="home-action" type="button" aria-label="Видалити адресу" title="Видалити адресу" hidden data-i18n-title="address_form_delete_action" data-i18n-aria-label="address_form_delete_action"><img src="images/delete.svg" width="24" height="24" alt="" aria-hidden="true"></button>
           </div>
         </fieldset>
       </form>
@@ -95,31 +96,31 @@
       <p id="delete-address-summary"></p>
       <label class="checkbox-row archive-delete-option" for="delete-address-archive">
         <input id="delete-address-archive" type="checkbox" aria-describedby="archive-retention-note" autocomplete="off">
-        <span>Видалити архів даних за адресою</span>
+        <span data-i18n="address_delete_archive_checkbox">Видалити архів даних за адресою</span>
       </label>
-      <p id="archive-retention-note" class="explanation">Якщо не вибрати, архів відновиться після повторного додавання адреси.</p>
+      <p id="archive-retention-note" class="explanation" data-i18n="address_delete_archive_retention_hint">Якщо не вибрати, архів відновиться після повторного додавання адреси.</p>
       <div class="form-actions">
-        <button id="confirm-delete" class="delete-confirm-action" type="button"><img src="images/delete.svg" width="24" height="24" alt="" aria-hidden="true"><span>Видалити</span></button>
+        <button id="confirm-delete" class="delete-confirm-action" type="button"><img src="images/delete.svg" width="24" height="24" alt="" aria-hidden="true"><span data-i18n="address_delete_confirm_action">Видалити</span></button>
       </div>
     </section>
     <section id="popup-offer-view" aria-labelledby="screen-title" hidden>
-      <p class="explanation">На сайті ДТЕК виявлено спливаюче вікно, що перекриває сторінку. Увімкнути автоматичне закриття таких вікон?</p>
+      <p class="explanation" data-i18n="popup_offer_description">На сайті ДТЕК виявлено спливаюче вікно, що перекриває сторінку. Увімкнути автоматичне закриття таких вікон?</p>
       <div class="home-actions">
-        <button id="accept-popup-offer" type="button" disabled>Увімкнути</button>
-        <button id="dismiss-popup-offer" class="secondary" type="button" disabled>Не зараз</button>
+        <button id="accept-popup-offer" type="button" disabled data-i18n="popup_offer_enable_action">Увімкнути</button>
+        <button id="dismiss-popup-offer" class="secondary" type="button" disabled data-i18n="popup_offer_dismiss_action">Не зараз</button>
       </div>
-      <p class="hint">Після відмови запропонуємо знову не раніше ніж через місяць. Це налаштування також доступне в «Налаштуваннях».</p>
+      <p class="hint" data-i18n="popup_offer_repeat_hint">Після відмови запропонуємо знову не раніше ніж через місяць. Це налаштування також доступне в «Налаштуваннях».</p>
     </section>
     <section id="settings-view" aria-labelledby="screen-title" hidden>
       <label class="checkbox-row" for="auto-close-popups">
         <input id="auto-close-popups" name="autoClosePopups" type="checkbox" autocomplete="off">
-        <span>Автоматично закривати спливаючі вікна</span>
+        <span data-i18n="settings_popup_closing_checkbox">Автоматично закривати спливаючі вікна</span>
       </label>
-      <p class="hint">Зміна зберігається одразу й застосовується до всіх регіональних сайтів ДТЕК.</p>
+      <p class="hint" data-i18n="settings_popup_closing_save_hint">Зміна зберігається одразу й застосовується до всіх регіональних сайтів ДТЕК.</p>
     </section>
-    <p id="status" role="status" aria-live="polite">Завантаження…</p>
+    <p id="status" role="status" aria-live="polite" data-i18n="application_loading_status">Завантаження…</p>
     <footer class="project-footer">
-      <a href="https://github.com/yuriyapostol/ua-shutdowns" title="@yuriyapostol/ua-shutdowns" target="_blank" rel="noopener noreferrer"><img src="images/github.svg" width="18" height="18" alt="" aria-hidden="true"><span>Проєкт на GitHub</span></a>
+      <a href="https://github.com/yuriyapostol/ua-shutdowns" title="@yuriyapostol/ua-shutdowns" target="_blank" rel="noopener noreferrer"><img src="images/github.svg" width="18" height="18" alt="" aria-hidden="true"><span data-i18n="footer_github_project_link">Проєкт на GitHub</span></a>
     </footer>
   </main>
 </body>

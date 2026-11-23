@@ -1,9 +1,10 @@
+const { i18nFixtureSource } = require('./i18n-fixture.cjs');
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const { readFileSync } = require('node:fs');
 const vm = require('node:vm');
 const source = readFileSync(require.resolve('../dtek-schedule.js'), 'utf8');
-const api = vm.runInNewContext(source + '\nDtekSchedule;', { Intl, Date });
+const api = vm.runInNewContext(i18nFixtureSource() + '\n' + source + '\nDtekSchedule;', { Intl, Date });
 const plain = value => JSON.parse(JSON.stringify(value));
 const slots = (overrides = {}) => Array.from({ length: 24 }, (_, hour) =>
   ({ start: hour * 60, end: (hour + 1) * 60, state: overrides[hour] || 'yes' }));

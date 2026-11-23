@@ -1,6 +1,6 @@
 'use strict';
 
-importScripts('dtek-sites.js', 'dtek-schedule.js', 'address-settings.js', 'address-navigation.js');
+importScripts('i18n.js', 'dtek-sites.js', 'dtek-schedule.js', 'address-settings.js', 'address-navigation.js');
 
 // Serialize detections from multiple modals/tabs, including while openPopup waits.
 let offerQueue = Promise.resolve();
@@ -28,7 +28,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message?.type === 'open-address' && sender.url === chrome.runtime.getURL('popup.html')) {
     navigationQueue = navigationQueue.then(async () => {
       const address = (await AddressSettings.list()).find(item => item.id === message.addressId);
-      if (!address) throw new Error('Адресу вже видалено.');
+      if (!address) throw new Error(I18n.t('address_save_already_deleted_error'));
       await AddressNavigation.navigate(address);
       sendResponse({ ok: true });
     }).catch(error => sendResponse({ ok: false, error: error.message }));
@@ -47,7 +47,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message?.type === 'save-address-queue') {
     navigationQueue = navigationQueue.then(async () => {
       const address = await AddressNavigation.forTab(sender.tab.id, sender.url);
-      if (!address || address.id !== message.address?.id) throw new Error('Адресу у вкладці змінено.');
+      if (!address || address.id !== message.address?.id) throw new Error(I18n.t('address_navigation_tab_changed_error'));
       await AddressSettings.saveQueue(message.address, message.queue, message.schedule, message.schedules);
       sendResponse({ ok: true });
     }).catch(error => sendResponse({ ok: false, error: error.message }));

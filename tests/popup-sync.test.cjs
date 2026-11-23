@@ -1,3 +1,4 @@
+const { i18nFixtureSource } = require('./i18n-fixture.cjs');
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const { readFileSync } = require('node:fs');
@@ -14,6 +15,7 @@ async function popup({ url = 'https://www.dtek-krem.com.ua/ua/shutdowns', unavai
   }
   const elements = new Map();
   const document = {
+    documentElement: {},
     getElementById(id) {
       if (!elements.has(id)) elements.set(id, new Element());
       return elements.get(id);
@@ -53,7 +55,7 @@ async function popup({ url = 'https://www.dtek-krem.com.ua/ua/shutdowns', unavai
   };
   const source = ['dtek-sites.js', 'dtek-schedule.js', 'address-settings.js', 'popup.js']
     .map(file => readFileSync(require.resolve('../' + file), 'utf8')).join('\n');
-  vm.runInNewContext(source, { chrome, document, URL, Intl, setTimeout, clearTimeout,
+  vm.runInNewContext(i18nFixtureSource() + '\n' + source, { chrome, document, URL, Intl, setTimeout, clearTimeout,
     Date: class extends Date { static now() { return Date.UTC(2026, 10, 19, 12); } } });
   const drain = async () => { for (let i = 0; i < 100; i++) await Promise.resolve(); };
   await drain();

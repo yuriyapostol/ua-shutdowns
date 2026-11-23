@@ -3,11 +3,11 @@
 const AddressSettings = (() => {
   function validate(address, allowUnassigned = false) {
     const region = DtekSites.get(address?.region);
-    if (!region && !(allowUnassigned && address?.region === '')) throw new Error('Оберіть регіональне представництво.');
+    if (!region && !(allowUnassigned && address?.region === '')) throw new Error(I18n.t('address_validation_region_required'));
     const result = { region: region?.id || '' };
     for (const field of ['city', 'street', 'house']) {
       const value = field === 'city' && region?.city ? region.city : address?.[field];
-      if (typeof value !== 'string' || !value.trim()) throw new Error('Заповніть місто, вулицю та номер будинку.');
+      if (typeof value !== 'string' || !value.trim()) throw new Error(I18n.t('address_validation_fields_required'));
       result[field] = value.trim().replace(/\s+/g, ' ');
     }
     return result;
@@ -50,7 +50,7 @@ const AddressSettings = (() => {
   }
 
   function archiveData(item = {}) {
-    if (!item || typeof item !== 'object' || Array.isArray(item)) throw new Error('Не вдалося прочитати архів графіків.');
+    if (!item || typeof item !== 'object' || Array.isArray(item)) throw new Error(I18n.t('schedule_archive_read_error'));
     const schedules = scheduleHistory(item);
     return { ...(validQueue(item.queue) ? { queue: item.queue } : {}),
       ...(Object.keys(schedules).length ? { schedules } : {}) };
@@ -65,19 +65,19 @@ const AddressSettings = (() => {
     const data = await chrome.storage.local.get(['addresses', 'address', 'addressArchives']);
     if (data.addressArchives !== undefined && (!data.addressArchives ||
         typeof data.addressArchives !== 'object' || Array.isArray(data.addressArchives))) {
-      throw new Error('Не вдалося прочитати архів графіків.');
+      throw new Error(I18n.t('schedule_archive_read_error'));
     }
     const archives = { ...data.addressArchives };
     let items;
     if (data.addresses !== undefined) {
-      if (!Array.isArray(data.addresses)) throw new Error('Не вдалося прочитати список адрес.');
+      if (!Array.isArray(data.addresses)) throw new Error(I18n.t('address_list_storage_read_error'));
       items = data.addresses;
     } else {
       // Preserve old profiles without guessing their regional operator.
       items = data.address == null ? [] : [{ ...data.address, id: 'legacy-address', region: '' }];
     }
     const profiles = items.map(item => {
-      if (typeof item?.id !== 'string' || !item.id) throw new Error('Пошкоджено запис адреси.');
+      if (typeof item?.id !== 'string' || !item.id) throw new Error(I18n.t('address_storage_record_invalid_error'));
       const profile = { id: item.id, ...validate(item, true) };
       const key = archiveKey(profile);
       const embedded = archiveData(item);
@@ -107,9 +107,9 @@ const AddressSettings = (() => {
       return locked(async () => {
         const { addresses, archives } = await readState();
         const index = addresses.findIndex(item => item.id === id);
-        if (id && index === -1) throw new Error('Адресу вже видалено.');
+        if (id && index === -1) throw new Error(I18n.t('address_save_already_deleted_error'));
         const duplicate = addresses.find(item => item.id !== id && archiveKey(item) === archiveKey(value));
-        if (duplicate) throw new Error('Таку адресу вже додано.');
+        if (duplicate) throw new Error(I18n.t('address_save_duplicate_error'));
         const saved = { id: id || crypto.randomUUID(), ...value, ...archiveData(archives[archiveKey(value)]) };
         if (index === -1) addresses.push(saved); else addresses[index] = saved;
         await writeState(addresses, archives);
@@ -126,10 +126,10 @@ const AddressSettings = (() => {
       });
     },
     async saveQueue(address, queue, schedule, schedules = []) {
-      if (queue !== '' && !validQueue(queue)) throw new Error('Некоректна черга.');
-      if (schedule != null && !DtekSchedule.isValid(schedule)) throw new Error('Некоректний графік.');
+      if (queue !== '' && !validQueue(queue)) throw new Error(I18n.t('schedule_validation_group_error'));
+      if (schedule != null && !DtekSchedule.isValid(schedule)) throw new Error(I18n.t('schedule_validation_single_error'));
       if (!Array.isArray(schedules) || schedules.length > 2 || schedules.some(item => !DtekSchedule.isValid(item))) {
-        throw new Error('Некоректні графіки.');
+        throw new Error(I18n.t('schedule_validation_collection_error'));
       }
       return locked(async () => {
         const { addresses, archives } = await readState();
