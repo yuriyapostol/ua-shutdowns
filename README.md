@@ -65,7 +65,7 @@ You can add multiple addresses. Use the edit button next to an address to change
 
 On the home screen, choose today, tomorrow or another date using the arrows or calendar. Schedules for buildings with two supply lines are displayed separately.
 
-The interface automatically uses Chrome's interface language: Ukrainian or English, with English as the fallback for other languages. The date field and calendar follow the interface locale: for example, `MM/DD/YYYY` for US English and `DD/MM/YYYY` for British English. Outage dates always refer to the time in Kyiv.
+The interface automatically uses Chrome's interface language: Ukrainian, English, German, French, Spanish, Italian or Polish, with English as the fallback for other languages. The date field and calendar follow the interface locale: for example, `MM/DD/YYYY` for US English and `DD/MM/YYYY` for British English. Outage dates always refer to the time in Kyiv.
 
 The extension receives data from the active DTEK tab. To update the schedule for an address, click it and wait for the website to load its data. Only previously saved schedules are available offline.
 

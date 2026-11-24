@@ -2,6 +2,10 @@
 
 **English** · [Українська](CHANGELOG.uk.md)
 
+## Unreleased
+
+- Added complete German, French, Spanish, Italian and Polish interface catalogs, including localized date hints, calendar settings, accessibility labels and shared schedule text.
+
 ## 0.6.1 — 2026-11-24
 
 - Declared `yuriyapostol/qrcode-generator` as a GitHub dependency pinned to the `v3.4.0` tag, with its exact source commit and transitive dependencies recorded in `package-lock.json`.

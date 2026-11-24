@@ -109,7 +109,7 @@ test('validation discovers added locales and rejects missing context or broken p
     const french = structuredClone(catalogs.en);
     french.locale_language.message = 'fr';
     french.locale_format.message = 'fr-FR';
-    mkdirSync(join(root, '_locales/fr'));
+    mkdirSync(join(root, '_locales/fr'), { recursive: true });
     const save = () => writeFileSync(join(root, '_locales/fr/messages.json'), JSON.stringify(french));
     save();
     assert.ok(checkLocales(root).languages.includes('fr'));
@@ -131,5 +131,38 @@ test('every catalog has working date input and sharing text without unresolved p
       assert.equal(i18n.parseDate(i18n.formatDate(date)), date, directory);
     }
     assert.doesNotMatch(i18n.sharedDate('2026-11-23'), /\$[A-Z_]+\$/, directory);
+  }
+});
+
+
+test('European catalogs select regional variants and localize dates and sharing', () => {
+  const cases = [
+    ['de', 'de-AT', '23.11.2026', 'TT.MM.JJJJ', 'Stromabschaltungen'],
+    ['fr', 'fr-BE', '23/11/2026', 'JJ/MM/AAAA', 'Coupures de courant'],
+    ['es', 'es-MX', '23/11/2026', 'DD/MM/AAAA', 'Cortes de luz'],
+    ['it', 'it-CH', '23/11/2026', 'GG/MM/AAAA', 'Interruzioni di corrente'],
+    ['pl', 'pl-PL', '23.11.2026', 'DD.MM.RRRR', 'Wyłączenia prądu']
+  ];
+  for (const [language, regional, date, hint, heading] of cases) {
+    const { i18n, schedule } = setup(language);
+    assert.equal(i18n.language, language);
+    assert.equal(i18n.formatDate('2026-11-23'), date);
+    assert.equal(i18n.datePlaceholder, hint);
+    assert.equal(i18n.firstWeekday, 1);
+    const variant = setup(regional).i18n;
+    assert.equal(variant.language, language);
+    assert.equal(variant.locale, regional);
+    assert.equal(variant.parseDate(variant.formatDate('2024-02-29')), '2024-02-29');
+    const address = { city: 'Обухів', street: 'Миру', house: '17', queue: '5.2' };
+    const day = { date: '2026-11-23', queue: '5.2', lines: [[], [[1410, 1440]]] };
+    const before = JSON.stringify({ address, day });
+    const text = schedule.toText(address, { id: 'krem' }, day);
+    assert.ok(text.startsWith(heading), language);
+    assert.ok(text.includes('Обухів'), language);
+    assert.ok(text.includes(catalogs[language].schedule_no_outages.message), language);
+    assert.ok(text.includes(i18n.t('schedule_supply_line_label', ['2'])), language);
+    assert.ok(text.includes('23:30 – 24:00'), language);
+    assert.doesNotMatch(text, /\$[A-Z_]+\$/);
+    assert.equal(JSON.stringify({ address, day }), before);
   }
 });
