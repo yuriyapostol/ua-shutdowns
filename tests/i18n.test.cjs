@@ -195,7 +195,8 @@ test('catalog examples use Ukrainian addresses and their own date and weekday fo
     for (const [key, entry] of Object.entries(catalog)) {
       for (const [name, value] of Object.entries(entry.placeholders || {})) {
         const context = `${language}/${key}/${name}`;
-        if (name === 'address' || name === 'place') assert.equal(value.example, 'Київ, Хрещатик 22', context);
+        if (name === 'address') assert.equal(value.example, 'Київ, Хрещатик, 22', context);
+        if (name === 'place') assert.equal(value.example, 'Київ', context);
         if (name === 'date_format') assert.equal(value.example, i18n.datePlaceholder, context);
         if (name === 'date') assert.equal(value.example, key === 'schedule_share_text_header' ?
           i18n.sharedDate('2026-11-23') : i18n.formatDate('2026-11-23'), context);

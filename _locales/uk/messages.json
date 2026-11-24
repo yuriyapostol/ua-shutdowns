@@ -25,7 +25,7 @@
     "placeholders": {
       "address": {
         "content": "$1",
-        "example": "Київ, Хрещатик 22"
+        "example": "Київ, Хрещатик, 22"
       }
     }
   },
@@ -99,7 +99,7 @@
     "placeholders": {
       "address": {
         "content": "$1",
-        "example": "Київ, Хрещатик 22"
+        "example": "Київ, Хрещатик, 22"
       }
     }
   },
@@ -467,7 +467,7 @@
       },
       "address": {
         "content": "$2",
-        "example": "Київ, Хрещатик 22"
+        "example": "Київ, Хрещатик, 22"
       }
     }
   },
@@ -551,7 +551,7 @@
       },
       "place": {
         "content": "$2",
-        "example": "Київ, Хрещатик 22"
+        "example": "Київ"
       },
       "group": {
         "content": "$3",
