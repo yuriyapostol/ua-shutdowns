@@ -59,13 +59,13 @@ Until the extension is published in the store, you can install it manually from 
 3. Click the saved address. The extension will open the DTEK website and fill in its address form.
 4. Wait for the schedule to appear on the website, then open the extension to view the received outage times.
 
-You can add multiple addresses. Use the edit button next to an address to change or delete it. Enter city and street names as they appear on the Ukrainian DTEK website.
+You can add multiple addresses. Use the edit button next to an address to change or delete it. Enter addresses in Ukrainian, as they appear on the DTEK website, regardless of the interface language. Otherwise, the address will not be found. For example: city — `Київ`, street — `Хрещатик`, building — `22`.
 
 ### View schedules by date
 
 On the home screen, choose today, tomorrow or another date using the arrows or calendar. Schedules for buildings with two supply lines are displayed separately.
 
-The interface automatically uses Chrome's interface language: Ukrainian or English, with English as the fallback for other languages. The date field and calendar follow the interface locale: for example, `MM/DD/YYYY` for US English and `DD/MM/YYYY` for British English. Outage dates always refer to the time in Kyiv.
+The interface automatically uses Chrome's interface language: Ukrainian or English, with English as the fallback for other languages. Date formats and calendar weeks follow the user’s locale, including its regional settings: date component order and separators, month and weekday names, and the first day of the week. For example, US English uses `MM/DD/YYYY` and weeks starting on Sunday; British English uses `DD/MM/YYYY` and weeks starting on Monday. If the Chrome interface language is unsupported, the default locale of the fallback translation is used. Outage dates always refer to the time in Kyiv.
 
 The extension receives data from the active DTEK tab. To update the schedule for an address, click it and wait for the website to load its data. Only previously saved schedules are available offline.
 

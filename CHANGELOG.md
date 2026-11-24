@@ -2,6 +2,13 @@
 
 **English** · [Українська](CHANGELOG.uk.md)
 
+## 0.6.2 — 2026-11-24
+
+- Moved the settings button to the right side of the home screen header. It now has a subdued icon, a transparent default background and the same compact hover area as the calendar's month and year controls.
+- Centered the home screen's empty-address and region-selection hints.
+- Added a visible, accessible reminder to enter addresses in Ukrainian regardless of the interface language, matching the DTEK website. Refined the English settlement label to “City, town or village”.
+- Standardized address examples in translations and documentation as “Київ, Хрещатик, 22”. Clarified that address values and examples remain Ukrainian, while date formats and calendar weeks follow the user's locale and regional settings.
+
 ## 0.6.1 — 2026-11-24
 
 - Declared `yuriyapostol/qrcode-generator` as a GitHub dependency pinned to the `v3.4.0` tag, with its exact source commit and transitive dependencies recorded in `package-lock.json`.

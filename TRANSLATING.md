@@ -27,7 +27,7 @@ The catalog is standard [Chrome messages.json](https://developer.chrome.com/docs
     "description": "Accessible label for sharing a particular address's schedule on a selected date.",
     "placeholders": {
       "date": { "content": "$1", "example": "11/23/2026" },
-      "address": { "content": "$2", "example": "Обухів, Миру, 17" }
+      "address": { "content": "$2", "example": "Київ, Хрещатик, 22" }
     }
   }
 }
@@ -37,7 +37,7 @@ The catalog is standard [Chrome messages.json](https://developer.chrome.com/docs
 - `description`: context for translators, not displayed in the interface.
 - `placeholders`: named dynamic values. Preserve their `content` (`$1`, `$2`, etc.); examples show what values look like. You may reorder named placeholders in the translated sentence. Keep every placeholder definition, even when a language's message does not use all of them.
 
-Do not translate stored address values. The DTEK website expects Ukrainian place and street names. “Group” means the DTEK outage queue identifier (for example, 5.2), not a waiting line. “Line” means a building's electricity supply line.
+Do not translate stored address values or address examples. Users must enter addresses in Ukrainian, as on the DTEK website, even when the interface is in another language; otherwise, the address will not be found. Keep this requirement explicit when translating `address_form_language_hint`. “Group” means the DTEK outage queue identifier (for example, 5.2), not a waiting line. “Line” means a building's electricity supply line.
 
 ### Locale metadata and dates
 
@@ -52,7 +52,7 @@ These entries configure the locale instead of displaying a sentence:
 | `locale_date_month_token` | `MM` | Month abbreviation in the date format hint |
 | `locale_date_year_token` | `YYYY` | Four-digit year abbreviation in the date format hint |
 
-If Chrome's interface language matches the selected catalog language, its regional variant controls date order and the calendar. Otherwise `locale_format` is used. Date entry uses Gregorian dates and ASCII digits; dates in storage always use `YYYY-MM-DD`, and outage days are determined in the Kyiv timezone.
+Date formats and calendar weeks must follow the user’s locale, including its regional settings: date component order and separators, month and weekday names, and the first day of the week. Do not hardcode one date format or a Monday/Sunday week start for every locale. For example, `en-US` uses `MM/DD/YYYY` and Sunday, while `en-GB` uses `DD/MM/YYYY` and Monday. When checking a translation, verify date input, calendar headings and weekday order, and dates in shared schedules. If Chrome's interface language matches the selected catalog language, its regional variant controls these settings. Otherwise `locale_format` is used. Date entry uses Gregorian dates and ASCII digits; dates in storage always use `YYYY-MM-DD`, and outage days are determined in the Kyiv timezone.
 
 `schedule_share_date_text` normally uses `$FULL_DATE$`, formatted automatically for the locale. If the language needs a custom grammatical date, use `$WEEKDAY$`, `$DAY$`, `$MONTH$` and `$YEAR$`. In that case translate `schedule_share_weekday_0` through `_6` for the sentence, starting with Sunday. Ukrainian uses these to preserve phrases such as “у вівторок”. Month names are supplied by `Intl` in a full date context.
 

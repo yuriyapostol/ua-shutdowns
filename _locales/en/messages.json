@@ -25,7 +25,7 @@
     "placeholders": {
       "address": {
         "content": "$1",
-        "example": "Обухів, Миру, 17"
+        "example": "Київ, Хрещатик, 22"
       }
     }
   },
@@ -58,7 +58,7 @@
     "description": "Placeholder in the building number input."
   },
   "address_form_city_label": {
-    "message": "City / town / village",
+    "message": "City, town or village",
     "description": "Label and accessible name for the city, town or village field."
   },
   "address_form_city_placeholder": {
@@ -68,6 +68,10 @@
   "address_form_delete_action": {
     "message": "Delete address",
     "description": "Tooltip and accessible label on the button that opens deletion confirmation."
+  },
+  "address_form_language_hint": {
+    "message": "Enter addresses in Ukrainian, as on the DTEK website, regardless of the interface language. Otherwise, the address will not be found.",
+    "description": "Hint explaining that address input must remain in Ukrainian in every interface language so the DTEK website can find it."
   },
   "address_form_region_not_selected": {
     "message": "Not selected",
@@ -99,7 +103,7 @@
     "placeholders": {
       "address": {
         "content": "$1",
-        "example": "Обухів, Миру, 17"
+        "example": "Київ, Хрещатик, 22"
       }
     }
   },
@@ -467,7 +471,7 @@
       },
       "address": {
         "content": "$2",
-        "example": "Обухів, Миру, 17"
+        "example": "Київ, Хрещатик, 22"
       }
     }
   },
@@ -551,7 +555,7 @@
       },
       "place": {
         "content": "$2",
-        "example": "Kyiv region, Обухів"
+        "example": "Kyiv, Київ"
       },
       "group": {
         "content": "$3",

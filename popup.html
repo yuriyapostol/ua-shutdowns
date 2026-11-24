@@ -23,6 +23,7 @@
           <h1 id="screen-title" data-i18n="home_screen_title">Графік відключень світла</h1>
         </div>
       </div>
+      <button id="open-settings" class="header-settings" type="button" aria-label="Налаштування" title="Налаштування" disabled data-i18n-title="settings_screen_title" data-i18n-aria-label="settings_screen_title"><img src="images/settings.svg" width="24" height="24" alt="" aria-hidden="true"></button>
     </header>
     <section id="home-view" aria-labelledby="screen-title">
       <div class="date-shortcuts" role="group" aria-label="Швидкий вибір дати" data-i18n-aria-label="date_shortcuts_accessible_label">
@@ -59,7 +60,6 @@
       <p id="empty-state" class="empty explanation" hidden data-i18n="address_list_empty_hint">Додайте адресу і слідкуйте за графіком відключень.</p>
       <div class="home-actions">
         <button id="add-address" class="home-action" type="button" aria-label="Додати адресу" title="Додати адресу" disabled data-i18n-title="address_add_action" data-i18n-aria-label="address_add_action"><img src="images/add-2.svg" width="24" height="24" alt="" aria-hidden="true"></button>
-        <button id="open-settings" class="home-action" type="button" aria-label="Налаштування" title="Налаштування" disabled data-i18n-title="settings_screen_title" data-i18n-aria-label="settings_screen_title"><img src="images/settings.svg" width="24" height="24" alt="" aria-hidden="true"></button>
       </div>
     </section>
     <section id="share-view" aria-labelledby="screen-title" hidden>
@@ -80,11 +80,12 @@
             <span class="select-placeholder" aria-hidden="true" data-i18n="address_form_region_placeholder">Виберіть представництво</span>
           </div>
           <div class="field-title" data-i18n="address_form_city_label">Місто / населений пункт</div>
-          <input id="city" name="city" type="text" aria-label="Місто / населений пункт" required autocomplete="off" placeholder="Введіть населений пункт" data-i18n-aria-label="address_form_city_label" data-i18n-placeholder="address_form_city_placeholder">
+          <input id="city" name="city" aria-describedby="address-language-hint" type="text" aria-label="Місто / населений пункт" required autocomplete="off" placeholder="Введіть населений пункт" data-i18n-aria-label="address_form_city_label" data-i18n-placeholder="address_form_city_placeholder">
           <div class="field-title" data-i18n="address_form_street_label">Вулиця</div>
-          <input id="street" name="street" type="text" aria-label="Вулиця" required autocomplete="off" placeholder="Введіть назву вулиці" data-i18n-aria-label="address_form_street_label" data-i18n-placeholder="address_form_street_placeholder">
+          <input id="street" name="street" aria-describedby="address-language-hint" type="text" aria-label="Вулиця" required autocomplete="off" placeholder="Введіть назву вулиці" data-i18n-aria-label="address_form_street_label" data-i18n-placeholder="address_form_street_placeholder">
           <div class="field-title" data-i18n="address_form_building_label">Будинок</div>
-          <input id="house" name="house" type="text" aria-label="Будинок" required autocomplete="off" placeholder="Введіть номер будинку" data-i18n-aria-label="address_form_building_label" data-i18n-placeholder="address_form_building_placeholder">
+          <input id="house" name="house" aria-describedby="address-language-hint" type="text" aria-label="Будинок" required autocomplete="off" placeholder="Введіть номер будинку" data-i18n-aria-label="address_form_building_label" data-i18n-placeholder="address_form_building_placeholder">
+          <p id="address-language-hint" class="explanation" data-i18n="address_form_language_hint">Вводьте адресу українською, як на сайті ДТЕК, незалежно від мови інтерфейсу. Інакше адресу не буде знайдено.</p>
           <div class="form-actions">
             <button id="save-address" class="home-action" type="submit" aria-label="Зберегти адресу" title="Зберегти адресу" disabled data-i18n-title="address_form_save_action" data-i18n-aria-label="address_form_save_action"><img src="images/check.svg" width="24" height="24" alt="" aria-hidden="true"></button>
             <button id="delete-address" class="home-action" type="button" aria-label="Видалити адресу" title="Видалити адресу" hidden data-i18n-title="address_form_delete_action" data-i18n-aria-label="address_form_delete_action"><img src="images/delete.svg" width="24" height="24" alt="" aria-hidden="true"></button>
