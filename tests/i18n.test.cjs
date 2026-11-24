@@ -4,7 +4,7 @@ const { readFileSync } = require('node:fs');
 const vm = require('node:vm');
 const { i18nFixtureSource } = require('./i18n-fixture.cjs');
 const read = file => readFileSync(require.resolve('../' + file), 'utf8');
-const { readCatalogs, checkLocales } = require('../scripts/check-locales.cjs');
+const { readCatalogs, checkLocales, catalogBundle } = require('../scripts/check-locales.cjs');
 const catalogs = readCatalogs();
 function setup(locale, extra = '') {
   return vm.runInNewContext(i18nFixtureSource(locale) + '\n' + read('dtek-schedule.js') + '\n' + extra +
@@ -12,6 +12,7 @@ function setup(locale, extra = '') {
 }
 
 test('all discovered catalogs cover source keys and provide translator context and valid placeholders', () => {
+  assert.equal(read('i18n-catalogs.js'), catalogBundle(), 'Regenerate bundled catalogs with --write');
   const result = checkLocales();
   assert.deepEqual(result.languages, Object.keys(catalogs).sort());
   assert.equal(result.messages, Object.keys(catalogs.en).length);
@@ -132,4 +133,64 @@ test('every catalog has working date input and sharing text without unresolved p
     }
     assert.doesNotMatch(i18n.sharedDate('2026-11-23'), /\$[A-Z_]+\$/, directory);
   }
+});
+
+function storedLanguage(browser, initial = {}) {
+  const data = structuredClone(initial);
+  let failSave = false;
+  const chrome = { storage: { local: {
+    async get() { return structuredClone(data); },
+    async set(update) {
+      if (failSave) throw new Error('Storage unavailable');
+      Object.assign(data, structuredClone(update));
+    }
+  } } };
+  const i18n = vm.runInNewContext(i18nFixtureSource(browser) + '\nI18n;', { chrome, Intl, Date });
+  return { i18n, data, failSave() { failSave = true; } };
+}
+
+test('manual language persists and updates formatting, sharing and literal placeholders', async () => {
+  const { i18n, data } = storedLanguage('uk');
+  await i18n.init();
+  assert.equal(i18n.preference, 'system');
+  await i18n.setLanguage('en');
+  assert.equal(data.interfaceLanguage, 'en');
+  assert.equal(i18n.language, 'en');
+  assert.equal(i18n.locale, 'en-US');
+  assert.equal(i18n.formatDate('2026-11-23'), '11/23/2026');
+  assert.match(i18n.sharedDate('2026-11-23'), /Monday, November 23, 2026/);
+  assert.equal(i18n.t('schedule_share_address_accessible_label', ['11/23/2026', 'Street $1, $DATE$']),
+    'Share schedule for 11/23/2026: Street $1, $DATE$');
+  const reopened = storedLanguage('uk', data).i18n;
+  await reopened.init();
+  assert.equal(reopened.language, 'en');
+  await reopened.setLanguage('system');
+  assert.equal(reopened.language, 'uk');
+  assert.equal(reopened.formatDate('2026-11-23'), '23.11.2026');
+});
+
+test('manual selections preserve matching browser regions and override a different language', async () => {
+  for (const [browser, selection, expected] of [['en-GB', 'en', 'en-GB'], ['en-US', 'uk', 'uk-UA'],
+    ['zz-ZZ', 'uk', 'uk-UA'], ['zz-ZZ', 'system', 'en-US']]) {
+    const { i18n } = storedLanguage(browser, { interfaceLanguage: selection });
+    await i18n.init();
+    assert.equal(i18n.locale, expected);
+  }
+});
+
+test('unsupported saved languages fall back to browser selection and failed saves keep current language', async () => {
+  for (const value of ['unknown', '__proto__', null, 42]) {
+    const { i18n } = storedLanguage('uk', { interfaceLanguage: value });
+    await i18n.init();
+    assert.equal(i18n.preference, 'system');
+    assert.equal(i18n.language, 'uk');
+  }
+  const p = storedLanguage('uk', { interfaceLanguage: 'uk' });
+  await p.i18n.init();
+  await assert.rejects(p.i18n.setLanguage('unknown'), /Unsupported/);
+  p.failSave();
+  await assert.rejects(p.i18n.setLanguage('en'), /Storage unavailable/);
+  assert.equal(p.i18n.language, 'uk');
+  assert.equal(p.i18n.preference, 'uk');
+  assert.equal(p.data.interfaceLanguage, 'uk');
 });

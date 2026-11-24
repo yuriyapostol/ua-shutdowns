@@ -23,6 +23,8 @@ function i18nFixtureSource(uiLocale = 'uk', overrides = {}) {
         });
       }
     };
+    const I18nDefaultLocale = ${JSON.stringify(defaultLocale)};
+    const I18nCatalogs = ${JSON.stringify(catalogs)};
     ${readFileSync(require.resolve('../i18n.js'), 'utf8')}
   `;
 }

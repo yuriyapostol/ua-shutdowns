@@ -9,10 +9,10 @@ Interface and Chrome Web Store translations can grow independently of the docume
 1. Copy `_locales/en/messages.json` to `_locales/<locale>/messages.json`. Use a [Chrome-supported locale directory](https://developer.chrome.com/docs/extensions/reference/api/i18n), such as `pl` or `pt_BR`.
 2. Translate `message` values. Keep keys and placeholder names unchanged. Each entry's `description` explains where and how the text is used. The Ukrainian catalog has Ukrainian descriptions; the English catalog has English descriptions. You may also translate these notes for a new language to make translators' work easier.
 3. Set the locale metadata described below. No JavaScript or language registration list needs updating.
-4. Run `node scripts/check-locales.cjs` and `node --test tests/*.test.cjs`.
-5. Reload the unpacked extension and check it in Chrome with the target interface language, including date entry, calendar navigation, long labels and sharing text.
+4. Run `node scripts/check-locales.cjs --write` to regenerate `i18n-catalogs.js`, then `node scripts/check-locales.cjs` and `npm test`. Commit the generated bundle with the catalog. The settings selector discovers languages from this bundle.
+5. Reload the unpacked extension and select the new language in Settings and also check automatic selection with the target Chrome interface language, including date entry, calendar navigation, long labels and sharing text.
 
-Chrome chooses the catalog using its interface language and falls back to `manifest.json`'s `default_locale`, currently English, for missing messages. Our checks require complete catalogs before publication so users do not see an accidentally mixed interface.
+Users can choose any bundled language in Settings. The default “Same as browser” option lets Chrome choose the catalog using its interface language and falls back to `manifest.json`'s `default_locale`, currently English, for missing messages. Our checks require complete catalogs before publication so users do not see an accidentally mixed interface.
 
 ### Keys and translator context
 
@@ -45,6 +45,7 @@ These entries configure the locale instead of displaying a sentence:
 
 | Key | Example | Meaning |
 | --- | --- | --- |
+| `locale_native_name` | `Português (Brasil)` | Language name in its own language for the settings selector |
 | `locale_language` | `pt-BR` | BCP 47 tag matching the catalog directory (`pt_BR`) |
 | `locale_format` | `pt-BR` | Default date/calendar locale for this translation |
 | `locale_week_first_day` | `1` | Fallback first weekday: Sunday = 0, Monday = 1, through Saturday = 6 |

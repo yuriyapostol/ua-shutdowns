@@ -391,6 +391,10 @@
     "message": "en",
     "description": "Locale metadata, not visible text. Set to this catalog's BCP 47 language tag, e.g. uk, en or pt-BR."
   },
+  "locale_native_name": {
+    "message": "English",
+    "description": "Language name in its own language, displayed in the interface language selector."
+  },
   "locale_week_first_day": {
     "message": "0",
     "description": "Locale metadata, not visible text. Fallback first weekday if Intl week information is unavailable: 0 = Sunday, 1 = Monday, ..., 6 = Saturday."
@@ -621,6 +625,14 @@
     "message": "Invalid schedule.",
     "description": "Validation error for a single received schedule."
   },
+  "settings_language_label": {
+    "message": "Interface language",
+    "description": "Label for the interface language selector in settings."
+  },
+  "settings_language_system_option": {
+    "message": "Same as browser",
+    "description": "Default language option that follows Chrome’s interface language, with English as the fallback."
+  },
   "settings_popup_closing_checkbox": {
     "message": "Automatically close popups",
     "description": "Checkbox enabling automatic closing of popups on DTEK websites."
@@ -628,10 +640,6 @@
   "settings_popup_closing_enabled_status": {
     "message": "Automatic popup closing is enabled.",
     "description": "Confirmation after automatic closing of DTEK website popups is enabled."
-  },
-  "settings_popup_closing_save_hint": {
-    "message": "Changes are saved immediately and apply to all DTEK regional websites.",
-    "description": "Explains that the checkbox saves immediately for all supported DTEK regional websites."
   },
   "settings_save_error": {
     "message": "Could not save settings. Please try again.",

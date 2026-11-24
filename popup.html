@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Графік відключень світла — UA Shutdowns: DTEK</title>
   <link rel="stylesheet" href="popup.css">
+  <script src="i18n-catalogs.js" defer></script>
   <script src="i18n.js" defer></script>
   <script src="dtek-sites.js" defer></script>
   <script src="dtek-schedule.js" defer></script>
@@ -113,11 +114,14 @@
       <p class="hint" data-i18n="popup_offer_repeat_hint">Після відмови запропонуємо знову не раніше ніж через місяць. Це налаштування також доступне в «Налаштуваннях».</p>
     </section>
     <section id="settings-view" aria-labelledby="screen-title" hidden>
+      <label for="interface-language" data-i18n="settings_language_label">Мова інтерфейсу</label>
+      <select id="interface-language" name="interfaceLanguage" disabled>
+        <option value="system" data-i18n="settings_language_system_option">Як у браузері</option>
+      </select>
       <label class="checkbox-row" for="auto-close-popups">
         <input id="auto-close-popups" name="autoClosePopups" type="checkbox" autocomplete="off">
         <span data-i18n="settings_popup_closing_checkbox">Автоматично закривати спливаючі вікна</span>
       </label>
-      <p class="hint" data-i18n="settings_popup_closing_save_hint">Зміна зберігається одразу й застосовується до всіх регіональних сайтів ДТЕК.</p>
     </section>
     <p id="status" role="status" aria-live="polite" data-i18n="application_loading_status">Завантаження…</p>
     <footer class="project-footer">

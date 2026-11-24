@@ -1,6 +1,8 @@
-(function() {
+(async function() {
   'use strict';
 
+  try { await I18n.init(); }
+  catch { /* Keep the browser language; load() reports storage failures below. */ }
   I18n.localizeDocument();
   document.title = I18n.t('home_screen_title') + ' — UA Shutdowns: DTEK';
 
@@ -297,13 +299,17 @@
   byId('date-next').addEventListener('click', () => selectDate(DtekSchedule.shiftDate(selectedDate, 1)));
   byId('date-today').addEventListener('click', () => selectDate(DtekSchedule.dateKey()));
   byId('date-tomorrow').addEventListener('click', () => selectDate(DtekSchedule.shiftDate(DtekSchedule.dateKey(), 1)));
-  const monthNames = Array.from({ length: 12 }, (_, index) =>
-    new Intl.DateTimeFormat(I18n.locale, { month: 'long', timeZone: 'UTC' }).format(new Date(Date.UTC(2024, index, 1))));
-  monthNames.forEach((name, index) => {
-    const option = make('option', '', name);
-    option.value = index + 1;
-    byId('calendar-month').append(option);
-  });
+  function localizeMonthOptions() {
+    byId('calendar-month').replaceChildren();
+    for (let index = 0; index < 12; index++) {
+      const name = new Intl.DateTimeFormat(I18n.locale, { month: 'long', timeZone: 'UTC' })
+        .format(new Date(Date.UTC(2024, index, 1)));
+      const option = make('option', '', name);
+      option.value = index + 1;
+      byId('calendar-month').append(option);
+    }
+  }
+  localizeMonthOptions();
   const calendarKey = (year, month, day) => `${String(year).padStart(4, '0')}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
   const calendarDay = key => new Date(key + 'T12:00:00Z');
   const daysInMonth = (year, month) => {
@@ -600,6 +606,38 @@
     } catch { status(I18n.t('address_delete_error'), true); }
     finally { setBusy(false); }
   });
+  const languageSelect = byId('interface-language');
+  for (const { value, label } of I18n.languages) {
+    const option = make('option', '', label);
+    option.value = value;
+    option.lang = value.replaceAll('_', '-');
+    languageSelect.append(option);
+  }
+  languageSelect.value = I18n.preference;
+  languageSelect.addEventListener('change', async () => {
+    if (busy) return;
+    setBusy(true);
+    try {
+      await I18n.setLanguage(languageSelect.value);
+      I18n.localizeDocument();
+      localizeMonthOptions();
+      for (const option of fields.region.children) {
+        if (!option.value) continue;
+        option.textContent = `${I18n.t('dtek_region_' + option.value + '_name')} — ${I18n.t('dtek_operator_' + option.value + '_name')}`;
+      }
+      dateDraft = false;
+      render();
+      show('settings', I18n.t('settings_screen_title'));
+      status(I18n.t('settings_save_success'));
+    } catch {
+      languageSelect.value = I18n.preference;
+      status(I18n.t('settings_save_error'), true);
+    } finally {
+      setBusy(false);
+      languageSelect.focus();
+    }
+  });
+
   byId('auto-close-popups').addEventListener('change', async event => {
     if (busy) return;
     const checked = event.target.checked;

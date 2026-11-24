@@ -2,6 +2,13 @@
 
 **English** · [Українська](CHANGELOG.uk.md)
 
+## 0.6.3 — 2026-11-25
+
+- Added an interface language selector in Settings: Ukrainian, English, or “Same as browser” by default. The choice is saved and applied immediately to interface text, date formats, the calendar and shared schedules, while preserving matching browser regional settings.
+- Simplified Settings by removing repeated save hints and their separators.
+- Fixed repeated schedule synchronization errors in DTEK tabs left open after reloading or updating the extension. Scripts now stop observing when their extension context becomes unavailable, while ordinary save failures remain visible and synchronization can recover.
+- Updated the translation workflow and release archive to include generated language catalogs. Added checks for catalog consistency, language switching and persistence, save failures, and extension context invalidation.
+
 ## 0.6.2 — 2026-11-24
 
 - Moved the settings button to the right side of the home screen header. It now has a subdued icon, a transparent default background and the same compact hover area as the calendar's month and year controls.

@@ -90,6 +90,7 @@ function page({ cities = ['м. Обухів'], streets = ['вул. Миру'],
   };
   const context = vm.createContext({
     chrome: { runtime: {
+      id: 'fixture',
       getURL: path => 'chrome-extension://fixture/' + path,
       onMessage: { addListener: fn => receivers.add(fn), removeListener: fn => receivers.delete(fn) },
       async sendMessage(message) {
@@ -126,6 +127,15 @@ function page({ cities = ['м. Обухів'], streets = ['вул. Миру'],
   return {
     inputs, clicks, searches, warnings, listeners, location, messages,
     schedule,
+    invalidate(mode = 'missing-runtime') {
+      const runtime = context.chrome.runtime;
+      if (mode === 'missing-runtime') context.chrome.runtime = undefined;
+      else if (mode === 'missing-id') delete runtime.id;
+      else {
+        runtime.sendMessage = async () => { throw new Error('Extension context invalidated.'); };
+        runtime.onMessage.removeListener = () => { throw new Error('Extension context invalidated.'); };
+      }
+    },
     replaceSchedules(days) { scheduleDays = days; },
     notifySchedule() {
       for (const observer of observers) if (observer.active &&
@@ -517,9 +527,44 @@ test('an initial save failure does not prevent later schedule synchronization', 
   const p = page({ watch: true, scheduleDays: [today], failFirstSave: true });
   await p.finish();
   assert.equal(p.watching, true);
+  assert.equal(p.warnings.length, 1);
   const updated = { ...today, lines: [[[120, 240]]] };
   p.replaceSchedules([updated]);
   p.notifySchedule();
   await p.finish();
   assert.deepEqual(p.messages.at(-1).schedules, [updated]);
+});
+
+test('invalidated extension contexts stop schedule observation without warnings or repeated saves', async () => {
+  for (const mode of ['missing-runtime', 'missing-id', 'throw-on-send']) {
+    const p = page({ watch: true, scheduleDays: [{ date: '2026-11-15', lines: [[]] }] });
+    await p.finish();
+    const before = p.messages.length;
+    p.notifySchedule(); // Invalidation can happen while a debounced save is pending.
+    p.invalidate(mode);
+    await p.finish();
+    assert.equal(p.watching, false, mode);
+    assert.equal(p.warnings.length, 0, mode);
+    p.notifySchedule();
+    p.visible(false);
+    p.visible(true);
+    p.pageHide();
+    await p.finish();
+    assert.equal(p.watching, false, mode);
+    assert.equal(p.messages.length, before, mode);
+  }
+});
+
+test('visibility and popup refresh safely stop a watcher when the runtime disappears', async () => {
+  for (const trigger of ['visibility', 'popup']) {
+    const p = page({ watch: true, scheduleDays: [{ date: '2026-11-15', lines: [[]] }] });
+    await p.finish();
+    p.invalidate();
+    if (trigger === 'visibility') p.visible(true);
+    else assert.equal(await p.refresh(), null);
+    await p.finish();
+    assert.equal(p.watching, false);
+    assert.equal(p.warnings.length, 0);
+    assert.equal(await p.refresh(), null);
+  }
 });

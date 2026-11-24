@@ -6,6 +6,10 @@
   const fieldTimeout = 10000;
   let selectedQueue = '';
 
+  function contextInvalidated(error) {
+    return !chrome.runtime?.id || error?.message?.includes('Extension context invalidated');
+  }
+
   function queueFromRaw(raw) {
     const groups = raw.split(',').map(value => value.trim().match(/^(?:GPV)?(\d+(?:\.\d+)?)$/)?.[1]);
     return groups.length && groups.every(Boolean) ? [...new Set(groups)].join(', ') : '';
@@ -184,6 +188,7 @@
     // The site may replace or insert the schedule container after selection.
     const root = document.body || document.getElementById('discon-fact');
     if (!root || typeof MutationObserver !== 'function') return;
+    const messageEvent = chrome.runtime.onMessage;
     const chosen = fields.map(field => [field.id, document.getElementById(field.id)?.value]);
     let timer;
     let stopped = false;
@@ -198,6 +203,7 @@
     });
     const matchesAddress = () => chosen.every(([id, value]) => document.getElementById(id)?.value === value);
     function stop() {
+      if (stopped) return;
       stopped = true;
       observer.disconnect();
       clearTimeout(timer);
@@ -205,13 +211,18 @@
       document.removeEventListener('input', onManualInput, true);
       document.removeEventListener('change', onManualInput, true);
       window.removeEventListener('pagehide', onPageHide);
-      chrome.runtime.onMessage.removeListener(onRefresh);
+      // Chrome may invalidate the extension while this tab and its DOM survive.
+      // Local observers still need cleanup even if the event API now throws.
+      try { messageEvent.removeListener(onRefresh); }
+      catch { /* An invalidated extension no longer owns a usable message listener. */ }
     }
     function update() {
       // A popup refresh must wait for the latest read and its storage write,
       // including when an observer-triggered save is already in progress.
       saving = saving.then(async () => {
-        if (stopped || document.visibilityState !== 'visible') return { ok: false };
+        if (stopped) return { ok: false };
+        if (!chrome.runtime?.id) { stop(); return { ok: false }; }
+        if (document.visibilityState !== 'visible') return { ok: false };
         if (!matchesAddress()) { stop(); return { ok: false }; }
         const schedules = DtekSchedule.readAll(document);
         if (!schedules.length) return { ok: false };
@@ -221,12 +232,14 @@
         if (!response?.ok) throw new Error(response?.error || I18n.t('schedule_storage_save_error'));
         return { ok: true };
       }).catch(error => {
+        if (contextInvalidated(error)) { stop(); return { ok: false }; }
         console.warn('UA Shutdowns: schedule update could not be saved.', error);
         return { ok: false };
       });
       return saving;
     }
     function onRefresh(message, sender, sendResponse) {
+      if (!chrome.runtime?.id) { stop(); return; }
       if (message?.type !== 'refresh-address-schedule' ||
           sender.url !== chrome.runtime.getURL('popup.html')) return;
       clearTimeout(timer);
@@ -236,7 +249,9 @@
     function onVisibility() {
       observer.disconnect();
       clearTimeout(timer);
-      if (stopped || document.visibilityState !== 'visible') return;
+      if (stopped) return;
+      if (!chrome.runtime?.id) { stop(); return; }
+      if (document.visibilityState !== 'visible') return;
       if (!matchesAddress()) { stop(); return; }
       observer.observe(root, { subtree: true, childList: true, attributes: true, characterData: true });
       void update();
@@ -249,12 +264,13 @@
     document.addEventListener('input', onManualInput, true);
     document.addEventListener('change', onManualInput, true);
     window.addEventListener('pagehide', onPageHide);
-    chrome.runtime.onMessage.addListener(onRefresh);
+    messageEvent.addListener(onRefresh);
     onVisibility();
   }
 
   async function setAddress() {
     try {
+      await I18n.init();
       const url = new URL(location.href);
       const fragment = new URLSearchParams(url.hash.slice(1));
       const legacyAddressId = fragment.get('ua-shutdowns-address');
@@ -282,13 +298,13 @@
       if (!signal.aborted) {
         watchSchedule(address, fields);
         const schedule = await waitFor(() => DtekSchedule.read(document), Date.now() + 3000);
-        if (signal.aborted) return;
+        if (signal.aborted || !chrome.runtime?.id) return;
         const schedules = DtekSchedule.readAll(document);
         const saved = await chrome.runtime.sendMessage({ type: 'save-address-queue', address, queue: selectedQueue, schedule, schedules });
         if (!saved?.ok) throw new Error(saved?.error || I18n.t('schedule_group_save_error'));
       }
     } catch (error) {
-      console.warn('UA Shutdowns: automatic address selection stopped.', error);
+      if (!contextInvalidated(error)) console.warn('UA Shutdowns: automatic address selection stopped.', error);
     } finally {
       // A single attempt per page load. No retries can overwrite a manual choice.
       controller.abort();

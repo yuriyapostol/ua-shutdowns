@@ -191,3 +191,14 @@ test('saves the detected queue only for the selected unchanged address', async (
   assert.equal(p.data.addresses[1].schedules, undefined);
   assert.equal(p.data.addresses[0].queue, undefined);
 });
+
+test('background errors use the saved interface language even after a worker restart', async () => {
+  const p = setup({ interfaceLanguage: 'en' });
+  const popupSender = { url: 'chrome-extension://fixture/popup.html' };
+  for (let attempt = 0; attempt < 2; attempt++) {
+    const result = await p.send(popupSender, { type: 'open-address', addressId: 'missing' });
+    assert.equal(result.ok, false);
+    assert.match(result.error, /already been deleted/);
+    p.restart();
+  }
+});
