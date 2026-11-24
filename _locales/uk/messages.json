@@ -25,7 +25,7 @@
     "placeholders": {
       "address": {
         "content": "$1",
-        "example": "Обухів, Миру, 17"
+        "example": "Київ, Хрещатик 22"
       }
     }
   },
@@ -99,7 +99,7 @@
     "placeholders": {
       "address": {
         "content": "$1",
-        "example": "Обухів, Миру, 17"
+        "example": "Київ, Хрещатик 22"
       }
     }
   },
@@ -251,7 +251,7 @@
     "placeholders": {
       "date_format": {
         "content": "$1",
-        "example": "MM/DD/YYYY"
+        "example": "ДД.ММ.РРРР"
       }
     }
   },
@@ -433,7 +433,7 @@
     "placeholders": {
       "date": {
         "content": "$1",
-        "example": "11/23/2026"
+        "example": "23.11.2026"
       }
     }
   },
@@ -463,11 +463,11 @@
     "placeholders": {
       "date": {
         "content": "$1",
-        "example": "11/23/2026"
+        "example": "23.11.2026"
       },
       "address": {
         "content": "$2",
-        "example": "Обухів, Миру, 17"
+        "example": "Київ, Хрещатик 22"
       }
     }
   },
@@ -489,7 +489,7 @@
     "placeholders": {
       "full_date": {
         "content": "$1",
-        "example": "Monday, November 23, 2026"
+        "example": "понеділок, 23 листопада 2026 р."
       },
       "weekday": {
         "content": "$2",
@@ -547,11 +547,11 @@
     "placeholders": {
       "date": {
         "content": "$1",
-        "example": "Monday, November 23, 2026"
+        "example": "в понеділок, 23 листопада 2026"
       },
       "place": {
         "content": "$2",
-        "example": "Kyiv region, Обухів"
+        "example": "Київ, Хрещатик 22"
       },
       "group": {
         "content": "$3",

@@ -166,3 +166,41 @@ test('European catalogs select regional variants and localize dates and sharing'
     assert.equal(JSON.stringify({ address, day }), before);
   }
 });
+
+test('regional browser settings control date order and the calendar week', () => {
+  for (const [locale, display, firstDay, monday] of [
+    ['de-DE', '23.11.2026', 1, 'Montag'],
+    ['fr-FR', '23/11/2026', 1, 'lundi'],
+    ['es-ES', '23/11/2026', 1, 'lunes'],
+    ['it-IT', '23/11/2026', 1, 'lunedì'],
+    ['pl-PL', '23.11.2026', 1, 'poniedziałek'],
+    ['uk-UA', '23.11.2026', 1, 'понеділок'],
+    ['en-US', '11/23/2026', 0, 'Monday'],
+    ['en-GB', '23/11/2026', 1, 'Monday'],
+    ['fr-CA', '2026-11-23', 0, 'lundi'],
+    ['es-MX', '23/11/2026', 0, 'lunes']
+  ]) {
+    const { i18n } = setup(locale);
+    assert.equal(i18n.locale, locale);
+    assert.equal(i18n.formatDate('2026-11-23'), display, locale);
+    assert.equal(i18n.parseDate(display), '2026-11-23', locale);
+    assert.equal(i18n.firstWeekday, firstDay, locale);
+    assert.ok(i18n.sharedDate('2026-11-23').includes(monday), locale);
+  }
+});
+
+test('catalog examples use Ukrainian addresses and their own date and weekday formats', () => {
+  for (const [language, catalog] of Object.entries(catalogs)) {
+    const { i18n } = setup(language);
+    for (const [key, entry] of Object.entries(catalog)) {
+      for (const [name, value] of Object.entries(entry.placeholders || {})) {
+        const context = `${language}/${key}/${name}`;
+        if (name === 'address' || name === 'place') assert.equal(value.example, 'Київ, Хрещатик 22', context);
+        if (name === 'date_format') assert.equal(value.example, i18n.datePlaceholder, context);
+        if (name === 'date') assert.equal(value.example, key === 'schedule_share_text_header' ?
+          i18n.sharedDate('2026-11-23') : i18n.formatDate('2026-11-23'), context);
+        if (name === 'weekday') assert.equal(value.example, catalog.schedule_share_weekday_1.message, context);
+      }
+    }
+  }
+});

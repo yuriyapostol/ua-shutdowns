@@ -1,127 +1,127 @@
 {
   "address_add_action": {
     "message": "Ajouter une adresse",
-    "description": "Tooltip and accessible label on the plus button that adds an address."
+    "description": "Infobulle et libellé accessible du bouton plus pour ajouter une adresse."
   },
   "address_add_screen_title": {
     "message": "Ajouter une adresse",
-    "description": "Heading of the screen for adding an address."
+    "description": "Titre de l’écran d’ajout d’une adresse."
   },
   "address_delete_archive_checkbox": {
     "message": "Supprimer les archives de cette adresse",
-    "description": "Checkbox opting into deletion of all saved schedule history for this address. Unchecked by default."
+    "description": "Case supprimant tout l’historique enregistré de cette adresse. Décochée par défaut."
   },
   "address_delete_archive_retention_hint": {
     "message": "Si cette case reste décochée, les archives seront restaurées lorsque vous ajouterez à nouveau cette adresse.",
-    "description": "Explanation that retained history is restored when the same address is added again."
+    "description": "Explique que l’historique conservé sera restauré si la même adresse est ajoutée à nouveau."
   },
   "address_delete_confirm_action": {
     "message": "Supprimer",
-    "description": "Button confirming deletion on the separate confirmation screen."
+    "description": "Bouton de confirmation de suppression sur l’écran dédié."
   },
   "address_delete_confirmation_question": {
     "message": "Retirer l’adresse « $ADDRESS$ » de la liste ?",
-    "description": "Question above the checkbox and button on the address deletion screen.",
+    "description": "Question au-dessus de la case et du bouton de suppression d’une adresse.",
     "placeholders": {
       "address": {
         "content": "$1",
-        "example": "Обухів, Миру, 17"
+        "example": "Київ, Хрещатик 22"
       }
     }
   },
   "address_delete_error": {
     "message": "Impossible de supprimer l’adresse. Veuillez réessayer.",
-    "description": "Error when deleting an address fails."
+    "description": "Erreur lors de la suppression d’une adresse."
   },
   "address_delete_keep_archive_success": {
     "message": "Adresse supprimée. Archives conservées.",
-    "description": "Confirmation that the address was removed but its schedule history was kept."
+    "description": "Confirmation de suppression de l’adresse avec conservation de l’historique."
   },
   "address_delete_screen_title": {
     "message": "Supprimer une adresse",
-    "description": "Heading of the address deletion confirmation screen."
+    "description": "Titre de l’écran de confirmation de suppression d’une adresse."
   },
   "address_delete_with_archive_success": {
     "message": "Adresse et archives supprimées.",
-    "description": "Confirmation that both the address and its saved schedule history were deleted."
+    "description": "Confirmation de suppression de l’adresse et de son historique."
   },
   "address_edit_screen_title": {
     "message": "Modifier une adresse",
-    "description": "Heading of the address editing screen."
+    "description": "Titre de l’écran de modification d’une adresse."
   },
   "address_form_building_label": {
     "message": "Numéro de bâtiment",
-    "description": "Label and accessible name for the building number field."
+    "description": "Libellé et nom accessible du champ du numéro de bâtiment."
   },
   "address_form_building_placeholder": {
     "message": "Saisissez un numéro de bâtiment",
-    "description": "Placeholder in the building number input."
+    "description": "Texte indicatif du champ vide du numéro de bâtiment."
   },
   "address_form_city_label": {
     "message": "Ville / village",
-    "description": "Label and accessible name for the city, town or village field."
+    "description": "Libellé et nom accessible du champ de la localité."
   },
   "address_form_city_placeholder": {
     "message": "Saisissez une ville ou un village",
-    "description": "Placeholder in the city, town or village input. Address values must match the DTEK website."
+    "description": "Texte indicatif du champ de la localité. Les valeurs doivent correspondre aux noms ukrainiens du site DTEK."
   },
   "address_form_delete_action": {
     "message": "Supprimer l’adresse",
-    "description": "Tooltip and accessible label on the button that opens deletion confirmation."
+    "description": "Infobulle et libellé accessible du bouton ouvrant la confirmation de suppression."
   },
   "address_form_region_not_selected": {
     "message": "Non sélectionné",
-    "description": "Empty option in the regional operator dropdown."
+    "description": "Option vide de la liste des opérateurs régionaux."
   },
   "address_form_region_placeholder": {
     "message": "Sélectionnez un opérateur",
-    "description": "Visible placeholder for the regional operator dropdown before a selection."
+    "description": "Texte indicatif de la liste des opérateurs régionaux avant la sélection."
   },
   "address_form_regional_operator_label": {
     "message": "Opérateur régional DTEK",
-    "description": "Label for the regional DTEK electricity distribution operator dropdown."
+    "description": "Libellé de la liste des gestionnaires régionaux du réseau de distribution DTEK."
   },
   "address_form_save_action": {
     "message": "Enregistrer l’adresse",
-    "description": "Tooltip and accessible label on the address form save button."
+    "description": "Infobulle et libellé accessible du bouton enregistrant l’adresse."
   },
   "address_form_street_label": {
     "message": "Rue",
-    "description": "Label and accessible name for the street field."
+    "description": "Libellé et nom accessible du champ de la rue."
   },
   "address_form_street_placeholder": {
     "message": "Saisissez un nom de rue",
-    "description": "Placeholder in the street name input."
+    "description": "Texte indicatif du champ vide du nom de rue."
   },
   "address_list_edit_accessible_label": {
     "message": "Modifier : $ADDRESS$",
-    "description": "Accessible label for editing a particular saved address.",
+    "description": "Libellé accessible pour modifier une adresse enregistrée précise.",
     "placeholders": {
       "address": {
         "content": "$1",
-        "example": "Обухів, Миру, 17"
+        "example": "Київ, Хрещатик 22"
       }
     }
   },
   "address_list_edit_address_tooltip": {
     "message": "Modifier l’adresse",
-    "description": "Tooltip on the pencil icon beside a saved address."
+    "description": "Infobulle de l’icône crayon à côté d’une adresse enregistrée."
   },
   "address_list_empty_hint": {
     "message": "Ajoutez une adresse pour suivre les coupures de courant.",
-    "description": "Home screen instructions when no addresses have been saved."
+    "description": "Instructions sur l’accueil lorsqu’aucune adresse n’est enregistrée."
   },
   "address_list_load_error": {
     "message": "Impossible de charger les adresses. Fermez puis rouvrez cette fenêtre pour réessayer.",
-    "description": "Error when initial loading of saved addresses fails; asks the user to reopen the extension."
+    "description": "Erreur de chargement initial des adresses invitant à rouvrir l’extension."
   },
   "address_list_open_schedule_action": {
     "message": "Ouvrir le planning",
-    "description": "Accessible action label before the full address. Opens that address on the DTEK website."
+    "description": "Libellé accessible précédant l’adresse complète pour l’ouvrir sur le site DTEK."
   },
   "address_list_outage_group_label": {
     "message": "Groupe $GROUP$",
-    "description": "Outage group displayed below the address. This is a DTEK outage queue identifier, not a waiting line.",
+    "description": "Groupe de coupure sous l’adresse. Il s’agit du groupe DTEK, pas d’une file d’attente.",
     "placeholders": {
       "group": {
         "content": "$1",
@@ -131,369 +131,369 @@
   },
   "address_list_select_region_action": {
     "message": "Sélectionner une région",
-    "description": "Accessible action label before an address that still needs a regional operator."
+    "description": "Libellé accessible pour une adresse sans opérateur régional sélectionné."
   },
   "address_list_storage_read_error": {
     "message": "Impossible de lire la liste des adresses.",
-    "description": "Error when the stored address list is invalid or cannot be read."
+    "description": "Erreur si la liste enregistrée des adresses est invalide ou illisible."
   },
   "address_list_unassigned_region_heading": {
     "message": "Sélectionnez un opérateur régional",
-    "description": "Heading grouping older saved addresses whose regional operator has not been selected."
+    "description": "Titre regroupant les anciennes adresses sans opérateur régional sélectionné."
   },
   "address_list_unassigned_region_hint": {
     "message": "Sélectionnez une région pour votre adresse précédemment enregistrée.",
-    "description": "Instructions below the heading for addresses without a regional operator."
+    "description": "Instructions sous le titre des adresses sans opérateur régional."
   },
   "address_navigation_open_error": {
     "message": "Impossible d’ouvrir le planning.",
-    "description": "Fallback navigation error returned by the background worker."
+    "description": "Erreur de navigation générique renvoyée par le processus d’arrière-plan."
   },
   "address_navigation_region_required_error": {
     "message": "Sélectionnez d’abord une région pour cette adresse.",
-    "description": "Navigation cannot continue until the saved address has a regional operator."
+    "description": "Navigation impossible avant de choisir un opérateur régional pour l’adresse."
   },
   "address_navigation_tab_changed_error": {
     "message": "L’adresse dans cet onglet a changé.",
-    "description": "The selected address in the website tab changed before its schedule could be saved."
+    "description": "L’adresse de l’onglet du site a changé avant l’enregistrement de son planning."
   },
   "address_open_schedule_pending": {
     "message": "Ouverture du planning…",
-    "description": "Status while opening the saved address on its DTEK regional website."
+    "description": "État pendant l’ouverture de l’adresse sur son site régional DTEK."
   },
   "address_open_schedule_retry_error": {
     "message": "Impossible d’ouvrir le planning. Veuillez réessayer.",
-    "description": "Error shown after navigation to a saved address fails; invites the user to retry."
+    "description": "Erreur d’ouverture d’une adresse invitant à réessayer."
   },
   "address_save_already_deleted_error": {
     "message": "L’adresse a déjà été supprimée.",
-    "description": "Error when trying to save or open an address that was deleted in another window."
+    "description": "Erreur d’enregistrement ou d’ouverture d’une adresse supprimée dans une autre fenêtre."
   },
   "address_save_duplicate_error": {
     "message": "Cette adresse a déjà été ajoutée.",
-    "description": "Validation error when the same address has already been saved."
+    "description": "Erreur de validation d’une adresse déjà enregistrée."
   },
   "address_save_error": {
     "message": "Impossible d’enregistrer l’adresse.",
-    "description": "Fallback error when saving an address fails without a more specific validation error."
+    "description": "Erreur d’enregistrement d’une adresse sans cause plus précise."
   },
   "address_save_pending": {
     "message": "Enregistrement…",
-    "description": "Status while saving a new or edited address."
+    "description": "État pendant l’enregistrement d’une adresse nouvelle ou modifiée."
   },
   "address_save_success": {
     "message": "Adresse enregistrée.",
-    "description": "Confirmation after saving an address."
+    "description": "Confirmation après l’enregistrement d’une adresse."
   },
   "address_storage_record_invalid_error": {
     "message": "Les données de l’adresse sont corrompues.",
-    "description": "Error when a saved address record is corrupted."
+    "description": "Erreur si les données d’une adresse enregistrée sont corrompues."
   },
   "address_validation_fields_required": {
     "message": "Saisissez la ville, la rue et le numéro de bâtiment.",
-    "description": "Validation error for missing city, street or building number."
+    "description": "Erreur de validation si la localité, la rue ou le numéro de bâtiment manque."
   },
   "address_validation_region_required": {
     "message": "Sélectionnez un opérateur régional.",
-    "description": "Validation error for a missing or unsupported regional operator."
+    "description": "Erreur de validation si l’opérateur régional manque ou n’est pas pris en charge."
   },
   "address_website_load_error": {
     "message": "Impossible de charger l’adresse.",
-    "description": "Fallback error when the website content script cannot load the selected saved address."
+    "description": "Erreur générique du script de contenu du site lors du chargement d’une adresse."
   },
   "application_loading_status": {
     "message": "Chargement…",
-    "description": "Initial status while the extension loads saved addresses and preferences."
+    "description": "État initial pendant le chargement des adresses et préférences enregistrées."
   },
   "date_calendar_accessible_label": {
     "message": "Choisir la date du planning",
-    "description": "Accessible label for the calendar panel."
+    "description": "Nom accessible du panneau du calendrier."
   },
   "date_calendar_days_accessible_label": {
     "message": "Jours du mois",
-    "description": "Initial accessible label for the calendar grid, replaced by its current month and year."
+    "description": "Nom accessible initial de la grille du calendrier, remplacé par le mois et l’année affichés."
   },
   "date_calendar_month_label": {
     "message": "Mois",
-    "description": "Accessible label for the calendar month dropdown."
+    "description": "Libellé accessible de la liste des mois du calendrier."
   },
   "date_calendar_next_month_action": {
     "message": "Mois suivant",
-    "description": "Accessible label for moving the calendar forward one month."
+    "description": "Libellé accessible pour avancer d’un mois."
   },
   "date_calendar_next_year_action": {
     "message": "Année suivante",
-    "description": "Accessible label for moving the calendar forward one year."
+    "description": "Libellé accessible pour avancer d’un an."
   },
   "date_calendar_open_action": {
     "message": "Ouvrir le calendrier",
-    "description": "Accessible label for the calendar icon next to the date input."
+    "description": "Libellé accessible de l’icône du calendrier à côté du champ de date."
   },
   "date_calendar_previous_month_action": {
     "message": "Mois précédent",
-    "description": "Accessible label for moving the calendar back one month."
+    "description": "Libellé accessible pour reculer d’un mois."
   },
   "date_calendar_previous_year_action": {
     "message": "Année précédente",
-    "description": "Accessible label for moving the calendar back one year."
+    "description": "Libellé accessible pour reculer d’un an."
   },
   "date_calendar_year_label": {
     "message": "Année",
-    "description": "Accessible label for the calendar year input."
+    "description": "Libellé accessible du champ de l’année du calendrier."
   },
   "date_input_accessible_label": {
     "message": "Date du planning",
-    "description": "Label for the editable schedule date. The localized format hint is appended automatically."
+    "description": "Libellé de la date modifiable du planning. Le format localisé est ajouté automatiquement."
   },
   "date_input_invalid_error": {
     "message": "Saisissez une date valide au format $DATE_FORMAT$.",
-    "description": "Validation error for the date field, including its expected localized format.",
+    "description": "Erreur de validation du champ de date indiquant le format localisé attendu.",
     "placeholders": {
       "date_format": {
         "content": "$1",
-        "example": "MM/DD/YYYY"
+        "example": "JJ/MM/AAAA"
       }
     }
   },
   "date_next_day_action": {
     "message": "Jour suivant",
-    "description": "Accessible label for the button selecting the next day."
+    "description": "Libellé accessible du bouton du jour suivant."
   },
   "date_previous_day_action": {
     "message": "Jour précédent",
-    "description": "Accessible label for the button selecting the previous day."
+    "description": "Libellé accessible du bouton du jour précédent."
   },
   "date_shortcut_other": {
     "message": "date",
-    "description": "Last button in the date shortcut sentence, after the join text."
+    "description": "Dernier bouton de la phrase de sélection rapide de date, après le texte de liaison."
   },
   "date_shortcut_other_accessible_label": {
     "message": "Choisir une autre date dans le calendrier",
-    "description": "Accessible label for the shortcut that opens the calendar for another date."
+    "description": "Libellé accessible ouvrant le calendrier pour choisir une autre date."
   },
   "date_shortcut_today": {
     "message": "aujourd’hui",
-    "description": "Today button in the compact date shortcut sentence. Use lowercase where appropriate."
+    "description": "Bouton d’aujourd’hui dans la phrase de sélection rapide. Employer la minuscule si nécessaire."
   },
   "date_shortcut_tomorrow": {
     "message": "demain",
-    "description": "Tomorrow button in the compact date shortcut sentence. Use lowercase where appropriate."
+    "description": "Bouton de demain dans la phrase de sélection rapide. Employer la minuscule si nécessaire."
   },
   "date_shortcuts_accessible_label": {
     "message": "Sélection rapide de la date",
-    "description": "Accessible label for the group of today, tomorrow and other date shortcuts."
+    "description": "Libellé accessible du groupe de raccourcis de date."
   },
   "date_shortcuts_sentence_join": {
     "message": "ou une autre ",
-    "description": "Text between the tomorrow and other date shortcut buttons. Preserve a trailing space when needed by the language."
+    "description": "Texte entre les boutons de demain et d’une autre date. Conserver l’espace final nécessaire."
   },
   "date_shortcuts_sentence_prefix": {
     "message": "pour ",
-    "description": "Text before the today shortcut button. Preserve a trailing space when needed by the language."
+    "description": "Texte avant le bouton d’aujourd’hui. Conserver l’espace final nécessaire."
   },
   "dtek_operator_dem_name": {
     "message": "Réseaux de Donetsk",
-    "description": "Display name of the DTEK regional operator Donetsk Grids."
+    "description": "Nom affiché de l’opérateur régional DTEK : Réseaux de Donetsk."
   },
   "dtek_operator_dnem_name": {
     "message": "Réseaux de Dnipro",
-    "description": "Display name of the DTEK regional operator Dnipro Grids."
+    "description": "Nom affiché de l’opérateur régional DTEK : Réseaux de Dnipro."
   },
   "dtek_operator_kem_name": {
     "message": "Réseaux de Kyiv",
-    "description": "Display name of the DTEK regional operator Kyiv Grids."
+    "description": "Nom affiché de l’opérateur régional DTEK : Réseaux de Kyiv."
   },
   "dtek_operator_krem_name": {
     "message": "Réseaux de la région de Kyiv",
-    "description": "Display name of the DTEK regional operator Kyiv Regional Grids."
+    "description": "Nom affiché de l’opérateur régional DTEK : Réseaux de la région de Kyiv."
   },
   "dtek_operator_oem_name": {
     "message": "Réseaux d’Odesa",
-    "description": "Display name of the DTEK regional operator Odesa Grids."
+    "description": "Nom affiché de l’opérateur régional DTEK : Réseaux d’Odesa."
   },
   "dtek_region_dem_name": {
     "message": "Région de Donetsk",
-    "description": "Display name of the supported Donetsk region region. Does not change stored Ukrainian address values."
+    "description": "Nom affiché de la région : Région de Donetsk. Ne modifie pas les valeurs ukrainiennes des adresses enregistrées."
   },
   "dtek_region_dem_short": {
     "message": "Région de Donetsk",
-    "description": "Region name in shared plain text schedules. May be abbreviated to keep the heading short."
+    "description": "Nom de région dans le planning partagé : Région de Donetsk. Peut être abrégé pour raccourcir le titre."
   },
   "dtek_region_dnem_name": {
     "message": "Région de Dnipropetrovsk",
-    "description": "Display name of the supported Dnipropetrovsk region region. Does not change stored Ukrainian address values."
+    "description": "Nom affiché de la région : Région de Dnipropetrovsk. Ne modifie pas les valeurs ukrainiennes des adresses enregistrées."
   },
   "dtek_region_dnem_short": {
     "message": "Région de Dnipropetrovsk",
-    "description": "Region name in shared plain text schedules. May be abbreviated to keep the heading short."
+    "description": "Nom de région dans le planning partagé : Région de Dnipropetrovsk. Peut être abrégé pour raccourcir le titre."
   },
   "dtek_region_kem_name": {
     "message": "Kyiv",
-    "description": "Display name of the supported Kyiv region. Does not change stored Ukrainian address values."
+    "description": "Nom affiché de la région : Kyiv. Ne modifie pas les valeurs ukrainiennes des adresses enregistrées."
   },
   "dtek_region_kem_short": {
     "message": "Kyiv",
-    "description": "Region name in shared plain text schedules. May be abbreviated to keep the heading short."
+    "description": "Nom de région dans le planning partagé : Kyiv. Peut être abrégé pour raccourcir le titre."
   },
   "dtek_region_krem_name": {
     "message": "Région de Kyiv",
-    "description": "Display name of the supported Kyiv region region. Does not change stored Ukrainian address values."
+    "description": "Nom affiché de la région : Région de Kyiv. Ne modifie pas les valeurs ukrainiennes des adresses enregistrées."
   },
   "dtek_region_krem_short": {
     "message": "Région de Kyiv",
-    "description": "Region name in shared plain text schedules. May be abbreviated to keep the heading short."
+    "description": "Nom de région dans le planning partagé : Région de Kyiv. Peut être abrégé pour raccourcir le titre."
   },
   "dtek_region_oem_name": {
     "message": "Région d’Odesa",
-    "description": "Display name of the supported Odesa region region. Does not change stored Ukrainian address values."
+    "description": "Nom affiché de la région : Région d’Odesa. Ne modifie pas les valeurs ukrainiennes des adresses enregistrées."
   },
   "dtek_region_oem_short": {
     "message": "Région d’Odesa",
-    "description": "Region name in shared plain text schedules. May be abbreviated to keep the heading short."
+    "description": "Nom de région dans le planning partagé : Région d’Odesa. Peut être abrégé pour raccourcir le titre."
   },
   "extension_description": {
     "message": "Coupures de courant à vos adresses : consultez, récupérez et partagez facilement les plannings des sites DTEK.",
-    "description": "Short extension summary in Chrome Web Store and the extension manager. Maximum 132 characters."
+    "description": "Résumé dans le Chrome Web Store et le gestionnaire d’extensions. Maximum 132 caractères."
   },
   "extension_name": {
     "message": "UA Shutdowns — Plannings des coupures DTEK",
-    "description": "Full extension name in Chrome Web Store and the extension manager. Keep UA Shutdowns and DTEK as brand names. Maximum 75 characters."
+    "description": "Nom complet dans le Chrome Web Store et le gestionnaire d’extensions. Conserver les marques UA Shutdowns et DTEK. Maximum 75 caractères."
   },
   "footer_github_project_link": {
     "message": "Projet sur GitHub",
-    "description": "Visible link to the GitHub repository in the extension footer."
+    "description": "Lien visible vers le dépôt GitHub dans le pied de page."
   },
   "home_screen_title": {
     "message": "Planning des coupures de courant",
-    "description": "Heading of the home screen showing saved addresses and their outage schedules."
+    "description": "Titre de l’accueil présentant les adresses et leurs plannings de coupures."
   },
   "locale_date_day_token": {
     "message": "JJ",
-    "description": "Day token in the date input format hint, e.g. DD. Translate the letters; do not insert separators."
+    "description": "Abréviation du jour dans l’indication du format de date. Traduire les lettres sans ajouter de séparateurs."
   },
   "locale_date_month_token": {
     "message": "MM",
-    "description": "Month token in the date input format hint, e.g. MM. Translate the letters; do not insert separators."
+    "description": "Abréviation du mois dans l’indication du format de date. Traduire les lettres sans ajouter de séparateurs."
   },
   "locale_date_year_token": {
     "message": "AAAA",
-    "description": "Four-digit year token in the date input format hint, e.g. YYYY. Translate the letters; do not insert separators."
+    "description": "Abréviation de l’année à quatre chiffres dans le format de date. Ne pas ajouter de séparateurs."
   },
   "locale_format": {
     "message": "fr-FR",
-    "description": "Locale metadata, not visible text. Default BCP 47 locale used for dates, month names and weekdays when the Chrome UI locale does not match this translation."
+    "description": "Métadonnées invisibles : locale BCP 47 par défaut des dates, mois et jours de la semaine si la langue de Chrome ne correspond pas à cette traduction."
   },
   "locale_language": {
     "message": "fr",
-    "description": "Locale metadata, not visible text. Set to this catalog's BCP 47 language tag, e.g. uk, en or pt-BR."
+    "description": "Métadonnées invisibles : code de langue BCP 47 de ce catalogue."
   },
   "locale_week_first_day": {
     "message": "1",
-    "description": "Locale metadata, not visible text. Fallback first weekday if Intl week information is unavailable: 0 = Sunday, 1 = Monday, ..., 6 = Saturday."
+    "description": "Métadonnées invisibles : premier jour de semaine sans informations Intl. 0 = dimanche, 1 = lundi, …, 6 = samedi."
   },
   "navigation_back_to_address_edit": {
     "message": "Retour à la modification de l’adresse",
-    "description": "Back button tooltip and accessible label on the address deletion screen."
+    "description": "Infobulle et libellé accessible du bouton de retour sur l’écran de suppression."
   },
   "navigation_back_to_home": {
     "message": "Retour à l’accueil",
-    "description": "Back button tooltip and accessible label on secondary screens."
+    "description": "Infobulle et libellé accessible du bouton de retour des écrans secondaires."
   },
   "popup_offer_description": {
     "message": "Une fenêtre surgissante masque la page du site DTEK. Activer la fermeture automatique de ces fenêtres ?",
-    "description": "Offer displayed when a DTEK website popup obscures the page."
+    "description": "Proposition affichée lorsqu’une fenêtre surgissante du site DTEK masque la page."
   },
   "popup_offer_dismiss_action": {
     "message": "Pas maintenant",
-    "description": "Button declining the popup closing offer for now."
+    "description": "Bouton refusant provisoirement la fermeture automatique des fenêtres surgissantes."
   },
   "popup_offer_enable_action": {
     "message": "Activer",
-    "description": "Button accepting the offer to close DTEK website popups automatically."
+    "description": "Bouton activant la fermeture automatique des fenêtres surgissantes DTEK."
   },
   "popup_offer_repeat_hint": {
     "message": "Si vous refusez, nous ne vous le redemanderons pas avant un mois. Vous pouvez aussi activer cette option dans les paramètres.",
-    "description": "Explains that declining postpones the offer and the preference remains available in Settings."
+    "description": "Explique le report de la proposition et la disponibilité de l’option dans les paramètres."
   },
   "popup_offer_response_save_error": {
     "message": "Impossible d’enregistrer votre réponse. Veuillez réessayer.",
-    "description": "Error when the user's response to the automatic popup closing offer could not be saved."
+    "description": "Erreur d’enregistrement de la réponse à la proposition de fermeture automatique."
   },
   "popup_offer_screen_title": {
     "message": "Fermer automatiquement les fenêtres surgissantes sur le planning",
-    "description": "Heading asking whether DTEK website popups should be closed automatically."
+    "description": "Titre proposant la fermeture automatique des fenêtres surgissantes DTEK."
   },
   "schedule_archive_read_error": {
     "message": "Impossible de lire les archives des plannings.",
-    "description": "Error when saved schedule history cannot be read from browser storage."
+    "description": "Erreur de lecture de l’historique des plannings dans le stockage du navigateur."
   },
   "schedule_date_accessible_label": {
     "message": "Coupures le $DATE$",
-    "description": "Accessible label for the outage intervals of the selected date.",
+    "description": "Libellé accessible des intervalles de coupure de la date sélectionnée.",
     "placeholders": {
       "date": {
         "content": "$1",
-        "example": "11/23/2026"
+        "example": "23/11/2026"
       }
     }
   },
   "schedule_group_save_error": {
     "message": "Impossible d’enregistrer le groupe de coupure.",
-    "description": "Fallback error when saving the outage group received from the DTEK website."
+    "description": "Erreur générique d’enregistrement du groupe de coupure reçu de DTEK."
   },
   "schedule_history_date_missing": {
     "message": "Planning non enregistré",
-    "description": "Shown when no saved schedule exists for a selected past date."
+    "description": "Affiché lorsqu’aucun planning n’est enregistré pour la date passée sélectionnée."
   },
   "schedule_no_outages": {
     "message": "Aucune coupure",
-    "description": "Shown only when a received schedule explicitly has no outages. Missing data is a different state."
+    "description": "Affiché seulement si le planning reçu indique explicitement aucune coupure. L’absence de données est un état distinct."
   },
   "schedule_refresh_error": {
     "message": "Impossible de mettre à jour les plannings. Veuillez rouvrir l’extension.",
-    "description": "Error when updating displayed schedules from browser storage fails."
+    "description": "Erreur de mise à jour des plannings affichés depuis le stockage du navigateur."
   },
   "schedule_selected_date_not_received": {
     "message": "Planning non reçu",
-    "description": "Shown when a schedule has not been received for the selected current or future date."
+    "description": "Affiché lorsque le planning de la date actuelle ou future sélectionnée n’a pas été reçu."
   },
   "schedule_share_address_accessible_label": {
     "message": "Partager le planning du $DATE$ : $ADDRESS$",
-    "description": "Accessible label for sharing a particular address's schedule on a selected date.",
+    "description": "Libellé accessible pour partager le planning d’une adresse précise à la date sélectionnée.",
     "placeholders": {
       "date": {
         "content": "$1",
-        "example": "11/23/2026"
+        "example": "23/11/2026"
       },
       "address": {
         "content": "$2",
-        "example": "Обухів, Миру, 17"
+        "example": "Київ, Хрещатик 22"
       }
     }
   },
   "schedule_share_copy_action": {
     "message": "Copier le planning des coupures",
-    "description": "Tooltip and accessible label for the button copying the sharing text."
+    "description": "Infobulle et libellé accessible du bouton copiant le texte à partager."
   },
   "schedule_share_copy_error": {
     "message": "Impossible de copier le planning. Veuillez réessayer.",
-    "description": "Error after copying schedule text to the clipboard fails. Shown on the sharing screen."
+    "description": "Erreur de copie du planning dans le presse-papiers sur l’écran de partage."
   },
   "schedule_share_copy_success": {
     "message": "Planning copié.",
-    "description": "Confirmation after the schedule text has been copied to the clipboard."
+    "description": "Confirmation après la copie du texte du planning."
   },
   "schedule_share_date_text": {
     "message": "$FULL_DATE$",
-    "description": "Date inside the shared schedule heading. Prefer $FULL_DATE$ for the locale-native full date. The other placeholders support custom grammatical forms; unused placeholder definitions are intentional.",
+    "description": "Date dans le titre partagé. Préférer $FULL_DATE$ pour la date complète locale. Les autres paramètres permettent des formes grammaticales personnalisées ; leurs définitions inutilisées sont intentionnelles.",
     "placeholders": {
       "full_date": {
         "content": "$1",
-        "example": "Monday, November 23, 2026"
+        "example": "lundi 23 novembre 2026"
       },
       "weekday": {
         "content": "$2",
-        "example": "в понеділок"
+        "example": "lundi"
       },
       "day": {
         "content": "$3",
@@ -501,7 +501,7 @@
       },
       "month": {
         "content": "$4",
-        "example": "листопада"
+        "example": "novembre"
       },
       "year": {
         "content": "$5",
@@ -511,47 +511,47 @@
   },
   "schedule_share_phone_scan_hint": {
     "message": "Scannez le code QR avec l’appareil photo de votre téléphone pour obtenir le texte du planning.",
-    "description": "Instructions below the QR code explaining how to transfer the schedule text to a phone."
+    "description": "Instructions sous le code QR pour transférer le texte du planning sur un téléphone."
   },
   "schedule_share_qr_accessible_description": {
     "message": "Scannez pour obtenir le texte du planning.",
-    "description": "Accessible description of the generated schedule QR code."
+    "description": "Description accessible du code QR du planning généré."
   },
   "schedule_share_qr_empty_text_hint": {
     "message": "Saisissez du texte pour créer un code QR.",
-    "description": "Hint when the editable sharing text is empty, so no QR code can be generated."
+    "description": "Indication si le texte à partager est vide et ne permet pas de générer un code QR."
   },
   "schedule_share_qr_generating_status": {
     "message": "Création du code QR…",
-    "description": "Progress message while generating the QR code from the editable sharing text."
+    "description": "État pendant la génération du code QR à partir du texte modifiable."
   },
   "schedule_share_qr_generation_error": {
     "message": "Impossible de créer un code QR. Utilisez le bouton de copie.",
-    "description": "Error when QR generation fails; suggests copying the text instead."
+    "description": "Erreur de génération du code QR suggérant de copier le texte."
   },
   "schedule_share_schedule_missing_error": {
     "message": "Le planning n’a pas encore été reçu.",
-    "description": "Error when attempting to prepare sharing text without a valid schedule."
+    "description": "Erreur de préparation du texte à partager sans planning valide."
   },
   "schedule_share_screen_title": {
     "message": "Partager le planning",
-    "description": "Share schedule action tooltip and heading of the screen containing editable text and a QR code."
+    "description": "Infobulle de l’action de partage et titre de l’écran contenant le texte modifiable et le code QR."
   },
   "schedule_share_text_accessible_label": {
     "message": "Texte du planning à partager",
-    "description": "Accessible label for the editable schedule text on the sharing screen."
+    "description": "Libellé accessible du texte modifiable du planning sur l’écran de partage."
   },
   "schedule_share_text_header": {
     "message": "Coupures de courant le $DATE$ ($PLACE$, groupe $GROUP$) :",
-    "description": "First line of the plain text schedule copied to the clipboard or encoded in the QR code.",
+    "description": "Première ligne du planning en texte brut copié ou encodé dans le code QR.",
     "placeholders": {
       "date": {
         "content": "$1",
-        "example": "Monday, November 23, 2026"
+        "example": "lundi 23 novembre 2026"
       },
       "place": {
         "content": "$2",
-        "example": "Kyiv region, Обухів"
+        "example": "Київ, Хрещатик 22"
       },
       "group": {
         "content": "$3",
@@ -561,43 +561,43 @@
   },
   "schedule_share_unavailable_tooltip": {
     "message": "Aucun planning disponible pour la date sélectionnée",
-    "description": "Tooltip on the disabled share action when the selected date has no schedule."
+    "description": "Infobulle du partage désactivé lorsqu’aucun planning n’existe pour la date choisie."
   },
   "schedule_share_weekday_0": {
     "message": "dimanche",
-    "description": "Weekday phrase for Sunday in the custom shared date. Used only if schedule_share_date_text contains $WEEKDAY$. May include a preposition required by this language."
+    "description": "Forme du jour « dimanche » dans la date partagée personnalisée. Utilisée seulement si schedule_share_date_text contient $WEEKDAY$. Peut inclure une préposition nécessaire."
   },
   "schedule_share_weekday_1": {
     "message": "lundi",
-    "description": "Weekday phrase for Monday in the custom shared date. Used only if schedule_share_date_text contains $WEEKDAY$. May include a preposition required by this language."
+    "description": "Forme du jour « lundi » dans la date partagée personnalisée. Utilisée seulement si schedule_share_date_text contient $WEEKDAY$. Peut inclure une préposition nécessaire."
   },
   "schedule_share_weekday_2": {
     "message": "mardi",
-    "description": "Weekday phrase for Tuesday in the custom shared date. Used only if schedule_share_date_text contains $WEEKDAY$. May include a preposition required by this language."
+    "description": "Forme du jour « mardi » dans la date partagée personnalisée. Utilisée seulement si schedule_share_date_text contient $WEEKDAY$. Peut inclure une préposition nécessaire."
   },
   "schedule_share_weekday_3": {
     "message": "mercredi",
-    "description": "Weekday phrase for Wednesday in the custom shared date. Used only if schedule_share_date_text contains $WEEKDAY$. May include a preposition required by this language."
+    "description": "Forme du jour « mercredi » dans la date partagée personnalisée. Utilisée seulement si schedule_share_date_text contient $WEEKDAY$. Peut inclure une préposition nécessaire."
   },
   "schedule_share_weekday_4": {
     "message": "jeudi",
-    "description": "Weekday phrase for Thursday in the custom shared date. Used only if schedule_share_date_text contains $WEEKDAY$. May include a preposition required by this language."
+    "description": "Forme du jour « jeudi » dans la date partagée personnalisée. Utilisée seulement si schedule_share_date_text contient $WEEKDAY$. Peut inclure une préposition nécessaire."
   },
   "schedule_share_weekday_5": {
     "message": "vendredi",
-    "description": "Weekday phrase for Friday in the custom shared date. Used only if schedule_share_date_text contains $WEEKDAY$. May include a preposition required by this language."
+    "description": "Forme du jour « vendredi » dans la date partagée personnalisée. Utilisée seulement si schedule_share_date_text contient $WEEKDAY$. Peut inclure une préposition nécessaire."
   },
   "schedule_share_weekday_6": {
     "message": "samedi",
-    "description": "Weekday phrase for Saturday in the custom shared date. Used only if schedule_share_date_text contains $WEEKDAY$. May include a preposition required by this language."
+    "description": "Forme du jour « samedi » dans la date partagée personnalisée. Utilisée seulement si schedule_share_date_text contient $WEEKDAY$. Peut inclure une préposition nécessaire."
   },
   "schedule_storage_save_error": {
     "message": "Impossible d’enregistrer le planning.",
-    "description": "Fallback error when saving a schedule received from the DTEK website."
+    "description": "Erreur générique d’enregistrement d’un planning reçu de DTEK."
   },
   "schedule_supply_line_label": {
     "message": "Ligne $LINE$",
-    "description": "Label separating schedules for buildings with more than one electricity supply line.",
+    "description": "Libellé séparant les plannings des différentes lignes d’alimentation électrique d’un bâtiment.",
     "placeholders": {
       "line": {
         "content": "$1",
@@ -607,38 +607,38 @@
   },
   "schedule_validation_collection_error": {
     "message": "Plannings invalides.",
-    "description": "Validation error for a collection of received schedules."
+    "description": "Erreur de validation d’un ensemble de plannings reçus."
   },
   "schedule_validation_group_error": {
     "message": "Groupe de coupure invalide.",
-    "description": "Invalid outage group data. A group is the DTEK outage queue, e.g. 5.2, not a waiting line."
+    "description": "Groupe de coupure invalide. Il s’agit du groupe DTEK, par exemple 5.2, pas d’une file d’attente."
   },
   "schedule_validation_single_error": {
     "message": "Planning invalide.",
-    "description": "Validation error for a single received schedule."
+    "description": "Erreur de validation d’un seul planning reçu."
   },
   "settings_popup_closing_checkbox": {
     "message": "Fermer automatiquement les fenêtres surgissantes",
-    "description": "Checkbox enabling automatic closing of popups on DTEK websites."
+    "description": "Case activant la fermeture automatique des fenêtres surgissantes des sites DTEK."
   },
   "settings_popup_closing_enabled_status": {
     "message": "La fermeture automatique des fenêtres surgissantes est activée.",
-    "description": "Confirmation after automatic closing of DTEK website popups is enabled."
+    "description": "Confirmation de l’activation de la fermeture automatique des fenêtres surgissantes DTEK."
   },
   "settings_popup_closing_save_hint": {
     "message": "Les modifications sont enregistrées immédiatement et s’appliquent à tous les sites régionaux DTEK.",
-    "description": "Explains that the checkbox saves immediately for all supported DTEK regional websites."
+    "description": "Explique l’enregistrement immédiat et l’application à tous les sites régionaux DTEK pris en charge."
   },
   "settings_save_error": {
     "message": "Impossible d’enregistrer les paramètres. Veuillez réessayer.",
-    "description": "Error when saving the popup closing preference fails."
+    "description": "Erreur d’enregistrement de la préférence de fermeture des fenêtres surgissantes."
   },
   "settings_save_success": {
     "message": "Paramètres enregistrés.",
-    "description": "Confirmation after saving settings."
+    "description": "Confirmation après l’enregistrement des paramètres."
   },
   "settings_screen_title": {
     "message": "Paramètres",
-    "description": "Settings screen heading and settings button tooltip and accessible label."
+    "description": "Titre des paramètres, infobulle et libellé accessible du bouton des paramètres."
   }
 }

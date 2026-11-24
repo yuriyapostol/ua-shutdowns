@@ -25,7 +25,7 @@
     "placeholders": {
       "address": {
         "content": "$1",
-        "example": "Обухів, Миру, 17"
+        "example": "Київ, Хрещатик 22"
       }
     }
   },
@@ -99,7 +99,7 @@
     "placeholders": {
       "address": {
         "content": "$1",
-        "example": "Обухів, Миру, 17"
+        "example": "Київ, Хрещатик 22"
       }
     }
   },
@@ -467,7 +467,7 @@
       },
       "address": {
         "content": "$2",
-        "example": "Обухів, Миру, 17"
+        "example": "Київ, Хрещатик 22"
       }
     }
   },
@@ -493,7 +493,7 @@
       },
       "weekday": {
         "content": "$2",
-        "example": "в понеділок"
+        "example": "Monday"
       },
       "day": {
         "content": "$3",
@@ -501,7 +501,7 @@
       },
       "month": {
         "content": "$4",
-        "example": "листопада"
+        "example": "November"
       },
       "year": {
         "content": "$5",
@@ -551,7 +551,7 @@
       },
       "place": {
         "content": "$2",
-        "example": "Kyiv region, Обухів"
+        "example": "Київ, Хрещатик 22"
       },
       "group": {
         "content": "$3",

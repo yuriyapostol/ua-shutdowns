@@ -7,7 +7,7 @@ Interface and Chrome Web Store translations can grow independently of the docume
 ## Add an interface language
 
 1. Copy `_locales/en/messages.json` to `_locales/<locale>/messages.json`. Use a [Chrome-supported locale directory](https://developer.chrome.com/docs/extensions/reference/api/i18n), such as `pl` or `pt_BR`.
-2. Translate `message` values. Keep keys and placeholder names unchanged. Each entry's `description` explains where and how the text is used. The Ukrainian catalog has Ukrainian descriptions; the English catalog has English descriptions. You may also translate these notes for a new language to make translators' work easier.
+2. Translate `message` values. Keep keys and placeholder names unchanged. Each entry's `description` explains where and how the text is used. Every `description` must be written in the catalog’s language, including metadata and accessibility notes. Keep date and weekday examples consistent with `locale_format`. Always keep address examples in Ukrainian and use `Київ, Хрещатик 22`.
 3. Set the locale metadata described below. No JavaScript or language registration list needs updating.
 4. Run `node scripts/check-locales.cjs` and `node --test tests/*.test.cjs`.
 5. Reload the unpacked extension and check it in Chrome with the target interface language, including date entry, calendar navigation, long labels and sharing text.
@@ -27,7 +27,7 @@ The catalog is standard [Chrome messages.json](https://developer.chrome.com/docs
     "description": "Accessible label for sharing a particular address's schedule on a selected date.",
     "placeholders": {
       "date": { "content": "$1", "example": "11/23/2026" },
-      "address": { "content": "$2", "example": "Обухів, Миру, 17" }
+      "address": { "content": "$2", "example": "Київ, Хрещатик 22" }
     }
   }
 }
