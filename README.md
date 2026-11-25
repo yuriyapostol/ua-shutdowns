@@ -106,6 +106,8 @@ In **Settings**, enable automatic closing of popups on DTEK websites. The extens
 
 ## Privacy and stored data
 
+[Full privacy policy](PRIVACY.md) · [Chrome Web Store privacy submission notes](store/privacy-practices.md)
+
 Addresses, settings and schedule history are stored only locally in your browser. The extension does not send this data to the developer and does not use analytics or tracking.
 
 To retrieve a schedule, the selected address is entered into the form on the relevant DTEK website and processed by that website. Schedules are shared only when you choose to do so; QR codes are generated locally without sending their content to external services.
