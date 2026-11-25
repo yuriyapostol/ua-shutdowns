@@ -1,6 +1,6 @@
 'use strict';
 
-importScripts('i18n-catalogs.js', 'i18n.js', 'dtek-sites.js', 'dtek-schedule.js', 'address-settings.js', 'address-navigation.js');
+importScripts('i18n-catalogs.js', 'i18n.js', 'dtek-sites.js', 'dtek-schedule.js', 'address-identity.js', 'address-settings.js', 'address-navigation.js');
 
 // Serialize detections from multiple modals/tabs, including while openPopup waits.
 let offerQueue = Promise.resolve();

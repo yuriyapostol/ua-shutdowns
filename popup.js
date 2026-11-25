@@ -8,7 +8,11 @@
 
   const byId = id => document.getElementById(id);
   const fields = Object.fromEntries(['region', 'city', 'street', 'house'].map(field => [field, byId(field)]));
-  const views = ['home', 'form', 'delete', 'settings', 'popup-offer', 'share'];
+  const views = ['home', 'form', 'delete', 'settings', 'popup-offer', 'share', 'archives', 'archive-detail', 'archive-delete', 'identity-confirm'];
+  let originalAddress = null;
+  let pendingAddress = null;
+  let archiveItems = [];
+  let selectedArchiveId = null;
   let addresses = [];
   let editingId = null;
   let initialFields = {};
@@ -55,10 +59,11 @@
   }
   function show(view, title) {
     closeCalendar(false);
+    if (view !== 'identity-confirm') pendingAddress = null;
     if (view !== 'share') { sharingText = ''; shareRequest++; clearTimeout(shareQrTimer); }
     for (const name of views) byId(name + '-view').hidden = name !== view;
     byId('nav-back').hidden = view === 'home';
-    const backLabel = view === 'delete' ? I18n.t('navigation_back_to_address_edit') : I18n.t('navigation_back_to_home');
+    const backLabel = view.startsWith('archive') ? I18n.t('archive_back') : ['delete', 'identity-confirm'].includes(view) ? I18n.t('navigation_back_to_address_edit') : I18n.t('navigation_back_to_home');
     byId('nav-back').setAttribute('aria-label', backLabel);
     byId('nav-back').title = backLabel;
     byId('screen-title').textContent = title;
@@ -135,6 +140,7 @@
             }
           });
         } else outages.append(make('span', 'outage-note', selectedDate < DtekSchedule.dateKey() ? I18n.t('schedule_history_date_missing') : I18n.t('schedule_selected_date_not_received')));
+        if (available && !address.queueVerified) outages.append(make('span', 'outage-note', I18n.t('schedule_unverified_address')));
         const actions = make('div', 'address-actions');
         const share = make('button', 'share-schedule');
         share.type = 'button';
@@ -351,7 +357,9 @@
     byId('calendar-year-previous').disabled = year === 1;
     byId('calendar-year-next').disabled = year === 9999;
     const grid = byId('calendar-grid');
-    grid.setAttribute('aria-label', `${monthNames[month - 1]}, ${year}`);
+    grid.setAttribute('aria-label', new Intl.DateTimeFormat(I18n.locale, {
+      month: 'long', year: 'numeric', timeZone: 'UTC'
+    }).format(calendarDay(calendarKey(year, month, 1))));
     grid.replaceChildren();
     const headers = make('div');
     headers.setAttribute('role', 'row');
@@ -510,6 +518,7 @@
   function edit(address = null) {
     if (busy) return;
     editingId = address?.id || null;
+    originalAddress = address ? { ...address } : null;
     fields.city.readOnly = false;
     for (const field of Object.keys(fields)) fields[field].value = address?.[field] || '';
     cityBeforeKyiv = fields.city.value;
@@ -548,8 +557,11 @@
   }
   byId('nav-back').addEventListener('click', () => {
     if (busy) return;
+    if (!byId('archive-delete-view').hidden) { renderArchiveDetail(); return; }
+    if (!byId('archive-detail-view').hidden) { void openArchives(); return; }
+    if (!byId('archives-view').hidden) { show('settings', I18n.t('settings_screen_title')); return; }
     if (!byId('popup-offer-view').hidden) void dismissPopupOffer();
-    else if (!byId('delete-view').hidden) show('form', I18n.t('address_edit_screen_title'));
+    else if (!byId('delete-view').hidden || !byId('identity-confirm-view').hidden) show('form', I18n.t('address_edit_screen_title'));
     else home();
   });
   byId('dismiss-popup-offer').addEventListener('click', dismissPopupOffer);
@@ -572,25 +584,46 @@
     input.addEventListener('input', updateSaveButton);
     input.addEventListener('change', updateSaveButton);
   }
-  byId('address-form').addEventListener('submit', async event => {
-    event.preventDefault();
-    if (busy || (editingId !== null && !hasAddressChanges())) return;
+  function addressSummary(address) {
+    return [I18n.t('dtek_region_' + address.region + '_name'), address.city, address.street, address.house].join(', ');
+  }
+  async function saveAddress(draft, newIdentity = false) {
+    if (busy) return;
     setBusy(true);
     status(I18n.t('address_save_pending'));
     try {
-      await AddressSettings.upsert(Object.fromEntries(Object.entries(fields).map(([key, input]) => [key, input.value])), editingId);
+      await AddressSettings.upsert(draft.fields, draft.id, { newIdentity, expectedRevision: draft.revision });
       addresses = await AddressSettings.list();
       home();
       status(I18n.t('address_save_success'));
     } catch (error) {
       status(error.message || I18n.t('address_save_error'), true);
     } finally { setBusy(false); }
+  }
+  byId('address-form').addEventListener('submit', async event => {
+    event.preventDefault();
+    if (busy || byId('form-view').hidden || (editingId !== null && !hasAddressChanges())) return;
+    try {
+      const draft = { id: editingId, revision: originalAddress?.revision,
+        fields: ScheduleStorage.profile(Object.fromEntries(Object.entries(fields).map(([key, input]) => [key, input.value]))) };
+      if (originalAddress && AddressIdentity.requiresConfirmation(originalAddress, draft.fields)) {
+        pendingAddress = draft;
+        byId('identity-before').textContent = addressSummary(originalAddress);
+        byId('identity-after').textContent = addressSummary(draft.fields);
+        show('identity-confirm', I18n.t('address_identity_title'));
+      } else await saveAddress(draft);
+    } catch (error) { status(error.message || I18n.t('address_save_error'), true); }
   });
+  for (const [id, newIdentity] of [['confirm-address-correction', false], ['confirm-address-replacement', true]]) {
+    byId(id).addEventListener('click', () => {
+      if (busy || byId('identity-confirm-view').hidden || !pendingAddress) return;
+      void saveAddress(pendingAddress, newIdentity);
+    });
+  }
   byId('delete-address').addEventListener('click', () => {
     if (busy || !editingId) return;
     const address = addresses.find(item => item.id === editingId);
     if (!address) return;
-    byId('delete-address-archive').checked = false;
     byId('delete-address-summary').textContent = I18n.t('address_delete_confirmation_question', [`${address.city}, ${address.street}, ${address.house}`]);
     show('delete', I18n.t('address_delete_screen_title'));
   });
@@ -598,11 +631,10 @@
     if (busy || !editingId || byId('delete-view').hidden) return;
     setBusy(true);
     try {
-      const deleteArchive = byId('delete-address-archive').checked;
-      await AddressSettings.remove(editingId, { deleteArchive });
+      await AddressSettings.remove(editingId);
       addresses = await AddressSettings.list();
       home();
-      status(deleteArchive ? I18n.t('address_delete_with_archive_success') : I18n.t('address_delete_keep_archive_success'));
+      status(I18n.t('address_delete_keep_archive_success'));
     } catch { status(I18n.t('address_delete_error'), true); }
     finally { setBusy(false); }
   });
@@ -651,6 +683,87 @@
     } finally { setBusy(false); }
   });
 
+
+  function archiveLabel(item) {
+    const region = item.locality.region ? I18n.t('dtek_region_' + item.locality.region + '_name') : I18n.t('address_list_unassigned_region_heading');
+    return `${region}, ${item.locality.name} — ${I18n.t('address_list_outage_group_label', [item.queue || '—'])}`;
+  }
+  function renderArchives() {
+    const container = byId('archive-list');
+    container.replaceChildren();
+    if (!archiveItems.length) container.append(make('p', 'explanation', I18n.t('archives_empty')));
+    for (const item of archiveItems) {
+      const button = make('button', 'archive-item archive-button archive-navigation');
+      button.type = 'button';
+      const arrow = make('img');
+      arrow.src = 'images/keyboard-arrow-right.svg';
+      arrow.width = 24;
+      arrow.height = 24;
+      arrow.alt = '';
+      arrow.setAttribute('aria-hidden', 'true');
+      button.append(make('span', '', archiveLabel(item)), arrow);
+      button.addEventListener('click', () => { selectedArchiveId = item.id; renderArchiveDetail(); });
+      container.append(button);
+    }
+    show('archives', I18n.t('archives_title'));
+  }
+  function renderArchiveDetail() {
+    const item = archiveItems.find(value => value.id === selectedArchiveId);
+    if (!item) { renderArchives(); return; }
+    byId('archive-summary').textContent = archiveLabel(item);
+    const container = byId('archive-days');
+    container.replaceChildren();
+    if (!Object.keys(item.days).length) container.append(make('p', 'explanation', I18n.t('archives_empty')));
+    for (const [date, variants] of Object.entries(item.days).sort(([a], [b]) => b.localeCompare(a))) {
+      const section = make('section', 'archive-day');
+      section.append(make('h2', '', I18n.formatDate(date)));
+      variants.forEach((variant, index) => {
+        if (variants.length > 1) section.append(make('p', 'hint', I18n.t('archive_variant', [String(index + 1)])));
+        const schedule = make('div', 'archive-schedule');
+        variant.lines.forEach((line, lineIndex) => {
+          const supply = make('div', 'archive-line');
+          if (variant.lines.length > 1) supply.append(make('span', 'archive-line-label', I18n.t('schedule_supply_line_label', [String(lineIndex + 1)])));
+          if (!line.length) supply.append(make('span', '', I18n.t('schedule_no_outages')));
+          for (const [start, end] of line) supply.append(make('span', '', `${DtekSchedule.format(start)} – ${DtekSchedule.format(end)}`));
+          schedule.append(supply);
+        });
+        section.append(schedule);
+      });
+      container.append(section);
+    }
+    show('archive-detail', I18n.t('archives_title'));
+  }
+  async function refreshArchives(detail = false) {
+    archiveItems = await AddressSettings.archives();
+    if (detail) renderArchiveDetail(); else renderArchives();
+  }
+  async function openArchives() {
+    if (busy) return;
+    setBusy(true);
+    try { await refreshArchives(); }
+    catch { status(I18n.t('schedule_archive_read_error'), true); }
+    finally { setBusy(false); }
+  }
+  byId('open-archives').addEventListener('click', () => { void openArchives(); });
+  byId('delete-queue-archive').addEventListener('click', () => {
+    if (busy) return;
+    const item = archiveItems.find(value => value.id === selectedArchiveId);
+    if (!item) return;
+    byId('archive-delete-summary').textContent = archiveLabel(item) + ' · ' + I18n.t('archive_linked_addresses', [String(item.addressCount)]);
+    show('archive-delete', I18n.t('archive_delete_action'));
+  });
+  byId('confirm-archive-delete').addEventListener('click', async () => {
+    if (busy || byId('archive-delete-view').hidden) return;
+    setBusy(true);
+    try {
+      await AddressSettings.removeArchive(selectedArchiveId);
+      addresses = await AddressSettings.list();
+      await refreshArchives();
+      status(I18n.t('archive_deleted'));
+    } catch { status(I18n.t('archive_delete_error'), true); }
+    finally { setBusy(false); }
+  });
+
   async function load() {
     try {
       // Re-read the visible table before loading the archive, even if its DOM
@@ -671,14 +784,21 @@
       byId('auto-close-popups').checked = preferences.autoClosePopups;
       home();
       if (offer) show('popup-offer', I18n.t('popup_offer_screen_title'));
-    } catch { status(I18n.t('address_list_load_error'), true); }
+    } catch (error) { status(error.message || I18n.t('address_list_load_error'), true); }
     finally { setBusy(false); }
   }
   chrome.storage.onChanged.addListener((changes, area) => {
-    if (area !== 'local' || (!changes.addresses && !changes.addressArchives)) return;
+    if (area !== 'local' || !changes.scheduleData) return;
     AddressSettings.list().then(saved => {
       addresses = saved;
       if (!busy && !byId('home-view').hidden) render();
+      if (!busy && (!byId('archives-view').hidden || !byId('archive-detail-view').hidden)) {
+        void AddressSettings.archives().then(items => {
+          archiveItems = items;
+          if (!busy && !byId('archives-view').hidden) renderArchives();
+          else if (!busy && !byId('archive-detail-view').hidden) renderArchiveDetail();
+        }).catch(() => status(I18n.t('schedule_refresh_error'), true));
+      }
     }).catch(() => { status(I18n.t('schedule_refresh_error'), true); });
   });
   load();

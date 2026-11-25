@@ -1,3 +1,4 @@
+const { fixtureState } = require('./storage-fixture.cjs');
 const { i18nFixtureSource } = require('./i18n-fixture.cjs');
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
@@ -6,13 +7,14 @@ const vm = require('node:vm');
 const source = readFileSync(require.resolve('../background.js'), 'utf8');
 const sites = readFileSync(require.resolve('../dtek-sites.js'), 'utf8');
 const schedule = readFileSync(require.resolve('../dtek-schedule.js'), 'utf8');
-const settings = readFileSync(require.resolve('../address-settings.js'), 'utf8');
+const settings = readFileSync(require.resolve('../address-identity.js'), 'utf8') + '\n' + readFileSync(require.resolve('../address-settings.js'), 'utf8');
 const navigation = readFileSync(require.resolve('../address-navigation.js'), 'utf8');
 const url = 'https://www.dtek-krem.com.ua/ua/shutdowns';
 const sender = { frameId: 0, url, tab: { id: 7 } };
 
 function setup(initial = {}, options = {}) {
   const data = structuredClone(initial);
+  if (data.addresses) { data.scheduleData = fixtureState(data.addresses); delete data.addresses; }
   const sessionData = {};
   const calls = [];
   const warnings = [];
@@ -41,7 +43,7 @@ function setup(initial = {}, options = {}) {
     } }
   };
   function startWorker() {
-    const context = vm.createContext({ chrome, URL, URLSearchParams,
+    const context = vm.createContext({ chrome, URL, URLSearchParams, crypto: require('node:crypto').webcrypto,
       console: { warn: (...args) => warnings.push(args) } });
     context.importScripts = () => vm.runInContext(i18nFixtureSource() + '\n' + sites + '\n' + schedule + '\n' + settings + '\n' + navigation, context);
     vm.runInContext(source, context);
@@ -127,8 +129,8 @@ test('ignores unsupported senders, subframes and unrelated messages', async () =
 });
 
 const savedAddresses = [
-  { id: 'first', region: 'krem', city: 'Обухів', street: 'Миру', house: '17' },
-  { id: 'second', region: 'krem', city: 'Обухів', street: 'Миру', house: '23' }
+  { id: 'first', revision: 1, region: 'krem', city: 'Обухів', street: 'Миру', house: '17' },
+  { id: 'second', revision: 1, region: 'krem', city: 'Обухів', street: 'Миру', house: '23' }
 ];
 const popupSender = { url: 'chrome-extension://fixture/popup.html' };
 
@@ -146,7 +148,7 @@ test('opens the saved address from the popup and serves its selection after work
 
 test('page address requests use the sender tab rather than an ID supplied in the message', async () => {
   const p = setup({ addresses: savedAddresses });
-  p.sessionData['address-for-tab:7'] = { id: 'second', region: 'krem' };
+  p.sessionData['address-for-tab:7'] = { id: 'second', revision: 1, region: 'krem' };
   const otherTab = { ...sender, tab: { id: 8 } };
   const response = await p.send(otherTab, { type: 'get-page-address', tabId: 7 });
   assert.equal(response.address.id, 'first');
@@ -155,8 +157,8 @@ test('page address requests use the sender tab rather than an ID supplied in the
 
 test('closed tab selections are removed without touching another tab', async () => {
   const p = setup();
-  p.sessionData['address-for-tab:7'] = { id: 'first', region: 'krem' };
-  p.sessionData['address-for-tab:8'] = { id: 'second', region: 'krem' };
+  p.sessionData['address-for-tab:7'] = { id: 'first', revision: 1, region: 'krem' };
+  p.sessionData['address-for-tab:8'] = { id: 'second', revision: 1, region: 'krem' };
   p.removeTab(7);
   await Promise.resolve();
   assert.equal(p.sessionData['address-for-tab:7'], undefined);
@@ -181,15 +183,15 @@ test('legacy migration and a new address selection cannot overwrite each other',
 
 test('saves the detected queue only for the selected unchanged address', async () => {
   const p = setup({ addresses: savedAddresses });
-  p.sessionData['address-for-tab:7'] = { id: 'second', region: 'krem' };
+  p.sessionData['address-for-tab:7'] = { id: 'second', revision: 1, region: 'krem' };
   assert.equal((await p.send(sender, { type: 'save-address-queue', address: savedAddresses[0], queue: '1.1' })).ok, false);
   const schedule = { date: '2026-11-15', lines: [[[150, 780]]] };
   assert.equal((await p.send(sender, { type: 'save-address-queue', address: savedAddresses[1], queue: '4.2', schedule })).ok, true);
   const updated = (await p.send(sender, { type: 'get-page-address' })).address;
   assert.equal(updated.queue, '4.2');
   assert.deepEqual(JSON.parse(JSON.stringify(updated.schedules[schedule.date])), { ...schedule, queue: '4.2' });
-  assert.equal(p.data.addresses[1].schedules, undefined);
-  assert.equal(p.data.addresses[0].queue, undefined);
+  assert.equal(p.data.scheduleData.addresses[1].schedules, undefined);
+  assert.equal(p.data.scheduleData.addresses[0].queue, '');
 });
 
 test('background errors use the saved interface language even after a worker restart', async () => {

@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "minimum_chrome_version": "127",
   "name": "__MSG_extension_name__",
-  "version": "0.6.3",
+  "version": "0.7.0",
   "description": "__MSG_extension_description__",
   "default_locale": "en",
   "permissions": [
@@ -29,6 +29,7 @@
         "i18n.js",
         "dtek-sites.js",
         "dtek-schedule.js",
+        "address-identity.js",
         "address-settings.js",
         "dtek-popup-closer.js",
         "dtek-content-script.js"

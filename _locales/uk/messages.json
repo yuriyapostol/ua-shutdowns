@@ -7,13 +7,9 @@
     "message": "Додавання адреси",
     "description": "Заголовок екрана додавання адреси."
   },
-  "address_delete_archive_checkbox": {
-    "message": "Видалити архів даних за адресою",
-    "description": "Прапорець видалення всієї збереженої історії графіків для цієї адреси. Типово вимкнений."
-  },
   "address_delete_archive_retention_hint": {
-    "message": "Якщо не вибрати, архів відновиться після повторного додавання адреси.",
-    "description": "Пояснення, що збережена історія відновиться після повторного додавання тієї самої адреси."
+    "message": "Архіви черг залишаться без вулиці й будинку. Керувати ними можна в налаштуваннях.",
+    "description": "Explains that deleting an address removes its street/building but keeps locality/group schedules, managed separately in Settings."
   },
   "address_delete_confirm_action": {
     "message": "Видалити",
@@ -34,16 +30,16 @@
     "description": "Повідомлення про невдале видалення адреси."
   },
   "address_delete_keep_archive_success": {
-    "message": "Адресу видалено. Архів збережено.",
+    "message": "Адресу видалено. Архіви черг збережено.",
     "description": "Підтвердження, що адресу видалено, а її історію графіків збережено."
   },
   "address_delete_screen_title": {
     "message": "Видалення адреси",
     "description": "Заголовок екрана підтвердження видалення адреси."
   },
-  "address_delete_with_archive_success": {
-    "message": "Адресу та її архів видалено.",
-    "description": "Підтвердження видалення адреси разом зі збереженою історією графіків."
+  "address_edit_conflict": {
+    "message": "Адресу змінено в іншому вікні. Відкрийте її редагування заново.",
+    "description": "Reject saving an outdated edit/confirmation rather than overwriting newer address data."
   },
   "address_edit_screen_title": {
     "message": "Редагування адреси",
@@ -96,6 +92,34 @@
   "address_form_street_placeholder": {
     "message": "Введіть назву вулиці",
     "description": "Текст усередині порожнього поля назви вулиці."
+  },
+  "address_identity_after": {
+    "message": "Стало",
+    "description": "Label for the proposed full address in edit confirmation."
+  },
+  "address_identity_before": {
+    "message": "Було",
+    "description": "Label for the original full address in edit confirmation."
+  },
+  "address_identity_correction": {
+    "message": "Уточнюю адресу",
+    "description": "Save with the same identity and history."
+  },
+  "address_identity_explanation": {
+    "message": "Уточнення зберігає історію адреси. Для іншого місця історія починається заново, а попередні архіви черг залишаються в налаштуваннях.",
+    "description": "Explains the effects of the two edit confirmation choices."
+  },
+  "address_identity_question": {
+    "message": "Ви уточнюєте адресу чи змінюєте місце?",
+    "description": "Question asking the user to distinguish an address correction from a different physical place."
+  },
+  "address_identity_replacement": {
+    "message": "Це інше місце",
+    "description": "Save with a new identity, retaining old shared group archives."
+  },
+  "address_identity_title": {
+    "message": "Зміна адреси",
+    "description": "Heading of the confirmation shown only after a substantive address edit."
   },
   "address_list_edit_accessible_label": {
     "message": "Редагувати: $ADDRESS$",
@@ -208,6 +232,68 @@
   "application_loading_status": {
     "message": "Завантаження…",
     "description": "Початкове повідомлення під час завантаження збережених адрес і налаштувань."
+  },
+  "archive_back": {
+    "message": "Назад",
+    "description": "Group archive management or address identity interface: archive_back."
+  },
+  "archive_delete_action": {
+    "message": "Видалити архів черги",
+    "description": "Group archive management or address identity interface: archive_delete_action."
+  },
+  "archive_delete_error": {
+    "message": "Не вдалося видалити архів. Спробуйте ще раз.",
+    "description": "Group archive management or address identity interface: archive_delete_error."
+  },
+  "archive_delete_warning": {
+    "message": "Графіки буде видалено також з історії всіх пов’язаних адрес. Цю дію не можна скасувати.",
+    "description": "Group archive management or address identity interface: archive_delete_warning."
+  },
+  "archive_deleted": {
+    "message": "Архів черги видалено.",
+    "description": "Group archive management or address identity interface: archive_deleted."
+  },
+  "archive_linked_addresses": {
+    "message": "Пов’язаних адрес: $COUNT$",
+    "description": "Number of saved addresses affected by deleting a shared group archive.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "2"
+      }
+    }
+  },
+  "archive_received_at": {
+    "message": "Отримано: $TIME$",
+    "description": "Time when a schedule snapshot was first received; hidden for imported snapshots without a known timestamp.",
+    "placeholders": {
+      "time": {
+        "content": "$1",
+        "example": "25.11.2026, 12:30"
+      }
+    }
+  },
+  "archive_variant": {
+    "message": "Варіант $NUMBER$",
+    "description": "Label distinguishing conflicting schedules for the same date.",
+    "placeholders": {
+      "number": {
+        "content": "$1",
+        "example": "2"
+      }
+    }
+  },
+  "archives_description": {
+    "message": "Графіки за населеними пунктами й чергами. Вулиці та будинки тут не зберігаються. Кілька черг можуть мати спільний графік із кількома лініями.",
+    "description": "Group archive management or address identity interface: archives_description."
+  },
+  "archives_empty": {
+    "message": "Збережених графіків немає.",
+    "description": "Group archive management or address identity interface: archives_empty."
+  },
+  "archives_title": {
+    "message": "Архіви черг",
+    "description": "Group archive management or address identity interface: archives_title."
   },
   "date_calendar_accessible_label": {
     "message": "Вибір дати графіка",
@@ -398,6 +484,10 @@
   "locale_week_first_day": {
     "message": "1",
     "description": "Мовні метадані, не видимий текст. Резервний перший день тижня, якщо Intl не надає цю інформацію: 0 — неділя, 1 — понеділок, ..., 6 — субота."
+  },
+  "locality_ambiguous": {
+    "message": "Знайдено кілька населених пунктів з однаковою назвою. Уточніть її, наприклад додайте район.",
+    "description": "Error when locality name/aliases match multiple distinct locality IDs; never merge automatically."
   },
   "navigation_back_to_address_edit": {
     "message": "До редагування адреси",
@@ -613,6 +703,10 @@
       }
     }
   },
+  "schedule_unverified_address": {
+    "message": "Черга для цієї адреси ще не підтверджена на сайті.",
+    "description": "Note beside cached schedules when the current address has no verified outage group, including after corrections."
+  },
   "schedule_validation_collection_error": {
     "message": "Некоректні графіки.",
     "description": "Помилка перевірки набору отриманих графіків."
@@ -652,5 +746,9 @@
   "settings_screen_title": {
     "message": "Налаштування",
     "description": "Заголовок екрана налаштувань, підказка та назва кнопки налаштувань для читачів екрана."
+  },
+  "storage_format_unsupported": {
+    "message": "Формат збережених даних не підтримується. Дані залишено без змін.",
+    "description": "Unknown or mixed storage schema: refuse access without overwriting any data."
   }
 }

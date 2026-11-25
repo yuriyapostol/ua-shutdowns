@@ -45,7 +45,7 @@ jobs:
           (Path(os.environ['RUNNER_TEMP']) / 'release-notes.md').write_text(notes, encoding='utf-8')
           subprocess.run([
               'git', 'archive', '--format=zip', '--output=ua-shutdowns-' + version + '.zip', 'HEAD',
-              'manifest.json', 'i18n-catalogs.js', 'i18n.js', 'background.js', 'dtek-sites.js', 'dtek-schedule.js', 'address-settings.js', 'address-navigation.js', 'dtek-content-script.js', 'dtek-popup-closer.js',
+              'manifest.json', 'i18n-catalogs.js', 'i18n.js', 'background.js', 'dtek-sites.js', 'dtek-schedule.js', 'address-settings.js', 'address-identity.js', 'address-navigation.js', 'dtek-content-script.js', 'dtek-popup-closer.js',
               'popup.html', 'popup.css', 'popup.js', 'schedule-sharing.mjs', 'vendor', '_locales', 'images', 'fonts', 'README.md', 'README.uk.md', 'CHANGELOG.md', 'CHANGELOG.uk.md', 'TRANSLATING.md', 'TRANSLATING.uk.md'
           ], check=True)
           PY

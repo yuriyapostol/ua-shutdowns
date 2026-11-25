@@ -1,3 +1,4 @@
+const { fixtureState } = require('./storage-fixture.cjs');
 const { i18nFixtureSource } = require('./i18n-fixture.cjs');
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
@@ -7,7 +8,7 @@ const vm = require('node:vm');
 const source = readFileSync(require.resolve('../dtek-content-script.js'), 'utf8');
 const sitesSource = readFileSync(require.resolve('../dtek-sites.js'), 'utf8');
 const scheduleSource = readFileSync(require.resolve('../dtek-schedule.js'), 'utf8');
-const settingsSource = readFileSync(require.resolve('../address-settings.js'), 'utf8');
+const settingsSource = readFileSync(require.resolve('../address-identity.js'), 'utf8') + '\n' + readFileSync(require.resolve('../address-settings.js'), 'utf8');
 
 // A deterministic model of DTEK's substring autocomplete and dependent fields.
 function page({ cities = ['м. Обухів'], streets = ['вул. Миру'],
@@ -106,7 +107,7 @@ function page({ cities = ['м. Обухів'], streets = ['вул. Миру'],
       if (storageDelay) await new Promise(resolve => schedule(resolve, storageDelay));
       if (storageError) throw new Error('Storage unavailable');
       const region = isKyiv && !['Київ', 'м. Київ'].includes(address?.city) ? 'krem' : hostname.match(/dtek-([^.]+)/)[1];
-      return { addresses: savedAddresses || (address ? [{ id: 'fixture-address', region, ...address }] : []) };
+      return { scheduleData: fixtureState(savedAddresses || (address ? [{ id: 'fixture-address', region, ...address }] : [])) };
     } } } },
     document, AbortController, Event, KeyboardEvent: Event, MouseEvent: Event,
     watchFixture: watch, readScheduleDays: () => scheduleDays,

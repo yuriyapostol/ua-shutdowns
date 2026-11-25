@@ -4,127 +4,201 @@ const assert = require('node:assert/strict');
 const { readFileSync } = require('node:fs');
 const vm = require('node:vm');
 const { webcrypto } = require('node:crypto');
-const sitesSource = readFileSync(require.resolve('../dtek-sites.js'), 'utf8');
-const scheduleSource = readFileSync(require.resolve('../dtek-schedule.js'), 'utf8');
-const source = readFileSync(require.resolve('../address-settings.js'), 'utf8');
-const address = { region: 'krem', city: 'Тестове місто', street: 'Тестова вулиця', house: '12 А' };
-function setup(initial = {}, now = Date.now()) {
+const { fixtureState } = require('./storage-fixture.cjs');
+const source = ['dtek-sites.js', 'dtek-schedule.js', 'address-identity.js', 'address-settings.js'].map(file => readFileSync(require.resolve('../' + file), 'utf8')).join('\n');
+const address = { region: 'krem', city: 'Обухів', street: 'Миру', house: '17' };
+const today = '2026-11-25';
+const day = (date = today, lines = [[[60, 120]]]) => ({ date, lines });
+function setup(initial = {}, now = Date.UTC(2026, 10, 25, 12)) {
   const data = structuredClone(initial);
   const local = { async get() { return structuredClone(data); }, async set(value) { Object.assign(data, structuredClone(value)); } };
   let queue = Promise.resolve();
   const navigator = { locks: { request(_name, work) { const operation = queue.then(work); queue = operation.catch(() => {}); return operation; } } };
-  const api = vm.runInNewContext(i18nFixtureSource() + '\n' + sitesSource + '\n' + scheduleSource + '\n' + source + '\nAddressSettings;', {
-    chrome: { storage: { local } }, crypto: webcrypto, URL, URLSearchParams, navigator,
+  const api = vm.runInNewContext(i18nFixtureSource() + '\n' + source + '\nAddressSettings;', {
+    chrome: { storage: { local } }, crypto: webcrypto, URL, navigator,
     Date: class extends Date { static now() { return now; } }
   });
-  return { data, local, api };
+  return { api, data, local };
 }
 const plain = value => JSON.parse(JSON.stringify(value));
 
-test('starts with an empty address list', async () => {
-  assert.deepEqual(plain(await setup().api.list()), []);
-});
-test('adds multiple addresses and preserves their regions and IDs', async () => {
-  const { api } = setup();
+test('fresh profile starts empty; creating addresses writes an atomic versioned state', async () => {
+  const { api, data } = setup({ interfaceLanguage: 'uk' });
+  assert.deepEqual(plain(await api.list()), []);
   const first = await api.upsert(address);
-  const second = await api.upsert({ ...address, region: 'oem' });
+  const second = await api.upsert({ ...address, house: '23' });
   assert.notEqual(first.id, second.id);
-  assert.deepEqual(plain(await api.list()), [plain(first), plain(second)]);
-});
-test('trims fields and rejects empty fields and an unknown region', async () => {
-  const { api } = setup();
-  assert.equal((await api.upsert({ ...address, house: ' 12   А ' })).house, '12 А');
-  for (const invalid of [null, {}, { ...address, region: 'other' }, { ...address, city: '' }, { ...address, street: ' ' }, { ...address, house: 3 }]) {
-    await assert.rejects(api.upsert(invalid));
-  }
-});
-test('fixes the city to Kyiv for the Kyiv operator', async () => {
-  const { api } = setup();
-  assert.equal((await api.upsert({ ...address, region: 'kem', city: '' })).city, 'Київ');
-});
-test('updates one address without changing its ID or another record', async () => {
-  const { api } = setup();
-  const first = await api.upsert(address);
-  const second = await api.upsert({ ...address, house: '23' });
-  const edited = await api.upsert({ ...address, region: 'dnem', house: '24' }, first.id);
-  assert.equal(edited.id, first.id);
-  assert.deepEqual(plain(await api.list()), [plain(edited), plain(second)]);
-  await assert.rejects(api.upsert(address, 'deleted-id'), /видалено/);
-});
-test('rejects duplicate addresses but allows editing the same record', async () => {
-  const { api } = setup();
-  const saved = await api.upsert(address);
-  await assert.rejects(api.upsert({ ...address, city: address.city.toUpperCase() }), /вже додано/);
-  await api.upsert(address, saved.id);
-});
-test('migrates a legacy address once and preserves its original stored value', async () => {
-  const legacy = { city: address.city, street: address.street, house: address.house };
-  const { api, data } = setup({ address: legacy, autoClosePopups: true });
-  const migrated = await api.list();
-  assert.equal(migrated[0].region, '');
-  assert.equal(migrated[0].id, 'legacy-address');
-  assert.deepEqual(data.address, legacy);
-  assert.equal(data.autoClosePopups, true);
-  assert.deepEqual(plain(await api.list()), plain(migrated));
-  await api.upsert(address, 'legacy-address');
-  await api.remove('legacy-address');
-  assert.deepEqual(plain(await api.list()), []);
-});
-test('rejects corrupt storage without overwriting it', async () => {
-  const { api, data } = setup({ addresses: 'corrupt' });
-  await assert.rejects(api.list());
-  assert.equal(data.addresses, 'corrupt');
-});
-test('selects an address by region and a per-tab ID without changing other addresses', async () => {
-  const { api } = setup();
-  const first = await api.upsert(address);
-  const second = await api.upsert({ ...address, house: '23' });
-  const other = await api.upsert({ ...address, region: 'oem' });
-  const base = 'https://www.dtek-krem.com.ua/ua/shutdowns';
-  assert.equal((await api.forPage(base)).id, first.id);
-  assert.equal((await api.forPage(base, second.id)).id, second.id);
-  assert.equal(await api.forPage(base, other.id), null);
-  assert.equal(await api.forPage(base, 'deleted'), null);
-  await api.remove(second.id);
-  assert.equal(await api.forPage(base, second.id), null);
-  assert.equal((await api.forPage('https://www.dtek-oem.com.ua/ua/shutdowns')).id, other.id);
-  assert.equal(await api.forPage('https://www.dtek-kem.com.ua/ua/shutdowns'), null);
-  assert.equal(await api.forPage('https://www.dtek-krem.com.ua.evil.example/ua/shutdowns'), null);
-});
-test('does not auto-select a legacy address until a region is assigned', async () => {
-  const { api } = setup({ address: { city: address.city, street: address.street, house: address.house } });
-  assert.equal(await api.forPage('https://www.dtek-krem.com.ua/ua/shutdowns'), null);
-});
-test('preferences can be toggled independently of an empty address list', async () => {
-  const { api } = setup();
-  assert.equal((await api.loadPreferences()).autoClosePopups, false);
-  await api.savePreferences({ autoClosePopups: true });
-  assert.equal((await api.loadPreferences()).autoClosePopups, true);
-  await api.savePreferences({ autoClosePopups: false });
-  assert.equal((await api.loadPreferences()).autoClosePopups, false);
-  assert.deepEqual(plain(await api.list()), []);
-});
-test('propagates storage failures without pretending that writes succeeded', async () => {
-  const { api, local } = setup();
-  local.set = async () => { throw new Error('unavailable'); };
-  await assert.rejects(api.upsert(address), /unavailable/);
-  await assert.rejects(api.savePreferences({ autoClosePopups: true }), /unavailable/);
-});
-
-
-test('concurrent edits from separate popups preserve both added addresses', async () => {
-  const { api } = setup();
-  await Promise.all([api.upsert(address), api.upsert({ ...address, house: '24' })]);
-  assert.equal((await api.list()).length, 2);
-});
-
-test('content-script reads never write legacy migration data', async () => {
-  const { api, data, local } = setup({ address: { city: address.city, street: address.street, house: address.house } });
-  local.set = async () => { throw new Error('Content scripts must not migrate storage'); };
-  assert.equal(await api.forPage('https://www.dtek-krem.com.ua/ua/shutdowns'), null);
+  assert.equal(first.revision, 1);
+  assert.equal(data.scheduleData.schemaVersion, 1);
+  assert.equal(data.interfaceLanguage, 'uk');
   assert.equal(data.addresses, undefined);
 });
-
+test('invalid addresses, duplicate addresses and missing edited records are rejected', async () => {
+  const { api } = setup();
+  await api.upsert(address);
+  await assert.rejects(api.upsert({ ...address, city: ' ОБУХІВ ' }), /вже додано/);
+  for (const value of [{}, null, { ...address, street: '' }, { ...address, region: 'unknown' }]) await assert.rejects(api.upsert(value));
+  await assert.rejects(api.upsert(address, 'missing'), /видалено/);
+});
+test('Kyiv fixes settlement and whitespace is normalized', async () => {
+  const { api } = setup();
+  const saved = await api.upsert({ ...address, region: 'kem', city: '', house: ' 12   А ' });
+  assert.equal(saved.city, 'Київ'); assert.equal(saved.house, '12 А');
+});
+test('unsupported old data is never overwritten or treated as empty', async () => {
+  for (const initial of [{ addresses: [address] }, { address }, { addresses: 'bad' }, { addressArchives: { old: {} } }]) {
+    const { api, data } = setup(initial); const before = JSON.stringify(data);
+    await assert.rejects(api.list(), /не підтримується/);
+    await assert.rejects(api.upsert(address));
+    assert.equal(JSON.stringify(data), before);
+  }
+});
+test('unknown schema, corrupt references and personal data in archives fail without writes', async () => {
+  const base = fixtureState([{ id: 'one', ...address, queue: '4.2', schedule: day() }]);
+  for (const corrupt of [s => s.schemaVersion = 900, s => Object.values(s.archives)[0].street = 'secret',
+    s => s.histories.one[today].snapshotId = 'missing', s => s.addresses[0].revision = 0,
+    s => s.localities = null, s => Object.values(s.archives)[0].days[today][0].queue = '2.1']) {
+    const state = structuredClone(base); corrupt(state);
+    const { api, data } = setup({ scheduleData: state }); const before = JSON.stringify(data);
+    await assert.rejects(api.list()); await assert.rejects(api.remove('one'));
+    assert.equal(JSON.stringify(data), before);
+  }
+});
+test('saving schedules keeps full address exclusively in the profile', async () => {
+  const { api, data } = setup(); const saved = await api.upsert(address);
+  await api.saveQueue(saved, '4.2', day());
+  const state = data.scheduleData;
+  assert.equal(state.addresses[0].street, address.street);
+  const nonProfiles = JSON.stringify({ ...state, addresses: [] });
+  assert.ok(!nonProfiles.includes(address.street));
+  assert.ok(!nonProfiles.includes('"house"')); assert.ok(!nonProfiles.includes('"street"'));
+  assert.equal(Object.keys(state.archives).length, 1);
+  assert.deepEqual(plain((await api.list())[0].schedules[today]), { ...day(), queue: '4.2' });
+});
+test('corrections retain ID/history and revision rejects even edit-away-and-back responses', async () => {
+  const { api } = setup(); const original = await api.upsert(address);
+  await api.saveQueue(original, '4.2', day());
+  const corrected = await api.upsert({ ...address, city: 'м. Обухів', street: 'вул. Миру' }, original.id);
+  assert.equal(corrected.id, original.id); assert.equal(corrected.localityId, original.localityId);
+  assert.equal(corrected.queueVerified, true); assert.equal(corrected.queue, '4.2');
+  assert.deepEqual(plain(corrected.schedules[today]), { ...day(), queue: '4.2' });
+  const back = await api.upsert(address, original.id);
+  await api.saveQueue(original, '9.1', day(today, [[]]));
+  assert.equal((await api.list())[0].queue, '4.2');
+  await api.saveQueue(back, '5.2', day(today, [[]]));
+  assert.equal((await api.list())[0].queue, '5.2');
+});
+test('unchanged saving does not invalidate the page revision', async () => {
+  const { api } = setup(); const original = await api.upsert(address);
+  const same = await api.upsert(address, original.id);
+  assert.equal(same.revision, original.revision);
+  await api.saveQueue(original, '4.2', day());
+  assert.equal((await api.list())[0].queue, '4.2');
+});
+test('different-address action creates a new ID and keeps only shared archives', async () => {
+  const { api } = setup(); const old = await api.upsert(address);
+  await api.saveQueue(old, '4.2', day());
+  const fresh = await api.upsert({ ...address, house: '23' }, old.id, { newIdentity: true });
+  assert.notEqual(old.id, fresh.id); assert.equal(fresh.schedules, undefined);
+  await api.saveQueue(old, '4.2', day(today, [[]]));
+  assert.equal((await api.archives())[0].days[today].length, 1);
+});
+test('deleting an address removes identifying data and keeps archives after restart', async () => {
+  const initial = setup(); const old = await initial.api.upsert(address);
+  await initial.api.saveQueue(old, '4.2', day()); await initial.api.remove(old.id);
+  const text = JSON.stringify(initial.data);
+  assert.ok(!text.includes('"street"')); assert.ok(!text.includes('"house"')); assert.ok(!text.includes(old.id));
+  const restarted = setup(initial.data);
+  assert.equal((await restarted.api.archives()).length, 1);
+  const fresh = await restarted.api.upsert(address);
+  assert.equal(fresh.schedules, undefined);
+  await restarted.api.saveQueue(fresh, '4.2');
+  assert.deepEqual(plain((await restarted.api.list())[0].schedules[today]), { ...day(), queue: '4.2' });
+});
+test('two addresses share identical snapshots but conflicting data never overwrites either history', async () => {
+  const { api } = setup(); const first = await api.upsert(address); const second = await api.upsert({ ...address, house: '23' });
+  await api.saveQueue(first, '4.2', day()); await api.saveQueue(second, '4.2', day());
+  assert.equal((await api.archives())[0].days[today].length, 1);
+  await api.saveQueue(second, '4.2', day(today, [[]]));
+  const profiles = await api.list();
+  assert.deepEqual(plain(profiles[0].schedules[today].lines), [[[60, 120]]]);
+  assert.deepEqual(plain(profiles[1].schedules[today].lines), [[]]);
+  assert.equal((await api.archives())[0].days[today].length, 2);
+  assert.equal((await api.archives())[0].addressCount, 2);
+});
+test('ambiguous shared days are not silently restored for a new address', async () => {
+  const { api } = setup(); const first = await api.upsert(address);
+  await api.saveQueue(first, '4.2', day()); await api.saveQueue(first, '4.2', day(today, [[]]));
+  await api.remove(first.id);
+  const other = await api.upsert(address); await api.saveQueue(other, '4.2');
+  assert.equal((await api.list())[0].schedules, undefined);
+});
+test('group and region changes preserve historical group snapshots', async () => {
+  const { api } = setup(); const a = await api.upsert(address);
+  await api.saveQueue(a, '4.2', day('2026-11-24'));
+  await api.saveQueue(a, '5.2', day());
+  const current = (await api.list())[0];
+  assert.equal(current.schedules['2026-11-24'].queue, '4.2'); assert.equal(current.schedules[today].queue, '5.2');
+  const edited = await api.upsert({ ...address, region: 'oem' }, a.id);
+  await api.saveQueue(edited, '5.2', day());
+  assert.equal((await api.archives()).length, 3);
+});
+test('unknown groups and combined lines survive without guessed line-group mapping', async () => {
+  const { api } = setup(); const a = await api.upsert(address);
+  await api.saveQueue(a, '1.1, 3.2', day(today, [[], [[30, 60]]]));
+  await api.saveQueue(a, '', day('2026-11-26'));
+  const groups = await api.archives();
+  assert.equal(groups.length, 2);
+  assert.equal(groups.find(item => item.queue === '1.1, 3.2').days[today][0].lines.length, 2);
+  assert.equal((await api.list())[0].queueVerified, false);
+});
+test('past snapshots are immutable; missing data preserves the latest known schedule', async () => {
+  const { api } = setup(); const a = await api.upsert(address);
+  await api.saveQueue(a, '4.2', day('2026-11-24'));
+  await api.saveQueue(a, '5.2', day('2026-11-24', [[]]));
+  await api.saveQueue(a, '');
+  assert.equal((await api.list())[0].schedules['2026-11-24'].queue, '4.2');
+});
+test('deleting shared archives removes every reference, invalidates old tabs and preserves unrelated data', async () => {
+  const { api } = setup(); const a = await api.upsert(address); const b = await api.upsert({ ...address, house: '23' });
+  await api.saveQueue(a, '4.2', day()); await api.saveQueue(b, '4.2', day());
+  await api.saveQueue(a, '5.2', day('2026-11-26'));
+  const target = (await api.archives()).find(item => item.queue === '4.2');
+  await api.removeArchive(target.id);
+  const profiles = await api.list();
+  assert.ok(profiles.every(item => !item.schedules?.[today]));
+  assert.ok(profiles[0].schedules['2026-11-26']);
+  await api.saveQueue(b, '4.2', day());
+  assert.ok(!(await api.archives()).some(item => item.id === target.id));
+  assert.equal((await api.archives()).length, 1);
+});
+test('storage failures never pretend success or partially erase state', async () => {
+  const { api, data, local } = setup(); const a = await api.upsert(address); await api.saveQueue(a, '4.2', day());
+  const archive = (await api.archives())[0]; const before = JSON.stringify(data);
+  local.set = async () => { throw Error('Storage unavailable'); };
+  await assert.rejects(api.remove(a.id)); await assert.rejects(api.removeArchive(archive.id));
+  await assert.rejects(api.upsert({ ...address, house: '23' }));
+  assert.equal(JSON.stringify(data), before);
+});
+test('concurrent writes from popups and worker preserve both addresses and schedules', async () => {
+  const { api } = setup();
+  const [a, b] = await Promise.all([api.upsert(address), api.upsert({ ...address, house: '23' })]);
+  await Promise.all([api.saveQueue(a, '4.2', day()), api.saveQueue(b, '5.2', day())]);
+  assert.equal((await api.list()).length, 2); assert.equal((await api.archives()).length, 2);
+});
+test('page selection remains region-specific; deleted explicit IDs never fall back', async () => {
+  const { api } = setup(); const a = await api.upsert(address); const b = await api.upsert({ ...address, house: '23' });
+  const url = 'https://www.dtek-krem.com.ua/ua/shutdowns';
+  assert.equal((await api.forPage(url, b.id)).id, b.id); await api.remove(b.id);
+  assert.equal(await api.forPage(url, b.id), null); assert.equal((await api.forPage(url)).id, a.id);
+  assert.equal(await api.forPage('https://www.dtek-oem.com.ua/ua/shutdowns', a.id), null);
+});
+test('read-only calls never write or migrate storage', async () => {
+  const { api, local } = setup({ scheduleData: fixtureState([{ id: 'test', ...address }]) });
+  local.set = async () => { throw Error('Unexpected write'); };
+  assert.equal((await api.forPage('https://www.dtek-krem.com.ua/ua/shutdowns')).id, 'test');
+  await api.archives();
+});
 test('offers closing only after a detected popup and stops after enabling', async () => {
   const { api, data, local } = setup();
   assert.equal(await api.shouldOfferPopupClosing(), false);
@@ -160,228 +234,66 @@ test('refusing an offer suppresses detections for 31 days and requires a new det
   assert.equal(await later.api.shouldOfferPopupClosing(), true);
 });
 
-test('stores a queue and preserves it when saving the same address', async () => {
+
+test('correcting a misspelled locality retains its ID and aliases for future verified archive reuse', async () => {
+  const { api } = setup(); const old = await api.upsert({ ...address, city: 'Обухівв' });
+  await api.saveQueue(old, '4.2', day());
+  const corrected = await api.upsert(address, old.id);
+  assert.equal(corrected.localityId, old.localityId);
+  const archive = (await api.archives())[0];
+  assert.equal(archive.locality.name, 'Обухів');
+  assert.ok(archive.locality.aliases.includes('Обухівв'));
+  await api.remove(old.id);
+  const another = await api.upsert(address); await api.saveQueue(another, '4.2');
+  assert.ok((await api.list())[0].schedules[today]);
+});
+
+test('explicit city/village names remain distinct and ambiguous short names are rejected', async () => {
   const { api } = setup();
-  const saved = await api.upsert(address);
-  await api.saveQueue(saved, '4.2');
-  assert.equal((await api.list())[0].queue, '4.2');
-  await api.upsert(address, saved.id);
-  assert.equal((await api.list())[0].queue, '4.2');
-  await api.upsert({ ...address, house: '23' }, saved.id);
-  assert.equal((await api.list())[0].queue, undefined);
+  const city = await api.upsert({ ...address, city: 'м. Тестове' });
+  const village = await api.upsert({ ...address, city: 'с. Тестове' });
+  assert.notEqual(city.localityId, village.localityId);
+  await api.saveQueue(city, '4.2', day()); await api.saveQueue(village, '4.2', day());
+  assert.equal((await api.archives()).length, 2);
+  await assert.rejects(api.upsert({ ...address, city: 'Тестове', house: '99' }), /кілька населених пунктів/);
 });
 
-test('queue updates never overwrite an edited or deleted address', async () => {
+test('mixed storage formats block all archive writes', async () => {
+  const { api, data } = setup({ scheduleData: fixtureState([{ id: 'one', ...address }]), addresses: [{ ...address, id: 'one' }] });
+  const before = JSON.stringify(data);
+  await assert.rejects(api.list(), /не підтримується/); await assert.rejects(api.remove('one'));
+  assert.equal(JSON.stringify(data), before);
+});
+
+test('editing another street never reverts a shared locality name to an old alias', async () => {
   const { api } = setup();
-  const original = await api.upsert(address);
-  await api.upsert({ ...address, street: 'Інша вулиця' }, original.id);
-  await api.saveQueue(original, '2.1');
-  assert.equal((await api.list())[0].queue, undefined);
-  await api.remove(original.id);
-  await api.saveQueue(original, '2.1');
-  assert.equal((await api.list()).length, 0);
+  const first = await api.upsert({ ...address, city: 'Обухівв' });
+  const second = await api.upsert({ ...address, city: 'Обухівв', house: '23' });
+  await api.saveQueue(first, '4.2', day());
+  await api.upsert(address, first.id);
+  await api.upsert({ ...address, city: 'Обухівв', street: 'вул. Миру', house: '23' }, second.id);
+  assert.equal((await api.archives())[0].locality.name, 'Обухів');
 });
 
-test('supports multiple queues, removes obsolete queues and rejects invalid values', async () => {
-  const { api } = setup();
-  const saved = await api.upsert(address);
-  await api.saveQueue(saved, '1.1, 3.2');
-  assert.equal((await api.list())[0].queue, '1.1, 3.2');
-  await api.saveQueue(saved, '4.2');
-  assert.equal((await api.list())[0].queue, '4.2');
-  await api.saveQueue(saved, '2.1');
-  assert.equal((await api.list())[0].queue, '2.1');
-  await api.saveQueue(saved, '');
-  assert.equal((await api.list())[0].queue, undefined);
-  await assert.rejects(api.saveQueue(saved, '<b>4.2</b>'), /Некоректна черга/);
-});
-
-test('replaces a changed daily schedule even if the queue stays the same', async () => {
-  const { api } = setup({}, Date.UTC(2026, 10, 15, 12));
-  const saved = await api.upsert(address);
-  const original = { date: '2026-11-15', lines: [[[150, 780]]] };
-  const updated = { date: '2026-11-15', lines: [[[180, 810], [1200, 1440]]] };
-  await api.saveQueue(saved, '4.2', original);
-  assert.deepEqual(plain((await api.list())[0].schedules[original.date]), { ...original, queue: '4.2' });
-  await api.saveQueue(saved, '4.2', updated);
-  assert.deepEqual(plain((await api.list())[0].schedules[updated.date]), { ...updated, queue: '4.2' });
-  await api.upsert(address, saved.id);
-  assert.deepEqual(plain((await api.list())[0].schedules[updated.date]), { ...updated, queue: '4.2' });
-  await api.upsert({ ...address, house: '23' }, saved.id);
-  assert.equal((await api.list())[0].schedules, undefined);
-});
-
-test('unavailable schedules preserve the last known data and an all-clear day stays distinct', async () => {
-  const { api } = setup({}, Date.UTC(2026, 10, 15, 12));
-  const saved = await api.upsert(address);
-  await api.saveQueue(saved, '4.2', { date: '2026-11-15', lines: [[[0, 1440]]] });
-  await api.saveQueue(saved, '4.2', { date: '2026-11-15', lines: [[]] });
-  assert.deepEqual(plain((await api.list())[0].schedules['2026-11-15'].lines), [[]]);
-  await api.saveQueue(saved, '4.2', null);
-  assert.deepEqual(plain((await api.list())[0].schedules['2026-11-15'].lines), [[]]);
-  await assert.rejects(api.saveQueue(saved, '4.2', { date: '2026-11-15', lines: [[[0, 1500]]] }), /Некоректний графік/);
-});
-
-test('migrates a single saved day into history with the queue for that day', async () => {
-  const schedule = { date: '2026-11-14', lines: [[[150, 780]]] };
-  const { api } = setup({ addresses: [{ ...address, id: 'saved', queue: '4.2', schedule }] });
-  const saved = (await api.list())[0];
-  assert.deepEqual(plain(saved.schedules), { '2026-11-14': { ...schedule, queue: '4.2' } });
-  assert.equal(saved.schedule, undefined);
-});
-
-test('updating today preserves other days and their historical queues', async () => {
-  const { api } = setup({}, Date.UTC(2026, 10, 15, 12));
-  const saved = await api.upsert(address);
-  const yesterday = { date: '2026-11-14', lines: [[[60, 120]]] };
-  const today = { date: '2026-11-15', lines: [[[150, 780]]] };
-  const tomorrow = { date: '2026-11-16', lines: [[]] };
-  await api.saveQueue(saved, '4.2', yesterday);
-  await api.saveQueue(saved, '4.2', today, [today, tomorrow]);
-  const updated = { ...today, lines: [[[180, 810]]] };
-  await api.saveQueue(saved, '5.2', updated);
-  const history = plain((await api.list())[0].schedules);
-  assert.deepEqual(history['2026-11-14'], { ...yesterday, queue: '4.2' });
-  assert.deepEqual(history['2026-11-15'], { ...updated, queue: '5.2' });
-  assert.deepEqual(history['2026-11-16'], { ...tomorrow, queue: '4.2' });
-});
-
-test('missing current-day data never deletes archived days', async () => {
-  const { api } = setup({}, Date.UTC(2026, 10, 15, 12));
-  const saved = await api.upsert(address);
-  await api.saveQueue(saved, '4.2', { date: '2026-11-14', lines: [[[0, 60]]] });
-  await api.saveQueue(saved, '4.2', { date: '2026-11-15', lines: [[[0, 1440]]] });
-  await api.saveQueue(saved, '4.2', null);
-  assert.deepEqual(plain((await api.list())[0].schedules['2026-11-15'].lines), [[[0, 1440]]]);
-  assert.deepEqual(plain((await api.list())[0].schedules['2026-11-14'].lines), [[[0, 60]]]);
-});
-
-test('concurrent day updates preserve history and a different household starts with its own archive', async () => {
-  const { api } = setup();
-  const saved = await api.upsert(address);
-  await Promise.all([
-    api.saveQueue(saved, '4.2', { date: '2026-11-14', lines: [[]] }),
-    api.saveQueue(saved, '4.2', { date: '2026-11-15', lines: [[]] })
-  ]);
-  assert.equal(Object.keys((await api.list())[0].schedules).length, 2);
-  await api.upsert({ ...address, house: '23' }, saved.id);
-  assert.equal((await api.list())[0].schedules, undefined);
-});
-
-test('a stale page cannot overwrite a past day while current and future days can change', async () => {
-  const { api } = setup({}, Date.UTC(2026, 10, 15, 12));
-  const saved = await api.upsert(address);
-  const past = { date: '2026-11-14', lines: [[[60, 120]]] };
-  const future = { date: '2026-11-16', lines: [[[60, 120]]] };
-  await api.saveQueue(saved, '4.2', past, [future]);
-  await api.saveQueue(saved, '5.2', { ...past, lines: [[[0, 1440]]] }, [{ ...future, lines: [[]] }]);
-  const history = (await api.list())[0].schedules;
-  assert.deepEqual(plain(history[past.date]), { ...past, queue: '4.2' });
-  assert.deepEqual(plain(history[future.date]), { ...future, lines: [[]], queue: '5.2' });
-});
-
-test('migrates embedded schedules to independent archives without data loss', async () => {
-  const schedule = { date: '2026-11-14', lines: [[[60, 120]]] };
-  const { api, data } = setup({ addresses: [{ id: 'old', ...address, queue: '5.2', schedule }] });
-  const result = (await api.list())[0];
-  assert.deepEqual(plain(result.schedules[schedule.date]), { ...schedule, queue: '5.2' });
-  assert.deepEqual(data.addresses, [{ id: 'old', ...address }]);
-  assert.equal(Object.keys(data.addressArchives).length, 1);
-  assert.deepEqual(Object.values(data.addressArchives)[0].schedules[schedule.date], { ...schedule, queue: '5.2' });
-});
-
-test('removing and re-adding an address restores history after restart with a new profile ID', async () => {
-  const initial = setup();
-  const saved = await initial.api.upsert(address);
-  const schedule = { date: '2026-11-14', lines: [[[150, 780]]] };
-  await initial.api.saveQueue(saved, '5.2', schedule);
-  await initial.api.remove(saved.id);
-  assert.deepEqual(plain(await initial.api.list()), []);
-  const restarted = setup(initial.data);
-  const restored = await restarted.api.upsert({ ...address, city: ' ТЕСТОВЕ  МІСТО ', street: ' ТЕСТОВА  ВУЛИЦЯ ', house: '12А' });
-  assert.notEqual(restored.id, saved.id);
-  assert.equal(restored.queue, '5.2');
-  assert.deepEqual(plain(restored.schedules[schedule.date]), { ...schedule, queue: '5.2' });
-  assert.equal(await restarted.api.forPage('https://www.dtek-krem.com.ua/ua/shutdowns', saved.id), null);
-});
-
-test('explicit archive deletion removes only that address history and late updates cannot resurrect it', async () => {
-  const { api, data } = setup();
-  const first = await api.upsert(address);
-  const second = await api.upsert({ ...address, house: '23' });
-  const schedule = { date: '2026-11-14', lines: [[[60, 120]]] };
-  await api.saveQueue(first, '5.2', schedule);
-  await api.saveQueue(second, '4.2', schedule);
-  await api.remove(first.id, { deleteArchive: true });
-  const restored = await api.upsert(address);
-  assert.equal(restored.schedules, undefined);
-  assert.equal(restored.queue, undefined);
-  await api.saveQueue(first, '5.2', schedule);
-  const current = await api.list();
-  assert.equal(current.find(item => item.id === restored.id).schedules, undefined);
-  assert.equal(current.find(item => item.id === second.id).schedules[schedule.date].queue, '4.2');
-  assert.equal(Object.keys(data.addressArchives).length, 1);
-});
-
-test('editing away and back restores each household archive independently', async () => {
-  const { api } = setup();
-  const first = await api.upsert(address);
-  const schedule = { date: '2026-11-14', lines: [[[60, 120]]] };
-  await api.saveQueue(first, '5.2', schedule);
-  const second = await api.upsert({ ...address, house: '23' }, first.id);
-  assert.equal(second.schedules, undefined);
-  await api.saveQueue(second, '4.2', { ...schedule, lines: [[]] });
-  const restored = await api.upsert(address, first.id);
-  assert.equal(restored.schedules[schedule.date].queue, '5.2');
-  assert.deepEqual(plain(restored.schedules[schedule.date].lines), [[[60, 120]]]);
-  const restoredSecond = await api.upsert({ ...address, house: '23' }, first.id);
-  assert.deepEqual(plain(restoredSecond.schedules[schedule.date].lines), [[]]);
-});
-
-test('archive identity preserves distinctions between regions, settlements, streets and house separators', async () => {
-  const { api } = setup();
-  const saved = await api.upsert({ ...address, house: '17/1' });
-  await api.saveQueue(saved, '5.2', { date: '2026-11-14', lines: [[]] });
-  await api.remove(saved.id);
-  for (const value of [{ ...address, house: '171' }, { ...address, house: '17-1' },
-    { ...address, house: '17/1', region: 'oem' }, { ...address, house: '17/1', city: 'Інше місто' },
-    { ...address, house: '17/1', street: 'Інша вулиця' }]) {
-    const fresh = await api.upsert(value);
-    assert.equal(fresh.schedules, undefined);
+test('a confirmed edit cannot overwrite a newer profile revision', async () => {
+  const { api, data } = setup(); const original = await api.upsert(address);
+  await api.upsert({ ...address, house: '18' }, original.id);
+  const before = JSON.stringify(data);
+  for (const newIdentity of [false, true]) {
+    await assert.rejects(api.upsert({ ...address, house: '19' }, original.id, { expectedRevision: original.revision, newIdentity }), /іншому вікні/);
+    assert.equal(JSON.stringify(data), before);
   }
 });
 
-test('purge failure leaves both the profile and archive intact', async () => {
-  const { api, data, local } = setup();
-  const saved = await api.upsert(address);
-  await api.saveQueue(saved, '5.2', { date: '2026-11-14', lines: [[]] });
-  const before = structuredClone(data);
-  local.set = async () => { throw new Error('Storage unavailable'); };
-  await assert.rejects(api.remove(saved.id, { deleteArchive: true }), /Storage unavailable/);
-  assert.deepEqual(data, before);
-});
-
-test('corrupt archive roots are reported without overwriting them', async () => {
-  for (const value of [null, [], 'corrupt']) {
-    const { api, data } = setup({ addressArchives: value });
-    await assert.rejects(api.list(), /архів/);
-    await assert.rejects(api.upsert(address), /архів/);
-    assert.deepEqual(data.addressArchives, value);
-  }
-});
-
-test('migration merges older embedded days without overwriting an existing archived day', async () => {
-  const { api, data } = setup();
-  const saved = await api.upsert(address);
-  const archived = { date: '2026-11-14', lines: [[[60, 120]]] };
-  await api.saveQueue(saved, '5.2', archived);
-  data.addresses[0].queue = '1.1';
-  data.addresses[0].schedules = {
-    '2026-11-14': { ...archived, lines: [[]], queue: '1.1' },
-    '2026-11-13': { date: '2026-11-13', lines: [[]], queue: '1.1' }
-  };
-  const migrated = (await api.list())[0];
-  assert.deepEqual(plain(migrated.schedules['2026-11-14']), { ...archived, queue: '5.2' });
-  assert.equal(migrated.schedules['2026-11-13'].queue, '1.1');
-  assert.equal(data.addresses[0].schedules, undefined);
+test('changing only building case keeps the confirmed queue and history but rejects stale tab writes', async () => {
+  const { api } = setup(); const original = await api.upsert({ ...address, house: '17 А' });
+  await api.saveQueue(original, '4.2', day());
+  const edited = await api.upsert({ ...address, house: '17 а' }, original.id);
+  assert.equal(edited.queueVerified, true); assert.equal(edited.queue, '4.2');
+  assert.equal(edited.id, original.id); assert.equal(edited.revision, original.revision + 1);
+  assert.deepEqual(plain(edited.schedules[today]), { ...day(), queue: '4.2' });
+  await api.saveQueue(original, '9.1', day(today, [[]]));
+  assert.equal((await api.list())[0].queue, '4.2');
+  const changed = await api.upsert({ ...address, house: '17 Б' }, original.id);
+  assert.equal(changed.queueVerified, false); assert.equal(changed.queue, '');
 });

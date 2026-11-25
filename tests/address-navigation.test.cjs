@@ -1,9 +1,10 @@
+const { fixtureState } = require('./storage-fixture.cjs');
 const { i18nFixtureSource } = require('./i18n-fixture.cjs');
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const { readFileSync } = require('node:fs');
 const vm = require('node:vm');
-const source = ['dtek-sites.js', 'dtek-schedule.js', 'address-settings.js', 'address-navigation.js']
+const source = ['dtek-sites.js', 'dtek-schedule.js', 'address-identity.js', 'address-settings.js', 'address-navigation.js']
   .map(file => readFileSync(require.resolve('../' + file), 'utf8')).join('\n');
 const address = { id: 'second', region: 'oem', city: 'Тестове місто', street: 'Тестова', house: '12' };
 const first = { ...address, id: 'first', house: '1' };
@@ -16,7 +17,7 @@ function page(tab, initial = {}) {
   const addresses = [first, address];
   const selected = [];
   const chrome = { storage: {
-    local: { async get() { return { addresses }; } },
+    local: { async get() { return { scheduleData: fixtureState(addresses) }; } },
     session: {
       async get() { return structuredClone(session); },
       async set(value) { Object.assign(session, structuredClone(value)); },

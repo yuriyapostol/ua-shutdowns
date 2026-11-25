@@ -7,13 +7,9 @@
     "message": "Add address",
     "description": "Heading of the screen for adding an address."
   },
-  "address_delete_archive_checkbox": {
-    "message": "Delete the archive for this address",
-    "description": "Checkbox opting into deletion of all saved schedule history for this address. Unchecked by default."
-  },
   "address_delete_archive_retention_hint": {
-    "message": "If unchecked, the archive will be restored when you add this address again.",
-    "description": "Explanation that retained history is restored when the same address is added again."
+    "message": "Group archives will be kept without the street or building. Manage them in Settings.",
+    "description": "Explains that deleting an address removes its street/building but keeps locality/group schedules, managed separately in Settings."
   },
   "address_delete_confirm_action": {
     "message": "Delete",
@@ -34,16 +30,16 @@
     "description": "Error when deleting an address fails."
   },
   "address_delete_keep_archive_success": {
-    "message": "Address deleted. Archive retained.",
+    "message": "Address deleted. Group archives kept.",
     "description": "Confirmation that the address was removed but its schedule history was kept."
   },
   "address_delete_screen_title": {
     "message": "Delete address",
     "description": "Heading of the address deletion confirmation screen."
   },
-  "address_delete_with_archive_success": {
-    "message": "Address and its archive deleted.",
-    "description": "Confirmation that both the address and its saved schedule history were deleted."
+  "address_edit_conflict": {
+    "message": "The address was changed in another window. Open it for editing again.",
+    "description": "Reject saving an outdated edit/confirmation rather than overwriting newer address data."
   },
   "address_edit_screen_title": {
     "message": "Edit address",
@@ -96,6 +92,34 @@
   "address_form_street_placeholder": {
     "message": "Enter a street name",
     "description": "Placeholder in the street name input."
+  },
+  "address_identity_after": {
+    "message": "After",
+    "description": "Label for the proposed full address in edit confirmation."
+  },
+  "address_identity_before": {
+    "message": "Before",
+    "description": "Label for the original full address in edit confirmation."
+  },
+  "address_identity_correction": {
+    "message": "Correcting the address",
+    "description": "Save with the same identity and history."
+  },
+  "address_identity_explanation": {
+    "message": "A correction keeps the address history. A different place starts a new history; previous group archives remain in Settings.",
+    "description": "Explains the effects of the two edit confirmation choices."
+  },
+  "address_identity_question": {
+    "message": "Are you correcting the address or changing the location?",
+    "description": "Question asking the user to distinguish an address correction from a different physical place."
+  },
+  "address_identity_replacement": {
+    "message": "This is a different place",
+    "description": "Save with a new identity, retaining old shared group archives."
+  },
+  "address_identity_title": {
+    "message": "Address change",
+    "description": "Heading of the confirmation shown only after a substantive address edit."
   },
   "address_list_edit_accessible_label": {
     "message": "Edit: $ADDRESS$",
@@ -208,6 +232,68 @@
   "application_loading_status": {
     "message": "Loading…",
     "description": "Initial status while the extension loads saved addresses and preferences."
+  },
+  "archive_back": {
+    "message": "Back",
+    "description": "Group archive management or address identity interface: archive_back."
+  },
+  "archive_delete_action": {
+    "message": "Delete group archive",
+    "description": "Group archive management or address identity interface: archive_delete_action."
+  },
+  "archive_delete_error": {
+    "message": "Could not delete the archive. Please try again.",
+    "description": "Group archive management or address identity interface: archive_delete_error."
+  },
+  "archive_delete_warning": {
+    "message": "Schedules will also be removed from the history of every linked address. This cannot be undone.",
+    "description": "Group archive management or address identity interface: archive_delete_warning."
+  },
+  "archive_deleted": {
+    "message": "Group archive deleted.",
+    "description": "Group archive management or address identity interface: archive_deleted."
+  },
+  "archive_linked_addresses": {
+    "message": "Linked addresses: $COUNT$",
+    "description": "Number of saved addresses affected by deleting a shared group archive.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "2"
+      }
+    }
+  },
+  "archive_received_at": {
+    "message": "Received: $TIME$",
+    "description": "Time when a schedule snapshot was first received; hidden for imported snapshots without a known timestamp.",
+    "placeholders": {
+      "time": {
+        "content": "$1",
+        "example": "25.11.2026, 12:30"
+      }
+    }
+  },
+  "archive_variant": {
+    "message": "Version $NUMBER$",
+    "description": "Label distinguishing conflicting schedules for the same date.",
+    "placeholders": {
+      "number": {
+        "content": "$1",
+        "example": "2"
+      }
+    }
+  },
+  "archives_description": {
+    "message": "Schedules by locality and outage group. No streets or buildings are stored here. Multiple groups may share a schedule with multiple supply lines.",
+    "description": "Group archive management or address identity interface: archives_description."
+  },
+  "archives_empty": {
+    "message": "No saved schedules.",
+    "description": "Group archive management or address identity interface: archives_empty."
+  },
+  "archives_title": {
+    "message": "Group archives",
+    "description": "Group archive management or address identity interface: archives_title."
   },
   "date_calendar_accessible_label": {
     "message": "Choose schedule date",
@@ -398,6 +484,10 @@
   "locale_week_first_day": {
     "message": "0",
     "description": "Locale metadata, not visible text. Fallback first weekday if Intl week information is unavailable: 0 = Sunday, 1 = Monday, ..., 6 = Saturday."
+  },
+  "locality_ambiguous": {
+    "message": "Several localities have the same name. Make the name more specific, for example by adding the district.",
+    "description": "Error when locality name/aliases match multiple distinct locality IDs; never merge automatically."
   },
   "navigation_back_to_address_edit": {
     "message": "Back to address editing",
@@ -613,6 +703,10 @@
       }
     }
   },
+  "schedule_unverified_address": {
+    "message": "The outage group for this address has not yet been confirmed on the website.",
+    "description": "Note beside cached schedules when the current address has no verified outage group, including after corrections."
+  },
   "schedule_validation_collection_error": {
     "message": "Invalid schedules.",
     "description": "Validation error for a collection of received schedules."
@@ -652,5 +746,9 @@
   "settings_screen_title": {
     "message": "Settings",
     "description": "Settings screen heading and settings button tooltip and accessible label."
+  },
+  "storage_format_unsupported": {
+    "message": "The saved data format is not supported. Your data has not been changed.",
+    "description": "Unknown or mixed storage schema: refuse access without overwriting any data."
   }
 }

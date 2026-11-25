@@ -59,7 +59,22 @@ Until the extension is published in the store, you can install it manually from 
 3. Click the saved address. The extension will open the DTEK website and fill in its address form.
 4. Wait for the schedule to appear on the website, then open the extension to view the received outage times.
 
-You can add multiple addresses. Use the edit button next to an address to change or delete it. Enter addresses in Ukrainian, as they appear on the DTEK website, regardless of the interface language. Otherwise, the address will not be found. For example: city — `Київ`, street — `Хрещатик`, building — `22`.
+You can add multiple addresses.
+
+Enter addresses in Ukrainian, as they appear on the DTEK website, regardless of the interface language. Otherwise, the address will not be found. For example: city — `Київ`, street — `Хрещатик`, building — `22`.
+
+### Edit an address
+
+Click the pencil next to an address, make your changes and click **Save**.
+
+Changes to case, spaces, or adding/removing a street or locality type save directly, keeping the group and schedules. For example, `17 А` → `17 а`.
+
+For other changes, the extension shows **Before / After** and asks you to choose:
+
+- **Correcting the address** — keep its history.
+- **This is a different place** — start a new history while keeping previous group archives.
+
+Changing a type (street → lane, city → village), a building letter or a digit may mean a different place. After such changes, open the address on the DTEK website to verify its group again.
 
 ### View schedules by date
 
@@ -70,6 +85,14 @@ In Settings, choose Ukrainian, English, or **Same as browser** (the default). Th
 The extension receives data from the active DTEK tab. To update the schedule for an address, click it and wait for the website to load its data. Only previously saved schedules are available offline.
 
 **Schedule not received** or **Schedule not saved** means there is no data for the selected date. It does not mean there will be no outages.
+
+### Archives and deletion
+
+Received schedules have no automatic expiry. Under **Settings → Group archives**, browse dates and outage intervals by locality and group. Different versions of the same day's schedule are shown separately.
+
+To delete an address, open it for editing and click the trash icon. Its street and building are removed; group archives remain. For a new or re-added address, unambiguous saved schedules appear after its group is confirmed on the website.
+
+Delete an archive separately in Settings, with confirmation. This also removes its schedules from every linked address's history.
 
 ### Share a schedule
 
@@ -87,7 +110,7 @@ Addresses, settings and schedule history are stored only locally in your browser
 
 To retrieve a schedule, the selected address is entered into the form on the relevant DTEK website and processed by that website. Schedules are shared only when you choose to do so; QR codes are generated locally without sending their content to external services.
 
-Deleting an address retains its history by default: if you add the same address again, its saved schedules will be available. To delete those too, select **Delete the archive for this address** in the deletion confirmation screen. Uninstalling the extension removes all of its data.
+Group archives contain no streets or buildings. Uninstalling the extension clears all its stored data; separate backup files on disk remain.
 
 ## Updates and help
 

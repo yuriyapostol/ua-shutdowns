@@ -9,6 +9,7 @@
   <script src="i18n.js" defer></script>
   <script src="dtek-sites.js" defer></script>
   <script src="dtek-schedule.js" defer></script>
+  <script src="address-identity.js" defer></script>
   <script src="address-settings.js" defer></script>
   <script src="address-navigation.js" defer></script>
   <script src="popup.js" defer></script>
@@ -94,13 +95,21 @@
         </fieldset>
       </form>
     </section>
+    <section id="identity-confirm-view" aria-labelledby="screen-title" hidden>
+      <p data-i18n="address_identity_question">Ви уточнюєте адресу чи змінюєте місце?</p>
+      <dl class="address-comparison">
+        <dt data-i18n="address_identity_before">Було</dt><dd id="identity-before"></dd>
+        <dt data-i18n="address_identity_after">Стало</dt><dd id="identity-after"></dd>
+      </dl>
+      <div class="home-actions">
+        <button id="confirm-address-correction" class="neutral-button" type="button" data-i18n="address_identity_correction">Уточнюю адресу</button>
+        <button id="confirm-address-replacement" class="neutral-button" type="button" data-i18n="address_identity_replacement">Це інше місце</button>
+      </div>
+      <p class="hint" data-i18n="address_identity_explanation">Уточнення зберігає історію адреси. Для іншого місця історія починається заново, а попередні архіви черг залишаються в налаштуваннях.</p>
+    </section>
     <section id="delete-view" aria-labelledby="screen-title" hidden>
       <p id="delete-address-summary"></p>
-      <label class="checkbox-row archive-delete-option" for="delete-address-archive">
-        <input id="delete-address-archive" type="checkbox" aria-describedby="archive-retention-note" autocomplete="off">
-        <span data-i18n="address_delete_archive_checkbox">Видалити архів даних за адресою</span>
-      </label>
-      <p id="archive-retention-note" class="explanation" data-i18n="address_delete_archive_retention_hint">Якщо не вибрати, архів відновиться після повторного додавання адреси.</p>
+      <p class="explanation" data-i18n="address_delete_archive_retention_hint">Архіви черг залишаться без вулиці й будинку. Керувати ними можна в налаштуваннях.</p>
       <div class="form-actions">
         <button id="confirm-delete" class="delete-confirm-action" type="button"><img src="images/delete.svg" width="24" height="24" alt="" aria-hidden="true"><span data-i18n="address_delete_confirm_action">Видалити</span></button>
       </div>
@@ -113,6 +122,20 @@
       </div>
       <p class="hint" data-i18n="popup_offer_repeat_hint">Після відмови запропонуємо знову не раніше ніж через місяць. Це налаштування також доступне в «Налаштуваннях».</p>
     </section>
+    <section id="archives-view" aria-labelledby="screen-title" hidden>
+      <p class="explanation" data-i18n="archives_description">Графіки за населеними пунктами й чергами. Вулиці та будинки тут не зберігаються.</p>
+      <div id="archive-list"></div>
+    </section>
+    <section id="archive-detail-view" aria-labelledby="screen-title" hidden>
+      <p id="archive-summary"></p>
+      <div id="archive-days"></div>
+      <button id="delete-queue-archive" class="delete-confirm-action" type="button"><img src="images/delete.svg" width="24" height="24" alt="" aria-hidden="true"><span data-i18n="archive_delete_action">Видалити архів черги</span></button>
+    </section>
+    <section id="archive-delete-view" aria-labelledby="screen-title" hidden>
+      <p id="archive-delete-summary"></p>
+      <p class="explanation" data-i18n="archive_delete_warning">Графіки буде видалено також з історії всіх пов’язаних адрес. Цю дію не можна скасувати.</p>
+      <button id="confirm-archive-delete" class="delete-confirm-action" type="button"><img src="images/delete.svg" width="24" height="24" alt="" aria-hidden="true"><span data-i18n="address_delete_confirm_action">Видалити</span></button>
+    </section>
     <section id="settings-view" aria-labelledby="screen-title" hidden>
       <label for="interface-language" data-i18n="settings_language_label">Мова інтерфейсу</label>
       <select id="interface-language" name="interfaceLanguage" disabled>
@@ -122,6 +145,7 @@
         <input id="auto-close-popups" name="autoClosePopups" type="checkbox" autocomplete="off">
         <span data-i18n="settings_popup_closing_checkbox">Автоматично закривати спливаючі вікна</span>
       </label>
+      <button id="open-archives" class="archive-button archive-navigation settings-archives" type="button"><span data-i18n="archives_title">Архіви черг</span><img src="images/keyboard-arrow-right.svg" width="24" height="24" alt="" aria-hidden="true"></button>
     </section>
     <p id="status" role="status" aria-live="polite" data-i18n="application_loading_status">Завантаження…</p>
     <footer class="project-footer">

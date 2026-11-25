@@ -2,6 +2,16 @@
 
 **English** · [Українська](CHANGELOG.uk.md)
 
+## 0.7.0 — 2026-11-25
+
+- Separated schedule archives from address profiles, using stable locality and outage-group identifiers. Deleting an address removes its street, building and private history links; group archives remain without that information.
+- Added **Settings → Group archives** to browse schedules by date, view conflicting versions separately and delete archives with confirmation. Deleting a shared archive also removes its schedules from every linked address’s history.
+- Address editing now distinguishes corrections from a different location. Substantive edits show the previous and new addresses with **Correcting the address / This is a different place** choices. Corrections retain history; a different place starts a new history while previous group archives remain available.
+- Changes to case, spaces, or adding/removing street or locality types save directly and preserve the confirmed group and schedules. Changes to an explicit type, name, region, building letter, digit or separator require clarification.
+- Added protection against stale tab responses and outdated edits from another window. Shared schedules do not overwrite an individual address’s history, and ambiguous versions are not selected automatically.
+- Refined archive and address-confirmation screens with compact navigation rows, right arrows, gray buttons with yellow highlights, and trash icons with red delete-button highlights. Archived schedules show outage intervals and supply-line labels instead of full sharing text.
+- Fixed calendar day rendering in both interface languages. Updated Ukrainian and English documentation for addresses, editing, archives and data deletion.
+
 ## 0.6.3 — 2026-11-25
 
 - Added an interface language selector in Settings: Ukrainian, English, or “Same as browser” by default. The choice is saved and applied immediately to interface text, date formats, the calendar and shared schedules, while preserving matching browser regional settings.

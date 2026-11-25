@@ -60,7 +60,7 @@ test('English sharing translates headings and lines without altering saved addre
 test('storage validation errors use the selected language', async () => {
   const context = vm.createContext({ URL });
   vm.runInContext(i18nFixtureSource('en-US') + '\n' + read('dtek-sites.js') + '\n' +
-    read('dtek-schedule.js') + '\n' + read('address-settings.js') + '\nglobalThis.settings = AddressSettings;', context);
+    read('dtek-schedule.js') + '\n' + read('address-identity.js') + '\n' + read('address-settings.js') + '\nglobalThis.settings = AddressSettings;', context);
   await assert.rejects(context.settings.upsert({ region: 'unknown' }), /Select a regional operator/);
   await assert.rejects(context.settings.upsert({ region: 'krem', city: '' }), /Enter the city/);
 });
