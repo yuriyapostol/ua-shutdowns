@@ -97,7 +97,8 @@ test('settings language applies immediately, keeps settings open and is restored
   const p = await popup({ url: 'https://example.com/' });
   const select = p.elements.get('interface-language');
   assert.deepEqual(select.children.map(option => [option.value, option.textContent]),
-    [['en', 'English'], ['uk', 'Українська']]);
+    [['de', 'Deutsch'], ['en', 'English'], ['es', 'Español'], ['fr', 'Français'],
+      ['it', 'Italiano'], ['pl', 'Polski'], ['uk', 'Українська']]);
   assert.equal(select.value, 'system');
   select.value = 'en';
   await select.dispatch('change');

@@ -1,0 +1,754 @@
+{
+  "address_add_action": {
+    "message": "Añadir dirección",
+    "description": "Sección: Gestión de direcciones. Control o indicación: «Añadir dirección»."
+  },
+  "address_add_screen_title": {
+    "message": "Añadir dirección",
+    "description": "Sección: Gestión de direcciones. Título de pantalla: «Añadir dirección»."
+  },
+  "address_delete_archive_retention_hint": {
+    "message": "Los archivos de los grupos se conservarán sin la calle ni el número del edificio. Gestiónelos en Configuración.",
+    "description": "Sección: Gestión de direcciones. Control o indicación: «Los archivos de los grupos se conservarán sin la calle ni el número del edificio. Gestiónelos en Configuración.»."
+  },
+  "address_delete_confirm_action": {
+    "message": "Eliminar",
+    "description": "Sección: Gestión de direcciones. Control o indicación: «Eliminar»."
+  },
+  "address_delete_confirmation_question": {
+    "message": "¿Eliminar la dirección «$ADDRESS$» de la lista?",
+    "description": "Sección: Gestión de direcciones. Control o indicación: «¿Eliminar la dirección «$ADDRESS$» de la lista?».",
+    "placeholders": {
+      "address": {
+        "content": "$1",
+        "example": "Київ, Хрещатик, 22"
+      }
+    }
+  },
+  "address_delete_error": {
+    "message": "No se pudo eliminar la dirección. Inténtelo de nuevo.",
+    "description": "Sección: Gestión de direcciones. Mensaje de error: «No se pudo eliminar la dirección. Inténtelo de nuevo.»."
+  },
+  "address_delete_keep_archive_success": {
+    "message": "Dirección eliminada. Archivos de los grupos conservados.",
+    "description": "Sección: Gestión de direcciones. Mensaje de estado: «Dirección eliminada. Archivos de los grupos conservados.»."
+  },
+  "address_delete_screen_title": {
+    "message": "Eliminar dirección",
+    "description": "Sección: Gestión de direcciones. Título de pantalla: «Eliminar dirección»."
+  },
+  "address_edit_conflict": {
+    "message": "La dirección se modificó en otra ventana. Ábrala de nuevo para editarla.",
+    "description": "Sección: Gestión de direcciones. Control o indicación: «La dirección se modificó en otra ventana. Ábrala de nuevo para editarla.»."
+  },
+  "address_edit_screen_title": {
+    "message": "Editar dirección",
+    "description": "Sección: Gestión de direcciones. Título de pantalla: «Editar dirección»."
+  },
+  "address_form_building_label": {
+    "message": "Número del edificio",
+    "description": "Sección: Gestión de direcciones. Control o indicación: «Número del edificio»."
+  },
+  "address_form_building_placeholder": {
+    "message": "Introduzca un número de edificio",
+    "description": "Sección: Gestión de direcciones. Indicación de entrada: «Introduzca un número de edificio»."
+  },
+  "address_form_city_label": {
+    "message": "Ciudad o pueblo",
+    "description": "Sección: Gestión de direcciones. Control o indicación: «Ciudad o pueblo»."
+  },
+  "address_form_city_placeholder": {
+    "message": "Introduzca una ciudad o un pueblo",
+    "description": "Sección: Gestión de direcciones. Indicación de entrada: «Introduzca una ciudad o un pueblo»."
+  },
+  "address_form_delete_action": {
+    "message": "Eliminar dirección",
+    "description": "Sección: Gestión de direcciones. Control o indicación: «Eliminar dirección»."
+  },
+  "address_form_language_hint": {
+    "message": "Introduzca las direcciones en ucraniano, como en el sitio web de DTEK, independientemente del idioma de la interfaz. De lo contrario, no se encontrará la dirección.",
+    "description": "Sección: Gestión de direcciones. Control o indicación: «Introduzca las direcciones en ucraniano, como en el sitio web de DTEK, independientemente del idioma de la interfaz. De lo contrario, no se encontrará la dirección.». El grupo es el grupo de cortes de DTEK; la línea es la alimentación eléctrica del edificio. Las direcciones se mantienen en ucraniano."
+  },
+  "address_form_region_not_selected": {
+    "message": "Sin seleccionar",
+    "description": "Sección: Gestión de direcciones. Control o indicación: «Sin seleccionar»."
+  },
+  "address_form_region_placeholder": {
+    "message": "Seleccione un operador",
+    "description": "Sección: Gestión de direcciones. Indicación de entrada: «Seleccione un operador»."
+  },
+  "address_form_regional_operator_label": {
+    "message": "Operador regional de DTEK",
+    "description": "Sección: Gestión de direcciones. Control o indicación: «Operador regional de DTEK»."
+  },
+  "address_form_save_action": {
+    "message": "Guardar dirección",
+    "description": "Sección: Gestión de direcciones. Control o indicación: «Guardar dirección»."
+  },
+  "address_form_street_label": {
+    "message": "Calle",
+    "description": "Sección: Gestión de direcciones. Control o indicación: «Calle»."
+  },
+  "address_form_street_placeholder": {
+    "message": "Introduzca el nombre de la calle",
+    "description": "Sección: Gestión de direcciones. Indicación de entrada: «Introduzca el nombre de la calle»."
+  },
+  "address_identity_after": {
+    "message": "Después",
+    "description": "Sección: Gestión de direcciones. Control o indicación: «Después»."
+  },
+  "address_identity_before": {
+    "message": "Antes",
+    "description": "Sección: Gestión de direcciones. Control o indicación: «Antes»."
+  },
+  "address_identity_correction": {
+    "message": "Corregir la dirección",
+    "description": "Sección: Gestión de direcciones. Control o indicación: «Corregir la dirección»."
+  },
+  "address_identity_explanation": {
+    "message": "Una corrección conserva el historial de la dirección. Otro lugar inicia un historial nuevo; los archivos anteriores de los grupos permanecen en Configuración.",
+    "description": "Sección: Gestión de direcciones. Control o indicación: «Una corrección conserva el historial de la dirección. Otro lugar inicia un historial nuevo; los archivos anteriores de los grupos permanecen en Configuración.»."
+  },
+  "address_identity_question": {
+    "message": "¿Está corrigiendo la dirección o cambiando de ubicación?",
+    "description": "Sección: Gestión de direcciones. Control o indicación: «¿Está corrigiendo la dirección o cambiando de ubicación?»."
+  },
+  "address_identity_replacement": {
+    "message": "Es un lugar diferente",
+    "description": "Sección: Gestión de direcciones. Control o indicación: «Es un lugar diferente»."
+  },
+  "address_identity_title": {
+    "message": "Cambio de dirección",
+    "description": "Sección: Gestión de direcciones. Título de pantalla: «Cambio de dirección»."
+  },
+  "address_list_edit_accessible_label": {
+    "message": "Editar: $ADDRESS$",
+    "description": "Sección: Gestión de direcciones. Etiqueta accesible: «Editar: $ADDRESS$».",
+    "placeholders": {
+      "address": {
+        "content": "$1",
+        "example": "Київ, Хрещатик, 22"
+      }
+    }
+  },
+  "address_list_edit_address_tooltip": {
+    "message": "Editar dirección",
+    "description": "Sección: Gestión de direcciones. Control o indicación: «Editar dirección»."
+  },
+  "address_list_empty_hint": {
+    "message": "Añada una dirección para consultar los cortes de luz.",
+    "description": "Sección: Gestión de direcciones. Control o indicación: «Añada una dirección para consultar los cortes de luz.»."
+  },
+  "address_list_load_error": {
+    "message": "No se pudieron cargar las direcciones. Cierre y vuelva a abrir esta ventana para reintentarlo.",
+    "description": "Sección: Gestión de direcciones. Mensaje de error: «No se pudieron cargar las direcciones. Cierre y vuelva a abrir esta ventana para reintentarlo.»."
+  },
+  "address_list_open_schedule_action": {
+    "message": "Abrir horario",
+    "description": "Sección: Gestión de direcciones. Control o indicación: «Abrir horario»."
+  },
+  "address_list_outage_group_label": {
+    "message": "Grupo $GROUP$",
+    "description": "Sección: Gestión de direcciones. Control o indicación: «Grupo $GROUP$». El grupo es el grupo de cortes de DTEK; la línea es la alimentación eléctrica del edificio. Las direcciones se mantienen en ucraniano.",
+    "placeholders": {
+      "group": {
+        "content": "$1",
+        "example": "5.2"
+      }
+    }
+  },
+  "address_list_select_region_action": {
+    "message": "Seleccionar región",
+    "description": "Sección: Gestión de direcciones. Control o indicación: «Seleccionar región»."
+  },
+  "address_list_storage_read_error": {
+    "message": "No se pudo leer la lista de direcciones.",
+    "description": "Sección: Gestión de direcciones. Mensaje de error: «No se pudo leer la lista de direcciones.»."
+  },
+  "address_list_unassigned_region_heading": {
+    "message": "Seleccione un operador regional",
+    "description": "Sección: Gestión de direcciones. Título de pantalla: «Seleccione un operador regional»."
+  },
+  "address_list_unassigned_region_hint": {
+    "message": "Seleccione una región para la dirección guardada anteriormente.",
+    "description": "Sección: Gestión de direcciones. Control o indicación: «Seleccione una región para la dirección guardada anteriormente.»."
+  },
+  "address_navigation_open_error": {
+    "message": "No se pudo abrir el horario.",
+    "description": "Sección: Gestión de direcciones. Mensaje de error: «No se pudo abrir el horario.»."
+  },
+  "address_navigation_region_required_error": {
+    "message": "Primero seleccione una región para esta dirección.",
+    "description": "Sección: Gestión de direcciones. Mensaje de error: «Primero seleccione una región para esta dirección.»."
+  },
+  "address_navigation_tab_changed_error": {
+    "message": "La dirección de esta pestaña ha cambiado.",
+    "description": "Sección: Gestión de direcciones. Mensaje de error: «La dirección de esta pestaña ha cambiado.»."
+  },
+  "address_open_schedule_pending": {
+    "message": "Abriendo horario…",
+    "description": "Sección: Gestión de direcciones. Mensaje de estado: «Abriendo horario…»."
+  },
+  "address_open_schedule_retry_error": {
+    "message": "No se pudo abrir el horario. Inténtelo de nuevo.",
+    "description": "Sección: Gestión de direcciones. Mensaje de error: «No se pudo abrir el horario. Inténtelo de nuevo.»."
+  },
+  "address_save_already_deleted_error": {
+    "message": "La dirección ya se ha eliminado.",
+    "description": "Sección: Gestión de direcciones. Mensaje de error: «La dirección ya se ha eliminado.»."
+  },
+  "address_save_duplicate_error": {
+    "message": "Esta dirección ya se ha añadido.",
+    "description": "Sección: Gestión de direcciones. Mensaje de error: «Esta dirección ya se ha añadido.»."
+  },
+  "address_save_error": {
+    "message": "No se pudo guardar la dirección.",
+    "description": "Sección: Gestión de direcciones. Mensaje de error: «No se pudo guardar la dirección.»."
+  },
+  "address_save_pending": {
+    "message": "Guardando…",
+    "description": "Sección: Gestión de direcciones. Mensaje de estado: «Guardando…»."
+  },
+  "address_save_success": {
+    "message": "Dirección guardada.",
+    "description": "Sección: Gestión de direcciones. Mensaje de estado: «Dirección guardada.»."
+  },
+  "address_storage_record_invalid_error": {
+    "message": "El registro de la dirección está dañado.",
+    "description": "Sección: Gestión de direcciones. Mensaje de error: «El registro de la dirección está dañado.»."
+  },
+  "address_validation_fields_required": {
+    "message": "Introduzca la ciudad, la calle y el número del edificio.",
+    "description": "Sección: Gestión de direcciones. Mensaje de error: «Introduzca la ciudad, la calle y el número del edificio.»."
+  },
+  "address_validation_region_required": {
+    "message": "Seleccione un operador regional.",
+    "description": "Sección: Gestión de direcciones. Mensaje de error: «Seleccione un operador regional.»."
+  },
+  "address_website_load_error": {
+    "message": "No se pudo cargar la dirección.",
+    "description": "Sección: Gestión de direcciones. Mensaje de error: «No se pudo cargar la dirección.»."
+  },
+  "application_loading_status": {
+    "message": "Cargando…",
+    "description": "Sección: Carga. Mensaje de estado: «Cargando…»."
+  },
+  "archive_back": {
+    "message": "Volver",
+    "description": "Sección: Archivos de grupos. Control o indicación: «Volver»."
+  },
+  "archive_delete_action": {
+    "message": "Eliminar archivo del grupo",
+    "description": "Sección: Archivos de grupos. Control o indicación: «Eliminar archivo del grupo»."
+  },
+  "archive_delete_error": {
+    "message": "No se pudo eliminar el archivo. Inténtelo de nuevo.",
+    "description": "Sección: Archivos de grupos. Mensaje de error: «No se pudo eliminar el archivo. Inténtelo de nuevo.»."
+  },
+  "archive_delete_warning": {
+    "message": "Los horarios también se eliminarán del historial de todas las direcciones vinculadas. Esta acción no se puede deshacer.",
+    "description": "Sección: Archivos de grupos. Control o indicación: «Los horarios también se eliminarán del historial de todas las direcciones vinculadas. Esta acción no se puede deshacer.»."
+  },
+  "archive_deleted": {
+    "message": "Archivo del grupo eliminado.",
+    "description": "Sección: Archivos de grupos. Control o indicación: «Archivo del grupo eliminado.»."
+  },
+  "archive_linked_addresses": {
+    "message": "Direcciones vinculadas: $COUNT$",
+    "description": "Sección: Archivos de grupos. Control o indicación: «Direcciones vinculadas: $COUNT$».",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "2"
+      }
+    }
+  },
+  "archive_received_at": {
+    "message": "Recibido: $TIME$",
+    "description": "Sección: Archivos de grupos. Control o indicación: «Recibido: $TIME$».",
+    "placeholders": {
+      "time": {
+        "content": "$1",
+        "example": "25.11.2026, 12:30"
+      }
+    }
+  },
+  "archive_variant": {
+    "message": "Versión $NUMBER$",
+    "description": "Sección: Archivos de grupos. Control o indicación: «Versión $NUMBER$».",
+    "placeholders": {
+      "number": {
+        "content": "$1",
+        "example": "2"
+      }
+    }
+  },
+  "archives_description": {
+    "message": "Horarios por localidad y grupo de cortes. Aquí no se guardan calles ni edificios. Varios grupos pueden compartir un horario con varias líneas de suministro.",
+    "description": "Sección: Archivos de grupos. Control o indicación: «Horarios por localidad y grupo de cortes. Aquí no se guardan calles ni edificios. Varios grupos pueden compartir un horario con varias líneas de suministro.»."
+  },
+  "archives_empty": {
+    "message": "No hay horarios guardados.",
+    "description": "Sección: Archivos de grupos. Control o indicación: «No hay horarios guardados.»."
+  },
+  "archives_title": {
+    "message": "Archivos de grupos",
+    "description": "Sección: Archivos de grupos. Título de pantalla: «Archivos de grupos»."
+  },
+  "date_calendar_accessible_label": {
+    "message": "Elegir fecha del horario",
+    "description": "Sección: Selección de fecha y calendario. Etiqueta accesible: «Elegir fecha del horario»."
+  },
+  "date_calendar_days_accessible_label": {
+    "message": "Días del mes",
+    "description": "Sección: Selección de fecha y calendario. Etiqueta accesible: «Días del mes»."
+  },
+  "date_calendar_month_label": {
+    "message": "Mes",
+    "description": "Sección: Selección de fecha y calendario. Control o indicación: «Mes»."
+  },
+  "date_calendar_next_month_action": {
+    "message": "Mes siguiente",
+    "description": "Sección: Selección de fecha y calendario. Control o indicación: «Mes siguiente»."
+  },
+  "date_calendar_next_year_action": {
+    "message": "Año siguiente",
+    "description": "Sección: Selección de fecha y calendario. Control o indicación: «Año siguiente»."
+  },
+  "date_calendar_open_action": {
+    "message": "Abrir calendario",
+    "description": "Sección: Selección de fecha y calendario. Control o indicación: «Abrir calendario»."
+  },
+  "date_calendar_previous_month_action": {
+    "message": "Mes anterior",
+    "description": "Sección: Selección de fecha y calendario. Control o indicación: «Mes anterior»."
+  },
+  "date_calendar_previous_year_action": {
+    "message": "Año anterior",
+    "description": "Sección: Selección de fecha y calendario. Control o indicación: «Año anterior»."
+  },
+  "date_calendar_year_label": {
+    "message": "Año",
+    "description": "Sección: Selección de fecha y calendario. Control o indicación: «Año»."
+  },
+  "date_input_accessible_label": {
+    "message": "Fecha del horario",
+    "description": "Sección: Selección de fecha y calendario. Etiqueta accesible: «Fecha del horario»."
+  },
+  "date_input_invalid_error": {
+    "message": "Introduzca una fecha válida en formato $DATE_FORMAT$.",
+    "description": "Sección: Selección de fecha y calendario. Mensaje de error: «Introduzca una fecha válida en formato $DATE_FORMAT$.».",
+    "placeholders": {
+      "date_format": {
+        "content": "$1",
+        "example": "DD/MM/AAAA"
+      }
+    }
+  },
+  "date_next_day_action": {
+    "message": "Día siguiente",
+    "description": "Sección: Selección de fecha y calendario. Control o indicación: «Día siguiente»."
+  },
+  "date_previous_day_action": {
+    "message": "Día anterior",
+    "description": "Sección: Selección de fecha y calendario. Control o indicación: «Día anterior»."
+  },
+  "date_shortcut_other": {
+    "message": "fecha",
+    "description": "Sección: Selección de fecha y calendario. Control o indicación: «fecha»."
+  },
+  "date_shortcut_other_accessible_label": {
+    "message": "Elegir otra fecha en el calendario",
+    "description": "Sección: Selección de fecha y calendario. Etiqueta accesible: «Elegir otra fecha en el calendario»."
+  },
+  "date_shortcut_today": {
+    "message": "hoy",
+    "description": "Sección: Selección de fecha y calendario. Control o indicación: «hoy»."
+  },
+  "date_shortcut_tomorrow": {
+    "message": "mañana",
+    "description": "Sección: Selección de fecha y calendario. Control o indicación: «mañana»."
+  },
+  "date_shortcuts_accessible_label": {
+    "message": "Selección rápida de fecha",
+    "description": "Sección: Selección de fecha y calendario. Etiqueta accesible: «Selección rápida de fecha»."
+  },
+  "date_shortcuts_sentence_join": {
+    "message": "o para otra ",
+    "description": "Sección: Selección de fecha y calendario. Control o indicación: «o para otra»."
+  },
+  "date_shortcuts_sentence_prefix": {
+    "message": "para ",
+    "description": "Sección: Selección de fecha y calendario. Control o indicación: «para»."
+  },
+  "dtek_operator_dem_name": {
+    "message": "Redes de Donetsk",
+    "description": "Sección: Operadores regionales DTEK. Control o indicación: «Redes de Donetsk»."
+  },
+  "dtek_operator_dnem_name": {
+    "message": "Redes de Dnipró",
+    "description": "Sección: Operadores regionales DTEK. Control o indicación: «Redes de Dnipró»."
+  },
+  "dtek_operator_kem_name": {
+    "message": "Redes de Kyiv",
+    "description": "Sección: Operadores regionales DTEK. Control o indicación: «Redes de Kyiv»."
+  },
+  "dtek_operator_krem_name": {
+    "message": "Redes regionales de Kyiv",
+    "description": "Sección: Operadores regionales DTEK. Control o indicación: «Redes regionales de Kyiv»."
+  },
+  "dtek_operator_oem_name": {
+    "message": "Redes de Odesa",
+    "description": "Sección: Operadores regionales DTEK. Control o indicación: «Redes de Odesa»."
+  },
+  "dtek_region_dem_name": {
+    "message": "Óblast de Donetsk",
+    "description": "Sección: Operadores regionales DTEK. Control o indicación: «Óblast de Donetsk»."
+  },
+  "dtek_region_dem_short": {
+    "message": "Óblast de Donetsk",
+    "description": "Sección: Operadores regionales DTEK. Control o indicación: «Óblast de Donetsk»."
+  },
+  "dtek_region_dnem_name": {
+    "message": "Óblast de Dnipropetrovsk",
+    "description": "Sección: Operadores regionales DTEK. Control o indicación: «Óblast de Dnipropetrovsk»."
+  },
+  "dtek_region_dnem_short": {
+    "message": "Óblast de Dnipropetrovsk",
+    "description": "Sección: Operadores regionales DTEK. Control o indicación: «Óblast de Dnipropetrovsk»."
+  },
+  "dtek_region_kem_name": {
+    "message": "Kyiv",
+    "description": "Sección: Operadores regionales DTEK. Control o indicación: «Kyiv»."
+  },
+  "dtek_region_kem_short": {
+    "message": "Kyiv",
+    "description": "Sección: Operadores regionales DTEK. Control o indicación: «Kyiv»."
+  },
+  "dtek_region_krem_name": {
+    "message": "Óblast de Kyiv",
+    "description": "Sección: Operadores regionales DTEK. Control o indicación: «Óblast de Kyiv»."
+  },
+  "dtek_region_krem_short": {
+    "message": "Óblast de Kyiv",
+    "description": "Sección: Operadores regionales DTEK. Control o indicación: «Óblast de Kyiv»."
+  },
+  "dtek_region_oem_name": {
+    "message": "Óblast de Odesa",
+    "description": "Sección: Operadores regionales DTEK. Control o indicación: «Óblast de Odesa»."
+  },
+  "dtek_region_oem_short": {
+    "message": "Óblast de Odesa",
+    "description": "Sección: Operadores regionales DTEK. Control o indicación: «Óblast de Odesa»."
+  },
+  "extension_description": {
+    "message": "Cortes de luz en sus direcciones: consulte y comparta fácilmente los horarios de los sitios web de DTEK.",
+    "description": "Sección: Información de la extensión. Control o indicación: «Cortes de luz en sus direcciones: consulte y comparta fácilmente los horarios de los sitios web de DTEK.»."
+  },
+  "extension_name": {
+    "message": "UA Shutdowns — horarios de cortes de luz de DTEK",
+    "description": "Sección: Información de la extensión. Control o indicación: «UA Shutdowns — horarios de cortes de luz de DTEK»."
+  },
+  "footer_github_project_link": {
+    "message": "Proyecto en GitHub",
+    "description": "Sección: Información de la extensión. Control o indicación: «Proyecto en GitHub»."
+  },
+  "home_screen_title": {
+    "message": "Horario de cortes de luz",
+    "description": "Sección: Información de la extensión. Título de pantalla: «Horario de cortes de luz»."
+  },
+  "locale_date_day_token": {
+    "message": "DD",
+    "description": "Sección: Idioma y formato de fechas. Control o indicación: «DD»."
+  },
+  "locale_date_month_token": {
+    "message": "MM",
+    "description": "Sección: Idioma y formato de fechas. Control o indicación: «MM»."
+  },
+  "locale_date_year_token": {
+    "message": "AAAA",
+    "description": "Sección: Idioma y formato de fechas. Control o indicación: «AAAA»."
+  },
+  "locale_format": {
+    "message": "es-ES",
+    "description": "Sección: Idioma y formato de fechas. Control o indicación: «es-ES»."
+  },
+  "locale_language": {
+    "message": "es",
+    "description": "Sección: Idioma y formato de fechas. Control o indicación: «es»."
+  },
+  "locale_native_name": {
+    "message": "Español",
+    "description": "Sección: Idioma y formato de fechas. Control o indicación: «Español»."
+  },
+  "locale_week_first_day": {
+    "message": "1",
+    "description": "Sección: Idioma y formato de fechas. Control o indicación: «1»."
+  },
+  "locality_ambiguous": {
+    "message": "Varias localidades tienen el mismo nombre. Precíselo, por ejemplo añadiendo el distrito.",
+    "description": "Sección: Gestión de direcciones. Control o indicación: «Varias localidades tienen el mismo nombre. Precíselo, por ejemplo añadiendo el distrito.»."
+  },
+  "navigation_back_to_address_edit": {
+    "message": "Volver a editar la dirección",
+    "description": "Sección: Navegación. Control o indicación: «Volver a editar la dirección»."
+  },
+  "navigation_back_to_home": {
+    "message": "Volver al inicio",
+    "description": "Sección: Navegación. Control o indicación: «Volver al inicio»."
+  },
+  "popup_offer_description": {
+    "message": "Una ventana emergente tapa la página del sitio web de DTEK. ¿Activar el cierre automático de estas ventanas?",
+    "description": "Sección: Cierre automático de ventanas emergentes. Control o indicación: «Una ventana emergente tapa la página del sitio web de DTEK. ¿Activar el cierre automático de estas ventanas?»."
+  },
+  "popup_offer_dismiss_action": {
+    "message": "Ahora no",
+    "description": "Sección: Cierre automático de ventanas emergentes. Control o indicación: «Ahora no»."
+  },
+  "popup_offer_enable_action": {
+    "message": "Activar",
+    "description": "Sección: Cierre automático de ventanas emergentes. Control o indicación: «Activar»."
+  },
+  "popup_offer_repeat_hint": {
+    "message": "Si rechaza la propuesta, no volveremos a preguntar hasta dentro de un mes como mínimo. También puede activarlo en Configuración.",
+    "description": "Sección: Cierre automático de ventanas emergentes. Control o indicación: «Si rechaza la propuesta, no volveremos a preguntar hasta dentro de un mes como mínimo. También puede activarlo en Configuración.»."
+  },
+  "popup_offer_response_save_error": {
+    "message": "No se pudo guardar su respuesta. Inténtelo de nuevo.",
+    "description": "Sección: Cierre automático de ventanas emergentes. Mensaje de error: «No se pudo guardar su respuesta. Inténtelo de nuevo.»."
+  },
+  "popup_offer_screen_title": {
+    "message": "Cerrar automáticamente las ventanas emergentes del horario",
+    "description": "Sección: Cierre automático de ventanas emergentes. Título de pantalla: «Cerrar automáticamente las ventanas emergentes del horario»."
+  },
+  "schedule_archive_read_error": {
+    "message": "No se pudo leer el archivo de horarios.",
+    "description": "Sección: Horarios de cortes y uso compartido. Mensaje de error: «No se pudo leer el archivo de horarios.»."
+  },
+  "schedule_date_accessible_label": {
+    "message": "Cortes el $DATE$",
+    "description": "Sección: Horarios de cortes y uso compartido. Etiqueta accesible: «Cortes el $DATE$».",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "23/11/2026"
+      }
+    }
+  },
+  "schedule_group_save_error": {
+    "message": "No se pudo guardar el grupo de cortes.",
+    "description": "Sección: Horarios de cortes y uso compartido. Mensaje de error: «No se pudo guardar el grupo de cortes.». El grupo es el grupo de cortes de DTEK; la línea es la alimentación eléctrica del edificio. Las direcciones se mantienen en ucraniano."
+  },
+  "schedule_history_date_missing": {
+    "message": "Horario no guardado",
+    "description": "Sección: Horarios de cortes y uso compartido. Control o indicación: «Horario no guardado»."
+  },
+  "schedule_no_outages": {
+    "message": "Sin cortes",
+    "description": "Sección: Horarios de cortes y uso compartido. Control o indicación: «Sin cortes»."
+  },
+  "schedule_refresh_error": {
+    "message": "No se pudieron actualizar los horarios. Vuelva a abrir la extensión.",
+    "description": "Sección: Horarios de cortes y uso compartido. Mensaje de error: «No se pudieron actualizar los horarios. Vuelva a abrir la extensión.»."
+  },
+  "schedule_selected_date_not_received": {
+    "message": "Horario no recibido",
+    "description": "Sección: Horarios de cortes y uso compartido. Control o indicación: «Horario no recibido»."
+  },
+  "schedule_share_address_accessible_label": {
+    "message": "Compartir horario del $DATE$: $ADDRESS$",
+    "description": "Sección: Horarios de cortes y uso compartido. Etiqueta accesible: «Compartir horario del $DATE$: $ADDRESS$».",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "23/11/2026"
+      },
+      "address": {
+        "content": "$2",
+        "example": "Київ, Хрещатик, 22"
+      }
+    }
+  },
+  "schedule_share_copy_action": {
+    "message": "Copiar horario de cortes",
+    "description": "Sección: Horarios de cortes y uso compartido. Control o indicación: «Copiar horario de cortes»."
+  },
+  "schedule_share_copy_error": {
+    "message": "No se pudo copiar el horario. Inténtelo de nuevo.",
+    "description": "Sección: Horarios de cortes y uso compartido. Mensaje de error: «No se pudo copiar el horario. Inténtelo de nuevo.»."
+  },
+  "schedule_share_copy_success": {
+    "message": "Horario copiado.",
+    "description": "Sección: Horarios de cortes y uso compartido. Mensaje de estado: «Horario copiado.»."
+  },
+  "schedule_share_date_text": {
+    "message": "$FULL_DATE$",
+    "description": "Sección: Horarios de cortes y uso compartido. Control o indicación: «$FULL_DATE$».",
+    "placeholders": {
+      "full_date": {
+        "content": "$1",
+        "example": "lunes, 23 de noviembre de 2026"
+      },
+      "weekday": {
+        "content": "$2",
+        "example": "lunes"
+      },
+      "day": {
+        "content": "$3",
+        "example": "23"
+      },
+      "month": {
+        "content": "$4",
+        "example": "noviembre"
+      },
+      "year": {
+        "content": "$5",
+        "example": "2026"
+      }
+    }
+  },
+  "schedule_share_phone_scan_hint": {
+    "message": "Escanee el código QR con la cámara del teléfono para obtener el texto del horario.",
+    "description": "Sección: Horarios de cortes y uso compartido. Control o indicación: «Escanee el código QR con la cámara del teléfono para obtener el texto del horario.»."
+  },
+  "schedule_share_qr_accessible_description": {
+    "message": "Escanee para obtener el texto del horario.",
+    "description": "Sección: Horarios de cortes y uso compartido. Etiqueta accesible: «Escanee para obtener el texto del horario.»."
+  },
+  "schedule_share_qr_empty_text_hint": {
+    "message": "Introduzca texto para crear un código QR.",
+    "description": "Sección: Horarios de cortes y uso compartido. Control o indicación: «Introduzca texto para crear un código QR.»."
+  },
+  "schedule_share_qr_generating_status": {
+    "message": "Generando código QR…",
+    "description": "Sección: Horarios de cortes y uso compartido. Mensaje de estado: «Generando código QR…»."
+  },
+  "schedule_share_qr_generation_error": {
+    "message": "No se pudo crear el código QR. Utilice el botón de copiar.",
+    "description": "Sección: Horarios de cortes y uso compartido. Mensaje de error: «No se pudo crear el código QR. Utilice el botón de copiar.»."
+  },
+  "schedule_share_schedule_missing_error": {
+    "message": "Todavía no se ha recibido el horario.",
+    "description": "Sección: Horarios de cortes y uso compartido. Mensaje de error: «Todavía no se ha recibido el horario.»."
+  },
+  "schedule_share_screen_title": {
+    "message": "Compartir horario",
+    "description": "Sección: Horarios de cortes y uso compartido. Título de pantalla: «Compartir horario»."
+  },
+  "schedule_share_text_accessible_label": {
+    "message": "Texto del horario para compartir",
+    "description": "Sección: Horarios de cortes y uso compartido. Etiqueta accesible: «Texto del horario para compartir»."
+  },
+  "schedule_share_text_header": {
+    "message": "Cortes de luz el $DATE$ ($PLACE$, grupo $GROUP$):",
+    "description": "Sección: Horarios de cortes y uso compartido. Control o indicación: «Cortes de luz el $DATE$ ($PLACE$, grupo $GROUP$):».",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "23/11/2026"
+      },
+      "place": {
+        "content": "$2",
+        "example": "Kyiv, Київ"
+      },
+      "group": {
+        "content": "$3",
+        "example": "5.2"
+      }
+    }
+  },
+  "schedule_share_unavailable_tooltip": {
+    "message": "No hay horario disponible para la fecha seleccionada",
+    "description": "Sección: Horarios de cortes y uso compartido. Control o indicación: «No hay horario disponible para la fecha seleccionada»."
+  },
+  "schedule_share_weekday_0": {
+    "message": "domingo",
+    "description": "Sección: Horarios de cortes y uso compartido. Control o indicación: «domingo»."
+  },
+  "schedule_share_weekday_1": {
+    "message": "lunes",
+    "description": "Sección: Horarios de cortes y uso compartido. Control o indicación: «lunes»."
+  },
+  "schedule_share_weekday_2": {
+    "message": "martes",
+    "description": "Sección: Horarios de cortes y uso compartido. Control o indicación: «martes»."
+  },
+  "schedule_share_weekday_3": {
+    "message": "miércoles",
+    "description": "Sección: Horarios de cortes y uso compartido. Control o indicación: «miércoles»."
+  },
+  "schedule_share_weekday_4": {
+    "message": "jueves",
+    "description": "Sección: Horarios de cortes y uso compartido. Control o indicación: «jueves»."
+  },
+  "schedule_share_weekday_5": {
+    "message": "viernes",
+    "description": "Sección: Horarios de cortes y uso compartido. Control o indicación: «viernes»."
+  },
+  "schedule_share_weekday_6": {
+    "message": "sábado",
+    "description": "Sección: Horarios de cortes y uso compartido. Control o indicación: «sábado»."
+  },
+  "schedule_storage_save_error": {
+    "message": "No se pudo guardar el horario.",
+    "description": "Sección: Horarios de cortes y uso compartido. Mensaje de error: «No se pudo guardar el horario.»."
+  },
+  "schedule_supply_line_label": {
+    "message": "Línea $LINE$",
+    "description": "Sección: Horarios de cortes y uso compartido. Control o indicación: «Línea $LINE$». El grupo es el grupo de cortes de DTEK; la línea es la alimentación eléctrica del edificio. Las direcciones se mantienen en ucraniano.",
+    "placeholders": {
+      "line": {
+        "content": "$1",
+        "example": "2"
+      }
+    }
+  },
+  "schedule_unverified_address": {
+    "message": "El grupo de cortes de esta dirección aún no se ha confirmado en el sitio web.",
+    "description": "Sección: Horarios de cortes y uso compartido. Control o indicación: «El grupo de cortes de esta dirección aún no se ha confirmado en el sitio web.»."
+  },
+  "schedule_validation_collection_error": {
+    "message": "Horarios no válidos.",
+    "description": "Sección: Horarios de cortes y uso compartido. Mensaje de error: «Horarios no válidos.»."
+  },
+  "schedule_validation_group_error": {
+    "message": "Grupo de cortes no válido.",
+    "description": "Sección: Horarios de cortes y uso compartido. Mensaje de error: «Grupo de cortes no válido.». El grupo es el grupo de cortes de DTEK; la línea es la alimentación eléctrica del edificio. Las direcciones se mantienen en ucraniano."
+  },
+  "schedule_validation_single_error": {
+    "message": "Horario no válido.",
+    "description": "Sección: Horarios de cortes y uso compartido. Mensaje de error: «Horario no válido.»."
+  },
+  "settings_language_label": {
+    "message": "Idioma de la interfaz",
+    "description": "Sección: Configuración. Control o indicación: «Idioma de la interfaz»."
+  },
+  "settings_language_system_option": {
+    "message": "Igual que el navegador",
+    "description": "Sección: Configuración. Control o indicación: «Igual que el navegador»."
+  },
+  "settings_popup_closing_checkbox": {
+    "message": "Cerrar automáticamente las ventanas emergentes",
+    "description": "Sección: Configuración. Control o indicación: «Cerrar automáticamente las ventanas emergentes»."
+  },
+  "settings_popup_closing_enabled_status": {
+    "message": "El cierre automático de ventanas emergentes está activado.",
+    "description": "Sección: Configuración. Mensaje de estado: «El cierre automático de ventanas emergentes está activado.»."
+  },
+  "settings_save_error": {
+    "message": "No se pudo guardar la configuración. Inténtelo de nuevo.",
+    "description": "Sección: Configuración. Mensaje de error: «No se pudo guardar la configuración. Inténtelo de nuevo.»."
+  },
+  "settings_save_success": {
+    "message": "Configuración guardada.",
+    "description": "Sección: Configuración. Mensaje de estado: «Configuración guardada.»."
+  },
+  "settings_screen_title": {
+    "message": "Configuración",
+    "description": "Sección: Configuración. Título de pantalla: «Configuración»."
+  },
+  "storage_format_unsupported": {
+    "message": "El formato de los datos guardados no es compatible. Sus datos no se han modificado.",
+    "description": "Sección: Almacenamiento de datos. Control o indicación: «El formato de los datos guardados no es compatible. Sus datos no se han modificado.»."
+  }
+}

@@ -1,0 +1,754 @@
+{
+  "address_add_action": {
+    "message": "Aggiungi indirizzo",
+    "description": "Sezione: Gestione degli indirizzi. Comando o indicazione: «Aggiungi indirizzo»."
+  },
+  "address_add_screen_title": {
+    "message": "Aggiungi indirizzo",
+    "description": "Sezione: Gestione degli indirizzi. Titolo della schermata: «Aggiungi indirizzo»."
+  },
+  "address_delete_archive_retention_hint": {
+    "message": "Gli archivi dei gruppi verranno conservati senza via né numero civico. Gestiscili nelle impostazioni.",
+    "description": "Sezione: Gestione degli indirizzi. Comando o indicazione: «Gli archivi dei gruppi verranno conservati senza via né numero civico. Gestiscili nelle impostazioni.»."
+  },
+  "address_delete_confirm_action": {
+    "message": "Elimina",
+    "description": "Sezione: Gestione degli indirizzi. Comando o indicazione: «Elimina»."
+  },
+  "address_delete_confirmation_question": {
+    "message": "Rimuovere l’indirizzo «$ADDRESS$» dall’elenco?",
+    "description": "Sezione: Gestione degli indirizzi. Comando o indicazione: «Rimuovere l’indirizzo «$ADDRESS$» dall’elenco?».",
+    "placeholders": {
+      "address": {
+        "content": "$1",
+        "example": "Київ, Хрещатик, 22"
+      }
+    }
+  },
+  "address_delete_error": {
+    "message": "Impossibile eliminare l’indirizzo. Riprova.",
+    "description": "Sezione: Gestione degli indirizzi. Messaggio di errore: «Impossibile eliminare l’indirizzo. Riprova.»."
+  },
+  "address_delete_keep_archive_success": {
+    "message": "Indirizzo eliminato. Archivi dei gruppi conservati.",
+    "description": "Sezione: Gestione degli indirizzi. Messaggio di stato: «Indirizzo eliminato. Archivi dei gruppi conservati.»."
+  },
+  "address_delete_screen_title": {
+    "message": "Elimina indirizzo",
+    "description": "Sezione: Gestione degli indirizzi. Titolo della schermata: «Elimina indirizzo»."
+  },
+  "address_edit_conflict": {
+    "message": "L’indirizzo è stato modificato in un’altra finestra. Riaprilo per modificarlo.",
+    "description": "Sezione: Gestione degli indirizzi. Comando o indicazione: «L’indirizzo è stato modificato in un’altra finestra. Riaprilo per modificarlo.»."
+  },
+  "address_edit_screen_title": {
+    "message": "Modifica indirizzo",
+    "description": "Sezione: Gestione degli indirizzi. Titolo della schermata: «Modifica indirizzo»."
+  },
+  "address_form_building_label": {
+    "message": "Numero civico",
+    "description": "Sezione: Gestione degli indirizzi. Comando o indicazione: «Numero civico»."
+  },
+  "address_form_building_placeholder": {
+    "message": "Inserisci un numero civico",
+    "description": "Sezione: Gestione degli indirizzi. Suggerimento di inserimento: «Inserisci un numero civico»."
+  },
+  "address_form_city_label": {
+    "message": "Città o paese",
+    "description": "Sezione: Gestione degli indirizzi. Comando o indicazione: «Città o paese»."
+  },
+  "address_form_city_placeholder": {
+    "message": "Inserisci una città o un paese",
+    "description": "Sezione: Gestione degli indirizzi. Suggerimento di inserimento: «Inserisci una città o un paese»."
+  },
+  "address_form_delete_action": {
+    "message": "Elimina indirizzo",
+    "description": "Sezione: Gestione degli indirizzi. Comando o indicazione: «Elimina indirizzo»."
+  },
+  "address_form_language_hint": {
+    "message": "Inserisci gli indirizzi in ucraino, come sul sito DTEK, indipendentemente dalla lingua dell’interfaccia. Altrimenti l’indirizzo non verrà trovato.",
+    "description": "Sezione: Gestione degli indirizzi. Comando o indicazione: «Inserisci gli indirizzi in ucraino, come sul sito DTEK, indipendentemente dalla lingua dell’interfaccia. Altrimenti l’indirizzo non verrà trovato.». Il gruppo indica il gruppo di interruzione DTEK; la linea indica l’alimentazione elettrica dell’edificio. Gli indirizzi restano in ucraino."
+  },
+  "address_form_region_not_selected": {
+    "message": "Non selezionato",
+    "description": "Sezione: Gestione degli indirizzi. Comando o indicazione: «Non selezionato»."
+  },
+  "address_form_region_placeholder": {
+    "message": "Seleziona un operatore",
+    "description": "Sezione: Gestione degli indirizzi. Suggerimento di inserimento: «Seleziona un operatore»."
+  },
+  "address_form_regional_operator_label": {
+    "message": "Operatore regionale DTEK",
+    "description": "Sezione: Gestione degli indirizzi. Comando o indicazione: «Operatore regionale DTEK»."
+  },
+  "address_form_save_action": {
+    "message": "Salva indirizzo",
+    "description": "Sezione: Gestione degli indirizzi. Comando o indicazione: «Salva indirizzo»."
+  },
+  "address_form_street_label": {
+    "message": "Via",
+    "description": "Sezione: Gestione degli indirizzi. Comando o indicazione: «Via»."
+  },
+  "address_form_street_placeholder": {
+    "message": "Inserisci il nome della via",
+    "description": "Sezione: Gestione degli indirizzi. Suggerimento di inserimento: «Inserisci il nome della via»."
+  },
+  "address_identity_after": {
+    "message": "Dopo",
+    "description": "Sezione: Gestione degli indirizzi. Comando o indicazione: «Dopo»."
+  },
+  "address_identity_before": {
+    "message": "Prima",
+    "description": "Sezione: Gestione degli indirizzi. Comando o indicazione: «Prima»."
+  },
+  "address_identity_correction": {
+    "message": "Correggi l’indirizzo",
+    "description": "Sezione: Gestione degli indirizzi. Comando o indicazione: «Correggi l’indirizzo»."
+  },
+  "address_identity_explanation": {
+    "message": "Una correzione conserva la cronologia dell’indirizzo. Un altro luogo avvia una nuova cronologia; gli archivi precedenti dei gruppi restano nelle impostazioni.",
+    "description": "Sezione: Gestione degli indirizzi. Comando o indicazione: «Una correzione conserva la cronologia dell’indirizzo. Un altro luogo avvia una nuova cronologia; gli archivi precedenti dei gruppi restano nelle impostazioni.»."
+  },
+  "address_identity_question": {
+    "message": "Stai correggendo l’indirizzo o cambiando luogo?",
+    "description": "Sezione: Gestione degli indirizzi. Comando o indicazione: «Stai correggendo l’indirizzo o cambiando luogo?»."
+  },
+  "address_identity_replacement": {
+    "message": "È un luogo diverso",
+    "description": "Sezione: Gestione degli indirizzi. Comando o indicazione: «È un luogo diverso»."
+  },
+  "address_identity_title": {
+    "message": "Cambio di indirizzo",
+    "description": "Sezione: Gestione degli indirizzi. Titolo della schermata: «Cambio di indirizzo»."
+  },
+  "address_list_edit_accessible_label": {
+    "message": "Modifica: $ADDRESS$",
+    "description": "Sezione: Gestione degli indirizzi. Etichetta accessibile: «Modifica: $ADDRESS$».",
+    "placeholders": {
+      "address": {
+        "content": "$1",
+        "example": "Київ, Хрещатик, 22"
+      }
+    }
+  },
+  "address_list_edit_address_tooltip": {
+    "message": "Modifica indirizzo",
+    "description": "Sezione: Gestione degli indirizzi. Comando o indicazione: «Modifica indirizzo»."
+  },
+  "address_list_empty_hint": {
+    "message": "Aggiungi un indirizzo per seguire le interruzioni di corrente.",
+    "description": "Sezione: Gestione degli indirizzi. Comando o indicazione: «Aggiungi un indirizzo per seguire le interruzioni di corrente.»."
+  },
+  "address_list_load_error": {
+    "message": "Impossibile caricare gli indirizzi. Chiudi e riapri questa finestra per riprovare.",
+    "description": "Sezione: Gestione degli indirizzi. Messaggio di errore: «Impossibile caricare gli indirizzi. Chiudi e riapri questa finestra per riprovare.»."
+  },
+  "address_list_open_schedule_action": {
+    "message": "Apri programma",
+    "description": "Sezione: Gestione degli indirizzi. Comando o indicazione: «Apri programma»."
+  },
+  "address_list_outage_group_label": {
+    "message": "Gruppo $GROUP$",
+    "description": "Sezione: Gestione degli indirizzi. Comando o indicazione: «Gruppo $GROUP$». Il gruppo indica il gruppo di interruzione DTEK; la linea indica l’alimentazione elettrica dell’edificio. Gli indirizzi restano in ucraino.",
+    "placeholders": {
+      "group": {
+        "content": "$1",
+        "example": "5.2"
+      }
+    }
+  },
+  "address_list_select_region_action": {
+    "message": "Seleziona regione",
+    "description": "Sezione: Gestione degli indirizzi. Comando o indicazione: «Seleziona regione»."
+  },
+  "address_list_storage_read_error": {
+    "message": "Impossibile leggere l’elenco degli indirizzi.",
+    "description": "Sezione: Gestione degli indirizzi. Messaggio di errore: «Impossibile leggere l’elenco degli indirizzi.»."
+  },
+  "address_list_unassigned_region_heading": {
+    "message": "Seleziona un operatore regionale",
+    "description": "Sezione: Gestione degli indirizzi. Titolo della schermata: «Seleziona un operatore regionale»."
+  },
+  "address_list_unassigned_region_hint": {
+    "message": "Seleziona una regione per l’indirizzo salvato in precedenza.",
+    "description": "Sezione: Gestione degli indirizzi. Comando o indicazione: «Seleziona una regione per l’indirizzo salvato in precedenza.»."
+  },
+  "address_navigation_open_error": {
+    "message": "Impossibile aprire il programma.",
+    "description": "Sezione: Gestione degli indirizzi. Messaggio di errore: «Impossibile aprire il programma.»."
+  },
+  "address_navigation_region_required_error": {
+    "message": "Seleziona prima una regione per questo indirizzo.",
+    "description": "Sezione: Gestione degli indirizzi. Messaggio di errore: «Seleziona prima una regione per questo indirizzo.»."
+  },
+  "address_navigation_tab_changed_error": {
+    "message": "L’indirizzo in questa scheda è cambiato.",
+    "description": "Sezione: Gestione degli indirizzi. Messaggio di errore: «L’indirizzo in questa scheda è cambiato.»."
+  },
+  "address_open_schedule_pending": {
+    "message": "Apertura del programma…",
+    "description": "Sezione: Gestione degli indirizzi. Messaggio di stato: «Apertura del programma…»."
+  },
+  "address_open_schedule_retry_error": {
+    "message": "Impossibile aprire il programma. Riprova.",
+    "description": "Sezione: Gestione degli indirizzi. Messaggio di errore: «Impossibile aprire il programma. Riprova.»."
+  },
+  "address_save_already_deleted_error": {
+    "message": "L’indirizzo è già stato eliminato.",
+    "description": "Sezione: Gestione degli indirizzi. Messaggio di errore: «L’indirizzo è già stato eliminato.»."
+  },
+  "address_save_duplicate_error": {
+    "message": "Questo indirizzo è già stato aggiunto.",
+    "description": "Sezione: Gestione degli indirizzi. Messaggio di errore: «Questo indirizzo è già stato aggiunto.»."
+  },
+  "address_save_error": {
+    "message": "Impossibile salvare l’indirizzo.",
+    "description": "Sezione: Gestione degli indirizzi. Messaggio di errore: «Impossibile salvare l’indirizzo.»."
+  },
+  "address_save_pending": {
+    "message": "Salvataggio…",
+    "description": "Sezione: Gestione degli indirizzi. Messaggio di stato: «Salvataggio…»."
+  },
+  "address_save_success": {
+    "message": "Indirizzo salvato.",
+    "description": "Sezione: Gestione degli indirizzi. Messaggio di stato: «Indirizzo salvato.»."
+  },
+  "address_storage_record_invalid_error": {
+    "message": "Il record dell’indirizzo è danneggiato.",
+    "description": "Sezione: Gestione degli indirizzi. Messaggio di errore: «Il record dell’indirizzo è danneggiato.»."
+  },
+  "address_validation_fields_required": {
+    "message": "Inserisci città, via e numero civico.",
+    "description": "Sezione: Gestione degli indirizzi. Messaggio di errore: «Inserisci città, via e numero civico.»."
+  },
+  "address_validation_region_required": {
+    "message": "Seleziona un operatore regionale.",
+    "description": "Sezione: Gestione degli indirizzi. Messaggio di errore: «Seleziona un operatore regionale.»."
+  },
+  "address_website_load_error": {
+    "message": "Impossibile caricare l’indirizzo.",
+    "description": "Sezione: Gestione degli indirizzi. Messaggio di errore: «Impossibile caricare l’indirizzo.»."
+  },
+  "application_loading_status": {
+    "message": "Caricamento…",
+    "description": "Sezione: Caricamento. Messaggio di stato: «Caricamento…»."
+  },
+  "archive_back": {
+    "message": "Indietro",
+    "description": "Sezione: Archivi dei gruppi. Comando o indicazione: «Indietro»."
+  },
+  "archive_delete_action": {
+    "message": "Elimina archivio del gruppo",
+    "description": "Sezione: Archivi dei gruppi. Comando o indicazione: «Elimina archivio del gruppo»."
+  },
+  "archive_delete_error": {
+    "message": "Impossibile eliminare l’archivio. Riprova.",
+    "description": "Sezione: Archivi dei gruppi. Messaggio di errore: «Impossibile eliminare l’archivio. Riprova.»."
+  },
+  "archive_delete_warning": {
+    "message": "I programmi verranno rimossi anche dalla cronologia di tutti gli indirizzi collegati. L’azione non può essere annullata.",
+    "description": "Sezione: Archivi dei gruppi. Comando o indicazione: «I programmi verranno rimossi anche dalla cronologia di tutti gli indirizzi collegati. L’azione non può essere annullata.»."
+  },
+  "archive_deleted": {
+    "message": "Archivio del gruppo eliminato.",
+    "description": "Sezione: Archivi dei gruppi. Comando o indicazione: «Archivio del gruppo eliminato.»."
+  },
+  "archive_linked_addresses": {
+    "message": "Indirizzi collegati: $COUNT$",
+    "description": "Sezione: Archivi dei gruppi. Comando o indicazione: «Indirizzi collegati: $COUNT$».",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "2"
+      }
+    }
+  },
+  "archive_received_at": {
+    "message": "Ricevuto: $TIME$",
+    "description": "Sezione: Archivi dei gruppi. Comando o indicazione: «Ricevuto: $TIME$».",
+    "placeholders": {
+      "time": {
+        "content": "$1",
+        "example": "25.11.2026, 12:30"
+      }
+    }
+  },
+  "archive_variant": {
+    "message": "Versione $NUMBER$",
+    "description": "Sezione: Archivi dei gruppi. Comando o indicazione: «Versione $NUMBER$».",
+    "placeholders": {
+      "number": {
+        "content": "$1",
+        "example": "2"
+      }
+    }
+  },
+  "archives_description": {
+    "message": "Programmi per località e gruppo di interruzione. Qui non vengono salvati vie o edifici. Più gruppi possono condividere un programma con più linee di alimentazione.",
+    "description": "Sezione: Archivi dei gruppi. Comando o indicazione: «Programmi per località e gruppo di interruzione. Qui non vengono salvati vie o edifici. Più gruppi possono condividere un programma con più linee di alimentazione.»."
+  },
+  "archives_empty": {
+    "message": "Nessun programma salvato.",
+    "description": "Sezione: Archivi dei gruppi. Comando o indicazione: «Nessun programma salvato.»."
+  },
+  "archives_title": {
+    "message": "Archivi dei gruppi",
+    "description": "Sezione: Archivi dei gruppi. Titolo della schermata: «Archivi dei gruppi»."
+  },
+  "date_calendar_accessible_label": {
+    "message": "Scegli la data del programma",
+    "description": "Sezione: Selezione della data e calendario. Etichetta accessibile: «Scegli la data del programma»."
+  },
+  "date_calendar_days_accessible_label": {
+    "message": "Giorni del mese",
+    "description": "Sezione: Selezione della data e calendario. Etichetta accessibile: «Giorni del mese»."
+  },
+  "date_calendar_month_label": {
+    "message": "Mese",
+    "description": "Sezione: Selezione della data e calendario. Comando o indicazione: «Mese»."
+  },
+  "date_calendar_next_month_action": {
+    "message": "Mese successivo",
+    "description": "Sezione: Selezione della data e calendario. Comando o indicazione: «Mese successivo»."
+  },
+  "date_calendar_next_year_action": {
+    "message": "Anno successivo",
+    "description": "Sezione: Selezione della data e calendario. Comando o indicazione: «Anno successivo»."
+  },
+  "date_calendar_open_action": {
+    "message": "Apri calendario",
+    "description": "Sezione: Selezione della data e calendario. Comando o indicazione: «Apri calendario»."
+  },
+  "date_calendar_previous_month_action": {
+    "message": "Mese precedente",
+    "description": "Sezione: Selezione della data e calendario. Comando o indicazione: «Mese precedente»."
+  },
+  "date_calendar_previous_year_action": {
+    "message": "Anno precedente",
+    "description": "Sezione: Selezione della data e calendario. Comando o indicazione: «Anno precedente»."
+  },
+  "date_calendar_year_label": {
+    "message": "Anno",
+    "description": "Sezione: Selezione della data e calendario. Comando o indicazione: «Anno»."
+  },
+  "date_input_accessible_label": {
+    "message": "Data del programma",
+    "description": "Sezione: Selezione della data e calendario. Etichetta accessibile: «Data del programma»."
+  },
+  "date_input_invalid_error": {
+    "message": "Inserisci una data valida nel formato $DATE_FORMAT$.",
+    "description": "Sezione: Selezione della data e calendario. Messaggio di errore: «Inserisci una data valida nel formato $DATE_FORMAT$.».",
+    "placeholders": {
+      "date_format": {
+        "content": "$1",
+        "example": "GG/MM/AAAA"
+      }
+    }
+  },
+  "date_next_day_action": {
+    "message": "Giorno successivo",
+    "description": "Sezione: Selezione della data e calendario. Comando o indicazione: «Giorno successivo»."
+  },
+  "date_previous_day_action": {
+    "message": "Giorno precedente",
+    "description": "Sezione: Selezione della data e calendario. Comando o indicazione: «Giorno precedente»."
+  },
+  "date_shortcut_other": {
+    "message": "data",
+    "description": "Sezione: Selezione della data e calendario. Comando o indicazione: «data»."
+  },
+  "date_shortcut_other_accessible_label": {
+    "message": "Scegli un’altra data nel calendario",
+    "description": "Sezione: Selezione della data e calendario. Etichetta accessibile: «Scegli un’altra data nel calendario»."
+  },
+  "date_shortcut_today": {
+    "message": "oggi",
+    "description": "Sezione: Selezione della data e calendario. Comando o indicazione: «oggi»."
+  },
+  "date_shortcut_tomorrow": {
+    "message": "domani",
+    "description": "Sezione: Selezione della data e calendario. Comando o indicazione: «domani»."
+  },
+  "date_shortcuts_accessible_label": {
+    "message": "Selezione rapida della data",
+    "description": "Sezione: Selezione della data e calendario. Etichetta accessibile: «Selezione rapida della data»."
+  },
+  "date_shortcuts_sentence_join": {
+    "message": "o per un’altra ",
+    "description": "Sezione: Selezione della data e calendario. Comando o indicazione: «o per un’altra»."
+  },
+  "date_shortcuts_sentence_prefix": {
+    "message": "per ",
+    "description": "Sezione: Selezione della data e calendario. Comando o indicazione: «per»."
+  },
+  "dtek_operator_dem_name": {
+    "message": "Reti di Donec’k",
+    "description": "Sezione: Operatori regionali DTEK. Comando o indicazione: «Reti di Donec’k»."
+  },
+  "dtek_operator_dnem_name": {
+    "message": "Reti di Dnipro",
+    "description": "Sezione: Operatori regionali DTEK. Comando o indicazione: «Reti di Dnipro»."
+  },
+  "dtek_operator_kem_name": {
+    "message": "Reti di Kyiv",
+    "description": "Sezione: Operatori regionali DTEK. Comando o indicazione: «Reti di Kyiv»."
+  },
+  "dtek_operator_krem_name": {
+    "message": "Reti regionali di Kyiv",
+    "description": "Sezione: Operatori regionali DTEK. Comando o indicazione: «Reti regionali di Kyiv»."
+  },
+  "dtek_operator_oem_name": {
+    "message": "Reti di Odessa",
+    "description": "Sezione: Operatori regionali DTEK. Comando o indicazione: «Reti di Odessa»."
+  },
+  "dtek_region_dem_name": {
+    "message": "Oblast’ di Donec’k",
+    "description": "Sezione: Operatori regionali DTEK. Comando o indicazione: «Oblast’ di Donec’k»."
+  },
+  "dtek_region_dem_short": {
+    "message": "Oblast’ di Donec’k",
+    "description": "Sezione: Operatori regionali DTEK. Comando o indicazione: «Oblast’ di Donec’k»."
+  },
+  "dtek_region_dnem_name": {
+    "message": "Oblast’ di Dnipropetrovs’k",
+    "description": "Sezione: Operatori regionali DTEK. Comando o indicazione: «Oblast’ di Dnipropetrovs’k»."
+  },
+  "dtek_region_dnem_short": {
+    "message": "Oblast’ di Dnipropetrovs’k",
+    "description": "Sezione: Operatori regionali DTEK. Comando o indicazione: «Oblast’ di Dnipropetrovs’k»."
+  },
+  "dtek_region_kem_name": {
+    "message": "Kyiv",
+    "description": "Sezione: Operatori regionali DTEK. Comando o indicazione: «Kyiv»."
+  },
+  "dtek_region_kem_short": {
+    "message": "Kyiv",
+    "description": "Sezione: Operatori regionali DTEK. Comando o indicazione: «Kyiv»."
+  },
+  "dtek_region_krem_name": {
+    "message": "Oblast’ di Kyiv",
+    "description": "Sezione: Operatori regionali DTEK. Comando o indicazione: «Oblast’ di Kyiv»."
+  },
+  "dtek_region_krem_short": {
+    "message": "Oblast’ di Kyiv",
+    "description": "Sezione: Operatori regionali DTEK. Comando o indicazione: «Oblast’ di Kyiv»."
+  },
+  "dtek_region_oem_name": {
+    "message": "Oblast’ di Odessa",
+    "description": "Sezione: Operatori regionali DTEK. Comando o indicazione: «Oblast’ di Odessa»."
+  },
+  "dtek_region_oem_short": {
+    "message": "Oblast’ di Odessa",
+    "description": "Sezione: Operatori regionali DTEK. Comando o indicazione: «Oblast’ di Odessa»."
+  },
+  "extension_description": {
+    "message": "Interruzioni di corrente ai tuoi indirizzi: consulta e condividi facilmente i programmi dei siti DTEK.",
+    "description": "Sezione: Informazioni sull’estensione. Comando o indicazione: «Interruzioni di corrente ai tuoi indirizzi: consulta e condividi facilmente i programmi dei siti DTEK.»."
+  },
+  "extension_name": {
+    "message": "UA Shutdowns — programmi delle interruzioni DTEK",
+    "description": "Sezione: Informazioni sull’estensione. Comando o indicazione: «UA Shutdowns — programmi delle interruzioni DTEK»."
+  },
+  "footer_github_project_link": {
+    "message": "Progetto su GitHub",
+    "description": "Sezione: Informazioni sull’estensione. Comando o indicazione: «Progetto su GitHub»."
+  },
+  "home_screen_title": {
+    "message": "Programma delle interruzioni di corrente",
+    "description": "Sezione: Informazioni sull’estensione. Titolo della schermata: «Programma delle interruzioni di corrente»."
+  },
+  "locale_date_day_token": {
+    "message": "GG",
+    "description": "Sezione: Lingua e formato delle date. Comando o indicazione: «GG»."
+  },
+  "locale_date_month_token": {
+    "message": "MM",
+    "description": "Sezione: Lingua e formato delle date. Comando o indicazione: «MM»."
+  },
+  "locale_date_year_token": {
+    "message": "AAAA",
+    "description": "Sezione: Lingua e formato delle date. Comando o indicazione: «AAAA»."
+  },
+  "locale_format": {
+    "message": "it-IT",
+    "description": "Sezione: Lingua e formato delle date. Comando o indicazione: «it-IT»."
+  },
+  "locale_language": {
+    "message": "it",
+    "description": "Sezione: Lingua e formato delle date. Comando o indicazione: «it»."
+  },
+  "locale_native_name": {
+    "message": "Italiano",
+    "description": "Sezione: Lingua e formato delle date. Comando o indicazione: «Italiano»."
+  },
+  "locale_week_first_day": {
+    "message": "1",
+    "description": "Sezione: Lingua e formato delle date. Comando o indicazione: «1»."
+  },
+  "locality_ambiguous": {
+    "message": "Più località hanno lo stesso nome. Precisalo, ad esempio aggiungendo il distretto.",
+    "description": "Sezione: Gestione degli indirizzi. Comando o indicazione: «Più località hanno lo stesso nome. Precisalo, ad esempio aggiungendo il distretto.»."
+  },
+  "navigation_back_to_address_edit": {
+    "message": "Torna alla modifica dell’indirizzo",
+    "description": "Sezione: Navigazione. Comando o indicazione: «Torna alla modifica dell’indirizzo»."
+  },
+  "navigation_back_to_home": {
+    "message": "Torna alla pagina iniziale",
+    "description": "Sezione: Navigazione. Comando o indicazione: «Torna alla pagina iniziale»."
+  },
+  "popup_offer_description": {
+    "message": "Un popup copre la pagina del sito DTEK. Attivare la chiusura automatica di questi popup?",
+    "description": "Sezione: Chiusura automatica dei popup. Comando o indicazione: «Un popup copre la pagina del sito DTEK. Attivare la chiusura automatica di questi popup?»."
+  },
+  "popup_offer_dismiss_action": {
+    "message": "Non ora",
+    "description": "Sezione: Chiusura automatica dei popup. Comando o indicazione: «Non ora»."
+  },
+  "popup_offer_enable_action": {
+    "message": "Attiva",
+    "description": "Sezione: Chiusura automatica dei popup. Comando o indicazione: «Attiva»."
+  },
+  "popup_offer_repeat_hint": {
+    "message": "Se rifiuti, te lo chiederemo di nuovo non prima di un mese. Puoi attivare questa opzione anche nelle impostazioni.",
+    "description": "Sezione: Chiusura automatica dei popup. Comando o indicazione: «Se rifiuti, te lo chiederemo di nuovo non prima di un mese. Puoi attivare questa opzione anche nelle impostazioni.»."
+  },
+  "popup_offer_response_save_error": {
+    "message": "Impossibile salvare la risposta. Riprova.",
+    "description": "Sezione: Chiusura automatica dei popup. Messaggio di errore: «Impossibile salvare la risposta. Riprova.»."
+  },
+  "popup_offer_screen_title": {
+    "message": "Chiudi automaticamente i popup del programma delle interruzioni",
+    "description": "Sezione: Chiusura automatica dei popup. Titolo della schermata: «Chiudi automaticamente i popup del programma delle interruzioni»."
+  },
+  "schedule_archive_read_error": {
+    "message": "Impossibile leggere l’archivio dei programmi.",
+    "description": "Sezione: Programmi delle interruzioni e condivisione. Messaggio di errore: «Impossibile leggere l’archivio dei programmi.»."
+  },
+  "schedule_date_accessible_label": {
+    "message": "Interruzioni il $DATE$",
+    "description": "Sezione: Programmi delle interruzioni e condivisione. Etichetta accessibile: «Interruzioni il $DATE$».",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "23/11/2026"
+      }
+    }
+  },
+  "schedule_group_save_error": {
+    "message": "Impossibile salvare il gruppo di interruzione.",
+    "description": "Sezione: Programmi delle interruzioni e condivisione. Messaggio di errore: «Impossibile salvare il gruppo di interruzione.». Il gruppo indica il gruppo di interruzione DTEK; la linea indica l’alimentazione elettrica dell’edificio. Gli indirizzi restano in ucraino."
+  },
+  "schedule_history_date_missing": {
+    "message": "Programma non salvato",
+    "description": "Sezione: Programmi delle interruzioni e condivisione. Comando o indicazione: «Programma non salvato»."
+  },
+  "schedule_no_outages": {
+    "message": "Nessuna interruzione",
+    "description": "Sezione: Programmi delle interruzioni e condivisione. Comando o indicazione: «Nessuna interruzione»."
+  },
+  "schedule_refresh_error": {
+    "message": "Impossibile aggiornare i programmi. Riapri l’estensione.",
+    "description": "Sezione: Programmi delle interruzioni e condivisione. Messaggio di errore: «Impossibile aggiornare i programmi. Riapri l’estensione.»."
+  },
+  "schedule_selected_date_not_received": {
+    "message": "Programma non ricevuto",
+    "description": "Sezione: Programmi delle interruzioni e condivisione. Comando o indicazione: «Programma non ricevuto»."
+  },
+  "schedule_share_address_accessible_label": {
+    "message": "Condividi il programma del $DATE$: $ADDRESS$",
+    "description": "Sezione: Programmi delle interruzioni e condivisione. Etichetta accessibile: «Condividi il programma del $DATE$: $ADDRESS$».",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "23/11/2026"
+      },
+      "address": {
+        "content": "$2",
+        "example": "Київ, Хрещатик, 22"
+      }
+    }
+  },
+  "schedule_share_copy_action": {
+    "message": "Copia il programma delle interruzioni",
+    "description": "Sezione: Programmi delle interruzioni e condivisione. Comando o indicazione: «Copia il programma delle interruzioni»."
+  },
+  "schedule_share_copy_error": {
+    "message": "Impossibile copiare il programma. Riprova.",
+    "description": "Sezione: Programmi delle interruzioni e condivisione. Messaggio di errore: «Impossibile copiare il programma. Riprova.»."
+  },
+  "schedule_share_copy_success": {
+    "message": "Programma copiato.",
+    "description": "Sezione: Programmi delle interruzioni e condivisione. Messaggio di stato: «Programma copiato.»."
+  },
+  "schedule_share_date_text": {
+    "message": "$FULL_DATE$",
+    "description": "Sezione: Programmi delle interruzioni e condivisione. Comando o indicazione: «$FULL_DATE$».",
+    "placeholders": {
+      "full_date": {
+        "content": "$1",
+        "example": "lunedì 23 novembre 2026"
+      },
+      "weekday": {
+        "content": "$2",
+        "example": "lunedì"
+      },
+      "day": {
+        "content": "$3",
+        "example": "23"
+      },
+      "month": {
+        "content": "$4",
+        "example": "novembre"
+      },
+      "year": {
+        "content": "$5",
+        "example": "2026"
+      }
+    }
+  },
+  "schedule_share_phone_scan_hint": {
+    "message": "Scansiona il codice QR con la fotocamera del telefono per ottenere il testo del programma.",
+    "description": "Sezione: Programmi delle interruzioni e condivisione. Comando o indicazione: «Scansiona il codice QR con la fotocamera del telefono per ottenere il testo del programma.»."
+  },
+  "schedule_share_qr_accessible_description": {
+    "message": "Scansiona per ottenere il testo del programma.",
+    "description": "Sezione: Programmi delle interruzioni e condivisione. Etichetta accessibile: «Scansiona per ottenere il testo del programma.»."
+  },
+  "schedule_share_qr_empty_text_hint": {
+    "message": "Inserisci del testo per creare un codice QR.",
+    "description": "Sezione: Programmi delle interruzioni e condivisione. Comando o indicazione: «Inserisci del testo per creare un codice QR.»."
+  },
+  "schedule_share_qr_generating_status": {
+    "message": "Generazione del codice QR…",
+    "description": "Sezione: Programmi delle interruzioni e condivisione. Messaggio di stato: «Generazione del codice QR…»."
+  },
+  "schedule_share_qr_generation_error": {
+    "message": "Impossibile creare il codice QR. Usa il pulsante di copia.",
+    "description": "Sezione: Programmi delle interruzioni e condivisione. Messaggio di errore: «Impossibile creare il codice QR. Usa il pulsante di copia.»."
+  },
+  "schedule_share_schedule_missing_error": {
+    "message": "Il programma non è ancora stato ricevuto.",
+    "description": "Sezione: Programmi delle interruzioni e condivisione. Messaggio di errore: «Il programma non è ancora stato ricevuto.»."
+  },
+  "schedule_share_screen_title": {
+    "message": "Condividi programma",
+    "description": "Sezione: Programmi delle interruzioni e condivisione. Titolo della schermata: «Condividi programma»."
+  },
+  "schedule_share_text_accessible_label": {
+    "message": "Testo del programma da condividere",
+    "description": "Sezione: Programmi delle interruzioni e condivisione. Etichetta accessibile: «Testo del programma da condividere»."
+  },
+  "schedule_share_text_header": {
+    "message": "Interruzioni di corrente il $DATE$ ($PLACE$, gruppo $GROUP$):",
+    "description": "Sezione: Programmi delle interruzioni e condivisione. Comando o indicazione: «Interruzioni di corrente il $DATE$ ($PLACE$, gruppo $GROUP$):».",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "23/11/2026"
+      },
+      "place": {
+        "content": "$2",
+        "example": "Kyiv, Київ"
+      },
+      "group": {
+        "content": "$3",
+        "example": "5.2"
+      }
+    }
+  },
+  "schedule_share_unavailable_tooltip": {
+    "message": "Nessun programma disponibile per la data selezionata",
+    "description": "Sezione: Programmi delle interruzioni e condivisione. Comando o indicazione: «Nessun programma disponibile per la data selezionata»."
+  },
+  "schedule_share_weekday_0": {
+    "message": "domenica",
+    "description": "Sezione: Programmi delle interruzioni e condivisione. Comando o indicazione: «domenica»."
+  },
+  "schedule_share_weekday_1": {
+    "message": "lunedì",
+    "description": "Sezione: Programmi delle interruzioni e condivisione. Comando o indicazione: «lunedì»."
+  },
+  "schedule_share_weekday_2": {
+    "message": "martedì",
+    "description": "Sezione: Programmi delle interruzioni e condivisione. Comando o indicazione: «martedì»."
+  },
+  "schedule_share_weekday_3": {
+    "message": "mercoledì",
+    "description": "Sezione: Programmi delle interruzioni e condivisione. Comando o indicazione: «mercoledì»."
+  },
+  "schedule_share_weekday_4": {
+    "message": "giovedì",
+    "description": "Sezione: Programmi delle interruzioni e condivisione. Comando o indicazione: «giovedì»."
+  },
+  "schedule_share_weekday_5": {
+    "message": "venerdì",
+    "description": "Sezione: Programmi delle interruzioni e condivisione. Comando o indicazione: «venerdì»."
+  },
+  "schedule_share_weekday_6": {
+    "message": "sabato",
+    "description": "Sezione: Programmi delle interruzioni e condivisione. Comando o indicazione: «sabato»."
+  },
+  "schedule_storage_save_error": {
+    "message": "Impossibile salvare il programma.",
+    "description": "Sezione: Programmi delle interruzioni e condivisione. Messaggio di errore: «Impossibile salvare il programma.»."
+  },
+  "schedule_supply_line_label": {
+    "message": "Linea $LINE$",
+    "description": "Sezione: Programmi delle interruzioni e condivisione. Comando o indicazione: «Linea $LINE$». Il gruppo indica il gruppo di interruzione DTEK; la linea indica l’alimentazione elettrica dell’edificio. Gli indirizzi restano in ucraino.",
+    "placeholders": {
+      "line": {
+        "content": "$1",
+        "example": "2"
+      }
+    }
+  },
+  "schedule_unverified_address": {
+    "message": "Il gruppo di interruzione per questo indirizzo non è ancora stato confermato sul sito.",
+    "description": "Sezione: Programmi delle interruzioni e condivisione. Comando o indicazione: «Il gruppo di interruzione per questo indirizzo non è ancora stato confermato sul sito.»."
+  },
+  "schedule_validation_collection_error": {
+    "message": "Programmi non validi.",
+    "description": "Sezione: Programmi delle interruzioni e condivisione. Messaggio di errore: «Programmi non validi.»."
+  },
+  "schedule_validation_group_error": {
+    "message": "Gruppo di interruzione non valido.",
+    "description": "Sezione: Programmi delle interruzioni e condivisione. Messaggio di errore: «Gruppo di interruzione non valido.». Il gruppo indica il gruppo di interruzione DTEK; la linea indica l’alimentazione elettrica dell’edificio. Gli indirizzi restano in ucraino."
+  },
+  "schedule_validation_single_error": {
+    "message": "Programma non valido.",
+    "description": "Sezione: Programmi delle interruzioni e condivisione. Messaggio di errore: «Programma non valido.»."
+  },
+  "settings_language_label": {
+    "message": "Lingua dell’interfaccia",
+    "description": "Sezione: Impostazioni. Comando o indicazione: «Lingua dell’interfaccia»."
+  },
+  "settings_language_system_option": {
+    "message": "Come il browser",
+    "description": "Sezione: Impostazioni. Comando o indicazione: «Come il browser»."
+  },
+  "settings_popup_closing_checkbox": {
+    "message": "Chiudi automaticamente i popup",
+    "description": "Sezione: Impostazioni. Comando o indicazione: «Chiudi automaticamente i popup»."
+  },
+  "settings_popup_closing_enabled_status": {
+    "message": "La chiusura automatica dei popup è attiva.",
+    "description": "Sezione: Impostazioni. Messaggio di stato: «La chiusura automatica dei popup è attiva.»."
+  },
+  "settings_save_error": {
+    "message": "Impossibile salvare le impostazioni. Riprova.",
+    "description": "Sezione: Impostazioni. Messaggio di errore: «Impossibile salvare le impostazioni. Riprova.»."
+  },
+  "settings_save_success": {
+    "message": "Impostazioni salvate.",
+    "description": "Sezione: Impostazioni. Messaggio di stato: «Impostazioni salvate.»."
+  },
+  "settings_screen_title": {
+    "message": "Impostazioni",
+    "description": "Sezione: Impostazioni. Titolo della schermata: «Impostazioni»."
+  },
+  "storage_format_unsupported": {
+    "message": "Il formato dei dati salvati non è supportato. I tuoi dati non sono stati modificati.",
+    "description": "Sezione: Memorizzazione dei dati. Comando o indicazione: «Il formato dei dati salvati non è supportato. I tuoi dati non sono stati modificati.»."
+  }
+}
