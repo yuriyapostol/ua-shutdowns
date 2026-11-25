@@ -1,0 +1,754 @@
+{
+  "address_add_action": {
+    "message": "Ajouter une adresse",
+    "description": "Section : Gestion des adresses. Commande ou indication : « Ajouter une adresse »."
+  },
+  "address_add_screen_title": {
+    "message": "Ajouter une adresse",
+    "description": "Section : Gestion des adresses. Titre de l’écran : « Ajouter une adresse »."
+  },
+  "address_delete_archive_retention_hint": {
+    "message": "Les archives des groupes seront conservées sans rue ni numéro de bâtiment. Gérez-les dans les paramètres.",
+    "description": "Section : Gestion des adresses. Commande ou indication : « Les archives des groupes seront conservées sans rue ni numéro de bâtiment. Gérez-les dans les paramètres. »."
+  },
+  "address_delete_confirm_action": {
+    "message": "Supprimer",
+    "description": "Section : Gestion des adresses. Commande ou indication : « Supprimer »."
+  },
+  "address_delete_confirmation_question": {
+    "message": "Retirer l’adresse « $ADDRESS$ » de la liste ?",
+    "description": "Section : Gestion des adresses. Commande ou indication : « Retirer l’adresse « $ADDRESS$ » de la liste ? ».",
+    "placeholders": {
+      "address": {
+        "content": "$1",
+        "example": "Київ, Хрещатик, 22"
+      }
+    }
+  },
+  "address_delete_error": {
+    "message": "Impossible de supprimer l’adresse. Réessayez.",
+    "description": "Section : Gestion des adresses. Message d’erreur : « Impossible de supprimer l’adresse. Réessayez. »."
+  },
+  "address_delete_keep_archive_success": {
+    "message": "Adresse supprimée. Archives des groupes conservées.",
+    "description": "Section : Gestion des adresses. Message d’état : « Adresse supprimée. Archives des groupes conservées. »."
+  },
+  "address_delete_screen_title": {
+    "message": "Supprimer l’adresse",
+    "description": "Section : Gestion des adresses. Titre de l’écran : « Supprimer l’adresse »."
+  },
+  "address_edit_conflict": {
+    "message": "L’adresse a été modifiée dans une autre fenêtre. Rouvrez-la pour la modifier.",
+    "description": "Section : Gestion des adresses. Commande ou indication : « L’adresse a été modifiée dans une autre fenêtre. Rouvrez-la pour la modifier. »."
+  },
+  "address_edit_screen_title": {
+    "message": "Modifier l’adresse",
+    "description": "Section : Gestion des adresses. Titre de l’écran : « Modifier l’adresse »."
+  },
+  "address_form_building_label": {
+    "message": "Numéro de bâtiment",
+    "description": "Section : Gestion des adresses. Commande ou indication : « Numéro de bâtiment »."
+  },
+  "address_form_building_placeholder": {
+    "message": "Saisissez un numéro de bâtiment",
+    "description": "Section : Gestion des adresses. Indication de saisie : « Saisissez un numéro de bâtiment »."
+  },
+  "address_form_city_label": {
+    "message": "Ville ou village",
+    "description": "Section : Gestion des adresses. Commande ou indication : « Ville ou village »."
+  },
+  "address_form_city_placeholder": {
+    "message": "Saisissez une ville ou un village",
+    "description": "Section : Gestion des adresses. Indication de saisie : « Saisissez une ville ou un village »."
+  },
+  "address_form_delete_action": {
+    "message": "Supprimer l’adresse",
+    "description": "Section : Gestion des adresses. Commande ou indication : « Supprimer l’adresse »."
+  },
+  "address_form_language_hint": {
+    "message": "Saisissez les adresses en ukrainien, comme sur le site de DTEK, quelle que soit la langue de l’interface. Sinon, l’adresse ne sera pas trouvée.",
+    "description": "Section : Gestion des adresses. Commande ou indication : « Saisissez les adresses en ukrainien, comme sur le site de DTEK, quelle que soit la langue de l’interface. Sinon, l’adresse ne sera pas trouvée. ». Le groupe désigne le groupe de coupure DTEK ; la ligne désigne l’alimentation électrique du bâtiment. Les adresses restent en ukrainien."
+  },
+  "address_form_region_not_selected": {
+    "message": "Non sélectionné",
+    "description": "Section : Gestion des adresses. Commande ou indication : « Non sélectionné »."
+  },
+  "address_form_region_placeholder": {
+    "message": "Sélectionnez un opérateur",
+    "description": "Section : Gestion des adresses. Indication de saisie : « Sélectionnez un opérateur »."
+  },
+  "address_form_regional_operator_label": {
+    "message": "Opérateur régional DTEK",
+    "description": "Section : Gestion des adresses. Commande ou indication : « Opérateur régional DTEK »."
+  },
+  "address_form_save_action": {
+    "message": "Enregistrer l’adresse",
+    "description": "Section : Gestion des adresses. Commande ou indication : « Enregistrer l’adresse »."
+  },
+  "address_form_street_label": {
+    "message": "Rue",
+    "description": "Section : Gestion des adresses. Commande ou indication : « Rue »."
+  },
+  "address_form_street_placeholder": {
+    "message": "Saisissez un nom de rue",
+    "description": "Section : Gestion des adresses. Indication de saisie : « Saisissez un nom de rue »."
+  },
+  "address_identity_after": {
+    "message": "Après",
+    "description": "Section : Gestion des adresses. Commande ou indication : « Après »."
+  },
+  "address_identity_before": {
+    "message": "Avant",
+    "description": "Section : Gestion des adresses. Commande ou indication : « Avant »."
+  },
+  "address_identity_correction": {
+    "message": "Corriger l’adresse",
+    "description": "Section : Gestion des adresses. Commande ou indication : « Corriger l’adresse »."
+  },
+  "address_identity_explanation": {
+    "message": "Une correction conserve l’historique de l’adresse. Un autre lieu crée un nouvel historique ; les anciennes archives des groupes restent dans les paramètres.",
+    "description": "Section : Gestion des adresses. Commande ou indication : « Une correction conserve l’historique de l’adresse. Un autre lieu crée un nouvel historique ; les anciennes archives des groupes restent dans les paramètres. »."
+  },
+  "address_identity_question": {
+    "message": "Corrigez-vous l’adresse ou changez-vous de lieu ?",
+    "description": "Section : Gestion des adresses. Commande ou indication : « Corrigez-vous l’adresse ou changez-vous de lieu ? »."
+  },
+  "address_identity_replacement": {
+    "message": "Il s’agit d’un autre lieu",
+    "description": "Section : Gestion des adresses. Commande ou indication : « Il s’agit d’un autre lieu »."
+  },
+  "address_identity_title": {
+    "message": "Changement d’adresse",
+    "description": "Section : Gestion des adresses. Titre de l’écran : « Changement d’adresse »."
+  },
+  "address_list_edit_accessible_label": {
+    "message": "Modifier : $ADDRESS$",
+    "description": "Section : Gestion des adresses. Libellé accessible : « Modifier : $ADDRESS$ ».",
+    "placeholders": {
+      "address": {
+        "content": "$1",
+        "example": "Київ, Хрещатик, 22"
+      }
+    }
+  },
+  "address_list_edit_address_tooltip": {
+    "message": "Modifier l’adresse",
+    "description": "Section : Gestion des adresses. Commande ou indication : « Modifier l’adresse »."
+  },
+  "address_list_empty_hint": {
+    "message": "Ajoutez une adresse pour suivre les coupures de courant.",
+    "description": "Section : Gestion des adresses. Commande ou indication : « Ajoutez une adresse pour suivre les coupures de courant. »."
+  },
+  "address_list_load_error": {
+    "message": "Impossible de charger les adresses. Fermez et rouvrez cette fenêtre pour réessayer.",
+    "description": "Section : Gestion des adresses. Message d’erreur : « Impossible de charger les adresses. Fermez et rouvrez cette fenêtre pour réessayer. »."
+  },
+  "address_list_open_schedule_action": {
+    "message": "Ouvrir le planning",
+    "description": "Section : Gestion des adresses. Commande ou indication : « Ouvrir le planning »."
+  },
+  "address_list_outage_group_label": {
+    "message": "Groupe $GROUP$",
+    "description": "Section : Gestion des adresses. Commande ou indication : « Groupe $GROUP$ ». Le groupe désigne le groupe de coupure DTEK ; la ligne désigne l’alimentation électrique du bâtiment. Les adresses restent en ukrainien.",
+    "placeholders": {
+      "group": {
+        "content": "$1",
+        "example": "5.2"
+      }
+    }
+  },
+  "address_list_select_region_action": {
+    "message": "Sélectionner une région",
+    "description": "Section : Gestion des adresses. Commande ou indication : « Sélectionner une région »."
+  },
+  "address_list_storage_read_error": {
+    "message": "Impossible de lire la liste des adresses.",
+    "description": "Section : Gestion des adresses. Message d’erreur : « Impossible de lire la liste des adresses. »."
+  },
+  "address_list_unassigned_region_heading": {
+    "message": "Sélectionnez un opérateur régional",
+    "description": "Section : Gestion des adresses. Titre de l’écran : « Sélectionnez un opérateur régional »."
+  },
+  "address_list_unassigned_region_hint": {
+    "message": "Sélectionnez une région pour votre adresse enregistrée précédemment.",
+    "description": "Section : Gestion des adresses. Commande ou indication : « Sélectionnez une région pour votre adresse enregistrée précédemment. »."
+  },
+  "address_navigation_open_error": {
+    "message": "Impossible d’ouvrir le planning.",
+    "description": "Section : Gestion des adresses. Message d’erreur : « Impossible d’ouvrir le planning. »."
+  },
+  "address_navigation_region_required_error": {
+    "message": "Sélectionnez d’abord une région pour cette adresse.",
+    "description": "Section : Gestion des adresses. Message d’erreur : « Sélectionnez d’abord une région pour cette adresse. »."
+  },
+  "address_navigation_tab_changed_error": {
+    "message": "L’adresse dans cet onglet a changé.",
+    "description": "Section : Gestion des adresses. Message d’erreur : « L’adresse dans cet onglet a changé. »."
+  },
+  "address_open_schedule_pending": {
+    "message": "Ouverture du planning…",
+    "description": "Section : Gestion des adresses. Message d’état : « Ouverture du planning… »."
+  },
+  "address_open_schedule_retry_error": {
+    "message": "Impossible d’ouvrir le planning. Réessayez.",
+    "description": "Section : Gestion des adresses. Message d’erreur : « Impossible d’ouvrir le planning. Réessayez. »."
+  },
+  "address_save_already_deleted_error": {
+    "message": "L’adresse a déjà été supprimée.",
+    "description": "Section : Gestion des adresses. Message d’erreur : « L’adresse a déjà été supprimée. »."
+  },
+  "address_save_duplicate_error": {
+    "message": "Cette adresse a déjà été ajoutée.",
+    "description": "Section : Gestion des adresses. Message d’erreur : « Cette adresse a déjà été ajoutée. »."
+  },
+  "address_save_error": {
+    "message": "Impossible d’enregistrer l’adresse.",
+    "description": "Section : Gestion des adresses. Message d’erreur : « Impossible d’enregistrer l’adresse. »."
+  },
+  "address_save_pending": {
+    "message": "Enregistrement…",
+    "description": "Section : Gestion des adresses. Message d’état : « Enregistrement… »."
+  },
+  "address_save_success": {
+    "message": "Adresse enregistrée.",
+    "description": "Section : Gestion des adresses. Message d’état : « Adresse enregistrée. »."
+  },
+  "address_storage_record_invalid_error": {
+    "message": "L’enregistrement de l’adresse est corrompu.",
+    "description": "Section : Gestion des adresses. Message d’erreur : « L’enregistrement de l’adresse est corrompu. »."
+  },
+  "address_validation_fields_required": {
+    "message": "Saisissez la ville, la rue et le numéro de bâtiment.",
+    "description": "Section : Gestion des adresses. Message d’erreur : « Saisissez la ville, la rue et le numéro de bâtiment. »."
+  },
+  "address_validation_region_required": {
+    "message": "Sélectionnez un opérateur régional.",
+    "description": "Section : Gestion des adresses. Message d’erreur : « Sélectionnez un opérateur régional. »."
+  },
+  "address_website_load_error": {
+    "message": "Impossible de charger l’adresse.",
+    "description": "Section : Gestion des adresses. Message d’erreur : « Impossible de charger l’adresse. »."
+  },
+  "application_loading_status": {
+    "message": "Chargement…",
+    "description": "Section : Chargement. Message d’état : « Chargement… »."
+  },
+  "archive_back": {
+    "message": "Retour",
+    "description": "Section : Archives des groupes. Commande ou indication : « Retour »."
+  },
+  "archive_delete_action": {
+    "message": "Supprimer les archives du groupe",
+    "description": "Section : Archives des groupes. Commande ou indication : « Supprimer les archives du groupe »."
+  },
+  "archive_delete_error": {
+    "message": "Impossible de supprimer les archives. Réessayez.",
+    "description": "Section : Archives des groupes. Message d’erreur : « Impossible de supprimer les archives. Réessayez. »."
+  },
+  "archive_delete_warning": {
+    "message": "Les plannings seront également supprimés de l’historique de toutes les adresses liées. Cette action est irréversible.",
+    "description": "Section : Archives des groupes. Commande ou indication : « Les plannings seront également supprimés de l’historique de toutes les adresses liées. Cette action est irréversible. »."
+  },
+  "archive_deleted": {
+    "message": "Archives du groupe supprimées.",
+    "description": "Section : Archives des groupes. Commande ou indication : « Archives du groupe supprimées. »."
+  },
+  "archive_linked_addresses": {
+    "message": "Adresses liées : $COUNT$",
+    "description": "Section : Archives des groupes. Commande ou indication : « Adresses liées : $COUNT$ ».",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "2"
+      }
+    }
+  },
+  "archive_received_at": {
+    "message": "Reçu le : $TIME$",
+    "description": "Section : Archives des groupes. Commande ou indication : « Reçu le : $TIME$ ».",
+    "placeholders": {
+      "time": {
+        "content": "$1",
+        "example": "25.11.2026, 12:30"
+      }
+    }
+  },
+  "archive_variant": {
+    "message": "Version $NUMBER$",
+    "description": "Section : Archives des groupes. Commande ou indication : « Version $NUMBER$ ».",
+    "placeholders": {
+      "number": {
+        "content": "$1",
+        "example": "2"
+      }
+    }
+  },
+  "archives_description": {
+    "message": "Plannings par localité et groupe de coupure. Aucune rue ni aucun bâtiment n’est enregistré ici. Plusieurs groupes peuvent partager un planning avec plusieurs lignes d’alimentation.",
+    "description": "Section : Archives des groupes. Commande ou indication : « Plannings par localité et groupe de coupure. Aucune rue ni aucun bâtiment n’est enregistré ici. Plusieurs groupes peuvent partager un planning avec plusieurs lignes d’alimentation. »."
+  },
+  "archives_empty": {
+    "message": "Aucun planning enregistré.",
+    "description": "Section : Archives des groupes. Commande ou indication : « Aucun planning enregistré. »."
+  },
+  "archives_title": {
+    "message": "Archives des groupes",
+    "description": "Section : Archives des groupes. Titre de l’écran : « Archives des groupes »."
+  },
+  "date_calendar_accessible_label": {
+    "message": "Choisir la date du planning",
+    "description": "Section : Choix de date et calendrier. Libellé accessible : « Choisir la date du planning »."
+  },
+  "date_calendar_days_accessible_label": {
+    "message": "Jours du mois",
+    "description": "Section : Choix de date et calendrier. Libellé accessible : « Jours du mois »."
+  },
+  "date_calendar_month_label": {
+    "message": "Mois",
+    "description": "Section : Choix de date et calendrier. Commande ou indication : « Mois »."
+  },
+  "date_calendar_next_month_action": {
+    "message": "Mois suivant",
+    "description": "Section : Choix de date et calendrier. Commande ou indication : « Mois suivant »."
+  },
+  "date_calendar_next_year_action": {
+    "message": "Année suivante",
+    "description": "Section : Choix de date et calendrier. Commande ou indication : « Année suivante »."
+  },
+  "date_calendar_open_action": {
+    "message": "Ouvrir le calendrier",
+    "description": "Section : Choix de date et calendrier. Commande ou indication : « Ouvrir le calendrier »."
+  },
+  "date_calendar_previous_month_action": {
+    "message": "Mois précédent",
+    "description": "Section : Choix de date et calendrier. Commande ou indication : « Mois précédent »."
+  },
+  "date_calendar_previous_year_action": {
+    "message": "Année précédente",
+    "description": "Section : Choix de date et calendrier. Commande ou indication : « Année précédente »."
+  },
+  "date_calendar_year_label": {
+    "message": "Année",
+    "description": "Section : Choix de date et calendrier. Commande ou indication : « Année »."
+  },
+  "date_input_accessible_label": {
+    "message": "Date du planning",
+    "description": "Section : Choix de date et calendrier. Libellé accessible : « Date du planning »."
+  },
+  "date_input_invalid_error": {
+    "message": "Saisissez une date valide au format $DATE_FORMAT$.",
+    "description": "Section : Choix de date et calendrier. Message d’erreur : « Saisissez une date valide au format $DATE_FORMAT$. ».",
+    "placeholders": {
+      "date_format": {
+        "content": "$1",
+        "example": "JJ/MM/AAAA"
+      }
+    }
+  },
+  "date_next_day_action": {
+    "message": "Jour suivant",
+    "description": "Section : Choix de date et calendrier. Commande ou indication : « Jour suivant »."
+  },
+  "date_previous_day_action": {
+    "message": "Jour précédent",
+    "description": "Section : Choix de date et calendrier. Commande ou indication : « Jour précédent »."
+  },
+  "date_shortcut_other": {
+    "message": "date",
+    "description": "Section : Choix de date et calendrier. Commande ou indication : « date »."
+  },
+  "date_shortcut_other_accessible_label": {
+    "message": "Choisir une autre date dans le calendrier",
+    "description": "Section : Choix de date et calendrier. Libellé accessible : « Choisir une autre date dans le calendrier »."
+  },
+  "date_shortcut_today": {
+    "message": "aujourd’hui",
+    "description": "Section : Choix de date et calendrier. Commande ou indication : « aujourd’hui »."
+  },
+  "date_shortcut_tomorrow": {
+    "message": "demain",
+    "description": "Section : Choix de date et calendrier. Commande ou indication : « demain »."
+  },
+  "date_shortcuts_accessible_label": {
+    "message": "Sélection rapide de la date",
+    "description": "Section : Choix de date et calendrier. Libellé accessible : « Sélection rapide de la date »."
+  },
+  "date_shortcuts_sentence_join": {
+    "message": "ou une autre ",
+    "description": "Section : Choix de date et calendrier. Commande ou indication : « ou une autre »."
+  },
+  "date_shortcuts_sentence_prefix": {
+    "message": "pour ",
+    "description": "Section : Choix de date et calendrier. Commande ou indication : « pour »."
+  },
+  "dtek_operator_dem_name": {
+    "message": "Réseaux de Donetsk",
+    "description": "Section : Opérateurs régionaux DTEK. Commande ou indication : « Réseaux de Donetsk »."
+  },
+  "dtek_operator_dnem_name": {
+    "message": "Réseaux de Dnipro",
+    "description": "Section : Opérateurs régionaux DTEK. Commande ou indication : « Réseaux de Dnipro »."
+  },
+  "dtek_operator_kem_name": {
+    "message": "Réseaux de Kyiv",
+    "description": "Section : Opérateurs régionaux DTEK. Commande ou indication : « Réseaux de Kyiv »."
+  },
+  "dtek_operator_krem_name": {
+    "message": "Réseaux régionaux de Kyiv",
+    "description": "Section : Opérateurs régionaux DTEK. Commande ou indication : « Réseaux régionaux de Kyiv »."
+  },
+  "dtek_operator_oem_name": {
+    "message": "Réseaux d’Odessa",
+    "description": "Section : Opérateurs régionaux DTEK. Commande ou indication : « Réseaux d’Odessa »."
+  },
+  "dtek_region_dem_name": {
+    "message": "Oblast de Donetsk",
+    "description": "Section : Opérateurs régionaux DTEK. Commande ou indication : « Oblast de Donetsk »."
+  },
+  "dtek_region_dem_short": {
+    "message": "Oblast de Donetsk",
+    "description": "Section : Opérateurs régionaux DTEK. Commande ou indication : « Oblast de Donetsk »."
+  },
+  "dtek_region_dnem_name": {
+    "message": "Oblast de Dnipropetrovsk",
+    "description": "Section : Opérateurs régionaux DTEK. Commande ou indication : « Oblast de Dnipropetrovsk »."
+  },
+  "dtek_region_dnem_short": {
+    "message": "Oblast de Dnipropetrovsk",
+    "description": "Section : Opérateurs régionaux DTEK. Commande ou indication : « Oblast de Dnipropetrovsk »."
+  },
+  "dtek_region_kem_name": {
+    "message": "Kyiv",
+    "description": "Section : Opérateurs régionaux DTEK. Commande ou indication : « Kyiv »."
+  },
+  "dtek_region_kem_short": {
+    "message": "Kyiv",
+    "description": "Section : Opérateurs régionaux DTEK. Commande ou indication : « Kyiv »."
+  },
+  "dtek_region_krem_name": {
+    "message": "Oblast de Kyiv",
+    "description": "Section : Opérateurs régionaux DTEK. Commande ou indication : « Oblast de Kyiv »."
+  },
+  "dtek_region_krem_short": {
+    "message": "Oblast de Kyiv",
+    "description": "Section : Opérateurs régionaux DTEK. Commande ou indication : « Oblast de Kyiv »."
+  },
+  "dtek_region_oem_name": {
+    "message": "Oblast d’Odessa",
+    "description": "Section : Opérateurs régionaux DTEK. Commande ou indication : « Oblast d’Odessa »."
+  },
+  "dtek_region_oem_short": {
+    "message": "Oblast d’Odessa",
+    "description": "Section : Opérateurs régionaux DTEK. Commande ou indication : « Oblast d’Odessa »."
+  },
+  "extension_description": {
+    "message": "Coupures de courant à vos adresses : consultez et partagez facilement les plannings des sites DTEK.",
+    "description": "Section : Informations sur l’extension. Commande ou indication : « Coupures de courant à vos adresses : consultez et partagez facilement les plannings des sites DTEK. »."
+  },
+  "extension_name": {
+    "message": "UA Shutdowns — plannings des coupures DTEK",
+    "description": "Section : Informations sur l’extension. Commande ou indication : « UA Shutdowns — plannings des coupures DTEK »."
+  },
+  "footer_github_project_link": {
+    "message": "Projet sur GitHub",
+    "description": "Section : Informations sur l’extension. Commande ou indication : « Projet sur GitHub »."
+  },
+  "home_screen_title": {
+    "message": "Planning des coupures de courant",
+    "description": "Section : Informations sur l’extension. Titre de l’écran : « Planning des coupures de courant »."
+  },
+  "locale_date_day_token": {
+    "message": "JJ",
+    "description": "Section : Langue et format des dates. Commande ou indication : « JJ »."
+  },
+  "locale_date_month_token": {
+    "message": "MM",
+    "description": "Section : Langue et format des dates. Commande ou indication : « MM »."
+  },
+  "locale_date_year_token": {
+    "message": "AAAA",
+    "description": "Section : Langue et format des dates. Commande ou indication : « AAAA »."
+  },
+  "locale_format": {
+    "message": "fr-FR",
+    "description": "Section : Langue et format des dates. Commande ou indication : « fr-FR »."
+  },
+  "locale_language": {
+    "message": "fr",
+    "description": "Section : Langue et format des dates. Commande ou indication : « fr »."
+  },
+  "locale_native_name": {
+    "message": "Français",
+    "description": "Section : Langue et format des dates. Commande ou indication : « Français »."
+  },
+  "locale_week_first_day": {
+    "message": "1",
+    "description": "Section : Langue et format des dates. Commande ou indication : « 1 »."
+  },
+  "locality_ambiguous": {
+    "message": "Plusieurs localités portent le même nom. Précisez-le, par exemple en ajoutant le district.",
+    "description": "Section : Gestion des adresses. Commande ou indication : « Plusieurs localités portent le même nom. Précisez-le, par exemple en ajoutant le district. »."
+  },
+  "navigation_back_to_address_edit": {
+    "message": "Retour à la modification de l’adresse",
+    "description": "Section : Navigation. Commande ou indication : « Retour à la modification de l’adresse »."
+  },
+  "navigation_back_to_home": {
+    "message": "Retour à l’accueil",
+    "description": "Section : Navigation. Commande ou indication : « Retour à l’accueil »."
+  },
+  "popup_offer_description": {
+    "message": "Une fenêtre surgissante masque la page du site DTEK. Activer la fermeture automatique de ces fenêtres ?",
+    "description": "Section : Fermeture automatique des fenêtres surgissantes. Commande ou indication : « Une fenêtre surgissante masque la page du site DTEK. Activer la fermeture automatique de ces fenêtres ? »."
+  },
+  "popup_offer_dismiss_action": {
+    "message": "Pas maintenant",
+    "description": "Section : Fermeture automatique des fenêtres surgissantes. Commande ou indication : « Pas maintenant »."
+  },
+  "popup_offer_enable_action": {
+    "message": "Activer",
+    "description": "Section : Fermeture automatique des fenêtres surgissantes. Commande ou indication : « Activer »."
+  },
+  "popup_offer_repeat_hint": {
+    "message": "Si vous refusez, nous ne vous le proposerons à nouveau que dans un mois au plus tôt. Cette option est aussi disponible dans les paramètres.",
+    "description": "Section : Fermeture automatique des fenêtres surgissantes. Commande ou indication : « Si vous refusez, nous ne vous le proposerons à nouveau que dans un mois au plus tôt. Cette option est aussi disponible dans les paramètres. »."
+  },
+  "popup_offer_response_save_error": {
+    "message": "Impossible d’enregistrer votre réponse. Réessayez.",
+    "description": "Section : Fermeture automatique des fenêtres surgissantes. Message d’erreur : « Impossible d’enregistrer votre réponse. Réessayez. »."
+  },
+  "popup_offer_screen_title": {
+    "message": "Fermer automatiquement les fenêtres surgissantes du planning",
+    "description": "Section : Fermeture automatique des fenêtres surgissantes. Titre de l’écran : « Fermer automatiquement les fenêtres surgissantes du planning »."
+  },
+  "schedule_archive_read_error": {
+    "message": "Impossible de lire les archives des plannings.",
+    "description": "Section : Plannings des coupures et partage. Message d’erreur : « Impossible de lire les archives des plannings. »."
+  },
+  "schedule_date_accessible_label": {
+    "message": "Coupures le $DATE$",
+    "description": "Section : Plannings des coupures et partage. Libellé accessible : « Coupures le $DATE$ ».",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "23/11/2026"
+      }
+    }
+  },
+  "schedule_group_save_error": {
+    "message": "Impossible d’enregistrer le groupe de coupure.",
+    "description": "Section : Plannings des coupures et partage. Message d’erreur : « Impossible d’enregistrer le groupe de coupure. ». Le groupe désigne le groupe de coupure DTEK ; la ligne désigne l’alimentation électrique du bâtiment. Les adresses restent en ukrainien."
+  },
+  "schedule_history_date_missing": {
+    "message": "Planning non enregistré",
+    "description": "Section : Plannings des coupures et partage. Commande ou indication : « Planning non enregistré »."
+  },
+  "schedule_no_outages": {
+    "message": "Aucune coupure",
+    "description": "Section : Plannings des coupures et partage. Commande ou indication : « Aucune coupure »."
+  },
+  "schedule_refresh_error": {
+    "message": "Impossible de mettre à jour les plannings. Rouvrez l’extension.",
+    "description": "Section : Plannings des coupures et partage. Message d’erreur : « Impossible de mettre à jour les plannings. Rouvrez l’extension. »."
+  },
+  "schedule_selected_date_not_received": {
+    "message": "Planning non reçu",
+    "description": "Section : Plannings des coupures et partage. Commande ou indication : « Planning non reçu »."
+  },
+  "schedule_share_address_accessible_label": {
+    "message": "Partager le planning du $DATE$ : $ADDRESS$",
+    "description": "Section : Plannings des coupures et partage. Libellé accessible : « Partager le planning du $DATE$ : $ADDRESS$ ».",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "23/11/2026"
+      },
+      "address": {
+        "content": "$2",
+        "example": "Київ, Хрещатик, 22"
+      }
+    }
+  },
+  "schedule_share_copy_action": {
+    "message": "Copier le planning des coupures",
+    "description": "Section : Plannings des coupures et partage. Commande ou indication : « Copier le planning des coupures »."
+  },
+  "schedule_share_copy_error": {
+    "message": "Impossible de copier le planning. Réessayez.",
+    "description": "Section : Plannings des coupures et partage. Message d’erreur : « Impossible de copier le planning. Réessayez. »."
+  },
+  "schedule_share_copy_success": {
+    "message": "Planning copié.",
+    "description": "Section : Plannings des coupures et partage. Message d’état : « Planning copié. »."
+  },
+  "schedule_share_date_text": {
+    "message": "$FULL_DATE$",
+    "description": "Section : Plannings des coupures et partage. Commande ou indication : « $FULL_DATE$ ».",
+    "placeholders": {
+      "full_date": {
+        "content": "$1",
+        "example": "lundi 23 novembre 2026"
+      },
+      "weekday": {
+        "content": "$2",
+        "example": "lundi"
+      },
+      "day": {
+        "content": "$3",
+        "example": "23"
+      },
+      "month": {
+        "content": "$4",
+        "example": "novembre"
+      },
+      "year": {
+        "content": "$5",
+        "example": "2026"
+      }
+    }
+  },
+  "schedule_share_phone_scan_hint": {
+    "message": "Scannez le code QR avec l’appareil photo de votre téléphone pour obtenir le texte du planning.",
+    "description": "Section : Plannings des coupures et partage. Commande ou indication : « Scannez le code QR avec l’appareil photo de votre téléphone pour obtenir le texte du planning. »."
+  },
+  "schedule_share_qr_accessible_description": {
+    "message": "Scannez pour obtenir le texte du planning.",
+    "description": "Section : Plannings des coupures et partage. Libellé accessible : « Scannez pour obtenir le texte du planning. »."
+  },
+  "schedule_share_qr_empty_text_hint": {
+    "message": "Saisissez du texte pour créer un code QR.",
+    "description": "Section : Plannings des coupures et partage. Commande ou indication : « Saisissez du texte pour créer un code QR. »."
+  },
+  "schedule_share_qr_generating_status": {
+    "message": "Création du code QR…",
+    "description": "Section : Plannings des coupures et partage. Message d’état : « Création du code QR… »."
+  },
+  "schedule_share_qr_generation_error": {
+    "message": "Impossible de créer le code QR. Utilisez le bouton de copie.",
+    "description": "Section : Plannings des coupures et partage. Message d’erreur : « Impossible de créer le code QR. Utilisez le bouton de copie. »."
+  },
+  "schedule_share_schedule_missing_error": {
+    "message": "Le planning n’a pas encore été reçu.",
+    "description": "Section : Plannings des coupures et partage. Message d’erreur : « Le planning n’a pas encore été reçu. »."
+  },
+  "schedule_share_screen_title": {
+    "message": "Partager le planning",
+    "description": "Section : Plannings des coupures et partage. Titre de l’écran : « Partager le planning »."
+  },
+  "schedule_share_text_accessible_label": {
+    "message": "Texte du planning à partager",
+    "description": "Section : Plannings des coupures et partage. Libellé accessible : « Texte du planning à partager »."
+  },
+  "schedule_share_text_header": {
+    "message": "Coupures de courant le $DATE$ ($PLACE$, groupe $GROUP$) :",
+    "description": "Section : Plannings des coupures et partage. Commande ou indication : « Coupures de courant le $DATE$ ($PLACE$, groupe $GROUP$) : ».",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "23/11/2026"
+      },
+      "place": {
+        "content": "$2",
+        "example": "Kyiv, Київ"
+      },
+      "group": {
+        "content": "$3",
+        "example": "5.2"
+      }
+    }
+  },
+  "schedule_share_unavailable_tooltip": {
+    "message": "Aucun planning disponible pour la date sélectionnée",
+    "description": "Section : Plannings des coupures et partage. Commande ou indication : « Aucun planning disponible pour la date sélectionnée »."
+  },
+  "schedule_share_weekday_0": {
+    "message": "dimanche",
+    "description": "Section : Plannings des coupures et partage. Commande ou indication : « dimanche »."
+  },
+  "schedule_share_weekday_1": {
+    "message": "lundi",
+    "description": "Section : Plannings des coupures et partage. Commande ou indication : « lundi »."
+  },
+  "schedule_share_weekday_2": {
+    "message": "mardi",
+    "description": "Section : Plannings des coupures et partage. Commande ou indication : « mardi »."
+  },
+  "schedule_share_weekday_3": {
+    "message": "mercredi",
+    "description": "Section : Plannings des coupures et partage. Commande ou indication : « mercredi »."
+  },
+  "schedule_share_weekday_4": {
+    "message": "jeudi",
+    "description": "Section : Plannings des coupures et partage. Commande ou indication : « jeudi »."
+  },
+  "schedule_share_weekday_5": {
+    "message": "vendredi",
+    "description": "Section : Plannings des coupures et partage. Commande ou indication : « vendredi »."
+  },
+  "schedule_share_weekday_6": {
+    "message": "samedi",
+    "description": "Section : Plannings des coupures et partage. Commande ou indication : « samedi »."
+  },
+  "schedule_storage_save_error": {
+    "message": "Impossible d’enregistrer le planning.",
+    "description": "Section : Plannings des coupures et partage. Message d’erreur : « Impossible d’enregistrer le planning. »."
+  },
+  "schedule_supply_line_label": {
+    "message": "Ligne $LINE$",
+    "description": "Section : Plannings des coupures et partage. Commande ou indication : « Ligne $LINE$ ». Le groupe désigne le groupe de coupure DTEK ; la ligne désigne l’alimentation électrique du bâtiment. Les adresses restent en ukrainien.",
+    "placeholders": {
+      "line": {
+        "content": "$1",
+        "example": "2"
+      }
+    }
+  },
+  "schedule_unverified_address": {
+    "message": "Le groupe de coupure de cette adresse n’a pas encore été confirmé sur le site.",
+    "description": "Section : Plannings des coupures et partage. Commande ou indication : « Le groupe de coupure de cette adresse n’a pas encore été confirmé sur le site. »."
+  },
+  "schedule_validation_collection_error": {
+    "message": "Plannings non valides.",
+    "description": "Section : Plannings des coupures et partage. Message d’erreur : « Plannings non valides. »."
+  },
+  "schedule_validation_group_error": {
+    "message": "Groupe de coupure non valide.",
+    "description": "Section : Plannings des coupures et partage. Message d’erreur : « Groupe de coupure non valide. ». Le groupe désigne le groupe de coupure DTEK ; la ligne désigne l’alimentation électrique du bâtiment. Les adresses restent en ukrainien."
+  },
+  "schedule_validation_single_error": {
+    "message": "Planning non valide.",
+    "description": "Section : Plannings des coupures et partage. Message d’erreur : « Planning non valide. »."
+  },
+  "settings_language_label": {
+    "message": "Langue de l’interface",
+    "description": "Section : Paramètres. Commande ou indication : « Langue de l’interface »."
+  },
+  "settings_language_system_option": {
+    "message": "Comme le navigateur",
+    "description": "Section : Paramètres. Commande ou indication : « Comme le navigateur »."
+  },
+  "settings_popup_closing_checkbox": {
+    "message": "Fermer automatiquement les fenêtres surgissantes",
+    "description": "Section : Paramètres. Commande ou indication : « Fermer automatiquement les fenêtres surgissantes »."
+  },
+  "settings_popup_closing_enabled_status": {
+    "message": "La fermeture automatique des fenêtres surgissantes est activée.",
+    "description": "Section : Paramètres. Message d’état : « La fermeture automatique des fenêtres surgissantes est activée. »."
+  },
+  "settings_save_error": {
+    "message": "Impossible d’enregistrer les paramètres. Réessayez.",
+    "description": "Section : Paramètres. Message d’erreur : « Impossible d’enregistrer les paramètres. Réessayez. »."
+  },
+  "settings_save_success": {
+    "message": "Paramètres enregistrés.",
+    "description": "Section : Paramètres. Message d’état : « Paramètres enregistrés. »."
+  },
+  "settings_screen_title": {
+    "message": "Paramètres",
+    "description": "Section : Paramètres. Titre de l’écran : « Paramètres »."
+  },
+  "storage_format_unsupported": {
+    "message": "Le format des données enregistrées n’est pas pris en charge. Vos données n’ont pas été modifiées.",
+    "description": "Section : Stockage des données. Commande ou indication : « Le format des données enregistrées n’est pas pris en charge. Vos données n’ont pas été modifiées. »."
+  }
+}

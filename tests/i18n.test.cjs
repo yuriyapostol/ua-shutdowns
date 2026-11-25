@@ -110,7 +110,7 @@ test('validation discovers added locales and rejects missing context or broken p
     const french = structuredClone(catalogs.en);
     french.locale_language.message = 'fr';
     french.locale_format.message = 'fr-FR';
-    mkdirSync(join(root, '_locales/fr'));
+    mkdirSync(join(root, '_locales/fr'), { recursive: true });
     const save = () => writeFileSync(join(root, '_locales/fr/messages.json'), JSON.stringify(french));
     save();
     assert.ok(checkLocales(root).languages.includes('fr'));
@@ -193,4 +193,44 @@ test('unsupported saved languages fall back to browser selection and failed save
   assert.equal(p.i18n.language, 'uk');
   assert.equal(p.i18n.preference, 'uk');
   assert.equal(p.data.interfaceLanguage, 'uk');
+});
+
+
+test('European catalogs use regional dates, Mondays and localized sharing', async () => {
+  for (const [language, locale, date, hint, weekday] of [
+    ['de', 'de-DE', '23.11.2026', 'TT.MM.JJJJ', 'Montag'],
+    ['fr', 'fr-FR', '23/11/2026', 'JJ/MM/AAAA', 'lundi'],
+    ['es', 'es-ES', '23/11/2026', 'DD/MM/AAAA', 'lunes'],
+    ['it', 'it-IT', '23/11/2026', 'GG/MM/AAAA', 'lunedì'],
+    ['pl', 'pl-PL', '23.11.2026', 'DD.MM.RRRR', 'poniedziałek']
+  ]) {
+    const automatic = setup(language).i18n;
+    assert.equal(automatic.language, language);
+    assert.equal(automatic.locale, locale);
+    assert.equal(automatic.firstWeekday, 1);
+    assert.equal(automatic.formatDate('2026-11-23'), date);
+    assert.equal(automatic.datePlaceholder, hint);
+    assert.ok(automatic.sharedDate('2026-11-23').includes(weekday));
+    const { i18n, data } = storedLanguage('uk');
+    await i18n.setLanguage(language);
+    assert.equal(data.interfaceLanguage, language);
+    assert.equal(i18n.locale, locale);
+    assert.equal(i18n.parseDate(date), '2026-11-23');
+  }
+});
+
+test('matching browser regions override European catalog defaults', async () => {
+  for (const [language, browser] of [['de', 'de-CH'], ['fr', 'fr-CA'], ['es', 'es-MX'], ['it', 'it-CH'], ['pl', 'pl-PL']]) {
+    const { i18n } = storedLanguage(browser);
+    await i18n.setLanguage(language);
+    assert.equal(i18n.locale, browser);
+    const expected = new Intl.DateTimeFormat(browser, {
+      day: '2-digit', month: '2-digit', year: 'numeric', timeZone: 'UTC', calendar: 'gregory', numberingSystem: 'latn'
+    }).format(new Date('2026-11-23T12:00:00Z'));
+    assert.equal(i18n.formatDate('2026-11-23'), expected);
+    assert.equal(i18n.parseDate(expected), '2026-11-23');
+    const regional = new Intl.Locale(browser);
+    const week = regional.getWeekInfo?.() || regional.weekInfo;
+    assert.equal(i18n.firstWeekday, week.firstDay % 7);
+  }
 });

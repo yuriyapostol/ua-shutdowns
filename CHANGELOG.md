@@ -2,6 +2,12 @@
 
 **English** · [Українська](CHANGELOG.uk.md)
 
+## 0.7.1 — 2026-11-25
+
+- Added German, French, Spanish, Italian and Polish interface languages. All 163 messages are translated, including address and archive management, accessibility labels and schedule sharing; translator descriptions are provided in each language.
+- Added regional date and calendar defaults for Germany, France, Spain, Italy and Poland, including localized date format hints, month and weekday names, Monday-first weeks and full dates in shared schedules. Matching browser regional settings remain respected, including variants such as French Canadian and Swiss German.
+- Preserved Ukrainian address input and examples in all languages, as required by DTEK websites. Updated the language lists in both README files and added checks for the new languages and their regional formats.
+
 ## 0.7.0 — 2026-11-25
 
 - Separated schedule archives from address profiles, using stable locality and outage-group identifiers. Deleting an address removes its street, building and private history links; group archives remain without that information.

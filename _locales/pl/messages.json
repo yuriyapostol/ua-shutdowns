@@ -1,0 +1,754 @@
+{
+  "address_add_action": {
+    "message": "Dodaj adres",
+    "description": "Sekcja: Zarządzanie adresami. Element sterujący lub wskazówka: „Dodaj adres”."
+  },
+  "address_add_screen_title": {
+    "message": "Dodaj adres",
+    "description": "Sekcja: Zarządzanie adresami. Tytuł ekranu: „Dodaj adres”."
+  },
+  "address_delete_archive_retention_hint": {
+    "message": "Archiwa grup zostaną zachowane bez ulicy i numeru budynku. Zarządzaj nimi w ustawieniach.",
+    "description": "Sekcja: Zarządzanie adresami. Element sterujący lub wskazówka: „Archiwa grup zostaną zachowane bez ulicy i numeru budynku. Zarządzaj nimi w ustawieniach.”."
+  },
+  "address_delete_confirm_action": {
+    "message": "Usuń",
+    "description": "Sekcja: Zarządzanie adresami. Element sterujący lub wskazówka: „Usuń”."
+  },
+  "address_delete_confirmation_question": {
+    "message": "Usunąć adres „$ADDRESS$” z listy?",
+    "description": "Sekcja: Zarządzanie adresami. Element sterujący lub wskazówka: „Usunąć adres „$ADDRESS$” z listy?”.",
+    "placeholders": {
+      "address": {
+        "content": "$1",
+        "example": "Київ, Хрещатик, 22"
+      }
+    }
+  },
+  "address_delete_error": {
+    "message": "Nie udało się usunąć adresu. Spróbuj ponownie.",
+    "description": "Sekcja: Zarządzanie adresami. Komunikat błędu: „Nie udało się usunąć adresu. Spróbuj ponownie.”."
+  },
+  "address_delete_keep_archive_success": {
+    "message": "Adres usunięty. Archiwa grup zachowane.",
+    "description": "Sekcja: Zarządzanie adresami. Komunikat o stanie: „Adres usunięty. Archiwa grup zachowane.”."
+  },
+  "address_delete_screen_title": {
+    "message": "Usuń adres",
+    "description": "Sekcja: Zarządzanie adresami. Tytuł ekranu: „Usuń adres”."
+  },
+  "address_edit_conflict": {
+    "message": "Adres zmieniono w innym oknie. Otwórz go ponownie do edycji.",
+    "description": "Sekcja: Zarządzanie adresami. Element sterujący lub wskazówka: „Adres zmieniono w innym oknie. Otwórz go ponownie do edycji.”."
+  },
+  "address_edit_screen_title": {
+    "message": "Edytuj adres",
+    "description": "Sekcja: Zarządzanie adresami. Tytuł ekranu: „Edytuj adres”."
+  },
+  "address_form_building_label": {
+    "message": "Numer budynku",
+    "description": "Sekcja: Zarządzanie adresami. Element sterujący lub wskazówka: „Numer budynku”."
+  },
+  "address_form_building_placeholder": {
+    "message": "Wpisz numer budynku",
+    "description": "Sekcja: Zarządzanie adresami. Podpowiedź wprowadzania: „Wpisz numer budynku”."
+  },
+  "address_form_city_label": {
+    "message": "Miejscowość",
+    "description": "Sekcja: Zarządzanie adresami. Element sterujący lub wskazówka: „Miejscowość”."
+  },
+  "address_form_city_placeholder": {
+    "message": "Wpisz miejscowość",
+    "description": "Sekcja: Zarządzanie adresami. Podpowiedź wprowadzania: „Wpisz miejscowość”."
+  },
+  "address_form_delete_action": {
+    "message": "Usuń adres",
+    "description": "Sekcja: Zarządzanie adresami. Element sterujący lub wskazówka: „Usuń adres”."
+  },
+  "address_form_language_hint": {
+    "message": "Wpisuj adresy po ukraińsku, tak jak na stronie DTEK, niezależnie od języka interfejsu. W przeciwnym razie adres nie zostanie znaleziony.",
+    "description": "Sekcja: Zarządzanie adresami. Element sterujący lub wskazówka: „Wpisuj adresy po ukraińsku, tak jak na stronie DTEK, niezależnie od języka interfejsu. W przeciwnym razie adres nie zostanie znaleziony.”. Grupa oznacza grupę wyłączeń DTEK; linia oznacza linię zasilania budynku. Adresy pozostają w języku ukraińskim."
+  },
+  "address_form_region_not_selected": {
+    "message": "Nie wybrano",
+    "description": "Sekcja: Zarządzanie adresami. Element sterujący lub wskazówka: „Nie wybrano”."
+  },
+  "address_form_region_placeholder": {
+    "message": "Wybierz operatora",
+    "description": "Sekcja: Zarządzanie adresami. Podpowiedź wprowadzania: „Wybierz operatora”."
+  },
+  "address_form_regional_operator_label": {
+    "message": "Regionalny operator DTEK",
+    "description": "Sekcja: Zarządzanie adresami. Element sterujący lub wskazówka: „Regionalny operator DTEK”."
+  },
+  "address_form_save_action": {
+    "message": "Zapisz adres",
+    "description": "Sekcja: Zarządzanie adresami. Element sterujący lub wskazówka: „Zapisz adres”."
+  },
+  "address_form_street_label": {
+    "message": "Ulica",
+    "description": "Sekcja: Zarządzanie adresami. Element sterujący lub wskazówka: „Ulica”."
+  },
+  "address_form_street_placeholder": {
+    "message": "Wpisz nazwę ulicy",
+    "description": "Sekcja: Zarządzanie adresami. Podpowiedź wprowadzania: „Wpisz nazwę ulicy”."
+  },
+  "address_identity_after": {
+    "message": "Po zmianie",
+    "description": "Sekcja: Zarządzanie adresami. Element sterujący lub wskazówka: „Po zmianie”."
+  },
+  "address_identity_before": {
+    "message": "Przed zmianą",
+    "description": "Sekcja: Zarządzanie adresami. Element sterujący lub wskazówka: „Przed zmianą”."
+  },
+  "address_identity_correction": {
+    "message": "Poprawiam adres",
+    "description": "Sekcja: Zarządzanie adresami. Element sterujący lub wskazówka: „Poprawiam adres”."
+  },
+  "address_identity_explanation": {
+    "message": "Poprawka zachowuje historię adresu. Inne miejsce rozpoczyna nową historię; poprzednie archiwa grup pozostają w ustawieniach.",
+    "description": "Sekcja: Zarządzanie adresami. Element sterujący lub wskazówka: „Poprawka zachowuje historię adresu. Inne miejsce rozpoczyna nową historię; poprzednie archiwa grup pozostają w ustawieniach.”."
+  },
+  "address_identity_question": {
+    "message": "Poprawiasz adres czy zmieniasz lokalizację?",
+    "description": "Sekcja: Zarządzanie adresami. Element sterujący lub wskazówka: „Poprawiasz adres czy zmieniasz lokalizację?”."
+  },
+  "address_identity_replacement": {
+    "message": "To inne miejsce",
+    "description": "Sekcja: Zarządzanie adresami. Element sterujący lub wskazówka: „To inne miejsce”."
+  },
+  "address_identity_title": {
+    "message": "Zmiana adresu",
+    "description": "Sekcja: Zarządzanie adresami. Tytuł ekranu: „Zmiana adresu”."
+  },
+  "address_list_edit_accessible_label": {
+    "message": "Edytuj: $ADDRESS$",
+    "description": "Sekcja: Zarządzanie adresami. Etykieta dostępności: „Edytuj: $ADDRESS$”.",
+    "placeholders": {
+      "address": {
+        "content": "$1",
+        "example": "Київ, Хрещатик, 22"
+      }
+    }
+  },
+  "address_list_edit_address_tooltip": {
+    "message": "Edytuj adres",
+    "description": "Sekcja: Zarządzanie adresami. Element sterujący lub wskazówka: „Edytuj adres”."
+  },
+  "address_list_empty_hint": {
+    "message": "Dodaj adres, aby śledzić wyłączenia prądu.",
+    "description": "Sekcja: Zarządzanie adresami. Element sterujący lub wskazówka: „Dodaj adres, aby śledzić wyłączenia prądu.”."
+  },
+  "address_list_load_error": {
+    "message": "Nie udało się wczytać adresów. Zamknij i otwórz ponownie to okno, aby spróbować jeszcze raz.",
+    "description": "Sekcja: Zarządzanie adresami. Komunikat błędu: „Nie udało się wczytać adresów. Zamknij i otwórz ponownie to okno, aby spróbować jeszcze raz.”."
+  },
+  "address_list_open_schedule_action": {
+    "message": "Otwórz harmonogram",
+    "description": "Sekcja: Zarządzanie adresami. Element sterujący lub wskazówka: „Otwórz harmonogram”."
+  },
+  "address_list_outage_group_label": {
+    "message": "Grupa $GROUP$",
+    "description": "Sekcja: Zarządzanie adresami. Element sterujący lub wskazówka: „Grupa $GROUP$”. Grupa oznacza grupę wyłączeń DTEK; linia oznacza linię zasilania budynku. Adresy pozostają w języku ukraińskim.",
+    "placeholders": {
+      "group": {
+        "content": "$1",
+        "example": "5.2"
+      }
+    }
+  },
+  "address_list_select_region_action": {
+    "message": "Wybierz region",
+    "description": "Sekcja: Zarządzanie adresami. Element sterujący lub wskazówka: „Wybierz region”."
+  },
+  "address_list_storage_read_error": {
+    "message": "Nie udało się odczytać listy adresów.",
+    "description": "Sekcja: Zarządzanie adresami. Komunikat błędu: „Nie udało się odczytać listy adresów.”."
+  },
+  "address_list_unassigned_region_heading": {
+    "message": "Wybierz operatora regionalnego",
+    "description": "Sekcja: Zarządzanie adresami. Tytuł ekranu: „Wybierz operatora regionalnego”."
+  },
+  "address_list_unassigned_region_hint": {
+    "message": "Wybierz region dla wcześniej zapisanego adresu.",
+    "description": "Sekcja: Zarządzanie adresami. Element sterujący lub wskazówka: „Wybierz region dla wcześniej zapisanego adresu.”."
+  },
+  "address_navigation_open_error": {
+    "message": "Nie udało się otworzyć harmonogramu.",
+    "description": "Sekcja: Zarządzanie adresami. Komunikat błędu: „Nie udało się otworzyć harmonogramu.”."
+  },
+  "address_navigation_region_required_error": {
+    "message": "Najpierw wybierz region dla tego adresu.",
+    "description": "Sekcja: Zarządzanie adresami. Komunikat błędu: „Najpierw wybierz region dla tego adresu.”."
+  },
+  "address_navigation_tab_changed_error": {
+    "message": "Adres w tej karcie uległ zmianie.",
+    "description": "Sekcja: Zarządzanie adresami. Komunikat błędu: „Adres w tej karcie uległ zmianie.”."
+  },
+  "address_open_schedule_pending": {
+    "message": "Otwieranie harmonogramu…",
+    "description": "Sekcja: Zarządzanie adresami. Komunikat o stanie: „Otwieranie harmonogramu…”."
+  },
+  "address_open_schedule_retry_error": {
+    "message": "Nie udało się otworzyć harmonogramu. Spróbuj ponownie.",
+    "description": "Sekcja: Zarządzanie adresami. Komunikat błędu: „Nie udało się otworzyć harmonogramu. Spróbuj ponownie.”."
+  },
+  "address_save_already_deleted_error": {
+    "message": "Adres został już usunięty.",
+    "description": "Sekcja: Zarządzanie adresami. Komunikat błędu: „Adres został już usunięty.”."
+  },
+  "address_save_duplicate_error": {
+    "message": "Ten adres został już dodany.",
+    "description": "Sekcja: Zarządzanie adresami. Komunikat błędu: „Ten adres został już dodany.”."
+  },
+  "address_save_error": {
+    "message": "Nie udało się zapisać adresu.",
+    "description": "Sekcja: Zarządzanie adresami. Komunikat błędu: „Nie udało się zapisać adresu.”."
+  },
+  "address_save_pending": {
+    "message": "Zapisywanie…",
+    "description": "Sekcja: Zarządzanie adresami. Komunikat o stanie: „Zapisywanie…”."
+  },
+  "address_save_success": {
+    "message": "Adres zapisany.",
+    "description": "Sekcja: Zarządzanie adresami. Komunikat o stanie: „Adres zapisany.”."
+  },
+  "address_storage_record_invalid_error": {
+    "message": "Zapis adresu jest uszkodzony.",
+    "description": "Sekcja: Zarządzanie adresami. Komunikat błędu: „Zapis adresu jest uszkodzony.”."
+  },
+  "address_validation_fields_required": {
+    "message": "Wpisz miejscowość, ulicę i numer budynku.",
+    "description": "Sekcja: Zarządzanie adresami. Komunikat błędu: „Wpisz miejscowość, ulicę i numer budynku.”."
+  },
+  "address_validation_region_required": {
+    "message": "Wybierz operatora regionalnego.",
+    "description": "Sekcja: Zarządzanie adresami. Komunikat błędu: „Wybierz operatora regionalnego.”."
+  },
+  "address_website_load_error": {
+    "message": "Nie udało się wczytać adresu.",
+    "description": "Sekcja: Zarządzanie adresami. Komunikat błędu: „Nie udało się wczytać adresu.”."
+  },
+  "application_loading_status": {
+    "message": "Wczytywanie…",
+    "description": "Sekcja: Wczytywanie. Komunikat o stanie: „Wczytywanie…”."
+  },
+  "archive_back": {
+    "message": "Wstecz",
+    "description": "Sekcja: Archiwa grup. Element sterujący lub wskazówka: „Wstecz”."
+  },
+  "archive_delete_action": {
+    "message": "Usuń archiwum grupy",
+    "description": "Sekcja: Archiwa grup. Element sterujący lub wskazówka: „Usuń archiwum grupy”."
+  },
+  "archive_delete_error": {
+    "message": "Nie udało się usunąć archiwum. Spróbuj ponownie.",
+    "description": "Sekcja: Archiwa grup. Komunikat błędu: „Nie udało się usunąć archiwum. Spróbuj ponownie.”."
+  },
+  "archive_delete_warning": {
+    "message": "Harmonogramy zostaną również usunięte z historii wszystkich powiązanych adresów. Tej czynności nie można cofnąć.",
+    "description": "Sekcja: Archiwa grup. Element sterujący lub wskazówka: „Harmonogramy zostaną również usunięte z historii wszystkich powiązanych adresów. Tej czynności nie można cofnąć.”."
+  },
+  "archive_deleted": {
+    "message": "Archiwum grupy usunięte.",
+    "description": "Sekcja: Archiwa grup. Element sterujący lub wskazówka: „Archiwum grupy usunięte.”."
+  },
+  "archive_linked_addresses": {
+    "message": "Powiązane adresy: $COUNT$",
+    "description": "Sekcja: Archiwa grup. Element sterujący lub wskazówka: „Powiązane adresy: $COUNT$”.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "2"
+      }
+    }
+  },
+  "archive_received_at": {
+    "message": "Otrzymano: $TIME$",
+    "description": "Sekcja: Archiwa grup. Element sterujący lub wskazówka: „Otrzymano: $TIME$”.",
+    "placeholders": {
+      "time": {
+        "content": "$1",
+        "example": "25.11.2026, 12:30"
+      }
+    }
+  },
+  "archive_variant": {
+    "message": "Wersja $NUMBER$",
+    "description": "Sekcja: Archiwa grup. Element sterujący lub wskazówka: „Wersja $NUMBER$”.",
+    "placeholders": {
+      "number": {
+        "content": "$1",
+        "example": "2"
+      }
+    }
+  },
+  "archives_description": {
+    "message": "Harmonogramy według miejscowości i grup wyłączeń. Ulice ani numery budynków nie są tu zapisywane. Kilka grup może mieć wspólny harmonogram z kilkoma liniami zasilania.",
+    "description": "Sekcja: Archiwa grup. Element sterujący lub wskazówka: „Harmonogramy według miejscowości i grup wyłączeń. Ulice ani numery budynków nie są tu zapisywane. Kilka grup może mieć wspólny harmonogram z kilkoma liniami zasilania.”."
+  },
+  "archives_empty": {
+    "message": "Brak zapisanych harmonogramów.",
+    "description": "Sekcja: Archiwa grup. Element sterujący lub wskazówka: „Brak zapisanych harmonogramów.”."
+  },
+  "archives_title": {
+    "message": "Archiwa grup",
+    "description": "Sekcja: Archiwa grup. Tytuł ekranu: „Archiwa grup”."
+  },
+  "date_calendar_accessible_label": {
+    "message": "Wybierz datę harmonogramu",
+    "description": "Sekcja: Wybór daty i kalendarz. Etykieta dostępności: „Wybierz datę harmonogramu”."
+  },
+  "date_calendar_days_accessible_label": {
+    "message": "Dni miesiąca",
+    "description": "Sekcja: Wybór daty i kalendarz. Etykieta dostępności: „Dni miesiąca”."
+  },
+  "date_calendar_month_label": {
+    "message": "Miesiąc",
+    "description": "Sekcja: Wybór daty i kalendarz. Element sterujący lub wskazówka: „Miesiąc”."
+  },
+  "date_calendar_next_month_action": {
+    "message": "Następny miesiąc",
+    "description": "Sekcja: Wybór daty i kalendarz. Element sterujący lub wskazówka: „Następny miesiąc”."
+  },
+  "date_calendar_next_year_action": {
+    "message": "Następny rok",
+    "description": "Sekcja: Wybór daty i kalendarz. Element sterujący lub wskazówka: „Następny rok”."
+  },
+  "date_calendar_open_action": {
+    "message": "Otwórz kalendarz",
+    "description": "Sekcja: Wybór daty i kalendarz. Element sterujący lub wskazówka: „Otwórz kalendarz”."
+  },
+  "date_calendar_previous_month_action": {
+    "message": "Poprzedni miesiąc",
+    "description": "Sekcja: Wybór daty i kalendarz. Element sterujący lub wskazówka: „Poprzedni miesiąc”."
+  },
+  "date_calendar_previous_year_action": {
+    "message": "Poprzedni rok",
+    "description": "Sekcja: Wybór daty i kalendarz. Element sterujący lub wskazówka: „Poprzedni rok”."
+  },
+  "date_calendar_year_label": {
+    "message": "Rok",
+    "description": "Sekcja: Wybór daty i kalendarz. Element sterujący lub wskazówka: „Rok”."
+  },
+  "date_input_accessible_label": {
+    "message": "Data harmonogramu",
+    "description": "Sekcja: Wybór daty i kalendarz. Etykieta dostępności: „Data harmonogramu”."
+  },
+  "date_input_invalid_error": {
+    "message": "Wpisz poprawną datę w formacie $DATE_FORMAT$.",
+    "description": "Sekcja: Wybór daty i kalendarz. Komunikat błędu: „Wpisz poprawną datę w formacie $DATE_FORMAT$.”.",
+    "placeholders": {
+      "date_format": {
+        "content": "$1",
+        "example": "DD.MM.RRRR"
+      }
+    }
+  },
+  "date_next_day_action": {
+    "message": "Następny dzień",
+    "description": "Sekcja: Wybór daty i kalendarz. Element sterujący lub wskazówka: „Następny dzień”."
+  },
+  "date_previous_day_action": {
+    "message": "Poprzedni dzień",
+    "description": "Sekcja: Wybór daty i kalendarz. Element sterujący lub wskazówka: „Poprzedni dzień”."
+  },
+  "date_shortcut_other": {
+    "message": "datę",
+    "description": "Sekcja: Wybór daty i kalendarz. Element sterujący lub wskazówka: „datę”."
+  },
+  "date_shortcut_other_accessible_label": {
+    "message": "Wybierz inną datę w kalendarzu",
+    "description": "Sekcja: Wybór daty i kalendarz. Etykieta dostępności: „Wybierz inną datę w kalendarzu”."
+  },
+  "date_shortcut_today": {
+    "message": "dzisiaj",
+    "description": "Sekcja: Wybór daty i kalendarz. Element sterujący lub wskazówka: „dzisiaj”."
+  },
+  "date_shortcut_tomorrow": {
+    "message": "jutro",
+    "description": "Sekcja: Wybór daty i kalendarz. Element sterujący lub wskazówka: „jutro”."
+  },
+  "date_shortcuts_accessible_label": {
+    "message": "Szybki wybór daty",
+    "description": "Sekcja: Wybór daty i kalendarz. Etykieta dostępności: „Szybki wybór daty”."
+  },
+  "date_shortcuts_sentence_join": {
+    "message": "lub na inną ",
+    "description": "Sekcja: Wybór daty i kalendarz. Element sterujący lub wskazówka: „lub na inną”."
+  },
+  "date_shortcuts_sentence_prefix": {
+    "message": "na ",
+    "description": "Sekcja: Wybór daty i kalendarz. Element sterujący lub wskazówka: „na”."
+  },
+  "dtek_operator_dem_name": {
+    "message": "Sieci Donieckie",
+    "description": "Sekcja: Regionalni operatorzy DTEK. Element sterujący lub wskazówka: „Sieci Donieckie”."
+  },
+  "dtek_operator_dnem_name": {
+    "message": "Sieci Dnieprzańskie",
+    "description": "Sekcja: Regionalni operatorzy DTEK. Element sterujący lub wskazówka: „Sieci Dnieprzańskie”."
+  },
+  "dtek_operator_kem_name": {
+    "message": "Sieci Kijowskie",
+    "description": "Sekcja: Regionalni operatorzy DTEK. Element sterujący lub wskazówka: „Sieci Kijowskie”."
+  },
+  "dtek_operator_krem_name": {
+    "message": "Kijowskie Sieci Regionalne",
+    "description": "Sekcja: Regionalni operatorzy DTEK. Element sterujący lub wskazówka: „Kijowskie Sieci Regionalne”."
+  },
+  "dtek_operator_oem_name": {
+    "message": "Sieci Odeskie",
+    "description": "Sekcja: Regionalni operatorzy DTEK. Element sterujący lub wskazówka: „Sieci Odeskie”."
+  },
+  "dtek_region_dem_name": {
+    "message": "Obwód doniecki",
+    "description": "Sekcja: Regionalni operatorzy DTEK. Element sterujący lub wskazówka: „Obwód doniecki”."
+  },
+  "dtek_region_dem_short": {
+    "message": "Obwód doniecki",
+    "description": "Sekcja: Regionalni operatorzy DTEK. Element sterujący lub wskazówka: „Obwód doniecki”."
+  },
+  "dtek_region_dnem_name": {
+    "message": "Obwód dniepropetrowski",
+    "description": "Sekcja: Regionalni operatorzy DTEK. Element sterujący lub wskazówka: „Obwód dniepropetrowski”."
+  },
+  "dtek_region_dnem_short": {
+    "message": "Obwód dniepropetrowski",
+    "description": "Sekcja: Regionalni operatorzy DTEK. Element sterujący lub wskazówka: „Obwód dniepropetrowski”."
+  },
+  "dtek_region_kem_name": {
+    "message": "Kijów",
+    "description": "Sekcja: Regionalni operatorzy DTEK. Element sterujący lub wskazówka: „Kijów”."
+  },
+  "dtek_region_kem_short": {
+    "message": "Kijów",
+    "description": "Sekcja: Regionalni operatorzy DTEK. Element sterujący lub wskazówka: „Kijów”."
+  },
+  "dtek_region_krem_name": {
+    "message": "Obwód kijowski",
+    "description": "Sekcja: Regionalni operatorzy DTEK. Element sterujący lub wskazówka: „Obwód kijowski”."
+  },
+  "dtek_region_krem_short": {
+    "message": "Obwód kijowski",
+    "description": "Sekcja: Regionalni operatorzy DTEK. Element sterujący lub wskazówka: „Obwód kijowski”."
+  },
+  "dtek_region_oem_name": {
+    "message": "Obwód odeski",
+    "description": "Sekcja: Regionalni operatorzy DTEK. Element sterujący lub wskazówka: „Obwód odeski”."
+  },
+  "dtek_region_oem_short": {
+    "message": "Obwód odeski",
+    "description": "Sekcja: Regionalni operatorzy DTEK. Element sterujący lub wskazówka: „Obwód odeski”."
+  },
+  "extension_description": {
+    "message": "Wyłączenia prądu pod Twoimi adresami: wygodnie pobieraj, przeglądaj i udostępniaj harmonogramy ze stron DTEK.",
+    "description": "Sekcja: Informacje o rozszerzeniu. Element sterujący lub wskazówka: „Wyłączenia prądu pod Twoimi adresami: wygodnie pobieraj, przeglądaj i udostępniaj harmonogramy ze stron DTEK.”."
+  },
+  "extension_name": {
+    "message": "UA Shutdowns — harmonogramy wyłączeń prądu DTEK",
+    "description": "Sekcja: Informacje o rozszerzeniu. Element sterujący lub wskazówka: „UA Shutdowns — harmonogramy wyłączeń prądu DTEK”."
+  },
+  "footer_github_project_link": {
+    "message": "Projekt na GitHub",
+    "description": "Sekcja: Informacje o rozszerzeniu. Element sterujący lub wskazówka: „Projekt na GitHub”."
+  },
+  "home_screen_title": {
+    "message": "Harmonogram wyłączeń prądu",
+    "description": "Sekcja: Informacje o rozszerzeniu. Tytuł ekranu: „Harmonogram wyłączeń prądu”."
+  },
+  "locale_date_day_token": {
+    "message": "DD",
+    "description": "Sekcja: Język i format dat. Element sterujący lub wskazówka: „DD”."
+  },
+  "locale_date_month_token": {
+    "message": "MM",
+    "description": "Sekcja: Język i format dat. Element sterujący lub wskazówka: „MM”."
+  },
+  "locale_date_year_token": {
+    "message": "RRRR",
+    "description": "Sekcja: Język i format dat. Element sterujący lub wskazówka: „RRRR”."
+  },
+  "locale_format": {
+    "message": "pl-PL",
+    "description": "Sekcja: Język i format dat. Element sterujący lub wskazówka: „pl-PL”."
+  },
+  "locale_language": {
+    "message": "pl",
+    "description": "Sekcja: Język i format dat. Element sterujący lub wskazówka: „pl”."
+  },
+  "locale_native_name": {
+    "message": "Polski",
+    "description": "Sekcja: Język i format dat. Element sterujący lub wskazówka: „Polski”."
+  },
+  "locale_week_first_day": {
+    "message": "1",
+    "description": "Sekcja: Język i format dat. Element sterujący lub wskazówka: „1”."
+  },
+  "locality_ambiguous": {
+    "message": "Kilka miejscowości ma tę samą nazwę. Doprecyzuj ją, na przykład dodając rejon.",
+    "description": "Sekcja: Zarządzanie adresami. Element sterujący lub wskazówka: „Kilka miejscowości ma tę samą nazwę. Doprecyzuj ją, na przykład dodając rejon.”."
+  },
+  "navigation_back_to_address_edit": {
+    "message": "Wróć do edycji adresu",
+    "description": "Sekcja: Nawigacja. Element sterujący lub wskazówka: „Wróć do edycji adresu”."
+  },
+  "navigation_back_to_home": {
+    "message": "Wróć do strony głównej",
+    "description": "Sekcja: Nawigacja. Element sterujący lub wskazówka: „Wróć do strony głównej”."
+  },
+  "popup_offer_description": {
+    "message": "Okno wyskakujące zasłania stronę DTEK. Włączyć automatyczne zamykanie takich okien?",
+    "description": "Sekcja: Automatyczne zamykanie okien wyskakujących. Element sterujący lub wskazówka: „Okno wyskakujące zasłania stronę DTEK. Włączyć automatyczne zamykanie takich okien?”."
+  },
+  "popup_offer_dismiss_action": {
+    "message": "Nie teraz",
+    "description": "Sekcja: Automatyczne zamykanie okien wyskakujących. Element sterujący lub wskazówka: „Nie teraz”."
+  },
+  "popup_offer_enable_action": {
+    "message": "Włącz",
+    "description": "Sekcja: Automatyczne zamykanie okien wyskakujących. Element sterujący lub wskazówka: „Włącz”."
+  },
+  "popup_offer_repeat_hint": {
+    "message": "Jeśli odmówisz, zapytamy ponownie nie wcześniej niż za miesiąc. Możesz też włączyć tę opcję w ustawieniach.",
+    "description": "Sekcja: Automatyczne zamykanie okien wyskakujących. Element sterujący lub wskazówka: „Jeśli odmówisz, zapytamy ponownie nie wcześniej niż za miesiąc. Możesz też włączyć tę opcję w ustawieniach.”."
+  },
+  "popup_offer_response_save_error": {
+    "message": "Nie udało się zapisać odpowiedzi. Spróbuj ponownie.",
+    "description": "Sekcja: Automatyczne zamykanie okien wyskakujących. Komunikat błędu: „Nie udało się zapisać odpowiedzi. Spróbuj ponownie.”."
+  },
+  "popup_offer_screen_title": {
+    "message": "Automatycznie zamykaj okna wyskakujące w harmonogramie wyłączeń",
+    "description": "Sekcja: Automatyczne zamykanie okien wyskakujących. Tytuł ekranu: „Automatycznie zamykaj okna wyskakujące w harmonogramie wyłączeń”."
+  },
+  "schedule_archive_read_error": {
+    "message": "Nie udało się odczytać archiwum harmonogramów.",
+    "description": "Sekcja: Harmonogramy wyłączeń i udostępnianie. Komunikat błędu: „Nie udało się odczytać archiwum harmonogramów.”."
+  },
+  "schedule_date_accessible_label": {
+    "message": "Wyłączenia na $DATE$",
+    "description": "Sekcja: Harmonogramy wyłączeń i udostępnianie. Etykieta dostępności: „Wyłączenia na $DATE$”.",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "23.11.2026"
+      }
+    }
+  },
+  "schedule_group_save_error": {
+    "message": "Nie udało się zapisać grupy wyłączeń.",
+    "description": "Sekcja: Harmonogramy wyłączeń i udostępnianie. Komunikat błędu: „Nie udało się zapisać grupy wyłączeń.”. Grupa oznacza grupę wyłączeń DTEK; linia oznacza linię zasilania budynku. Adresy pozostają w języku ukraińskim."
+  },
+  "schedule_history_date_missing": {
+    "message": "Harmonogram niezapisany",
+    "description": "Sekcja: Harmonogramy wyłączeń i udostępnianie. Element sterujący lub wskazówka: „Harmonogram niezapisany”."
+  },
+  "schedule_no_outages": {
+    "message": "Bez wyłączeń",
+    "description": "Sekcja: Harmonogramy wyłączeń i udostępnianie. Element sterujący lub wskazówka: „Bez wyłączeń”."
+  },
+  "schedule_refresh_error": {
+    "message": "Nie udało się zaktualizować harmonogramów. Otwórz rozszerzenie ponownie.",
+    "description": "Sekcja: Harmonogramy wyłączeń i udostępnianie. Komunikat błędu: „Nie udało się zaktualizować harmonogramów. Otwórz rozszerzenie ponownie.”."
+  },
+  "schedule_selected_date_not_received": {
+    "message": "Harmonogram nieotrzymany",
+    "description": "Sekcja: Harmonogramy wyłączeń i udostępnianie. Element sterujący lub wskazówka: „Harmonogram nieotrzymany”."
+  },
+  "schedule_share_address_accessible_label": {
+    "message": "Udostępnij harmonogram na $DATE$: $ADDRESS$",
+    "description": "Sekcja: Harmonogramy wyłączeń i udostępnianie. Etykieta dostępności: „Udostępnij harmonogram na $DATE$: $ADDRESS$”.",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "23.11.2026"
+      },
+      "address": {
+        "content": "$2",
+        "example": "Київ, Хрещатик, 22"
+      }
+    }
+  },
+  "schedule_share_copy_action": {
+    "message": "Kopiuj harmonogram wyłączeń",
+    "description": "Sekcja: Harmonogramy wyłączeń i udostępnianie. Element sterujący lub wskazówka: „Kopiuj harmonogram wyłączeń”."
+  },
+  "schedule_share_copy_error": {
+    "message": "Nie udało się skopiować harmonogramu. Spróbuj ponownie.",
+    "description": "Sekcja: Harmonogramy wyłączeń i udostępnianie. Komunikat błędu: „Nie udało się skopiować harmonogramu. Spróbuj ponownie.”."
+  },
+  "schedule_share_copy_success": {
+    "message": "Harmonogram skopiowany.",
+    "description": "Sekcja: Harmonogramy wyłączeń i udostępnianie. Komunikat o stanie: „Harmonogram skopiowany.”."
+  },
+  "schedule_share_date_text": {
+    "message": "$FULL_DATE$",
+    "description": "Sekcja: Harmonogramy wyłączeń i udostępnianie. Element sterujący lub wskazówka: „$FULL_DATE$”.",
+    "placeholders": {
+      "full_date": {
+        "content": "$1",
+        "example": "poniedziałek, 23 listopada 2026"
+      },
+      "weekday": {
+        "content": "$2",
+        "example": "poniedziałek"
+      },
+      "day": {
+        "content": "$3",
+        "example": "23"
+      },
+      "month": {
+        "content": "$4",
+        "example": "listopad"
+      },
+      "year": {
+        "content": "$5",
+        "example": "2026"
+      }
+    }
+  },
+  "schedule_share_phone_scan_hint": {
+    "message": "Zeskanuj kod QR aparatem telefonu, aby otrzymać tekst harmonogramu.",
+    "description": "Sekcja: Harmonogramy wyłączeń i udostępnianie. Element sterujący lub wskazówka: „Zeskanuj kod QR aparatem telefonu, aby otrzymać tekst harmonogramu.”."
+  },
+  "schedule_share_qr_accessible_description": {
+    "message": "Zeskanuj, aby otrzymać tekst harmonogramu.",
+    "description": "Sekcja: Harmonogramy wyłączeń i udostępnianie. Etykieta dostępności: „Zeskanuj, aby otrzymać tekst harmonogramu.”."
+  },
+  "schedule_share_qr_empty_text_hint": {
+    "message": "Wpisz tekst, aby utworzyć kod QR.",
+    "description": "Sekcja: Harmonogramy wyłączeń i udostępnianie. Element sterujący lub wskazówka: „Wpisz tekst, aby utworzyć kod QR.”."
+  },
+  "schedule_share_qr_generating_status": {
+    "message": "Generowanie kodu QR…",
+    "description": "Sekcja: Harmonogramy wyłączeń i udostępnianie. Komunikat o stanie: „Generowanie kodu QR…”."
+  },
+  "schedule_share_qr_generation_error": {
+    "message": "Nie udało się utworzyć kodu QR. Użyj przycisku kopiowania.",
+    "description": "Sekcja: Harmonogramy wyłączeń i udostępnianie. Komunikat błędu: „Nie udało się utworzyć kodu QR. Użyj przycisku kopiowania.”."
+  },
+  "schedule_share_schedule_missing_error": {
+    "message": "Harmonogram nie został jeszcze otrzymany.",
+    "description": "Sekcja: Harmonogramy wyłączeń i udostępnianie. Komunikat błędu: „Harmonogram nie został jeszcze otrzymany.”."
+  },
+  "schedule_share_screen_title": {
+    "message": "Udostępnij harmonogram",
+    "description": "Sekcja: Harmonogramy wyłączeń i udostępnianie. Tytuł ekranu: „Udostępnij harmonogram”."
+  },
+  "schedule_share_text_accessible_label": {
+    "message": "Tekst harmonogramu do udostępnienia",
+    "description": "Sekcja: Harmonogramy wyłączeń i udostępnianie. Etykieta dostępności: „Tekst harmonogramu do udostępnienia”."
+  },
+  "schedule_share_text_header": {
+    "message": "Wyłączenia prądu na $DATE$ ($PLACE$, grupa $GROUP$):",
+    "description": "Sekcja: Harmonogramy wyłączeń i udostępnianie. Element sterujący lub wskazówka: „Wyłączenia prądu na $DATE$ ($PLACE$, grupa $GROUP$):”.",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "23.11.2026"
+      },
+      "place": {
+        "content": "$2",
+        "example": "Kyiv, Київ"
+      },
+      "group": {
+        "content": "$3",
+        "example": "5.2"
+      }
+    }
+  },
+  "schedule_share_unavailable_tooltip": {
+    "message": "Brak harmonogramu dla wybranej daty",
+    "description": "Sekcja: Harmonogramy wyłączeń i udostępnianie. Element sterujący lub wskazówka: „Brak harmonogramu dla wybranej daty”."
+  },
+  "schedule_share_weekday_0": {
+    "message": "niedziela",
+    "description": "Sekcja: Harmonogramy wyłączeń i udostępnianie. Element sterujący lub wskazówka: „niedziela”."
+  },
+  "schedule_share_weekday_1": {
+    "message": "poniedziałek",
+    "description": "Sekcja: Harmonogramy wyłączeń i udostępnianie. Element sterujący lub wskazówka: „poniedziałek”."
+  },
+  "schedule_share_weekday_2": {
+    "message": "wtorek",
+    "description": "Sekcja: Harmonogramy wyłączeń i udostępnianie. Element sterujący lub wskazówka: „wtorek”."
+  },
+  "schedule_share_weekday_3": {
+    "message": "środa",
+    "description": "Sekcja: Harmonogramy wyłączeń i udostępnianie. Element sterujący lub wskazówka: „środa”."
+  },
+  "schedule_share_weekday_4": {
+    "message": "czwartek",
+    "description": "Sekcja: Harmonogramy wyłączeń i udostępnianie. Element sterujący lub wskazówka: „czwartek”."
+  },
+  "schedule_share_weekday_5": {
+    "message": "piątek",
+    "description": "Sekcja: Harmonogramy wyłączeń i udostępnianie. Element sterujący lub wskazówka: „piątek”."
+  },
+  "schedule_share_weekday_6": {
+    "message": "sobota",
+    "description": "Sekcja: Harmonogramy wyłączeń i udostępnianie. Element sterujący lub wskazówka: „sobota”."
+  },
+  "schedule_storage_save_error": {
+    "message": "Nie udało się zapisać harmonogramu.",
+    "description": "Sekcja: Harmonogramy wyłączeń i udostępnianie. Komunikat błędu: „Nie udało się zapisać harmonogramu.”."
+  },
+  "schedule_supply_line_label": {
+    "message": "Linia $LINE$",
+    "description": "Sekcja: Harmonogramy wyłączeń i udostępnianie. Element sterujący lub wskazówka: „Linia $LINE$”. Grupa oznacza grupę wyłączeń DTEK; linia oznacza linię zasilania budynku. Adresy pozostają w języku ukraińskim.",
+    "placeholders": {
+      "line": {
+        "content": "$1",
+        "example": "2"
+      }
+    }
+  },
+  "schedule_unverified_address": {
+    "message": "Grupa wyłączeń dla tego adresu nie została jeszcze potwierdzona na stronie.",
+    "description": "Sekcja: Harmonogramy wyłączeń i udostępnianie. Element sterujący lub wskazówka: „Grupa wyłączeń dla tego adresu nie została jeszcze potwierdzona na stronie.”."
+  },
+  "schedule_validation_collection_error": {
+    "message": "Nieprawidłowe harmonogramy.",
+    "description": "Sekcja: Harmonogramy wyłączeń i udostępnianie. Komunikat błędu: „Nieprawidłowe harmonogramy.”."
+  },
+  "schedule_validation_group_error": {
+    "message": "Nieprawidłowa grupa wyłączeń.",
+    "description": "Sekcja: Harmonogramy wyłączeń i udostępnianie. Komunikat błędu: „Nieprawidłowa grupa wyłączeń.”. Grupa oznacza grupę wyłączeń DTEK; linia oznacza linię zasilania budynku. Adresy pozostają w języku ukraińskim."
+  },
+  "schedule_validation_single_error": {
+    "message": "Nieprawidłowy harmonogram.",
+    "description": "Sekcja: Harmonogramy wyłączeń i udostępnianie. Komunikat błędu: „Nieprawidłowy harmonogram.”."
+  },
+  "settings_language_label": {
+    "message": "Język interfejsu",
+    "description": "Sekcja: Ustawienia. Element sterujący lub wskazówka: „Język interfejsu”."
+  },
+  "settings_language_system_option": {
+    "message": "Jak w przeglądarce",
+    "description": "Sekcja: Ustawienia. Element sterujący lub wskazówka: „Jak w przeglądarce”."
+  },
+  "settings_popup_closing_checkbox": {
+    "message": "Automatycznie zamykaj okna wyskakujące",
+    "description": "Sekcja: Ustawienia. Element sterujący lub wskazówka: „Automatycznie zamykaj okna wyskakujące”."
+  },
+  "settings_popup_closing_enabled_status": {
+    "message": "Automatyczne zamykanie okien wyskakujących jest włączone.",
+    "description": "Sekcja: Ustawienia. Komunikat o stanie: „Automatyczne zamykanie okien wyskakujących jest włączone.”."
+  },
+  "settings_save_error": {
+    "message": "Nie udało się zapisać ustawień. Spróbuj ponownie.",
+    "description": "Sekcja: Ustawienia. Komunikat błędu: „Nie udało się zapisać ustawień. Spróbuj ponownie.”."
+  },
+  "settings_save_success": {
+    "message": "Ustawienia zapisane.",
+    "description": "Sekcja: Ustawienia. Komunikat o stanie: „Ustawienia zapisane.”."
+  },
+  "settings_screen_title": {
+    "message": "Ustawienia",
+    "description": "Sekcja: Ustawienia. Tytuł ekranu: „Ustawienia”."
+  },
+  "storage_format_unsupported": {
+    "message": "Format zapisanych danych nie jest obsługiwany. Twoje dane nie zostały zmienione.",
+    "description": "Sekcja: Przechowywanie danych. Element sterujący lub wskazówka: „Format zapisanych danych nie jest obsługiwany. Twoje dane nie zostały zmienione.”."
+  }
+}

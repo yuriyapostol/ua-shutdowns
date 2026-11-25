@@ -1,0 +1,754 @@
+{
+  "address_add_action": {
+    "message": "Adresse hinzufügen",
+    "description": "Bereich: Adressenverwaltung. Bedienelement oder Hinweis: „Adresse hinzufügen“."
+  },
+  "address_add_screen_title": {
+    "message": "Adresse hinzufügen",
+    "description": "Bereich: Adressenverwaltung. Bildschirmüberschrift: „Adresse hinzufügen“."
+  },
+  "address_delete_archive_retention_hint": {
+    "message": "Gruppenarchive bleiben ohne Straße und Hausnummer erhalten. Verwalten Sie sie in den Einstellungen.",
+    "description": "Bereich: Adressenverwaltung. Bedienelement oder Hinweis: „Gruppenarchive bleiben ohne Straße und Hausnummer erhalten. Verwalten Sie sie in den Einstellungen.“."
+  },
+  "address_delete_confirm_action": {
+    "message": "Löschen",
+    "description": "Bereich: Adressenverwaltung. Bedienelement oder Hinweis: „Löschen“."
+  },
+  "address_delete_confirmation_question": {
+    "message": "Adresse „$ADDRESS$“ aus der Liste entfernen?",
+    "description": "Bereich: Adressenverwaltung. Bedienelement oder Hinweis: „Adresse „$ADDRESS$“ aus der Liste entfernen?“.",
+    "placeholders": {
+      "address": {
+        "content": "$1",
+        "example": "Київ, Хрещатик, 22"
+      }
+    }
+  },
+  "address_delete_error": {
+    "message": "Die Adresse konnte nicht gelöscht werden. Versuchen Sie es erneut.",
+    "description": "Bereich: Adressenverwaltung. Fehlermeldung: „Die Adresse konnte nicht gelöscht werden. Versuchen Sie es erneut.“."
+  },
+  "address_delete_keep_archive_success": {
+    "message": "Adresse gelöscht. Gruppenarchive bleiben erhalten.",
+    "description": "Bereich: Adressenverwaltung. Statusmeldung: „Adresse gelöscht. Gruppenarchive bleiben erhalten.“."
+  },
+  "address_delete_screen_title": {
+    "message": "Adresse löschen",
+    "description": "Bereich: Adressenverwaltung. Bildschirmüberschrift: „Adresse löschen“."
+  },
+  "address_edit_conflict": {
+    "message": "Die Adresse wurde in einem anderen Fenster geändert. Öffnen Sie sie erneut zur Bearbeitung.",
+    "description": "Bereich: Adressenverwaltung. Bedienelement oder Hinweis: „Die Adresse wurde in einem anderen Fenster geändert. Öffnen Sie sie erneut zur Bearbeitung.“."
+  },
+  "address_edit_screen_title": {
+    "message": "Adresse bearbeiten",
+    "description": "Bereich: Adressenverwaltung. Bildschirmüberschrift: „Adresse bearbeiten“."
+  },
+  "address_form_building_label": {
+    "message": "Hausnummer",
+    "description": "Bereich: Adressenverwaltung. Bedienelement oder Hinweis: „Hausnummer“."
+  },
+  "address_form_building_placeholder": {
+    "message": "Hausnummer eingeben",
+    "description": "Bereich: Adressenverwaltung. Eingabehinweis: „Hausnummer eingeben“."
+  },
+  "address_form_city_label": {
+    "message": "Stadt oder Dorf",
+    "description": "Bereich: Adressenverwaltung. Bedienelement oder Hinweis: „Stadt oder Dorf“."
+  },
+  "address_form_city_placeholder": {
+    "message": "Stadt oder Dorf eingeben",
+    "description": "Bereich: Adressenverwaltung. Eingabehinweis: „Stadt oder Dorf eingeben“."
+  },
+  "address_form_delete_action": {
+    "message": "Adresse löschen",
+    "description": "Bereich: Adressenverwaltung. Bedienelement oder Hinweis: „Adresse löschen“."
+  },
+  "address_form_language_hint": {
+    "message": "Geben Sie Adressen unabhängig von der Sprache der Oberfläche auf Ukrainisch ein, wie auf der DTEK-Website. Andernfalls wird die Adresse nicht gefunden.",
+    "description": "Bereich: Adressenverwaltung. Bedienelement oder Hinweis: „Geben Sie Adressen unabhängig von der Sprache der Oberfläche auf Ukrainisch ein, wie auf der DTEK-Website. Andernfalls wird die Adresse nicht gefunden.“. Die Gruppe bezeichnet die DTEK-Abschaltgruppe; die Leitung bezeichnet die Stromversorgung des Gebäudes. Adressen bleiben auf Ukrainisch."
+  },
+  "address_form_region_not_selected": {
+    "message": "Nicht ausgewählt",
+    "description": "Bereich: Adressenverwaltung. Bedienelement oder Hinweis: „Nicht ausgewählt“."
+  },
+  "address_form_region_placeholder": {
+    "message": "Betreiber auswählen",
+    "description": "Bereich: Adressenverwaltung. Eingabehinweis: „Betreiber auswählen“."
+  },
+  "address_form_regional_operator_label": {
+    "message": "Regionaler DTEK-Netzbetreiber",
+    "description": "Bereich: Adressenverwaltung. Bedienelement oder Hinweis: „Regionaler DTEK-Netzbetreiber“."
+  },
+  "address_form_save_action": {
+    "message": "Adresse speichern",
+    "description": "Bereich: Adressenverwaltung. Bedienelement oder Hinweis: „Adresse speichern“."
+  },
+  "address_form_street_label": {
+    "message": "Straße",
+    "description": "Bereich: Adressenverwaltung. Bedienelement oder Hinweis: „Straße“."
+  },
+  "address_form_street_placeholder": {
+    "message": "Straßennamen eingeben",
+    "description": "Bereich: Adressenverwaltung. Eingabehinweis: „Straßennamen eingeben“."
+  },
+  "address_identity_after": {
+    "message": "Nachher",
+    "description": "Bereich: Adressenverwaltung. Bedienelement oder Hinweis: „Nachher“."
+  },
+  "address_identity_before": {
+    "message": "Vorher",
+    "description": "Bereich: Adressenverwaltung. Bedienelement oder Hinweis: „Vorher“."
+  },
+  "address_identity_correction": {
+    "message": "Adresse korrigieren",
+    "description": "Bereich: Adressenverwaltung. Bedienelement oder Hinweis: „Adresse korrigieren“."
+  },
+  "address_identity_explanation": {
+    "message": "Eine Korrektur erhält den Adressverlauf. Ein anderer Ort beginnt einen neuen Verlauf; bisherige Gruppenarchive bleiben in den Einstellungen.",
+    "description": "Bereich: Adressenverwaltung. Bedienelement oder Hinweis: „Eine Korrektur erhält den Adressverlauf. Ein anderer Ort beginnt einen neuen Verlauf; bisherige Gruppenarchive bleiben in den Einstellungen.“."
+  },
+  "address_identity_question": {
+    "message": "Korrigieren Sie die Adresse oder ändern Sie den Standort?",
+    "description": "Bereich: Adressenverwaltung. Bedienelement oder Hinweis: „Korrigieren Sie die Adresse oder ändern Sie den Standort?“."
+  },
+  "address_identity_replacement": {
+    "message": "Dies ist ein anderer Ort",
+    "description": "Bereich: Adressenverwaltung. Bedienelement oder Hinweis: „Dies ist ein anderer Ort“."
+  },
+  "address_identity_title": {
+    "message": "Adressänderung",
+    "description": "Bereich: Adressenverwaltung. Bildschirmüberschrift: „Adressänderung“."
+  },
+  "address_list_edit_accessible_label": {
+    "message": "Bearbeiten: $ADDRESS$",
+    "description": "Bereich: Adressenverwaltung. Barrierefreie Beschriftung: „Bearbeiten: $ADDRESS$“.",
+    "placeholders": {
+      "address": {
+        "content": "$1",
+        "example": "Київ, Хрещатик, 22"
+      }
+    }
+  },
+  "address_list_edit_address_tooltip": {
+    "message": "Adresse bearbeiten",
+    "description": "Bereich: Adressenverwaltung. Bedienelement oder Hinweis: „Adresse bearbeiten“."
+  },
+  "address_list_empty_hint": {
+    "message": "Fügen Sie eine Adresse hinzu, um Stromausfälle zu verfolgen.",
+    "description": "Bereich: Adressenverwaltung. Bedienelement oder Hinweis: „Fügen Sie eine Adresse hinzu, um Stromausfälle zu verfolgen.“."
+  },
+  "address_list_load_error": {
+    "message": "Adressen konnten nicht geladen werden. Schließen und öffnen Sie dieses Fenster erneut.",
+    "description": "Bereich: Adressenverwaltung. Fehlermeldung: „Adressen konnten nicht geladen werden. Schließen und öffnen Sie dieses Fenster erneut.“."
+  },
+  "address_list_open_schedule_action": {
+    "message": "Zeitplan öffnen",
+    "description": "Bereich: Adressenverwaltung. Bedienelement oder Hinweis: „Zeitplan öffnen“."
+  },
+  "address_list_outage_group_label": {
+    "message": "Gruppe $GROUP$",
+    "description": "Bereich: Adressenverwaltung. Bedienelement oder Hinweis: „Gruppe $GROUP$“. Die Gruppe bezeichnet die DTEK-Abschaltgruppe; die Leitung bezeichnet die Stromversorgung des Gebäudes. Adressen bleiben auf Ukrainisch.",
+    "placeholders": {
+      "group": {
+        "content": "$1",
+        "example": "5.2"
+      }
+    }
+  },
+  "address_list_select_region_action": {
+    "message": "Region auswählen",
+    "description": "Bereich: Adressenverwaltung. Bedienelement oder Hinweis: „Region auswählen“."
+  },
+  "address_list_storage_read_error": {
+    "message": "Die Adressliste konnte nicht gelesen werden.",
+    "description": "Bereich: Adressenverwaltung. Fehlermeldung: „Die Adressliste konnte nicht gelesen werden.“."
+  },
+  "address_list_unassigned_region_heading": {
+    "message": "Regionalen Netzbetreiber auswählen",
+    "description": "Bereich: Adressenverwaltung. Bildschirmüberschrift: „Regionalen Netzbetreiber auswählen“."
+  },
+  "address_list_unassigned_region_hint": {
+    "message": "Wählen Sie eine Region für Ihre zuvor gespeicherte Adresse.",
+    "description": "Bereich: Adressenverwaltung. Bedienelement oder Hinweis: „Wählen Sie eine Region für Ihre zuvor gespeicherte Adresse.“."
+  },
+  "address_navigation_open_error": {
+    "message": "Der Zeitplan konnte nicht geöffnet werden.",
+    "description": "Bereich: Adressenverwaltung. Fehlermeldung: „Der Zeitplan konnte nicht geöffnet werden.“."
+  },
+  "address_navigation_region_required_error": {
+    "message": "Wählen Sie zuerst eine Region für diese Adresse.",
+    "description": "Bereich: Adressenverwaltung. Fehlermeldung: „Wählen Sie zuerst eine Region für diese Adresse.“."
+  },
+  "address_navigation_tab_changed_error": {
+    "message": "Die Adresse in diesem Tab wurde geändert.",
+    "description": "Bereich: Adressenverwaltung. Fehlermeldung: „Die Adresse in diesem Tab wurde geändert.“."
+  },
+  "address_open_schedule_pending": {
+    "message": "Zeitplan wird geöffnet…",
+    "description": "Bereich: Adressenverwaltung. Statusmeldung: „Zeitplan wird geöffnet…“."
+  },
+  "address_open_schedule_retry_error": {
+    "message": "Der Zeitplan konnte nicht geöffnet werden. Versuchen Sie es erneut.",
+    "description": "Bereich: Adressenverwaltung. Fehlermeldung: „Der Zeitplan konnte nicht geöffnet werden. Versuchen Sie es erneut.“."
+  },
+  "address_save_already_deleted_error": {
+    "message": "Die Adresse wurde bereits gelöscht.",
+    "description": "Bereich: Adressenverwaltung. Fehlermeldung: „Die Adresse wurde bereits gelöscht.“."
+  },
+  "address_save_duplicate_error": {
+    "message": "Diese Adresse wurde bereits hinzugefügt.",
+    "description": "Bereich: Adressenverwaltung. Fehlermeldung: „Diese Adresse wurde bereits hinzugefügt.“."
+  },
+  "address_save_error": {
+    "message": "Die Adresse konnte nicht gespeichert werden.",
+    "description": "Bereich: Adressenverwaltung. Fehlermeldung: „Die Adresse konnte nicht gespeichert werden.“."
+  },
+  "address_save_pending": {
+    "message": "Wird gespeichert…",
+    "description": "Bereich: Adressenverwaltung. Statusmeldung: „Wird gespeichert…“."
+  },
+  "address_save_success": {
+    "message": "Adresse gespeichert.",
+    "description": "Bereich: Adressenverwaltung. Statusmeldung: „Adresse gespeichert.“."
+  },
+  "address_storage_record_invalid_error": {
+    "message": "Der Adresseintrag ist beschädigt.",
+    "description": "Bereich: Adressenverwaltung. Fehlermeldung: „Der Adresseintrag ist beschädigt.“."
+  },
+  "address_validation_fields_required": {
+    "message": "Geben Sie Ort, Straße und Hausnummer ein.",
+    "description": "Bereich: Adressenverwaltung. Fehlermeldung: „Geben Sie Ort, Straße und Hausnummer ein.“."
+  },
+  "address_validation_region_required": {
+    "message": "Wählen Sie einen regionalen Netzbetreiber.",
+    "description": "Bereich: Adressenverwaltung. Fehlermeldung: „Wählen Sie einen regionalen Netzbetreiber.“."
+  },
+  "address_website_load_error": {
+    "message": "Die Adresse konnte nicht geladen werden.",
+    "description": "Bereich: Adressenverwaltung. Fehlermeldung: „Die Adresse konnte nicht geladen werden.“."
+  },
+  "application_loading_status": {
+    "message": "Wird geladen…",
+    "description": "Bereich: Ladevorgang. Statusmeldung: „Wird geladen…“."
+  },
+  "archive_back": {
+    "message": "Zurück",
+    "description": "Bereich: Gruppenarchive. Bedienelement oder Hinweis: „Zurück“."
+  },
+  "archive_delete_action": {
+    "message": "Gruppenarchiv löschen",
+    "description": "Bereich: Gruppenarchive. Bedienelement oder Hinweis: „Gruppenarchiv löschen“."
+  },
+  "archive_delete_error": {
+    "message": "Das Archiv konnte nicht gelöscht werden. Versuchen Sie es erneut.",
+    "description": "Bereich: Gruppenarchive. Fehlermeldung: „Das Archiv konnte nicht gelöscht werden. Versuchen Sie es erneut.“."
+  },
+  "archive_delete_warning": {
+    "message": "Die Zeitpläne werden auch aus dem Verlauf aller verknüpften Adressen entfernt. Dies kann nicht rückgängig gemacht werden.",
+    "description": "Bereich: Gruppenarchive. Bedienelement oder Hinweis: „Die Zeitpläne werden auch aus dem Verlauf aller verknüpften Adressen entfernt. Dies kann nicht rückgängig gemacht werden.“."
+  },
+  "archive_deleted": {
+    "message": "Gruppenarchiv gelöscht.",
+    "description": "Bereich: Gruppenarchive. Bedienelement oder Hinweis: „Gruppenarchiv gelöscht.“."
+  },
+  "archive_linked_addresses": {
+    "message": "Verknüpfte Adressen: $COUNT$",
+    "description": "Bereich: Gruppenarchive. Bedienelement oder Hinweis: „Verknüpfte Adressen: $COUNT$“.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "2"
+      }
+    }
+  },
+  "archive_received_at": {
+    "message": "Empfangen: $TIME$",
+    "description": "Bereich: Gruppenarchive. Bedienelement oder Hinweis: „Empfangen: $TIME$“.",
+    "placeholders": {
+      "time": {
+        "content": "$1",
+        "example": "25.11.2026, 12:30"
+      }
+    }
+  },
+  "archive_variant": {
+    "message": "Version $NUMBER$",
+    "description": "Bereich: Gruppenarchive. Bedienelement oder Hinweis: „Version $NUMBER$“.",
+    "placeholders": {
+      "number": {
+        "content": "$1",
+        "example": "2"
+      }
+    }
+  },
+  "archives_description": {
+    "message": "Zeitpläne nach Ort und Abschaltgruppe. Straßen und Hausnummern werden hier nicht gespeichert. Mehrere Gruppen können einen Zeitplan mit mehreren Versorgungsleitungen teilen.",
+    "description": "Bereich: Gruppenarchive. Bedienelement oder Hinweis: „Zeitpläne nach Ort und Abschaltgruppe. Straßen und Hausnummern werden hier nicht gespeichert. Mehrere Gruppen können einen Zeitplan mit mehreren Versorgungsleitungen teilen.“."
+  },
+  "archives_empty": {
+    "message": "Keine gespeicherten Zeitpläne.",
+    "description": "Bereich: Gruppenarchive. Bedienelement oder Hinweis: „Keine gespeicherten Zeitpläne.“."
+  },
+  "archives_title": {
+    "message": "Gruppenarchive",
+    "description": "Bereich: Gruppenarchive. Bildschirmüberschrift: „Gruppenarchive“."
+  },
+  "date_calendar_accessible_label": {
+    "message": "Datum des Zeitplans auswählen",
+    "description": "Bereich: Datumsauswahl und Kalender. Barrierefreie Beschriftung: „Datum des Zeitplans auswählen“."
+  },
+  "date_calendar_days_accessible_label": {
+    "message": "Tage des Monats",
+    "description": "Bereich: Datumsauswahl und Kalender. Barrierefreie Beschriftung: „Tage des Monats“."
+  },
+  "date_calendar_month_label": {
+    "message": "Monat",
+    "description": "Bereich: Datumsauswahl und Kalender. Bedienelement oder Hinweis: „Monat“."
+  },
+  "date_calendar_next_month_action": {
+    "message": "Nächster Monat",
+    "description": "Bereich: Datumsauswahl und Kalender. Bedienelement oder Hinweis: „Nächster Monat“."
+  },
+  "date_calendar_next_year_action": {
+    "message": "Nächstes Jahr",
+    "description": "Bereich: Datumsauswahl und Kalender. Bedienelement oder Hinweis: „Nächstes Jahr“."
+  },
+  "date_calendar_open_action": {
+    "message": "Kalender öffnen",
+    "description": "Bereich: Datumsauswahl und Kalender. Bedienelement oder Hinweis: „Kalender öffnen“."
+  },
+  "date_calendar_previous_month_action": {
+    "message": "Vorheriger Monat",
+    "description": "Bereich: Datumsauswahl und Kalender. Bedienelement oder Hinweis: „Vorheriger Monat“."
+  },
+  "date_calendar_previous_year_action": {
+    "message": "Vorheriges Jahr",
+    "description": "Bereich: Datumsauswahl und Kalender. Bedienelement oder Hinweis: „Vorheriges Jahr“."
+  },
+  "date_calendar_year_label": {
+    "message": "Jahr",
+    "description": "Bereich: Datumsauswahl und Kalender. Bedienelement oder Hinweis: „Jahr“."
+  },
+  "date_input_accessible_label": {
+    "message": "Datum des Zeitplans",
+    "description": "Bereich: Datumsauswahl und Kalender. Barrierefreie Beschriftung: „Datum des Zeitplans“."
+  },
+  "date_input_invalid_error": {
+    "message": "Geben Sie ein gültiges Datum im Format $DATE_FORMAT$ ein.",
+    "description": "Bereich: Datumsauswahl und Kalender. Fehlermeldung: „Geben Sie ein gültiges Datum im Format $DATE_FORMAT$ ein.“.",
+    "placeholders": {
+      "date_format": {
+        "content": "$1",
+        "example": "TT.MM.JJJJ"
+      }
+    }
+  },
+  "date_next_day_action": {
+    "message": "Nächster Tag",
+    "description": "Bereich: Datumsauswahl und Kalender. Bedienelement oder Hinweis: „Nächster Tag“."
+  },
+  "date_previous_day_action": {
+    "message": "Vorheriger Tag",
+    "description": "Bereich: Datumsauswahl und Kalender. Bedienelement oder Hinweis: „Vorheriger Tag“."
+  },
+  "date_shortcut_other": {
+    "message": "Datum",
+    "description": "Bereich: Datumsauswahl und Kalender. Bedienelement oder Hinweis: „Datum“."
+  },
+  "date_shortcut_other_accessible_label": {
+    "message": "Anderes Datum im Kalender auswählen",
+    "description": "Bereich: Datumsauswahl und Kalender. Barrierefreie Beschriftung: „Anderes Datum im Kalender auswählen“."
+  },
+  "date_shortcut_today": {
+    "message": "heute",
+    "description": "Bereich: Datumsauswahl und Kalender. Bedienelement oder Hinweis: „heute“."
+  },
+  "date_shortcut_tomorrow": {
+    "message": "morgen",
+    "description": "Bereich: Datumsauswahl und Kalender. Bedienelement oder Hinweis: „morgen“."
+  },
+  "date_shortcuts_accessible_label": {
+    "message": "Schnelle Datumsauswahl",
+    "description": "Bereich: Datumsauswahl und Kalender. Barrierefreie Beschriftung: „Schnelle Datumsauswahl“."
+  },
+  "date_shortcuts_sentence_join": {
+    "message": "oder ein anderes ",
+    "description": "Bereich: Datumsauswahl und Kalender. Bedienelement oder Hinweis: „oder ein anderes“."
+  },
+  "date_shortcuts_sentence_prefix": {
+    "message": "für ",
+    "description": "Bereich: Datumsauswahl und Kalender. Bedienelement oder Hinweis: „für“."
+  },
+  "dtek_operator_dem_name": {
+    "message": "Stromnetze Donezk",
+    "description": "Bereich: Regionale DTEK-Netzbetreiber. Bedienelement oder Hinweis: „Stromnetze Donezk“."
+  },
+  "dtek_operator_dnem_name": {
+    "message": "Stromnetze Dnipro",
+    "description": "Bereich: Regionale DTEK-Netzbetreiber. Bedienelement oder Hinweis: „Stromnetze Dnipro“."
+  },
+  "dtek_operator_kem_name": {
+    "message": "Stromnetze Kyjiw",
+    "description": "Bereich: Regionale DTEK-Netzbetreiber. Bedienelement oder Hinweis: „Stromnetze Kyjiw“."
+  },
+  "dtek_operator_krem_name": {
+    "message": "Regionale Stromnetze Kyjiw",
+    "description": "Bereich: Regionale DTEK-Netzbetreiber. Bedienelement oder Hinweis: „Regionale Stromnetze Kyjiw“."
+  },
+  "dtek_operator_oem_name": {
+    "message": "Stromnetze Odessa",
+    "description": "Bereich: Regionale DTEK-Netzbetreiber. Bedienelement oder Hinweis: „Stromnetze Odessa“."
+  },
+  "dtek_region_dem_name": {
+    "message": "Oblast Donezk",
+    "description": "Bereich: Regionale DTEK-Netzbetreiber. Bedienelement oder Hinweis: „Oblast Donezk“."
+  },
+  "dtek_region_dem_short": {
+    "message": "Oblast Donezk",
+    "description": "Bereich: Regionale DTEK-Netzbetreiber. Bedienelement oder Hinweis: „Oblast Donezk“."
+  },
+  "dtek_region_dnem_name": {
+    "message": "Oblast Dnipropetrowsk",
+    "description": "Bereich: Regionale DTEK-Netzbetreiber. Bedienelement oder Hinweis: „Oblast Dnipropetrowsk“."
+  },
+  "dtek_region_dnem_short": {
+    "message": "Oblast Dnipropetrowsk",
+    "description": "Bereich: Regionale DTEK-Netzbetreiber. Bedienelement oder Hinweis: „Oblast Dnipropetrowsk“."
+  },
+  "dtek_region_kem_name": {
+    "message": "Kyjiw",
+    "description": "Bereich: Regionale DTEK-Netzbetreiber. Bedienelement oder Hinweis: „Kyjiw“."
+  },
+  "dtek_region_kem_short": {
+    "message": "Kyjiw",
+    "description": "Bereich: Regionale DTEK-Netzbetreiber. Bedienelement oder Hinweis: „Kyjiw“."
+  },
+  "dtek_region_krem_name": {
+    "message": "Oblast Kyjiw",
+    "description": "Bereich: Regionale DTEK-Netzbetreiber. Bedienelement oder Hinweis: „Oblast Kyjiw“."
+  },
+  "dtek_region_krem_short": {
+    "message": "Oblast Kyjiw",
+    "description": "Bereich: Regionale DTEK-Netzbetreiber. Bedienelement oder Hinweis: „Oblast Kyjiw“."
+  },
+  "dtek_region_oem_name": {
+    "message": "Oblast Odessa",
+    "description": "Bereich: Regionale DTEK-Netzbetreiber. Bedienelement oder Hinweis: „Oblast Odessa“."
+  },
+  "dtek_region_oem_short": {
+    "message": "Oblast Odessa",
+    "description": "Bereich: Regionale DTEK-Netzbetreiber. Bedienelement oder Hinweis: „Oblast Odessa“."
+  },
+  "extension_description": {
+    "message": "Stromausfälle an Ihren Adressen: DTEK-Zeitpläne einfach abrufen, ansehen und teilen.",
+    "description": "Bereich: Erweiterungsinformationen. Bedienelement oder Hinweis: „Stromausfälle an Ihren Adressen: DTEK-Zeitpläne einfach abrufen, ansehen und teilen.“."
+  },
+  "extension_name": {
+    "message": "UA Shutdowns — DTEK-Stromausfallpläne",
+    "description": "Bereich: Erweiterungsinformationen. Bedienelement oder Hinweis: „UA Shutdowns — DTEK-Stromausfallpläne“."
+  },
+  "footer_github_project_link": {
+    "message": "Projekt auf GitHub",
+    "description": "Bereich: Erweiterungsinformationen. Bedienelement oder Hinweis: „Projekt auf GitHub“."
+  },
+  "home_screen_title": {
+    "message": "Stromausfallplan",
+    "description": "Bereich: Erweiterungsinformationen. Bildschirmüberschrift: „Stromausfallplan“."
+  },
+  "locale_date_day_token": {
+    "message": "TT",
+    "description": "Bereich: Sprache und Datumsformat. Bedienelement oder Hinweis: „TT“."
+  },
+  "locale_date_month_token": {
+    "message": "MM",
+    "description": "Bereich: Sprache und Datumsformat. Bedienelement oder Hinweis: „MM“."
+  },
+  "locale_date_year_token": {
+    "message": "JJJJ",
+    "description": "Bereich: Sprache und Datumsformat. Bedienelement oder Hinweis: „JJJJ“."
+  },
+  "locale_format": {
+    "message": "de-DE",
+    "description": "Bereich: Sprache und Datumsformat. Bedienelement oder Hinweis: „de-DE“."
+  },
+  "locale_language": {
+    "message": "de",
+    "description": "Bereich: Sprache und Datumsformat. Bedienelement oder Hinweis: „de“."
+  },
+  "locale_native_name": {
+    "message": "Deutsch",
+    "description": "Bereich: Sprache und Datumsformat. Bedienelement oder Hinweis: „Deutsch“."
+  },
+  "locale_week_first_day": {
+    "message": "1",
+    "description": "Bereich: Sprache und Datumsformat. Bedienelement oder Hinweis: „1“."
+  },
+  "locality_ambiguous": {
+    "message": "Mehrere Orte haben denselben Namen. Präzisieren Sie den Namen, etwa durch Angabe des Bezirks.",
+    "description": "Bereich: Adressenverwaltung. Bedienelement oder Hinweis: „Mehrere Orte haben denselben Namen. Präzisieren Sie den Namen, etwa durch Angabe des Bezirks.“."
+  },
+  "navigation_back_to_address_edit": {
+    "message": "Zurück zur Adressbearbeitung",
+    "description": "Bereich: Navigation. Bedienelement oder Hinweis: „Zurück zur Adressbearbeitung“."
+  },
+  "navigation_back_to_home": {
+    "message": "Zur Startseite",
+    "description": "Bereich: Navigation. Bedienelement oder Hinweis: „Zur Startseite“."
+  },
+  "popup_offer_description": {
+    "message": "Ein Popup verdeckt die Seite auf der DTEK-Website. Automatisches Schließen dieser Popups aktivieren?",
+    "description": "Bereich: Automatisches Schließen von Popups. Bedienelement oder Hinweis: „Ein Popup verdeckt die Seite auf der DTEK-Website. Automatisches Schließen dieser Popups aktivieren?“."
+  },
+  "popup_offer_dismiss_action": {
+    "message": "Nicht jetzt",
+    "description": "Bereich: Automatisches Schließen von Popups. Bedienelement oder Hinweis: „Nicht jetzt“."
+  },
+  "popup_offer_enable_action": {
+    "message": "Aktivieren",
+    "description": "Bereich: Automatisches Schließen von Popups. Bedienelement oder Hinweis: „Aktivieren“."
+  },
+  "popup_offer_repeat_hint": {
+    "message": "Wenn Sie ablehnen, fragen wir frühestens in einem Monat erneut. Sie können dies auch in den Einstellungen aktivieren.",
+    "description": "Bereich: Automatisches Schließen von Popups. Bedienelement oder Hinweis: „Wenn Sie ablehnen, fragen wir frühestens in einem Monat erneut. Sie können dies auch in den Einstellungen aktivieren.“."
+  },
+  "popup_offer_response_save_error": {
+    "message": "Ihre Antwort konnte nicht gespeichert werden. Versuchen Sie es erneut.",
+    "description": "Bereich: Automatisches Schließen von Popups. Fehlermeldung: „Ihre Antwort konnte nicht gespeichert werden. Versuchen Sie es erneut.“."
+  },
+  "popup_offer_screen_title": {
+    "message": "Popups im Stromausfallplan automatisch schließen",
+    "description": "Bereich: Automatisches Schließen von Popups. Bildschirmüberschrift: „Popups im Stromausfallplan automatisch schließen“."
+  },
+  "schedule_archive_read_error": {
+    "message": "Das Zeitplanarchiv konnte nicht gelesen werden.",
+    "description": "Bereich: Stromausfallpläne und Teilen. Fehlermeldung: „Das Zeitplanarchiv konnte nicht gelesen werden.“."
+  },
+  "schedule_date_accessible_label": {
+    "message": "Stromausfälle am $DATE$",
+    "description": "Bereich: Stromausfallpläne und Teilen. Barrierefreie Beschriftung: „Stromausfälle am $DATE$“.",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "23.11.2026"
+      }
+    }
+  },
+  "schedule_group_save_error": {
+    "message": "Die Abschaltgruppe konnte nicht gespeichert werden.",
+    "description": "Bereich: Stromausfallpläne und Teilen. Fehlermeldung: „Die Abschaltgruppe konnte nicht gespeichert werden.“. Die Gruppe bezeichnet die DTEK-Abschaltgruppe; die Leitung bezeichnet die Stromversorgung des Gebäudes. Adressen bleiben auf Ukrainisch."
+  },
+  "schedule_history_date_missing": {
+    "message": "Zeitplan nicht gespeichert",
+    "description": "Bereich: Stromausfallpläne und Teilen. Bedienelement oder Hinweis: „Zeitplan nicht gespeichert“."
+  },
+  "schedule_no_outages": {
+    "message": "Keine Stromausfälle",
+    "description": "Bereich: Stromausfallpläne und Teilen. Bedienelement oder Hinweis: „Keine Stromausfälle“."
+  },
+  "schedule_refresh_error": {
+    "message": "Zeitpläne konnten nicht aktualisiert werden. Öffnen Sie die Erweiterung erneut.",
+    "description": "Bereich: Stromausfallpläne und Teilen. Fehlermeldung: „Zeitpläne konnten nicht aktualisiert werden. Öffnen Sie die Erweiterung erneut.“."
+  },
+  "schedule_selected_date_not_received": {
+    "message": "Zeitplan nicht empfangen",
+    "description": "Bereich: Stromausfallpläne und Teilen. Bedienelement oder Hinweis: „Zeitplan nicht empfangen“."
+  },
+  "schedule_share_address_accessible_label": {
+    "message": "Zeitplan für $DATE$ teilen: $ADDRESS$",
+    "description": "Bereich: Stromausfallpläne und Teilen. Barrierefreie Beschriftung: „Zeitplan für $DATE$ teilen: $ADDRESS$“.",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "23.11.2026"
+      },
+      "address": {
+        "content": "$2",
+        "example": "Київ, Хрещатик, 22"
+      }
+    }
+  },
+  "schedule_share_copy_action": {
+    "message": "Stromausfallplan kopieren",
+    "description": "Bereich: Stromausfallpläne und Teilen. Bedienelement oder Hinweis: „Stromausfallplan kopieren“."
+  },
+  "schedule_share_copy_error": {
+    "message": "Der Zeitplan konnte nicht kopiert werden. Versuchen Sie es erneut.",
+    "description": "Bereich: Stromausfallpläne und Teilen. Fehlermeldung: „Der Zeitplan konnte nicht kopiert werden. Versuchen Sie es erneut.“."
+  },
+  "schedule_share_copy_success": {
+    "message": "Zeitplan kopiert.",
+    "description": "Bereich: Stromausfallpläne und Teilen. Statusmeldung: „Zeitplan kopiert.“."
+  },
+  "schedule_share_date_text": {
+    "message": "$FULL_DATE$",
+    "description": "Bereich: Stromausfallpläne und Teilen. Bedienelement oder Hinweis: „$FULL_DATE$“.",
+    "placeholders": {
+      "full_date": {
+        "content": "$1",
+        "example": "Montag, 23. November 2026"
+      },
+      "weekday": {
+        "content": "$2",
+        "example": "Montag"
+      },
+      "day": {
+        "content": "$3",
+        "example": "23"
+      },
+      "month": {
+        "content": "$4",
+        "example": "November"
+      },
+      "year": {
+        "content": "$5",
+        "example": "2026"
+      }
+    }
+  },
+  "schedule_share_phone_scan_hint": {
+    "message": "Scannen Sie den QR-Code mit der Handykamera, um den Zeitplan als Text zu erhalten.",
+    "description": "Bereich: Stromausfallpläne und Teilen. Bedienelement oder Hinweis: „Scannen Sie den QR-Code mit der Handykamera, um den Zeitplan als Text zu erhalten.“."
+  },
+  "schedule_share_qr_accessible_description": {
+    "message": "Scannen, um den Zeitplan als Text zu erhalten.",
+    "description": "Bereich: Stromausfallpläne und Teilen. Barrierefreie Beschriftung: „Scannen, um den Zeitplan als Text zu erhalten.“."
+  },
+  "schedule_share_qr_empty_text_hint": {
+    "message": "Geben Sie Text ein, um einen QR-Code zu erstellen.",
+    "description": "Bereich: Stromausfallpläne und Teilen. Bedienelement oder Hinweis: „Geben Sie Text ein, um einen QR-Code zu erstellen.“."
+  },
+  "schedule_share_qr_generating_status": {
+    "message": "QR-Code wird erstellt…",
+    "description": "Bereich: Stromausfallpläne und Teilen. Statusmeldung: „QR-Code wird erstellt…“."
+  },
+  "schedule_share_qr_generation_error": {
+    "message": "Der QR-Code konnte nicht erstellt werden. Verwenden Sie die Kopiertaste.",
+    "description": "Bereich: Stromausfallpläne und Teilen. Fehlermeldung: „Der QR-Code konnte nicht erstellt werden. Verwenden Sie die Kopiertaste.“."
+  },
+  "schedule_share_schedule_missing_error": {
+    "message": "Der Zeitplan wurde noch nicht empfangen.",
+    "description": "Bereich: Stromausfallpläne und Teilen. Fehlermeldung: „Der Zeitplan wurde noch nicht empfangen.“."
+  },
+  "schedule_share_screen_title": {
+    "message": "Zeitplan teilen",
+    "description": "Bereich: Stromausfallpläne und Teilen. Bildschirmüberschrift: „Zeitplan teilen“."
+  },
+  "schedule_share_text_accessible_label": {
+    "message": "Zeitplantext zum Teilen",
+    "description": "Bereich: Stromausfallpläne und Teilen. Barrierefreie Beschriftung: „Zeitplantext zum Teilen“."
+  },
+  "schedule_share_text_header": {
+    "message": "Stromausfälle am $DATE$ ($PLACE$, Gruppe $GROUP$):",
+    "description": "Bereich: Stromausfallpläne und Teilen. Bedienelement oder Hinweis: „Stromausfälle am $DATE$ ($PLACE$, Gruppe $GROUP$):“.",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "23.11.2026"
+      },
+      "place": {
+        "content": "$2",
+        "example": "Kyiv, Київ"
+      },
+      "group": {
+        "content": "$3",
+        "example": "5.2"
+      }
+    }
+  },
+  "schedule_share_unavailable_tooltip": {
+    "message": "Für das gewählte Datum ist kein Zeitplan verfügbar",
+    "description": "Bereich: Stromausfallpläne und Teilen. Bedienelement oder Hinweis: „Für das gewählte Datum ist kein Zeitplan verfügbar“."
+  },
+  "schedule_share_weekday_0": {
+    "message": "Sonntag",
+    "description": "Bereich: Stromausfallpläne und Teilen. Bedienelement oder Hinweis: „Sonntag“."
+  },
+  "schedule_share_weekday_1": {
+    "message": "Montag",
+    "description": "Bereich: Stromausfallpläne und Teilen. Bedienelement oder Hinweis: „Montag“."
+  },
+  "schedule_share_weekday_2": {
+    "message": "Dienstag",
+    "description": "Bereich: Stromausfallpläne und Teilen. Bedienelement oder Hinweis: „Dienstag“."
+  },
+  "schedule_share_weekday_3": {
+    "message": "Mittwoch",
+    "description": "Bereich: Stromausfallpläne und Teilen. Bedienelement oder Hinweis: „Mittwoch“."
+  },
+  "schedule_share_weekday_4": {
+    "message": "Donnerstag",
+    "description": "Bereich: Stromausfallpläne und Teilen. Bedienelement oder Hinweis: „Donnerstag“."
+  },
+  "schedule_share_weekday_5": {
+    "message": "Freitag",
+    "description": "Bereich: Stromausfallpläne und Teilen. Bedienelement oder Hinweis: „Freitag“."
+  },
+  "schedule_share_weekday_6": {
+    "message": "Samstag",
+    "description": "Bereich: Stromausfallpläne und Teilen. Bedienelement oder Hinweis: „Samstag“."
+  },
+  "schedule_storage_save_error": {
+    "message": "Der Zeitplan konnte nicht gespeichert werden.",
+    "description": "Bereich: Stromausfallpläne und Teilen. Fehlermeldung: „Der Zeitplan konnte nicht gespeichert werden.“."
+  },
+  "schedule_supply_line_label": {
+    "message": "Leitung $LINE$",
+    "description": "Bereich: Stromausfallpläne und Teilen. Bedienelement oder Hinweis: „Leitung $LINE$“. Die Gruppe bezeichnet die DTEK-Abschaltgruppe; die Leitung bezeichnet die Stromversorgung des Gebäudes. Adressen bleiben auf Ukrainisch.",
+    "placeholders": {
+      "line": {
+        "content": "$1",
+        "example": "2"
+      }
+    }
+  },
+  "schedule_unverified_address": {
+    "message": "Die Abschaltgruppe für diese Adresse wurde auf der Website noch nicht bestätigt.",
+    "description": "Bereich: Stromausfallpläne und Teilen. Bedienelement oder Hinweis: „Die Abschaltgruppe für diese Adresse wurde auf der Website noch nicht bestätigt.“."
+  },
+  "schedule_validation_collection_error": {
+    "message": "Ungültige Zeitpläne.",
+    "description": "Bereich: Stromausfallpläne und Teilen. Fehlermeldung: „Ungültige Zeitpläne.“."
+  },
+  "schedule_validation_group_error": {
+    "message": "Ungültige Abschaltgruppe.",
+    "description": "Bereich: Stromausfallpläne und Teilen. Fehlermeldung: „Ungültige Abschaltgruppe.“. Die Gruppe bezeichnet die DTEK-Abschaltgruppe; die Leitung bezeichnet die Stromversorgung des Gebäudes. Adressen bleiben auf Ukrainisch."
+  },
+  "schedule_validation_single_error": {
+    "message": "Ungültiger Zeitplan.",
+    "description": "Bereich: Stromausfallpläne und Teilen. Fehlermeldung: „Ungültiger Zeitplan.“."
+  },
+  "settings_language_label": {
+    "message": "Sprache der Oberfläche",
+    "description": "Bereich: Einstellungen. Bedienelement oder Hinweis: „Sprache der Oberfläche“."
+  },
+  "settings_language_system_option": {
+    "message": "Wie im Browser",
+    "description": "Bereich: Einstellungen. Bedienelement oder Hinweis: „Wie im Browser“."
+  },
+  "settings_popup_closing_checkbox": {
+    "message": "Popups automatisch schließen",
+    "description": "Bereich: Einstellungen. Bedienelement oder Hinweis: „Popups automatisch schließen“."
+  },
+  "settings_popup_closing_enabled_status": {
+    "message": "Automatisches Schließen von Popups ist aktiviert.",
+    "description": "Bereich: Einstellungen. Statusmeldung: „Automatisches Schließen von Popups ist aktiviert.“."
+  },
+  "settings_save_error": {
+    "message": "Einstellungen konnten nicht gespeichert werden. Versuchen Sie es erneut.",
+    "description": "Bereich: Einstellungen. Fehlermeldung: „Einstellungen konnten nicht gespeichert werden. Versuchen Sie es erneut.“."
+  },
+  "settings_save_success": {
+    "message": "Einstellungen gespeichert.",
+    "description": "Bereich: Einstellungen. Statusmeldung: „Einstellungen gespeichert.“."
+  },
+  "settings_screen_title": {
+    "message": "Einstellungen",
+    "description": "Bereich: Einstellungen. Bildschirmüberschrift: „Einstellungen“."
+  },
+  "storage_format_unsupported": {
+    "message": "Das gespeicherte Datenformat wird nicht unterstützt. Ihre Daten wurden nicht verändert.",
+    "description": "Bereich: Datenspeicherung. Bedienelement oder Hinweis: „Das gespeicherte Datenformat wird nicht unterstützt. Ihre Daten wurden nicht verändert.“."
+  }
+}
