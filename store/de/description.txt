@@ -1,0 +1,32 @@
+UA Shutdowns — DTEK-Stromabschaltungspläne
+
+Laden Sie Stromabschaltungspläne für Ihre Adressen von DTEK-Websites, sehen Sie diese übersichtlich an, archivieren Sie vergangene Tage und teilen Sie die Pläne mit anderen.
+
+Ein unabhängiges Projekt. Keine offizielle DTEK-Erweiterung.
+
+Funktionen:
+• Mehrere Adressen speichern und die jeweiligen Abschaltungsgruppen und Zeiten anzeigen.
+• Die passende regionale Website öffnen und die Adresse automatisch ausfüllen.
+• Bereits abgerufene Pläne nach Datum ansehen, auch offline.
+• Den Plan als Text kopieren oder per QR-Code auf Ihr Smartphone übertragen.
+• Auf Wunsch Pop-ups schließen, die den Plan verdecken.
+
+Unterstützte Regionen:
+Die Erweiterung unterstützt DTEK-Pläne für Kyjiw sowie die Regionen Kyjiw, Dnipropetrowsk, Odesa und Donezk. Pläne anderer Stromversorger werden derzeit nicht unterstützt.
+
+Aktualisierung der Pläne:
+Öffnen Sie eine gespeicherte Adresse und warten Sie, bis der Plan auf der Website geladen ist. Die Erweiterung übernimmt die Daten aus dem aktiven Website-Tab. Fehlende Daten bedeuten nicht, dass es keine Abschaltungen geben wird. Offline sind nur zuvor gespeicherte Pläne verfügbar.
+
+Geben Sie Adressen auf Ukrainisch ein, genau wie auf der DTEK-Website, auch wenn Sie eine andere Sprache für die Oberfläche wählen.
+
+Datenschutz:
+Adressen, Einstellungen und der Planverlauf werden ausschließlich lokal in Ihrem Browser gespeichert. Die Erweiterung sendet diese Daten nicht an den Entwickler und verwendet weder Analysewerkzeuge noch Tracking. Zum Abrufen eines Plans wird die ausgewählte Adresse in das Formular der jeweiligen regionalen Website eingetragen und dort verarbeitet. QR-Codes werden lokal erstellt; Sie entscheiden selbst, ob Sie einen Plan teilen. Bei einer Adresskorrektur bleiben die Kennung und der Verlauf erhalten. Nach dem Löschen einer Adresse bleiben Archive nach Ort und Abschaltungsgruppe ohne Straße oder Hausnummer bestehen. Sie können diese in den Einstellungen ansehen oder löschen; die Archive werden nicht automatisch nach einer bestimmten Frist gelöscht.
+
+Datenschutzerklärung (Englisch, mit ukrainischer Übersetzung):
+https://github.com/yuriyapostol/ua-shutdowns/blob/main/PRIVACY.md
+
+Hilfe (Englisch):
+https://github.com/yuriyapostol/ua-shutdowns/blob/main/README.md
+
+Änderungsverlauf (Englisch):
+https://github.com/yuriyapostol/ua-shutdowns/blob/main/CHANGELOG.md

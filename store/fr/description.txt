@@ -1,0 +1,32 @@
+UA Shutdowns — horaires des coupures DTEK
+
+Consultez facilement les horaires des coupures de courant pour vos adresses depuis les sites DTEK, affichez-les clairement, conservez un historique des jours précédents et partagez-les.
+
+Projet indépendant. Cette extension n’est pas une extension officielle de DTEK.
+
+Fonctionnalités :
+• Enregistrer plusieurs adresses et consulter leurs groupes de coupure et horaires respectifs.
+• Ouvrir le site régional correspondant et remplir automatiquement l’adresse.
+• Consulter les horaires déjà récupérés par date, même hors connexion.
+• Copier les horaires sous forme de texte ou les transférer sur votre téléphone avec un code QR.
+• Fermer, si vous le souhaitez, les fenêtres qui masquent les horaires.
+
+Zones couvertes :
+L’extension prend en charge les horaires DTEK pour Kyiv ainsi que les régions de Kyiv, Dnipropetrovsk, Odesa et Donetsk. Les horaires des autres fournisseurs ne sont pas pris en charge actuellement.
+
+Mise à jour des horaires :
+Ouvrez une adresse enregistrée et attendez le chargement des horaires sur le site. L’extension récupère les données depuis l’onglet actif du site. L’absence de données ne signifie pas qu’il n’y aura pas de coupures. Seuls les horaires déjà enregistrés sont disponibles hors connexion.
+
+Saisissez les adresses en ukrainien, comme sur le site DTEK, même si vous utilisez une autre langue pour l’interface.
+
+Confidentialité :
+Les adresses, les paramètres et l’historique des horaires sont stockés uniquement dans votre navigateur. L’extension n’envoie pas ces données au développeur et n’utilise ni outils d’analyse ni suivi. Pour récupérer les horaires, l’adresse sélectionnée est saisie dans le formulaire du site régional correspondant et traitée par celui-ci. Les codes QR sont générés localement ; le partage se fait uniquement à votre initiative. La correction d’une adresse conserve son identifiant et son historique. La suppression d’une adresse conserve les archives par localité et groupe, sans rue ni numéro de bâtiment. Vous pouvez les consulter ou les supprimer dans les paramètres ; les archives n’ont pas de délai de suppression automatique.
+
+Politique de confidentialité (en anglais, avec traduction ukrainienne) :
+https://github.com/yuriyapostol/ua-shutdowns/blob/main/PRIVACY.md
+
+Aide (en anglais) :
+https://github.com/yuriyapostol/ua-shutdowns/blob/main/README.md
+
+Historique des modifications (en anglais) :
+https://github.com/yuriyapostol/ua-shutdowns/blob/main/CHANGELOG.md

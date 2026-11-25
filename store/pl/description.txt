@@ -1,0 +1,32 @@
+UA Shutdowns — harmonogramy wyłączeń DTEK
+
+Wygodnie pobieraj harmonogramy wyłączeń prądu dla swoich adresów ze stron DTEK, przeglądaj je w czytelnej formie, zachowuj archiwum poprzednich dni i udostępniaj je innym.
+
+Niezależny projekt. Nie jest to oficjalne rozszerzenie DTEK.
+
+Funkcje:
+• Zapisywanie wielu adresów i przeglądanie przypisanych im grup oraz godzin wyłączeń.
+• Otwieranie odpowiedniej strony regionalnej i automatyczne wypełnianie adresu.
+• Przeglądanie wcześniej pobranych harmonogramów według daty, również bez internetu.
+• Kopiowanie harmonogramu jako tekstu lub przenoszenie go na telefon za pomocą kodu QR.
+• Opcjonalne zamykanie wyskakujących okien zasłaniających harmonogramy.
+
+Obsługiwane regiony:
+Rozszerzenie obsługuje harmonogramy DTEK dla Kijowa oraz obwodów kijowskiego, dniepropetrowskiego, odeskiego i donieckiego. Harmonogramy innych dostawców energii nie są obecnie obsługiwane.
+
+Aktualizacja harmonogramów:
+Otwórz zapisany adres i poczekaj, aż strona wczyta jego harmonogram. Rozszerzenie odczytuje dane z aktywnej karty strony. Brak danych nie oznacza, że nie będzie wyłączeń. Bez internetu dostępne są tylko wcześniej zapisane harmonogramy.
+
+Wpisuj adresy po ukraińsku, tak jak na stronie DTEK, nawet jeśli używasz innego języka interfejsu.
+
+Prywatność:
+Adresy, ustawienia i historia harmonogramów są przechowywane wyłącznie lokalnie w przeglądarce. Rozszerzenie nie wysyła tych danych do twórcy i nie korzysta z narzędzi analitycznych ani śledzenia. Aby pobrać harmonogram, wybrany adres jest wprowadzany do formularza odpowiedniej strony regionalnej i przez nią przetwarzany. Kody QR powstają lokalnie; harmonogramy są udostępniane tylko z Twojej inicjatywy. Poprawienie adresu zachowuje jego identyfikator i historię. Po usunięciu adresu pozostają archiwa miejscowości i grup bez ulicy i numeru budynku. Można je przeglądać lub usuwać w ustawieniach; archiwa nie mają automatycznego terminu usunięcia.
+
+Polityka prywatności (po angielsku, z ukraińskim tłumaczeniem):
+https://github.com/yuriyapostol/ua-shutdowns/blob/main/PRIVACY.md
+
+Pomoc (po angielsku):
+https://github.com/yuriyapostol/ua-shutdowns/blob/main/README.md
+
+Historia zmian (po angielsku):
+https://github.com/yuriyapostol/ua-shutdowns/blob/main/CHANGELOG.md

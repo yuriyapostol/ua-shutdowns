@@ -1,0 +1,32 @@
+UA Shutdowns — orari delle interruzioni DTEK
+
+Consulta facilmente gli orari delle interruzioni di corrente per i tuoi indirizzi dai siti DTEK, visualizzali in modo chiaro, conserva un archivio dei giorni precedenti e condividili.
+
+Progetto indipendente. Non è un’estensione ufficiale di DTEK.
+
+Funzioni:
+• Salvare più indirizzi e visualizzare i rispettivi gruppi e orari delle interruzioni.
+• Aprire il sito regionale corrispondente e compilare automaticamente l’indirizzo.
+• Consultare per data gli orari già acquisiti, anche senza connessione.
+• Copiare gli orari come testo o trasferirli sul telefono tramite un codice QR.
+• Chiudere, se lo desideri, le finestre popup che coprono gli orari.
+
+Copertura:
+L’estensione supporta gli orari DTEK per Kyiv e le regioni di Kyiv, Dnipropetrovsk, Odesa e Donetsk. Gli orari di altri fornitori di energia elettrica non sono attualmente supportati.
+
+Aggiornamento degli orari:
+Apri un indirizzo salvato e attendi che il sito carichi gli orari. L’estensione acquisisce i dati dalla scheda attiva del sito. L’assenza di dati non significa che non ci saranno interruzioni. Senza connessione sono disponibili solo gli orari salvati in precedenza.
+
+Inserisci gli indirizzi in ucraino, come sul sito DTEK, anche se usi un’altra lingua per l’interfaccia.
+
+Privacy:
+Gli indirizzi, le impostazioni e la cronologia degli orari vengono memorizzati solo localmente nel browser. L’estensione non invia questi dati allo sviluppatore e non utilizza strumenti di analisi o tracciamento. Per ottenere gli orari, l’indirizzo selezionato viene inserito nel modulo del sito regionale corrispondente ed elaborato da quest’ultimo. I codici QR sono generati localmente; gli orari vengono condivisi solo su tua iniziativa. La correzione di un indirizzo ne conserva l’identificatore e la cronologia. Eliminando un indirizzo, gli archivi per località e gruppo rimangono disponibili senza via né numero civico. Puoi consultarli o eliminarli nelle impostazioni; non è prevista una scadenza automatica degli archivi.
+
+Informativa sulla privacy (in inglese, con traduzione ucraina):
+https://github.com/yuriyapostol/ua-shutdowns/blob/main/PRIVACY.md
+
+Guida (in inglese):
+https://github.com/yuriyapostol/ua-shutdowns/blob/main/README.md
+
+Cronologia delle modifiche (in inglese):
+https://github.com/yuriyapostol/ua-shutdowns/blob/main/CHANGELOG.md

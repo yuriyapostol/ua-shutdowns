@@ -17,8 +17,13 @@ The extension supports DTEK schedules for Kyiv, Kyiv region, Dnipropetrovsk regi
 How schedules are updated:
 Open a saved address and wait for its schedule to load on the website. The extension receives data from the active website tab. Missing data does not mean there will be no outages. Only previously saved schedules are available offline.
 
+Enter addresses in Ukrainian, exactly as on the DTEK website, even when using another interface language.
+
 Privacy:
 Addresses, settings and schedule history are stored only locally in your browser. The extension does not send this data to the developer and does not use analytics or tracking. To retrieve a schedule, the selected address is entered into and processed by the corresponding regional website. QR codes are generated locally; schedules are shared only when you choose to do so. Correcting an address keeps its identifier and history. Deleting an address retains locality/group archives without the street or building. View or delete these in Settings; archives have no automatic expiry.
+
+Privacy policy (English, with Ukrainian translation):
+https://github.com/yuriyapostol/ua-shutdowns/blob/main/PRIVACY.md
 
 Help:
 https://github.com/yuriyapostol/ua-shutdowns/blob/main/README.md

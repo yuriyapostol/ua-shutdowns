@@ -1,0 +1,32 @@
+UA Shutdowns — horarios de cortes de DTEK
+
+Consulta fácilmente los horarios de cortes de electricidad para tus direcciones desde los sitios de DTEK, visualízalos con claridad, guarda un historial de días anteriores y compártelos.
+
+Proyecto independiente. No es una extensión oficial de DTEK.
+
+Funciones:
+• Guardar varias direcciones y consultar sus respectivos grupos y horarios de corte.
+• Abrir el sitio regional correspondiente y rellenar la dirección automáticamente.
+• Consultar por fecha los horarios obtenidos anteriormente, incluso sin conexión.
+• Copiar el horario como texto o transferirlo al teléfono mediante un código QR.
+• Cerrar, si lo deseas, las ventanas emergentes que ocultan los horarios.
+
+Cobertura:
+La extensión admite los horarios de DTEK para Kyiv y las regiones de Kyiv, Dnipropetrovsk, Odesa y Donetsk. Actualmente no admite horarios de otras compañías eléctricas.
+
+Actualización de los horarios:
+Abre una dirección guardada y espera a que se cargue su horario en el sitio web. La extensión obtiene los datos de la pestaña activa del sitio. La ausencia de datos no significa que no vaya a haber cortes. Sin conexión solo están disponibles los horarios guardados anteriormente.
+
+Introduce las direcciones en ucraniano, tal como aparecen en el sitio de DTEK, aunque utilices otro idioma en la interfaz.
+
+Privacidad:
+Las direcciones, los ajustes y el historial de horarios se guardan únicamente en tu navegador. La extensión no envía estos datos al desarrollador ni utiliza herramientas de análisis o seguimiento. Para obtener el horario, la dirección seleccionada se introduce en el formulario del sitio regional correspondiente y este la procesa. Los códigos QR se generan localmente; los horarios solo se comparten cuando tú decides hacerlo. Al corregir una dirección se conservan su identificador y su historial. Al eliminarla, se conservan los archivos por localidad y grupo, sin calle ni número de edificio. Puedes consultarlos o eliminarlos en los ajustes; no tienen un plazo de eliminación automática.
+
+Política de privacidad (en inglés, con traducción al ucraniano):
+https://github.com/yuriyapostol/ua-shutdowns/blob/main/PRIVACY.md
+
+Ayuda (en inglés):
+https://github.com/yuriyapostol/ua-shutdowns/blob/main/README.md
+
+Historial de cambios (en inglés):
+https://github.com/yuriyapostol/ua-shutdowns/blob/main/CHANGELOG.md
