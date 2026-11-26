@@ -237,9 +237,23 @@
     "message": "Retour",
     "description": "Section : Archives des groupes. Commande ou indication : « Retour »."
   },
+  "archive_counts": {
+    "message": "Jours : $DAYS$ (entrées : $RECORDS$)",
+    "description": "Archive summary: distinct saved schedule dates, followed by the total number of saved versions in parentheses.",
+    "placeholders": {
+      "days": {
+        "content": "$1",
+        "example": "12"
+      },
+      "records": {
+        "content": "$2",
+        "example": "15"
+      }
+    }
+  },
   "archive_delete_action": {
-    "message": "Supprimer les archives du groupe",
-    "description": "Section : Archives des groupes. Commande ou indication : « Supprimer les archives du groupe »."
+    "message": "Supprimer les archives des horaires",
+    "description": "Delete action and accessible label for a schedule archive."
   },
   "archive_delete_error": {
     "message": "Impossible de supprimer les archives. Réessayez.",
@@ -250,8 +264,8 @@
     "description": "Section : Archives des groupes. Commande ou indication : « Les plannings seront également supprimés de l’historique de toutes les adresses liées. Cette action est irréversible. »."
   },
   "archive_deleted": {
-    "message": "Archives du groupe supprimées.",
-    "description": "Section : Archives des groupes. Commande ou indication : « Archives du groupe supprimées. »."
+    "message": "Archives des horaires supprimées.",
+    "description": "Status after a schedule archive is deleted."
   },
   "archive_linked_addresses": {
     "message": "Adresses liées : $COUNT$",
@@ -292,8 +306,8 @@
     "description": "Section : Archives des groupes. Commande ou indication : « Aucun planning enregistré. »."
   },
   "archives_title": {
-    "message": "Archives des groupes",
-    "description": "Section : Archives des groupes. Titre de l’écran : « Archives des groupes »."
+    "message": "Archives des horaires",
+    "description": "Title of the schedule archive management screen."
   },
   "date_calendar_accessible_label": {
     "message": "Choisir la date du planning",
@@ -718,6 +732,18 @@
   "schedule_validation_single_error": {
     "message": "Planning non valide.",
     "description": "Section : Plannings des coupures et partage. Message d’erreur : « Planning non valide. »."
+  },
+  "settings_archive_retention_hint": {
+    "message": "Les anciens horaires sont automatiquement supprimés des archives et de l’historique des adresses.",
+    "description": "Hint under the retention setting: expired schedule dates and linked histories are removed."
+  },
+  "settings_archive_retention_invalid": {
+    "message": "Saisissez un nombre entier de jours, au moins 1.",
+    "description": "Validation error for an empty, fractional, negative or zero retention period."
+  },
+  "settings_archive_retention_label": {
+    "message": "Durée de conservation des archives (jours)",
+    "description": "Number input label. Archives default to 365 days; only positive whole numbers are accepted."
   },
   "settings_language_label": {
     "message": "Langue de l’interface",

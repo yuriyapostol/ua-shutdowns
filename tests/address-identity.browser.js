@@ -48,9 +48,7 @@ async () => {
   el('open-archives').click();
   await wait(() => !el('archives-view').hidden && !el('open-archives').disabled);
   assert(el('screen-title').textContent === I18n.t('archives_title'), 'Archive title follows language choice');
-  el('archive-list').querySelector('button').click();
-  assert(el('archive-days').textContent.includes('01:00'), 'Old group archive remains available');
-  el('nav-back').click(); await wait(() => !el('archives-view').hidden && !el('nav-back').disabled);
+  assert(el('archive-list').querySelector('.archive-counts').textContent, 'Old group archive remains available with counts');
   el('nav-back').click();
   assert(!el('settings-view').hidden, 'Archive back navigation returns to settings');
   return { passed: true, checks: 'formatting, group verification, type confirmation, cancel/draft, correction, replacement, language, retained archives' };

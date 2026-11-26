@@ -237,9 +237,23 @@
     "message": "Back",
     "description": "Group archive management or address identity interface: archive_back."
   },
+  "archive_counts": {
+    "message": "Days: $DAYS$ (records: $RECORDS$)",
+    "description": "Archive summary: distinct saved schedule dates, followed by the total number of saved versions in parentheses.",
+    "placeholders": {
+      "days": {
+        "content": "$1",
+        "example": "12"
+      },
+      "records": {
+        "content": "$2",
+        "example": "15"
+      }
+    }
+  },
   "archive_delete_action": {
-    "message": "Delete group archive",
-    "description": "Group archive management or address identity interface: archive_delete_action."
+    "message": "Delete schedule archive",
+    "description": "Delete action and accessible label for a schedule archive."
   },
   "archive_delete_error": {
     "message": "Could not delete the archive. Please try again.",
@@ -250,8 +264,8 @@
     "description": "Group archive management or address identity interface: archive_delete_warning."
   },
   "archive_deleted": {
-    "message": "Group archive deleted.",
-    "description": "Group archive management or address identity interface: archive_deleted."
+    "message": "Schedule archive deleted.",
+    "description": "Status after a schedule archive is deleted."
   },
   "archive_linked_addresses": {
     "message": "Linked addresses: $COUNT$",
@@ -292,8 +306,8 @@
     "description": "Group archive management or address identity interface: archives_empty."
   },
   "archives_title": {
-    "message": "Group archives",
-    "description": "Group archive management or address identity interface: archives_title."
+    "message": "Schedule archives",
+    "description": "Title of the schedule archive management screen."
   },
   "date_calendar_accessible_label": {
     "message": "Choose schedule date",
@@ -718,6 +732,18 @@
   "schedule_validation_single_error": {
     "message": "Invalid schedule.",
     "description": "Validation error for a single received schedule."
+  },
+  "settings_archive_retention_hint": {
+    "message": "Older schedules are automatically removed from archives and address histories.",
+    "description": "Hint under the retention setting: expired schedule dates and linked histories are removed."
+  },
+  "settings_archive_retention_invalid": {
+    "message": "Enter a whole number of days, at least 1.",
+    "description": "Validation error for an empty, fractional, negative or zero retention period."
+  },
+  "settings_archive_retention_label": {
+    "message": "Archive retention (days)",
+    "description": "Number input label. Archives default to 365 days; only positive whole numbers are accepted."
   },
   "settings_language_label": {
     "message": "Interface language",

@@ -20,7 +20,7 @@ Abre una dirección guardada y espera a que se cargue su horario en el sitio web
 Introduce las direcciones en ucraniano, tal como aparecen en el sitio de DTEK, aunque utilices otro idioma en la interfaz.
 
 Privacidad:
-Las direcciones, los ajustes y el historial de horarios se guardan únicamente en tu navegador. La extensión no envía estos datos al desarrollador ni utiliza herramientas de análisis o seguimiento. Para obtener el horario, la dirección seleccionada se introduce en el formulario del sitio regional correspondiente y este la procesa. Los códigos QR se generan localmente; los horarios solo se comparten cuando tú decides hacerlo. Al corregir una dirección se conservan su identificador y su historial. Al eliminarla, se conservan los archivos por localidad y grupo, sin calle ni número de edificio. Puedes consultarlos o eliminarlos en los ajustes; no tienen un plazo de eliminación automática.
+Las direcciones, los ajustes y el historial de horarios se guardan únicamente en tu navegador. La extensión no envía estos datos al desarrollador ni utiliza herramientas de análisis o seguimiento. Para obtener el horario, la dirección seleccionada se introduce en el formulario del sitio regional correspondiente y este la procesa. Los códigos QR se generan localmente; los horarios solo se comparten cuando tú decides hacerlo. Al corregir una dirección se conservan su identificador y su historial. Al eliminarla, se conservan los archivos por localidad y grupo, sin calle ni número de edificio. Puedes consultarlos o eliminarlos en los ajustes; el plazo de conservación es configurable y, por defecto, es de 365 días.
 
 Política de privacidad (en inglés, con traducción al ucraniano):
 https://github.com/yuriyapostol/ua-shutdowns/blob/main/PRIVACY.md

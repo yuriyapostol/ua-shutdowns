@@ -31,7 +31,7 @@ Copying a schedule places the displayed text on your clipboard. QR codes are gen
 
 ## Retention and deletion
 
-Saved data has no automatic expiry. You can edit or delete addresses in the extension. Deleting an address removes its street, building and private history links from the current address records; locality and group archives remain without streets or buildings. You can delete group archives in Settings → Group archives. Removing a shared archive also removes its linked schedules from address histories. Locality metadata may remain after deleting an archive.
+Schedule archives default to 365 days of retention, configurable in Settings. Older schedule dates and linked address history entries are removed when schedules are read or saved; a retention change applies immediately. You can edit or delete addresses in the extension. Deleting an address removes its street, building and private history links from the current address records; locality and group archives remain without streets or buildings. You can delete group archives in Settings → Schedule archives. Removing a shared archive also removes its linked schedules from address histories. Locality metadata may remain after deleting an archive.
 
 Uninstalling the extension removes its Chrome-managed extension storage. Files, clipboard contents, screenshots, backups or text you saved or shared separately are outside this deletion; remove these separately where needed. Uninstalling does not delete records independently held by DTEK or recipients.
 

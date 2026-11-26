@@ -121,19 +121,58 @@ const ScheduleStorage = (() => {
 })();
 
 const AddressSettings = (() => {
+  const validRetention = days => Number.isSafeInteger(days) && days >= 1;
+  const retentionDays = days => validRetention(days) ? days : 365;
+  function normalizeLocalities(state) {
+    let changed = false;
+    for (const place of Object.values(state.localities)) {
+      const city = DtekSites.get(place.region)?.city;
+      if (city && place.name !== city && ScheduleStorage.normalize(place.name) === ScheduleStorage.normalize(city)) {
+        if (!place.aliases.includes(place.name)) place.aliases.push(place.name);
+        place.name = city;
+        changed = true;
+      }
+    }
+    return changed;
+  }
+  function prune(state, days) {
+    const cutoff = DtekSchedule.shiftDate(DtekSchedule.dateKey(), -Math.min(days - 1, 3652058)) || '0001-01-01';
+    let changed = false;
+    for (const archive of Object.values(state.archives)) {
+      for (const date of Object.keys(archive.days)) {
+        if (date < cutoff) { delete archive.days[date]; changed = true; }
+      }
+      if (!Object.keys(archive.days).length) { delete state.archives[archive.id]; changed = true; }
+    }
+    for (const history of Object.values(state.histories)) {
+      for (const [date, ref] of Object.entries(history)) {
+        if (!state.archives[ref.archiveId]?.days[date]) { delete history[date]; changed = true; }
+      }
+    }
+    return changed;
+  }
   function locked(work) {
     return globalThis.navigator?.locks ? navigator.locks.request('ua-shutdowns-addresses', work) : work();
   }
-  async function readState() {
-    const data = await chrome.storage.local.get(['scheduleData', 'addresses', 'address', 'addressArchives']);
+  async function readState(cleanup = true) {
+    const data = await chrome.storage.local.get(['scheduleData', 'addresses', 'address', 'addressArchives', 'archiveRetentionDays']);
     // Reject unsupported or mixed formats without overwriting saved data.
     const hasLegacy = data.address != null || data.addresses !== undefined && (!Array.isArray(data.addresses) || data.addresses.length) ||
       data.addressArchives !== undefined && (!data.addressArchives || typeof data.addressArchives !== 'object' ||
         Array.isArray(data.addressArchives) || Object.keys(data.addressArchives).length);
     if (hasLegacy) throw new Error(I18n.t('storage_format_unsupported'));
-    return data.scheduleData === undefined ? ScheduleStorage.empty() : ScheduleStorage.validate(data.scheduleData);
+    const state = data.scheduleData === undefined ? ScheduleStorage.empty() : ScheduleStorage.validate(data.scheduleData);
+    if (cleanup) {
+      const renamed = normalizeLocalities(state);
+      const expired = prune(state, retentionDays(data.archiveRetentionDays));
+      if (renamed || expired) await writeState(state);
+    }
+    return state;
   }
   async function writeState(state) {
+    const { archiveRetentionDays } = await chrome.storage.local.get('archiveRetentionDays');
+    normalizeLocalities(state);
+    prune(state, retentionDays(archiveRetentionDays));
     ScheduleStorage.validate(state);
     await chrome.storage.local.set({ scheduleData: state });
   }
@@ -245,17 +284,31 @@ const AddressSettings = (() => {
     async forPage(value, id = null) {
       const region = DtekSites.forUrl(value);
       if (!region) return null;
-      const addresses = await list();
+      const addresses = await locked(list);
       return id !== null ? addresses.find(item => item.id === id && item.region === region.id) || null :
         addresses.find(item => item.region === region.id) || null;
     },
     async loadPreferences() {
-      const { autoClosePopups } = await chrome.storage.local.get('autoClosePopups');
-      return { autoClosePopups: autoClosePopups === true };
+      const { autoClosePopups, archiveRetentionDays } = await chrome.storage.local.get(['autoClosePopups', 'archiveRetentionDays']);
+      return { autoClosePopups: autoClosePopups === true, archiveRetentionDays: retentionDays(archiveRetentionDays) };
     },
     async savePreferences(preferences) {
-      const enabled = preferences.autoClosePopups === true;
-      await chrome.storage.local.set({ autoClosePopups: enabled, ...(enabled ? { popupOfferPending: false } : {}) });
+      if ('archiveRetentionDays' in preferences && !validRetention(preferences.archiveRetentionDays)) {
+        throw new Error(I18n.t('settings_archive_retention_invalid'));
+      }
+      return locked(async () => {
+        const updates = {};
+        if ('autoClosePopups' in preferences) {
+          updates.autoClosePopups = preferences.autoClosePopups === true;
+          if (updates.autoClosePopups) updates.popupOfferPending = false;
+        }
+        if ('archiveRetentionDays' in preferences) {
+          const state = await readState(false);
+          if (prune(state, preferences.archiveRetentionDays)) updates.scheduleData = ScheduleStorage.validate(state);
+          updates.archiveRetentionDays = preferences.archiveRetentionDays;
+        }
+        await chrome.storage.local.set(updates);
+      });
     },
     async recordPopupDetection() {
       const data = await chrome.storage.local.get(['autoClosePopups', 'popupOfferPending', 'popupOfferDismissedAt']);

@@ -243,24 +243,57 @@ test('a building case edit retains the graph without showing the unverified-grou
   assert.doesNotMatch(renderedText(p), /ще не підтверджена/);
 });
 
-test('archive details show intervals and supply lines without generating full sharing text', async () => {
+test('archive cards group schedules, count days and versions, and require confirmation before deletion', async () => {
   for (const language of ['uk', 'en']) {
     const p = await popup({ url: 'https://example.com/', interfaceLanguage: language }); const el = id => p.elements.get(id);
     const archive = Object.values(p.data.scheduleData.archives)[0];
-    archive.days['2026-11-19'][0].lines = [[], [[60, 120], [180, 240]]];
+    archive.days['2026-11-19'].push({ ...archive.days['2026-11-19'][0], id: 'another-version', lines: [[]] });
+    archive.days['2026-11-18'] = [{ ...archive.days['2026-11-19'][0], date: '2026-11-18', id: 'another-day' }];
     await el('open-settings').dispatch('click');
+    assert.equal(Number(el('archive-retention-days').value), 365);
     await el('open-archives').dispatch('click'); await p.drain();
-    const button = el('archive-list').children[0];
-    assert.equal(button.children[1].src, 'images/keyboard-arrow-right.svg');
-    assert.equal(button.children[1].getAttribute('aria-hidden'), 'true');
-    await button.dispatch('click');
-    assert.equal(el('archive-detail-view').hidden, false);
+    const section = el('archive-list').children[0];
+    assert.equal(section.className, 'address-group');
+    const row = section.children[1];
     const visit = node => [node.textContent || '', ...node.children.map(visit)].join(' ');
-    const text = visit(el('archive-days'));
-    assert.match(text, /01:00 – 02:00/); assert.match(text, /03:00 – 04:00/);
-    assert.match(text, language === 'uk' ? /Лінія 1/ : /Line 1/);
-    assert.match(text, language === 'uk' ? /Без відключень/ : /No outages/);
-    assert.doesNotMatch(text, /Відключення світла|Power outages|Обухів|group 5.2|черга 5.2/);
-    assert.match(el('archive-summary').textContent, /Обухів/);
+    assert.match(visit(row), /Обухів/);
+    assert.match(visit(row), language === 'uk' ? /Днів: 2 \(записів: 3\)/ : /Days: 2 \(records: 3\)/);
+    assert.doesNotMatch(visit(row), /Миру|17|01:00/);
+    const button = row.children[2].children[0];
+    assert.equal(button.children.length, 1);
+    assert.equal(button.children[0].src, 'images/delete.svg');
+    const before = JSON.stringify(p.data);
+    await button.dispatch('click');
+    assert.equal(el('archive-delete-view').hidden, false);
+    assert.equal(JSON.stringify(p.data), before);
+    await el('nav-back').dispatch('click'); await p.drain();
+    assert.equal(el('archives-view').hidden, false);
+    assert.equal(JSON.stringify(p.data), before);
+    await el('archive-list').children[0].children[1].children[2].children[0].dispatch('click');
+    await el('confirm-archive-delete').dispatch('click'); await p.drain();
+    assert.equal(Object.keys(p.data.scheduleData.archives).length, 0);
+    assert.equal(el('archives-view').hidden, false);
   }
+});
+
+test('retention changes validate input, save without toggling popup closing, and survive reopening', async () => {
+  const p = await popup({ url: 'https://example.com/' }); const el = id => p.elements.get(id);
+  await el('open-settings').dispatch('click');
+  p.data.autoClosePopups = true;
+  const input = el('archive-retention-days');
+  for (const value of ['', '0', '-1', '1.5', 'invalid']) {
+    input.value = value;
+    await input.dispatch('change');
+    assert.equal(input.getAttribute('aria-invalid'), 'true');
+    assert.equal(p.data.archiveRetentionDays, undefined);
+  }
+  input.value = '1';
+  await input.dispatch('change'); await p.drain();
+  assert.equal(input.getAttribute('aria-invalid'), null);
+  assert.equal(p.data.archiveRetentionDays, 1);
+  assert.equal(p.data.autoClosePopups, true);
+  assert.equal(Object.keys(p.data.scheduleData.archives).length, 1);
+  await el('nav-back').dispatch('click');
+  await el('open-settings').dispatch('click');
+  assert.equal(Number(input.value), 1);
 });

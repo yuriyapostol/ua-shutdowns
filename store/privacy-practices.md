@@ -13,7 +13,7 @@ Retrieve, view, archive and share DTEK power outage schedules for user-selected 
 | Field | Text to copy |
 | --- | --- |
 | storage | Store user-entered addresses, outage groups, schedule history and preferences locally. Session storage associates a DTEK tab with its selected address. Data is not synced to a developer backend. |
-| unlimitedStorage | Keep a user-controlled local archive of daily outage schedules and their versions without automatic expiry. This prevents Chrome's normal local storage quota from interrupting archive retention. Users can delete archives in Settings. |
+| unlimitedStorage | Keep a user-controlled local archive of daily outage schedules and their versions with configurable retention (365 days by default). This prevents Chrome's normal local storage quota from interrupting archive retention. Users can delete archives in Settings. |
 | activeTab | When the user opens the extension, inspect the active tab URL to recognize a supported DTEK schedule page, refresh its displayed schedule and reuse the current DTEK tab when opening a saved address. No general browsing-history archive is created. |
 | Host access / content scripts, if shown | Content scripts run only on HTTPS /ua/shutdowns pages of dtek-kem.com.ua, dtek-krem.com.ua, dtek-dnem.com.ua, dtek-oem.com.ua and dtek-dem.com.ua, including subdomains. They fill the selected address, read outage groups and displayed schedules, and optionally dismiss obstructing popups. |
 

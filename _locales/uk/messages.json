@@ -237,9 +237,23 @@
     "message": "Назад",
     "description": "Group archive management or address identity interface: archive_back."
   },
+  "archive_counts": {
+    "message": "Днів: $DAYS$ (записів: $RECORDS$)",
+    "description": "Archive summary: distinct saved schedule dates, followed by the total number of saved versions in parentheses.",
+    "placeholders": {
+      "days": {
+        "content": "$1",
+        "example": "12"
+      },
+      "records": {
+        "content": "$2",
+        "example": "15"
+      }
+    }
+  },
   "archive_delete_action": {
-    "message": "Видалити архів черги",
-    "description": "Group archive management or address identity interface: archive_delete_action."
+    "message": "Видалити архів графіків",
+    "description": "Delete action and accessible label for a schedule archive."
   },
   "archive_delete_error": {
     "message": "Не вдалося видалити архів. Спробуйте ще раз.",
@@ -250,8 +264,8 @@
     "description": "Group archive management or address identity interface: archive_delete_warning."
   },
   "archive_deleted": {
-    "message": "Архів черги видалено.",
-    "description": "Group archive management or address identity interface: archive_deleted."
+    "message": "Архів графіків видалено.",
+    "description": "Status after a schedule archive is deleted."
   },
   "archive_linked_addresses": {
     "message": "Пов’язаних адрес: $COUNT$",
@@ -292,8 +306,8 @@
     "description": "Group archive management or address identity interface: archives_empty."
   },
   "archives_title": {
-    "message": "Архіви черг",
-    "description": "Group archive management or address identity interface: archives_title."
+    "message": "Архіви графіків",
+    "description": "Title of the schedule archive management screen."
   },
   "date_calendar_accessible_label": {
     "message": "Вибір дати графіка",
@@ -718,6 +732,18 @@
   "schedule_validation_single_error": {
     "message": "Некоректний графік.",
     "description": "Помилка перевірки одного отриманого графіка."
+  },
+  "settings_archive_retention_hint": {
+    "message": "Старіші графіки автоматично видаляються з архівів та історії адрес.",
+    "description": "Hint under the retention setting: expired schedule dates and linked histories are removed."
+  },
+  "settings_archive_retention_invalid": {
+    "message": "Введіть цілу кількість днів, не меншу за 1.",
+    "description": "Validation error for an empty, fractional, negative or zero retention period."
+  },
+  "settings_archive_retention_label": {
+    "message": "Тривалість зберігання архівів (днів)",
+    "description": "Number input label. Archives default to 365 days; only positive whole numbers are accepted."
   },
   "settings_language_label": {
     "message": "Мова інтерфейсу",

@@ -2,7 +2,7 @@
 
 **English** · [Українська](README.uk.md)
 
-Detailed listing descriptions cover every interface language shipped in version 0.7.1. They are plain text for pasting into the Developer Dashboard; repository changes do not update the store automatically.
+Detailed listing descriptions cover every interface language shipped in version 0.7.2. They are plain text for pasting into the Developer Dashboard; repository changes do not update the store automatically.
 
 | Locale | Language | Detailed description |
 | --- | --- | --- |
@@ -32,6 +32,6 @@ Descriptions link to existing English or Ukrainian documentation and clearly lab
 
 The descriptions explain the supported regions, manual website-based refresh, offline limitations, Ukrainian address input, independent status, local storage, DTEK processing and user-initiated sharing. They contain no invented address examples or promises of automatic background polling.
 
-These listing materials do not change extension behavior or require replacing the published 0.7.1 ZIP. Keep future behavior changes consistent across every description and the privacy policy.
+The descriptions and privacy materials reflect version 0.7.2, including configurable archive retention with a 365-day default. Upload the matching 0.7.2 extension ZIP when releasing this version. Keep future behavior changes consistent across every description and the privacy policy.
 
 Validation: `node scripts/check-locales.cjs` checks catalog completeness, name/summary limits and that each existing store locale has a nonempty description and a matching interface catalog. When adding a language, review description parity and the store's detailed-description limit as well.

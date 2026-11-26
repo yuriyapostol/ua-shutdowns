@@ -237,9 +237,23 @@
     "message": "Indietro",
     "description": "Sezione: Archivi dei gruppi. Comando o indicazione: «Indietro»."
   },
+  "archive_counts": {
+    "message": "Giorni: $DAYS$ (voci: $RECORDS$)",
+    "description": "Archive summary: distinct saved schedule dates, followed by the total number of saved versions in parentheses.",
+    "placeholders": {
+      "days": {
+        "content": "$1",
+        "example": "12"
+      },
+      "records": {
+        "content": "$2",
+        "example": "15"
+      }
+    }
+  },
   "archive_delete_action": {
-    "message": "Elimina archivio del gruppo",
-    "description": "Sezione: Archivi dei gruppi. Comando o indicazione: «Elimina archivio del gruppo»."
+    "message": "Elimina archivio degli orari",
+    "description": "Delete action and accessible label for a schedule archive."
   },
   "archive_delete_error": {
     "message": "Impossibile eliminare l’archivio. Riprova.",
@@ -250,8 +264,8 @@
     "description": "Sezione: Archivi dei gruppi. Comando o indicazione: «I programmi verranno rimossi anche dalla cronologia di tutti gli indirizzi collegati. L’azione non può essere annullata.»."
   },
   "archive_deleted": {
-    "message": "Archivio del gruppo eliminato.",
-    "description": "Sezione: Archivi dei gruppi. Comando o indicazione: «Archivio del gruppo eliminato.»."
+    "message": "Archivio degli orari eliminato.",
+    "description": "Status after a schedule archive is deleted."
   },
   "archive_linked_addresses": {
     "message": "Indirizzi collegati: $COUNT$",
@@ -292,8 +306,8 @@
     "description": "Sezione: Archivi dei gruppi. Comando o indicazione: «Nessun programma salvato.»."
   },
   "archives_title": {
-    "message": "Archivi dei gruppi",
-    "description": "Sezione: Archivi dei gruppi. Titolo della schermata: «Archivi dei gruppi»."
+    "message": "Archivi degli orari",
+    "description": "Title of the schedule archive management screen."
   },
   "date_calendar_accessible_label": {
     "message": "Scegli la data del programma",
@@ -718,6 +732,18 @@
   "schedule_validation_single_error": {
     "message": "Programma non valido.",
     "description": "Sezione: Programmi delle interruzioni e condivisione. Messaggio di errore: «Programma non valido.»."
+  },
+  "settings_archive_retention_hint": {
+    "message": "Gli orari meno recenti vengono rimossi automaticamente dagli archivi e dalla cronologia degli indirizzi.",
+    "description": "Hint under the retention setting: expired schedule dates and linked histories are removed."
+  },
+  "settings_archive_retention_invalid": {
+    "message": "Inserisci un numero intero di giorni, almeno 1.",
+    "description": "Validation error for an empty, fractional, negative or zero retention period."
+  },
+  "settings_archive_retention_label": {
+    "message": "Conservazione degli archivi (giorni)",
+    "description": "Number input label. Archives default to 365 days; only positive whole numbers are accepted."
   },
   "settings_language_label": {
     "message": "Lingua dell’interfaccia",

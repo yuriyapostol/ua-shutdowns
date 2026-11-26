@@ -2,6 +2,14 @@
 
 **English** · [Українська](CHANGELOG.uk.md)
 
+## 0.7.2 — 2026-11-26
+
+- Added configurable archive retention in days, defaulting to **365 days**. Older schedule dates, all their saved versions and linked address history entries are removed when schedules are read or saved; changing the retention period applies immediately. Today's and future schedules are preserved.
+- Replaced **Group archives** with **Schedule archives**: cards grouped by region show the locality, outage group, saved day count and total record count in parentheses. Each card has only a trash icon, and deletion requires confirmation.
+- Added a compact **Schedule archives** link below the retention setting, without an arrow. Matched the archive deletion summary font to address deletion confirmations.
+- Automatically corrected the saved locality name “київ” to “Київ” for Kyiv city archives while preserving schedules and address links.
+- Updated the header logo and extension icons. Added translations for the archive controls in all seven interface languages and aligned the README, privacy policies and store descriptions with the new retention behavior.
+
 ## 0.7.1 — 2026-11-25
 
 - Added German, French, Spanish, Italian and Polish interface languages. All 163 messages are translated, including address and archive management, accessibility labels and schedule sharing; translator descriptions are provided in each language.

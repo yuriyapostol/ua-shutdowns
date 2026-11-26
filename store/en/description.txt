@@ -20,7 +20,7 @@ Open a saved address and wait for its schedule to load on the website. The exten
 Enter addresses in Ukrainian, exactly as on the DTEK website, even when using another interface language.
 
 Privacy:
-Addresses, settings and schedule history are stored only locally in your browser. The extension does not send this data to the developer and does not use analytics or tracking. To retrieve a schedule, the selected address is entered into and processed by the corresponding regional website. QR codes are generated locally; schedules are shared only when you choose to do so. Correcting an address keeps its identifier and history. Deleting an address retains locality/group archives without the street or building. View or delete these in Settings; archives have no automatic expiry.
+Addresses, settings and schedule history are stored only locally in your browser. The extension does not send this data to the developer and does not use analytics or tracking. To retrieve a schedule, the selected address is entered into and processed by the corresponding regional website. QR codes are generated locally; schedules are shared only when you choose to do so. Correcting an address keeps its identifier and history. Deleting an address retains locality/group archives without the street or building. View or delete these in Settings; archive retention is configurable and defaults to 365 days.
 
 Privacy policy (English, with Ukrainian translation):
 https://github.com/yuriyapostol/ua-shutdowns/blob/main/PRIVACY.md

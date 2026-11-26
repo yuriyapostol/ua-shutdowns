@@ -297,3 +297,76 @@ test('changing only building case keeps the confirmed queue and history but reje
   const changed = await api.upsert({ ...address, house: '17 Б' }, original.id);
   assert.equal(changed.queueVerified, false); assert.equal(changed.queue, '');
 });
+
+
+test('365-day default expires all versions and history references by schedule date, preserving boundary and future dates', async () => {
+  const base = fixtureState([
+    { id: 'one', ...address, queue: '4.2', schedules: {
+      '2025-11-25': day('2025-11-25'), '2025-11-26': day('2025-11-26'), '2026-11-26': day('2026-11-26')
+    } },
+    { id: 'two', ...address, house: '23', queue: '4.2', schedule: day('2025-11-25', [[]]) },
+    { id: 'three', ...address, house: '24', queue: '5.2', schedule: day('2025-11-25') }
+  ]);
+  const { api, data } = setup({ scheduleData: base });
+  assert.equal((await api.loadPreferences()).archiveRetentionDays, 365);
+  const archives = await api.archives();
+  assert.equal(archives.length, 1);
+  assert.deepEqual(Object.keys(archives[0].days), ['2025-11-26', '2026-11-26']);
+  assert.deepEqual(Object.keys(data.scheduleData.histories.one), ['2025-11-26', '2026-11-26']);
+  assert.deepEqual(data.scheduleData.histories.two, {});
+  assert.deepEqual(data.scheduleData.histories.three, {});
+  assert.equal(data.scheduleData.addresses[1].queueVerified, true);
+  assert.equal(data.scheduleData.addresses[1].revision, 1);
+  await api.saveQueue((await api.list())[0], '4.2', day('2025-11-25'));
+  assert.equal((await api.archives())[0].days['2025-11-25'], undefined);
+});
+
+test('retention and pruning commit atomically, preserve unrelated preferences, and apply after restart', async () => {
+  const { api, data, local } = setup({ autoClosePopups: true });
+  const saved = await api.upsert(address);
+  await api.saveQueue(saved, '4.2', day('2026-11-24'));
+  await api.saveQueue(saved, '4.2', day());
+  const before = JSON.stringify(data);
+  const write = local.set;
+  local.set = async () => { throw Error('Storage unavailable'); };
+  await assert.rejects(api.savePreferences({ archiveRetentionDays: 1 }));
+  assert.equal(JSON.stringify(data), before);
+  local.set = write;
+  await api.savePreferences({ archiveRetentionDays: 1 });
+  assert.equal(data.autoClosePopups, true);
+  assert.deepEqual(Object.keys(data.scheduleData.histories[saved.id]), [today]);
+  await api.savePreferences({ autoClosePopups: false });
+  assert.equal(data.archiveRetentionDays, 1);
+  const restarted = setup(data, Date.UTC(2026, 10, 26, 12));
+  assert.equal((await restarted.api.loadPreferences()).archiveRetentionDays, 1);
+  assert.equal((await restarted.api.archives()).length, 0);
+  assert.equal((await restarted.api.list())[0].schedules, undefined);
+});
+
+test('invalid retention periods fail without writes and invalid stored preferences fall back to 365 days', async () => {
+  const { api, data } = setup({ archiveRetentionDays: 90 });
+  const before = JSON.stringify(data);
+  for (const days of [0, -1, 1.2, NaN, Infinity, null, '30', Number.MAX_SAFE_INTEGER + 1]) {
+    await assert.rejects(api.savePreferences({ archiveRetentionDays: days }));
+    assert.equal(JSON.stringify(data), before);
+    assert.equal((await setup({ archiveRetentionDays: days }).api.loadPreferences()).archiveRetentionDays, 365);
+  }
+});
+
+test('existing Kyiv archives get the canonical city name without changing schedules or address links', async () => {
+  const state = fixtureState([{ id: 'kyiv', ...address, region: 'kem', city: 'Київ', queue: '4.2', schedule: day() },
+    { id: 'regional', ...address, city: 'обухів', queue: '5.2', schedule: day() }]);
+  const place = Object.values(state.localities).find(item => item.region === 'kem');
+  place.name = 'київ';
+  const original = structuredClone(state);
+  const { api, data, local } = setup({ scheduleData: state });
+  const archives = await api.archives();
+  assert.equal(archives.find(item => item.locality.region === 'kem').locality.name, 'Київ');
+  assert.equal(archives.find(item => item.locality.region === 'krem').locality.name, 'обухів');
+  assert.equal(data.scheduleData.localities[place.id].name, 'Київ');
+  assert.deepEqual(data.scheduleData.localities[place.id].aliases, ['київ']);
+  for (const key of ['addresses', 'archives', 'histories']) assert.deepEqual(data.scheduleData[key], original[key]);
+  local.set = async () => { throw Error('Unexpected repeated write'); };
+  assert.equal((await api.archives()).find(item => item.locality.region === 'kem').locality.name, 'Київ');
+  assert.equal((await api.list())[0].schedules[today].date, today);
+});

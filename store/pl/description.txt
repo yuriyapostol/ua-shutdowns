@@ -20,7 +20,7 @@ Otwórz zapisany adres i poczekaj, aż strona wczyta jego harmonogram. Rozszerze
 Wpisuj adresy po ukraińsku, tak jak na stronie DTEK, nawet jeśli używasz innego języka interfejsu.
 
 Prywatność:
-Adresy, ustawienia i historia harmonogramów są przechowywane wyłącznie lokalnie w przeglądarce. Rozszerzenie nie wysyła tych danych do twórcy i nie korzysta z narzędzi analitycznych ani śledzenia. Aby pobrać harmonogram, wybrany adres jest wprowadzany do formularza odpowiedniej strony regionalnej i przez nią przetwarzany. Kody QR powstają lokalnie; harmonogramy są udostępniane tylko z Twojej inicjatywy. Poprawienie adresu zachowuje jego identyfikator i historię. Po usunięciu adresu pozostają archiwa miejscowości i grup bez ulicy i numeru budynku. Można je przeglądać lub usuwać w ustawieniach; archiwa nie mają automatycznego terminu usunięcia.
+Adresy, ustawienia i historia harmonogramów są przechowywane wyłącznie lokalnie w przeglądarce. Rozszerzenie nie wysyła tych danych do twórcy i nie korzysta z narzędzi analitycznych ani śledzenia. Aby pobrać harmonogram, wybrany adres jest wprowadzany do formularza odpowiedniej strony regionalnej i przez nią przetwarzany. Kody QR powstają lokalnie; harmonogramy są udostępniane tylko z Twojej inicjatywy. Poprawienie adresu zachowuje jego identyfikator i historię. Po usunięciu adresu pozostają archiwa miejscowości i grup bez ulicy i numeru budynku. Można je przeglądać lub usuwać w ustawieniach; czas przechowywania archiwów można ustawić; domyślnie wynosi 365 dni.
 
 Polityka prywatności (po angielsku, z ukraińskim tłumaczeniem):
 https://github.com/yuriyapostol/ua-shutdowns/blob/main/PRIVACY.md

@@ -17,7 +17,7 @@
 <body>
   <main>
     <header>
-      <img src="images/icon-48.png" width="36" height="36" alt="">
+      <img src="images/icon.svg" width="36" height="36" alt="">
       <div class="header-text">
         <p class="brand">UA Shutdowns: DTEK</p>
         <div class="screen-heading">
@@ -126,11 +126,6 @@
       <p class="explanation" data-i18n="archives_description">Графіки за населеними пунктами й чергами. Вулиці та будинки тут не зберігаються.</p>
       <div id="archive-list"></div>
     </section>
-    <section id="archive-detail-view" aria-labelledby="screen-title" hidden>
-      <p id="archive-summary"></p>
-      <div id="archive-days"></div>
-      <button id="delete-queue-archive" class="delete-confirm-action" type="button"><img src="images/delete.svg" width="24" height="24" alt="" aria-hidden="true"><span data-i18n="archive_delete_action">Видалити архів черги</span></button>
-    </section>
     <section id="archive-delete-view" aria-labelledby="screen-title" hidden>
       <p id="archive-delete-summary"></p>
       <p class="explanation" data-i18n="archive_delete_warning">Графіки буде видалено також з історії всіх пов’язаних адрес. Цю дію не можна скасувати.</p>
@@ -145,7 +140,10 @@
         <input id="auto-close-popups" name="autoClosePopups" type="checkbox" autocomplete="off">
         <span data-i18n="settings_popup_closing_checkbox">Автоматично закривати спливаючі вікна</span>
       </label>
-      <button id="open-archives" class="archive-button archive-navigation settings-archives" type="button"><span data-i18n="archives_title">Архіви черг</span><img src="images/keyboard-arrow-right.svg" width="24" height="24" alt="" aria-hidden="true"></button>
+      <label for="archive-retention-days" data-i18n="settings_archive_retention_label">Тривалість зберігання архівів (днів)</label>
+      <input id="archive-retention-days" name="archiveRetentionDays" type="number" min="1" step="1" value="365" required aria-describedby="archive-retention-hint" disabled>
+      <p id="archive-retention-hint" class="explanation" data-i18n="settings_archive_retention_hint">Старіші графіки автоматично видаляються з архівів та історії адрес.</p>
+      <button id="open-archives" class="settings-archives" type="button" data-i18n="archives_title">Архіви графіків</button>
     </section>
     <p id="status" role="status" aria-live="polite" data-i18n="application_loading_status">Завантаження…</p>
     <footer class="project-footer">

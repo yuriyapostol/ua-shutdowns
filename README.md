@@ -88,7 +88,7 @@ The extension receives data from the active DTEK tab. To update the schedule for
 
 ### Archives and deletion
 
-Received schedules have no automatic expiry. Under **Settings → Group archives**, browse dates and outage intervals by locality and group. Different versions of the same day's schedule are shown separately.
+Schedules are kept for **365 days** by default. Change the retention period in days in **Settings**. Older schedule dates and their links in address histories are removed when stored schedules are read or saved; changing the period applies immediately. Under **Settings → Schedule archives**, cards grouped by region show the locality, outage group, saved day count and total record count (including different versions). Use the trash icon to delete an archive, with confirmation.
 
 To delete an address, open it for editing and click the trash icon. Its street and building are removed; group archives remain. For a new or re-added address, unambiguous saved schedules appear after its group is confirmed on the website.
 

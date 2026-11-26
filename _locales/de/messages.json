@@ -237,9 +237,23 @@
     "message": "Zurück",
     "description": "Bereich: Gruppenarchive. Bedienelement oder Hinweis: „Zurück“."
   },
+  "archive_counts": {
+    "message": "Tage: $DAYS$ (Einträge: $RECORDS$)",
+    "description": "Archive summary: distinct saved schedule dates, followed by the total number of saved versions in parentheses.",
+    "placeholders": {
+      "days": {
+        "content": "$1",
+        "example": "12"
+      },
+      "records": {
+        "content": "$2",
+        "example": "15"
+      }
+    }
+  },
   "archive_delete_action": {
-    "message": "Gruppenarchiv löschen",
-    "description": "Bereich: Gruppenarchive. Bedienelement oder Hinweis: „Gruppenarchiv löschen“."
+    "message": "Zeitplanarchiv löschen",
+    "description": "Delete action and accessible label for a schedule archive."
   },
   "archive_delete_error": {
     "message": "Das Archiv konnte nicht gelöscht werden. Versuchen Sie es erneut.",
@@ -250,8 +264,8 @@
     "description": "Bereich: Gruppenarchive. Bedienelement oder Hinweis: „Die Zeitpläne werden auch aus dem Verlauf aller verknüpften Adressen entfernt. Dies kann nicht rückgängig gemacht werden.“."
   },
   "archive_deleted": {
-    "message": "Gruppenarchiv gelöscht.",
-    "description": "Bereich: Gruppenarchive. Bedienelement oder Hinweis: „Gruppenarchiv gelöscht.“."
+    "message": "Zeitplanarchiv gelöscht.",
+    "description": "Status after a schedule archive is deleted."
   },
   "archive_linked_addresses": {
     "message": "Verknüpfte Adressen: $COUNT$",
@@ -292,8 +306,8 @@
     "description": "Bereich: Gruppenarchive. Bedienelement oder Hinweis: „Keine gespeicherten Zeitpläne.“."
   },
   "archives_title": {
-    "message": "Gruppenarchive",
-    "description": "Bereich: Gruppenarchive. Bildschirmüberschrift: „Gruppenarchive“."
+    "message": "Zeitplanarchive",
+    "description": "Title of the schedule archive management screen."
   },
   "date_calendar_accessible_label": {
     "message": "Datum des Zeitplans auswählen",
@@ -718,6 +732,18 @@
   "schedule_validation_single_error": {
     "message": "Ungültiger Zeitplan.",
     "description": "Bereich: Stromausfallpläne und Teilen. Fehlermeldung: „Ungültiger Zeitplan.“."
+  },
+  "settings_archive_retention_hint": {
+    "message": "Ältere Zeitpläne werden automatisch aus Archiven und Adressverläufen entfernt.",
+    "description": "Hint under the retention setting: expired schedule dates and linked histories are removed."
+  },
+  "settings_archive_retention_invalid": {
+    "message": "Geben Sie eine ganze Anzahl von Tagen ein, mindestens 1.",
+    "description": "Validation error for an empty, fractional, negative or zero retention period."
+  },
+  "settings_archive_retention_label": {
+    "message": "Archivaufbewahrung (Tage)",
+    "description": "Number input label. Archives default to 365 days; only positive whole numbers are accepted."
   },
   "settings_language_label": {
     "message": "Sprache der Oberfläche",

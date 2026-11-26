@@ -22,10 +22,11 @@ async () => {
   await wait(() => !el('archives-view').hidden && !el('open-archives').disabled);
   assert(el('archive-list').querySelector('button'), 'Retained archives available in settings');
   el('archive-list').querySelector('button').click();
-  assert(!el('archive-detail-view').hidden && el('archive-days').textContent, 'Dates and schedules shown');
-  el('delete-queue-archive').click(); el('nav-back').click();
-  assert(!el('archive-detail-view').hidden, 'Cancel returns to archive');
-  el('delete-queue-archive').click();
+  assert(!el('archive-delete-view').hidden, 'Delete icon opens confirmation');
+  el('nav-back').click();
+  await wait(() => !el('archives-view').hidden && !el('nav-back').disabled);
+  assert(el('archive-list').querySelector('.archive-counts').textContent, 'Saved days and record counts shown');
+  el('archive-list').querySelector('button').click();
   const before = JSON.stringify(previewData);
   const write = chrome.storage.local.set;
   chrome.storage.local.set = async () => { throw new Error('Storage unavailable'); };
@@ -38,5 +39,5 @@ async () => {
   assert((await AddressSettings.archives()).length === 0, 'Explicit shared archive deletion succeeds');
   el('nav-back').click();
   assert(!el('settings-view').hidden, 'Back goes to settings');
-  return { passed: true, checks: 'retention, private link removal, settings list, detail, cancellation, failure, deletion' };
+  return { passed: true, checks: 'retention, private link removal, settings list, counts, cancellation, failure, deletion' };
 }

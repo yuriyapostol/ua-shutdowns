@@ -237,9 +237,23 @@
     "message": "Volver",
     "description": "Sección: Archivos de grupos. Control o indicación: «Volver»."
   },
+  "archive_counts": {
+    "message": "Días: $DAYS$ (registros: $RECORDS$)",
+    "description": "Archive summary: distinct saved schedule dates, followed by the total number of saved versions in parentheses.",
+    "placeholders": {
+      "days": {
+        "content": "$1",
+        "example": "12"
+      },
+      "records": {
+        "content": "$2",
+        "example": "15"
+      }
+    }
+  },
   "archive_delete_action": {
-    "message": "Eliminar archivo del grupo",
-    "description": "Sección: Archivos de grupos. Control o indicación: «Eliminar archivo del grupo»."
+    "message": "Eliminar archivo de horarios",
+    "description": "Delete action and accessible label for a schedule archive."
   },
   "archive_delete_error": {
     "message": "No se pudo eliminar el archivo. Inténtelo de nuevo.",
@@ -250,8 +264,8 @@
     "description": "Sección: Archivos de grupos. Control o indicación: «Los horarios también se eliminarán del historial de todas las direcciones vinculadas. Esta acción no se puede deshacer.»."
   },
   "archive_deleted": {
-    "message": "Archivo del grupo eliminado.",
-    "description": "Sección: Archivos de grupos. Control o indicación: «Archivo del grupo eliminado.»."
+    "message": "Archivo de horarios eliminado.",
+    "description": "Status after a schedule archive is deleted."
   },
   "archive_linked_addresses": {
     "message": "Direcciones vinculadas: $COUNT$",
@@ -292,8 +306,8 @@
     "description": "Sección: Archivos de grupos. Control o indicación: «No hay horarios guardados.»."
   },
   "archives_title": {
-    "message": "Archivos de grupos",
-    "description": "Sección: Archivos de grupos. Título de pantalla: «Archivos de grupos»."
+    "message": "Archivos de horarios",
+    "description": "Title of the schedule archive management screen."
   },
   "date_calendar_accessible_label": {
     "message": "Elegir fecha del horario",
@@ -718,6 +732,18 @@
   "schedule_validation_single_error": {
     "message": "Horario no válido.",
     "description": "Sección: Horarios de cortes y uso compartido. Mensaje de error: «Horario no válido.»."
+  },
+  "settings_archive_retention_hint": {
+    "message": "Los horarios antiguos se eliminan automáticamente de los archivos y del historial de direcciones.",
+    "description": "Hint under the retention setting: expired schedule dates and linked histories are removed."
+  },
+  "settings_archive_retention_invalid": {
+    "message": "Introduce un número entero de días, como mínimo 1.",
+    "description": "Validation error for an empty, fractional, negative or zero retention period."
+  },
+  "settings_archive_retention_label": {
+    "message": "Conservación de archivos (días)",
+    "description": "Number input label. Archives default to 365 days; only positive whole numbers are accepted."
   },
   "settings_language_label": {
     "message": "Idioma de la interfaz",

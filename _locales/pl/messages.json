@@ -237,9 +237,23 @@
     "message": "Wstecz",
     "description": "Sekcja: Archiwa grup. Element sterujący lub wskazówka: „Wstecz”."
   },
+  "archive_counts": {
+    "message": "Dni: $DAYS$ (wpisy: $RECORDS$)",
+    "description": "Archive summary: distinct saved schedule dates, followed by the total number of saved versions in parentheses.",
+    "placeholders": {
+      "days": {
+        "content": "$1",
+        "example": "12"
+      },
+      "records": {
+        "content": "$2",
+        "example": "15"
+      }
+    }
+  },
   "archive_delete_action": {
-    "message": "Usuń archiwum grupy",
-    "description": "Sekcja: Archiwa grup. Element sterujący lub wskazówka: „Usuń archiwum grupy”."
+    "message": "Usuń archiwum harmonogramów",
+    "description": "Delete action and accessible label for a schedule archive."
   },
   "archive_delete_error": {
     "message": "Nie udało się usunąć archiwum. Spróbuj ponownie.",
@@ -250,8 +264,8 @@
     "description": "Sekcja: Archiwa grup. Element sterujący lub wskazówka: „Harmonogramy zostaną również usunięte z historii wszystkich powiązanych adresów. Tej czynności nie można cofnąć.”."
   },
   "archive_deleted": {
-    "message": "Archiwum grupy usunięte.",
-    "description": "Sekcja: Archiwa grup. Element sterujący lub wskazówka: „Archiwum grupy usunięte.”."
+    "message": "Archiwum harmonogramów usunięto.",
+    "description": "Status after a schedule archive is deleted."
   },
   "archive_linked_addresses": {
     "message": "Powiązane adresy: $COUNT$",
@@ -292,8 +306,8 @@
     "description": "Sekcja: Archiwa grup. Element sterujący lub wskazówka: „Brak zapisanych harmonogramów.”."
   },
   "archives_title": {
-    "message": "Archiwa grup",
-    "description": "Sekcja: Archiwa grup. Tytuł ekranu: „Archiwa grup”."
+    "message": "Archiwa harmonogramów",
+    "description": "Title of the schedule archive management screen."
   },
   "date_calendar_accessible_label": {
     "message": "Wybierz datę harmonogramu",
@@ -718,6 +732,18 @@
   "schedule_validation_single_error": {
     "message": "Nieprawidłowy harmonogram.",
     "description": "Sekcja: Harmonogramy wyłączeń i udostępnianie. Komunikat błędu: „Nieprawidłowy harmonogram.”."
+  },
+  "settings_archive_retention_hint": {
+    "message": "Starsze harmonogramy są automatycznie usuwane z archiwów i historii adresów.",
+    "description": "Hint under the retention setting: expired schedule dates and linked histories are removed."
+  },
+  "settings_archive_retention_invalid": {
+    "message": "Wpisz całkowitą liczbę dni, co najmniej 1.",
+    "description": "Validation error for an empty, fractional, negative or zero retention period."
+  },
+  "settings_archive_retention_label": {
+    "message": "Czas przechowywania archiwów (dni)",
+    "description": "Number input label. Archives default to 365 days; only positive whole numbers are accepted."
   },
   "settings_language_label": {
     "message": "Język interfejsu",

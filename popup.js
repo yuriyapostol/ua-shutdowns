@@ -8,7 +8,7 @@
 
   const byId = id => document.getElementById(id);
   const fields = Object.fromEntries(['region', 'city', 'street', 'house'].map(field => [field, byId(field)]));
-  const views = ['home', 'form', 'delete', 'settings', 'popup-offer', 'share', 'archives', 'archive-detail', 'archive-delete', 'identity-confirm'];
+  const views = ['home', 'form', 'delete', 'settings', 'popup-offer', 'share', 'archives', 'archive-delete', 'identity-confirm'];
   let originalAddress = null;
   let pendingAddress = null;
   let archiveItems = [];
@@ -557,8 +557,7 @@
   }
   byId('nav-back').addEventListener('click', () => {
     if (busy) return;
-    if (!byId('archive-delete-view').hidden) { renderArchiveDetail(); return; }
-    if (!byId('archive-detail-view').hidden) { void openArchives(); return; }
+    if (!byId('archive-delete-view').hidden) { void openArchives(); return; }
     if (!byId('archives-view').hidden) { show('settings', I18n.t('settings_screen_title')); return; }
     if (!byId('popup-offer-view').hidden) void dismissPopupOffer();
     else if (!byId('delete-view').hidden || !byId('identity-confirm-view').hidden) show('form', I18n.t('address_edit_screen_title'));
@@ -684,6 +683,28 @@
   });
 
 
+  byId('archive-retention-days').addEventListener('change', async event => {
+    if (busy) return;
+    const input = event.target;
+    const days = Number(input.value);
+    if (!Number.isSafeInteger(days) || days < 1) {
+      input.setAttribute('aria-invalid', 'true');
+      status(I18n.t('settings_archive_retention_invalid'), true);
+      return;
+    }
+    input.removeAttribute('aria-invalid');
+    setBusy(true);
+    try {
+      await AddressSettings.savePreferences({ archiveRetentionDays: days });
+      addresses = await AddressSettings.list();
+      status(I18n.t('settings_save_success'));
+    } catch {
+      status(I18n.t('settings_save_error'), true);
+      try { input.value = (await AddressSettings.loadPreferences()).archiveRetentionDays; } catch {}
+    } finally { setBusy(false); }
+  });
+
+
   function archiveLabel(item) {
     const region = item.locality.region ? I18n.t('dtek_region_' + item.locality.region + '_name') : I18n.t('address_list_unassigned_region_heading');
     return `${region}, ${item.locality.name} — ${I18n.t('address_list_outage_group_label', [item.queue || '—'])}`;
@@ -692,50 +713,47 @@
     const container = byId('archive-list');
     container.replaceChildren();
     if (!archiveItems.length) container.append(make('p', 'explanation', I18n.t('archives_empty')));
-    for (const item of archiveItems) {
-      const button = make('button', 'archive-item archive-button archive-navigation');
-      button.type = 'button';
-      const arrow = make('img');
-      arrow.src = 'images/keyboard-arrow-right.svg';
-      arrow.width = 24;
-      arrow.height = 24;
-      arrow.alt = '';
-      arrow.setAttribute('aria-hidden', 'true');
-      button.append(make('span', '', archiveLabel(item)), arrow);
-      button.addEventListener('click', () => { selectedArchiveId = item.id; renderArchiveDetail(); });
-      container.append(button);
+    for (const region of [...DtekSites.regions, { id: '' }]) {
+      const items = archiveItems.filter(item => item.locality.region === region.id);
+      if (!items.length) continue;
+      const section = make('section', 'address-group');
+      section.append(make('h2', '', I18n.t(region.id ? 'dtek_region_' + region.id + '_name' : 'address_list_unassigned_region_heading')));
+      for (const item of items) {
+        const row = make('article', 'address-card');
+        const summary = make('div', 'archive-info');
+        summary.append(make('span', 'address-city', item.locality.name),
+          make('span', 'address-queue', I18n.t('address_list_outage_group_label', [item.queue || '—'])));
+        const days = Object.values(item.days);
+        const counts = make('div', 'address-outages archive-counts', I18n.t('archive_counts', [String(days.length), String(days.reduce((count, versions) => count + versions.length, 0))]));
+        const actions = make('div', 'address-actions');
+        const button = make('button', 'edit-address delete-archive');
+        button.type = 'button';
+        button.title = I18n.t('archive_delete_action');
+        button.setAttribute('aria-label', I18n.t('archive_delete_action') + ': ' + archiveLabel(item));
+        const icon = make('img');
+        icon.src = 'images/delete.svg';
+        icon.width = 24;
+        icon.height = 24;
+        icon.alt = '';
+        icon.setAttribute('aria-hidden', 'true');
+        button.append(icon);
+        button.addEventListener('click', () => {
+          if (busy) return;
+          selectedArchiveId = item.id;
+          byId('archive-delete-summary').textContent = archiveLabel(item) + ' · ' + I18n.t('archive_linked_addresses', [String(item.addressCount)]);
+          show('archive-delete', I18n.t('archive_delete_action'));
+        });
+        actions.append(button);
+        row.append(summary, counts, actions);
+        section.append(row);
+      }
+      container.append(section);
     }
     show('archives', I18n.t('archives_title'));
   }
-  function renderArchiveDetail() {
-    const item = archiveItems.find(value => value.id === selectedArchiveId);
-    if (!item) { renderArchives(); return; }
-    byId('archive-summary').textContent = archiveLabel(item);
-    const container = byId('archive-days');
-    container.replaceChildren();
-    if (!Object.keys(item.days).length) container.append(make('p', 'explanation', I18n.t('archives_empty')));
-    for (const [date, variants] of Object.entries(item.days).sort(([a], [b]) => b.localeCompare(a))) {
-      const section = make('section', 'archive-day');
-      section.append(make('h2', '', I18n.formatDate(date)));
-      variants.forEach((variant, index) => {
-        if (variants.length > 1) section.append(make('p', 'hint', I18n.t('archive_variant', [String(index + 1)])));
-        const schedule = make('div', 'archive-schedule');
-        variant.lines.forEach((line, lineIndex) => {
-          const supply = make('div', 'archive-line');
-          if (variant.lines.length > 1) supply.append(make('span', 'archive-line-label', I18n.t('schedule_supply_line_label', [String(lineIndex + 1)])));
-          if (!line.length) supply.append(make('span', '', I18n.t('schedule_no_outages')));
-          for (const [start, end] of line) supply.append(make('span', '', `${DtekSchedule.format(start)} – ${DtekSchedule.format(end)}`));
-          schedule.append(supply);
-        });
-        section.append(schedule);
-      });
-      container.append(section);
-    }
-    show('archive-detail', I18n.t('archives_title'));
-  }
-  async function refreshArchives(detail = false) {
+  async function refreshArchives() {
     archiveItems = await AddressSettings.archives();
-    if (detail) renderArchiveDetail(); else renderArchives();
+    renderArchives();
   }
   async function openArchives() {
     if (busy) return;
@@ -745,13 +763,6 @@
     finally { setBusy(false); }
   }
   byId('open-archives').addEventListener('click', () => { void openArchives(); });
-  byId('delete-queue-archive').addEventListener('click', () => {
-    if (busy) return;
-    const item = archiveItems.find(value => value.id === selectedArchiveId);
-    if (!item) return;
-    byId('archive-delete-summary').textContent = archiveLabel(item) + ' · ' + I18n.t('archive_linked_addresses', [String(item.addressCount)]);
-    show('archive-delete', I18n.t('archive_delete_action'));
-  });
   byId('confirm-archive-delete').addEventListener('click', async () => {
     if (busy || byId('archive-delete-view').hidden) return;
     setBusy(true);
@@ -782,6 +793,7 @@
       ]);
       addresses = saved;
       byId('auto-close-popups').checked = preferences.autoClosePopups;
+      byId('archive-retention-days').value = preferences.archiveRetentionDays;
       home();
       if (offer) show('popup-offer', I18n.t('popup_offer_screen_title'));
     } catch (error) { status(error.message || I18n.t('address_list_load_error'), true); }
@@ -792,11 +804,10 @@
     AddressSettings.list().then(saved => {
       addresses = saved;
       if (!busy && !byId('home-view').hidden) render();
-      if (!busy && (!byId('archives-view').hidden || !byId('archive-detail-view').hidden)) {
+      if (!busy && !byId('archives-view').hidden) {
         void AddressSettings.archives().then(items => {
           archiveItems = items;
           if (!busy && !byId('archives-view').hidden) renderArchives();
-          else if (!busy && !byId('archive-detail-view').hidden) renderArchiveDetail();
         }).catch(() => status(I18n.t('schedule_refresh_error'), true));
       }
     }).catch(() => { status(I18n.t('schedule_refresh_error'), true); });
