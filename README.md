@@ -90,7 +90,9 @@ The extension receives data from the active DTEK tab. To update the schedule for
 
 Schedules are kept for **365 days** by default. Change the retention period in days in **Settings**. Older schedule dates and their links in address histories are removed when stored schedules are read or saved; changing the period applies immediately. Under **Settings → Schedule archives**, cards grouped by region show the locality, outage group, saved day count and total record count (including different versions). Use the trash icon to delete an archive, with confirmation.
 
-To delete an address, open it for editing and click the trash icon. Its street and building are removed; group archives remain. For a new or re-added address, unambiguous saved schedules appear after its group is confirmed on the website.
+To delete an address, open it for editing and click the trash icon. Its street and building are removed; group archives remain. For a new or re-added address, saved schedules appear after its group is confirmed on the website. Each date shows the version with the latest received timestamp; if all versions lack timestamps, the last entry in the list is used. Timestamp ties also use the last entry. Previous versions remain in the archive.
+
+Storage schema 2 keeps only address/date links to an `archiveId` in `histories`, without a reference to a specific schedule version. This preserves the history of previous address groups and regions; the latest version is selected from the linked archive. Schema 1 is not converted automatically.
 
 Delete an archive separately in Settings, with confirmation. This also removes its schedules from every linked address's history.
 

@@ -149,7 +149,7 @@ button:where(:not(:disabled)):active { background: #343e43; }
 :focus-visible { outline: 2px solid #0068a6; outline-offset: 3px; }
 fieldset:disabled { opacity: .6; }
 fieldset:disabled button, fieldset:disabled input { cursor: wait; }
-#status { min-height: 18px; margin: 12px 0 0; color: #5a636b; font-size: 13px; line-height: 18px; text-align: center; }
+#status { margin: 12px 0 0; color: #5a636b; font-size: 13px; line-height: 18px; text-align: center; }
 #status[data-error='true'] { color: #c62828; }
 .project-footer { margin-top: 12px; text-align: center; font-size: 12px; }
 .project-footer a { display: inline-flex; align-items: center; gap: 6px; color: #5a636b; text-decoration: none; }

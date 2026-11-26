@@ -1,7 +1,7 @@
 // New-schema fixtures, independent of the temporary converter.
 const { randomUUID } = require('node:crypto');
 function fixtureState(profiles = []) {
-  const state = { schemaVersion: 1, addresses: [], localities: {}, archives: {}, histories: {} };
+  const state = { schemaVersion: 2, addresses: [], localities: {}, archives: {}, histories: {} };
   for (const source of profiles) {
     let place = Object.values(state.localities).find(item => item.region === source.region && item.name === source.city);
     if (!place) { place = { id: randomUUID(), region: source.region, name: source.city, aliases: [] }; state.localities[place.id] = place; }
@@ -15,7 +15,7 @@ function fixtureState(profiles = []) {
       if (!archive) { archive = { id: randomUUID(), localityId: place.id, queue, days: {} }; state.archives[archive.id] = archive; }
       const snapshot = { ...structuredClone(day), queue, id: randomUUID(), observedAt: null };
       (archive.days[day.date] ||= []).push(snapshot);
-      history[day.date] = { archiveId: archive.id, snapshotId: snapshot.id };
+      history[day.date] = { archiveId: archive.id };
     }
   }
   return state;

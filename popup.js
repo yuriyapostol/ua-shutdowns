@@ -624,6 +624,9 @@
     const address = addresses.find(item => item.id === editingId);
     if (!address) return;
     byId('delete-address-summary').textContent = I18n.t('address_delete_confirmation_question', [`${address.city}, ${address.street}, ${address.house}`]);
+    byId('delete-address-archive-hint').textContent = address.queue
+      ? I18n.t('address_delete_archive_retention_hint', [address.queue])
+      : I18n.t('address_delete_archive_retention_unknown_hint');
     show('delete', I18n.t('address_delete_screen_title'));
   });
   byId('confirm-delete').addEventListener('click', async () => {

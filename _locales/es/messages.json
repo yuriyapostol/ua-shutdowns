@@ -8,8 +8,18 @@
     "description": "Sección: Gestión de direcciones. Título de pantalla: «Añadir dirección»."
   },
   "address_delete_archive_retention_hint": {
-    "message": "Los archivos de los grupos se conservarán sin la calle ni el número del edificio. Gestiónelos en Configuración.",
-    "description": "Sección: Gestión de direcciones. Control o indicación: «Los archivos de los grupos se conservarán sin la calle ni el número del edificio. Gestiónelos en Configuración.»."
+    "message": "El archivo de horarios del grupo $GROUP$ se conservará sin vínculo con la dirección. Puedes gestionar los archivos en Configuración.",
+    "description": "Address deletion confirmation: the schedule archive is retained without a link to the deleted address. GROUP is the outage group number or list of groups.",
+    "placeholders": {
+      "group": {
+        "content": "$1",
+        "example": "5.2"
+      }
+    }
+  },
+  "address_delete_archive_retention_unknown_hint": {
+    "message": "Los archivos de horarios se conservarán sin vínculo con la dirección. Puedes gestionar los archivos en Configuración.",
+    "description": "Address deletion confirmation when no outage group is known: schedule archives are retained without a link to the deleted address."
   },
   "address_delete_confirm_action": {
     "message": "Eliminar",

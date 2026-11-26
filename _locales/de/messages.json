@@ -8,8 +8,18 @@
     "description": "Bereich: Adressenverwaltung. Bildschirmüberschrift: „Adresse hinzufügen“."
   },
   "address_delete_archive_retention_hint": {
-    "message": "Gruppenarchive bleiben ohne Straße und Hausnummer erhalten. Verwalten Sie sie in den Einstellungen.",
-    "description": "Bereich: Adressenverwaltung. Bedienelement oder Hinweis: „Gruppenarchive bleiben ohne Straße und Hausnummer erhalten. Verwalten Sie sie in den Einstellungen.“."
+    "message": "Das Zeitplanarchiv für Gruppe $GROUP$ bleibt ohne Verknüpfung mit der Adresse erhalten. Archive können in den Einstellungen verwaltet werden.",
+    "description": "Address deletion confirmation: the schedule archive is retained without a link to the deleted address. GROUP is the outage group number or list of groups.",
+    "placeholders": {
+      "group": {
+        "content": "$1",
+        "example": "5.2"
+      }
+    }
+  },
+  "address_delete_archive_retention_unknown_hint": {
+    "message": "Die Zeitplanarchive bleiben ohne Verknüpfung mit der Adresse erhalten. Archive können in den Einstellungen verwaltet werden.",
+    "description": "Address deletion confirmation when no outage group is known: schedule archives are retained without a link to the deleted address."
   },
   "address_delete_confirm_action": {
     "message": "Löschen",

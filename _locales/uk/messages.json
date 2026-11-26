@@ -8,8 +8,18 @@
     "description": "Заголовок екрана додавання адреси."
   },
   "address_delete_archive_retention_hint": {
-    "message": "Архіви черг залишаться без вулиці й будинку. Керувати ними можна в налаштуваннях.",
-    "description": "Explains that deleting an address removes its street/building but keeps locality/group schedules, managed separately in Settings."
+    "message": "Архів графіків черги $GROUP$ буде збережено без прив’язки до адреси. Керувати архівами можна в налаштуваннях.",
+    "description": "Address deletion confirmation: the schedule archive is retained without a link to the deleted address. GROUP is the outage group number or list of groups.",
+    "placeholders": {
+      "group": {
+        "content": "$1",
+        "example": "5.2"
+      }
+    }
+  },
+  "address_delete_archive_retention_unknown_hint": {
+    "message": "Архіви графіків буде збережено без прив’язки до адреси. Керувати архівами можна в налаштуваннях.",
+    "description": "Address deletion confirmation when no outage group is known: schedule archives are retained without a link to the deleted address."
   },
   "address_delete_confirm_action": {
     "message": "Видалити",

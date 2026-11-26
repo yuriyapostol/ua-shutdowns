@@ -2,7 +2,7 @@
 
 // The single storage value is committed atomically. Only profiles contain streets/houses.
 const ScheduleStorage = (() => {
-  const empty = () => ({ schemaVersion: 1, addresses: [], localities: {}, archives: {}, histories: {} });
+  const empty = () => ({ schemaVersion: 2, addresses: [], localities: {}, archives: {}, histories: {} });
   const normalize = value => value.normalize('NFKC').toLocaleLowerCase('uk')
     .replace(/[’'`ʼ]/g, "'").trim().replace(/\s+/g, ' ');
   const cityName = value => normalize(value).replace(/^(?:(?:м\.|с\.|смт\.?)\s*|(?:місто|село|селище)\s+)/u, '');
@@ -58,29 +58,40 @@ const ScheduleStorage = (() => {
     if (!result) {
       result = { id: id(), date: schedule.date, queue, lines, observedAt };
       days.push(result);
+    } else {
+      // A schedule can return to an earlier version during the day.
+      result.observedAt = observedAt;
+      days.splice(days.indexOf(result), 1);
+      days.push(result);
     }
-    return { archiveId: archive.id, snapshotId: result.id };
+    return { archiveId: archive.id };
   }
-  function resolve(state, ref, index) {
-    if (index) {
-      const entry = index.get(ref?.snapshotId);
-      return entry?.archiveId === ref?.archiveId ? entry.snapshot : null;
+  function latest(versions) {
+    let result = null;
+    for (const version of versions || []) {
+      if (!result || version.observedAt !== null &&
+          (result.observedAt === null || version.observedAt >= result.observedAt) ||
+          version.observedAt === null && result.observedAt === null) result = version;
     }
-    const archive = state.archives[ref?.archiveId];
-    if (!archive) return null;
-    return Object.values(archive.days).flat().find(item => item.id === ref.snapshotId) || null;
+    return result;
   }
   function materialize(state, item) {
     const schedules = {};
-    const index = new Map(Object.values(state.archives).flatMap(archive => Object.values(archive.days).flat().map(snapshot => [snapshot.id, { archiveId: archive.id, snapshot }])));
     for (const [date, ref] of Object.entries(state.histories[item.id] || {})) {
-      const saved = resolve(state, ref, index);
+      const saved = latest(state.archives[ref.archiveId]?.days[date]);
       if (saved) schedules[date] = { date, lines: saved.lines, queue: saved.queue };
+    }
+    // Existing installations can have missing links for days with multiple versions.
+    const current = item.queueVerified && Object.values(state.archives).find(archive =>
+      archive.localityId === item.localityId && archive.queue === item.queue);
+    if (current) for (const [date, versions] of Object.entries(current.days)) {
+      const saved = latest(versions);
+      if (!schedules[date] && saved) schedules[date] = { date, lines: saved.lines, queue: saved.queue };
     }
     return { ...item, ...(Object.keys(schedules).length ? { schedules } : {}) };
   }
   function validate(state) {
-    if (!record(state) || state.schemaVersion !== 1 || !Array.isArray(state.addresses) ||
+    if (!record(state) || state.schemaVersion !== 2 || !Array.isArray(state.addresses) ||
         !['localities', 'archives', 'histories'].every(key => record(state[key])) ||
         Object.keys(state).some(key => !['schemaVersion', 'addresses', 'localities', 'archives', 'histories'].includes(key))) fail();
     const ids = new Set();
@@ -95,7 +106,7 @@ const ScheduleStorage = (() => {
       if (!Array.isArray(place.aliases) || place.aliases.some(alias => typeof alias !== 'string' || !alias.trim()) || !safeId(key) || place.id !== key || typeof place.name !== 'string' || !place.name.trim() ||
           (place.region !== '' && !DtekSites.get(place.region)) || Object.keys(place).some(k => !['id', 'region', 'name', 'aliases'].includes(k))) fail();
     }
-    const snapshots = new Map();
+    const snapshots = new Set();
     for (const [key, a] of Object.entries(state.archives)) {
       if (!safeId(key) || a.id !== key || !state.localities[a.localityId] || !validQueue(a.queue) || !record(a.days) ||
           Object.keys(a).some(k => !['id', 'localityId', 'queue', 'days'].includes(k))) fail();
@@ -105,19 +116,20 @@ const ScheduleStorage = (() => {
           if (!safeId(item.id) || snapshots.has(item.id) || !DtekSchedule.isValid(item) || item.date !== date || item.queue !== a.queue ||
               !(item.observedAt === null || Number.isFinite(item.observedAt) && item.observedAt >= 0) ||
               Object.keys(item).some(k => !['id', 'date', 'queue', 'lines', 'observedAt'].includes(k))) fail();
-          snapshots.set(item.id, { archiveId: a.id, snapshot: item });
+          snapshots.add(item.id);
         }
       }
     }
     for (const [key, history] of Object.entries(state.histories)) {
       if (!ids.has(key) || !record(history)) fail();
       for (const [date, ref] of Object.entries(history)) {
-        if (!record(ref) || Object.keys(ref).some(k => !['archiveId', 'snapshotId'].includes(k)) || resolve(state, ref, snapshots)?.date !== date) fail();
+        if (!DtekSchedule.validDate(date) || !record(ref) || Object.keys(ref).some(k => k !== 'archiveId') ||
+            !safeId(ref.archiveId) || !state.archives[ref.archiveId]?.days[date]) fail();
       }
     }
     return state;
   }
-  return { empty, normalize, cityName, validQueue, queueName, profile, locality, archive, snapshot, resolve, materialize, validate, id };
+  return { empty, normalize, cityName, validQueue, queueName, profile, locality, archive, snapshot, latest, materialize, validate, id };
 })();
 
 const AddressSettings = (() => {
@@ -243,14 +255,14 @@ const AddressSettings = (() => {
         saved.queueVerified = !!queue;
         const a = ScheduleStorage.archive(state, saved.localityId, queue);
         const history = state.histories[saved.id] ||= {};
-        // Restore only unambiguous days, after the website has confirmed this group.
-        if (queue) for (const [date, versions] of Object.entries(a.days)) {
-          if (!history[date] && versions.length === 1) history[date] = { archiveId: a.id, snapshotId: versions[0].id };
+        // Restore the latest version after the website has confirmed this group.
+        if (queue) for (const date of Object.keys(a.days)) {
+          if (!history[date]) history[date] = { archiveId: a.id };
         }
         const incoming = new Map([...(schedule ? [schedule] : []), ...schedules].map(item => [item.date, item]));
         for (const item of incoming.values()) {
-          if (item.date < DtekSchedule.dateKey() && history[item.date]) continue;
-          history[item.date] = ScheduleStorage.snapshot(a, item, queue);
+          const ref = ScheduleStorage.snapshot(a, item, queue);
+          if (item.date >= DtekSchedule.dateKey() || !history[item.date]) history[item.date] = ref;
         }
         await writeState(state);
       });

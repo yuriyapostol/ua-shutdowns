@@ -29,7 +29,7 @@ test('fresh profile starts empty; creating addresses writes an atomic versioned 
   const second = await api.upsert({ ...address, house: '23' });
   assert.notEqual(first.id, second.id);
   assert.equal(first.revision, 1);
-  assert.equal(data.scheduleData.schemaVersion, 1);
+  assert.equal(data.scheduleData.schemaVersion, 2);
   assert.equal(data.interfaceLanguage, 'uk');
   assert.equal(data.addresses, undefined);
 });
@@ -56,13 +56,26 @@ test('unsupported old data is never overwritten or treated as empty', async () =
 test('unknown schema, corrupt references and personal data in archives fail without writes', async () => {
   const base = fixtureState([{ id: 'one', ...address, queue: '4.2', schedule: day() }]);
   for (const corrupt of [s => s.schemaVersion = 900, s => Object.values(s.archives)[0].street = 'secret',
-    s => s.histories.one[today].snapshotId = 'missing', s => s.addresses[0].revision = 0,
-    s => s.localities = null, s => Object.values(s.archives)[0].days[today][0].queue = '2.1']) {
+    s => s.histories.one[today].archiveId = 'missing', s => s.addresses[0].revision = 0,
+    s => s.localities = null, s => Object.values(s.archives)[0].days[today][0].queue = '2.1',
+    s => s.schemaVersion = 1, s => s.histories.one[today].snapshotId = 'obsolete',
+    s => s.histories.one['2026-11-24'] = s.histories.one[today],
+    s => s.histories.one[today] = {}]) {
     const state = structuredClone(base); corrupt(state);
     const { api, data } = setup({ scheduleData: state }); const before = JSON.stringify(data);
     await assert.rejects(api.list()); await assert.rejects(api.remove('one'));
     assert.equal(JSON.stringify(data), before);
   }
+});
+test('history contains only archive links and resolves versions without snapshot references', async () => {
+  const { api, data } = setup();
+  const a = await api.upsert(address);
+  await api.saveQueue(a, '4.2', day());
+  const archive = (await api.archives())[0];
+  assert.deepEqual(data.scheduleData.histories[a.id], { [today]: { archiveId: archive.id } });
+  const version = data.scheduleData.archives[archive.id].days[today][0];
+  version.id = 'replacement-id';
+  assert.deepEqual(plain((await api.list())[0].schedules[today].lines), day().lines);
 });
 test('saving schedules keeps full address exclusively in the profile', async () => {
   const { api, data } = setup(); const saved = await api.upsert(address);
@@ -115,23 +128,50 @@ test('deleting an address removes identifying data and keeps archives after rest
   await restarted.api.saveQueue(fresh, '4.2');
   assert.deepEqual(plain((await restarted.api.list())[0].schedules[today]), { ...day(), queue: '4.2' });
 });
-test('two addresses share identical snapshots but conflicting data never overwrites either history', async () => {
-  const { api } = setup(); const first = await api.upsert(address); const second = await api.upsert({ ...address, house: '23' });
+test('two addresses share snapshots and display the latest version without rewriting history links', async () => {
+  const { api, data } = setup(); const first = await api.upsert(address); const second = await api.upsert({ ...address, house: '23' });
   await api.saveQueue(first, '4.2', day()); await api.saveQueue(second, '4.2', day());
   assert.equal((await api.archives())[0].days[today].length, 1);
+  const firstRef = plain(data.scheduleData.histories[first.id][today]);
   await api.saveQueue(second, '4.2', day(today, [[]]));
   const profiles = await api.list();
-  assert.deepEqual(plain(profiles[0].schedules[today].lines), [[[60, 120]]]);
+  assert.deepEqual(plain(profiles[0].schedules[today].lines), [[]]);
   assert.deepEqual(plain(profiles[1].schedules[today].lines), [[]]);
   assert.equal((await api.archives())[0].days[today].length, 2);
   assert.equal((await api.archives())[0].addressCount, 2);
+  assert.deepEqual(data.scheduleData.histories[first.id][today], firstRef);
 });
-test('ambiguous shared days are not silently restored for a new address', async () => {
+test('multiple shared versions restore the latest schedule for a new address', async () => {
   const { api } = setup(); const first = await api.upsert(address);
   await api.saveQueue(first, '4.2', day()); await api.saveQueue(first, '4.2', day(today, [[]]));
   await api.remove(first.id);
   const other = await api.upsert(address); await api.saveQueue(other, '4.2');
-  assert.equal((await api.list())[0].schedules, undefined);
+  assert.deepEqual(plain((await api.list())[0].schedules[today].lines), [[]]);
+});
+test('reading existing data selects by timestamp, then list order, and fills missing history days without writes', async () => {
+  for (const times of [[300, 100, 200], [null, null, null], [300, null, 200], [100, 300, 300], [0, null, null]]) {
+    const state = fixtureState([{ id: 'one', ...address, queue: '4.2', schedule: day() },
+      { id: 'two', ...address, house: '20', queue: '4.2' }]);
+    const archive = Object.values(state.archives)[0];
+    const initial = archive.days[today][0];
+    archive.days[today] = times.map((observedAt, i) => ({ ...initial, id: 'version-' + i, observedAt, lines: [[[i * 60, (i + 1) * 60]]] }));
+    const { api, local } = setup({ scheduleData: state });
+    local.set = async () => { throw Error('Unexpected write'); };
+    const profiles = await api.list();
+    const expected = times[0] === null || times[1] === 300 ? 2 : 0;
+    for (const profile of profiles) assert.deepEqual(plain(profile.schedules[today].lines), [[[expected * 60, (expected + 1) * 60]]]);
+  }
+});
+test('receiving an earlier version again makes it current without duplicating snapshots', async () => {
+  const first = setup(); const a = await first.api.upsert(address);
+  await first.api.saveQueue(a, '4.2', day());
+  await first.api.saveQueue(a, '4.2', day(today, [[]]));
+  const later = setup(first.data, Date.UTC(2026, 10, 26, 12));
+  await later.api.saveQueue(a, '4.2', day());
+  const archive = (await later.api.archives())[0];
+  assert.equal(archive.days[today].length, 2);
+  assert.equal(archive.days[today][1].observedAt, Date.UTC(2026, 10, 26, 12));
+  assert.deepEqual(plain((await later.api.list())[0].schedules[today].lines), day().lines);
 });
 test('group and region changes preserve historical group snapshots', async () => {
   const { api } = setup(); const a = await api.upsert(address);

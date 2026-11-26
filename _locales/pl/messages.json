@@ -8,8 +8,18 @@
     "description": "Sekcja: Zarządzanie adresami. Tytuł ekranu: „Dodaj adres”."
   },
   "address_delete_archive_retention_hint": {
-    "message": "Archiwa grup zostaną zachowane bez ulicy i numeru budynku. Zarządzaj nimi w ustawieniach.",
-    "description": "Sekcja: Zarządzanie adresami. Element sterujący lub wskazówka: „Archiwa grup zostaną zachowane bez ulicy i numeru budynku. Zarządzaj nimi w ustawieniach.”."
+    "message": "Archiwum harmonogramów grupy $GROUP$ zostanie zachowane bez powiązania z adresem. Archiwami można zarządzać w ustawieniach.",
+    "description": "Address deletion confirmation: the schedule archive is retained without a link to the deleted address. GROUP is the outage group number or list of groups.",
+    "placeholders": {
+      "group": {
+        "content": "$1",
+        "example": "5.2"
+      }
+    }
+  },
+  "address_delete_archive_retention_unknown_hint": {
+    "message": "Archiwa harmonogramów zostaną zachowane bez powiązania z adresem. Archiwami można zarządzać w ustawieniach.",
+    "description": "Address deletion confirmation when no outage group is known: schedule archives are retained without a link to the deleted address."
   },
   "address_delete_confirm_action": {
     "message": "Usuń",

@@ -8,8 +8,18 @@
     "description": "Heading of the screen for adding an address."
   },
   "address_delete_archive_retention_hint": {
-    "message": "Group archives will be kept without the street or building. Manage them in Settings.",
-    "description": "Explains that deleting an address removes its street/building but keeps locality/group schedules, managed separately in Settings."
+    "message": "The schedule archive for group $GROUP$ will be kept without a link to the address. You can manage archives in Settings.",
+    "description": "Address deletion confirmation: the schedule archive is retained without a link to the deleted address. GROUP is the outage group number or list of groups.",
+    "placeholders": {
+      "group": {
+        "content": "$1",
+        "example": "5.2"
+      }
+    }
+  },
+  "address_delete_archive_retention_unknown_hint": {
+    "message": "Schedule archives will be kept without a link to the address. You can manage archives in Settings.",
+    "description": "Address deletion confirmation when no outage group is known: schedule archives are retained without a link to the deleted address."
   },
   "address_delete_confirm_action": {
     "message": "Delete",

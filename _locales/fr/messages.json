@@ -8,8 +8,18 @@
     "description": "Section : Gestion des adresses. Titre de l’écran : « Ajouter une adresse »."
   },
   "address_delete_archive_retention_hint": {
-    "message": "Les archives des groupes seront conservées sans rue ni numéro de bâtiment. Gérez-les dans les paramètres.",
-    "description": "Section : Gestion des adresses. Commande ou indication : « Les archives des groupes seront conservées sans rue ni numéro de bâtiment. Gérez-les dans les paramètres. »."
+    "message": "L’archive des horaires du groupe $GROUP$ sera conservée sans lien avec l’adresse. Vous pouvez gérer les archives dans les paramètres.",
+    "description": "Address deletion confirmation: the schedule archive is retained without a link to the deleted address. GROUP is the outage group number or list of groups.",
+    "placeholders": {
+      "group": {
+        "content": "$1",
+        "example": "5.2"
+      }
+    }
+  },
+  "address_delete_archive_retention_unknown_hint": {
+    "message": "Les archives des horaires seront conservées sans lien avec l’adresse. Vous pouvez gérer les archives dans les paramètres.",
+    "description": "Address deletion confirmation when no outage group is known: schedule archives are retained without a link to the deleted address."
   },
   "address_delete_confirm_action": {
     "message": "Supprimer",

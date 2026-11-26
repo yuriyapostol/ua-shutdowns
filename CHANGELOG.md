@@ -2,6 +2,13 @@
 
 **English** · [Українська](CHANGELOG.uk.md)
 
+## 0.7.3 — 2026-11-26
+
+- Fixed schedule display for new and re-added addresses in the same outage group: days with multiple versions are no longer skipped. Each date shows the version with the latest received timestamp, falling back to the last entry when timestamps are absent. Timestamp ties also use the last entry. Receiving an earlier version again makes it current for all linked addresses.
+- Simplified address histories in storage schema **2**: each date links to an archive using only `archiveId`, without a `snapshotId`. History from previous groups and regions is preserved, while the current schedule version is selected from the archive. Schema 1 is not converted automatically; existing data requires a one-time conversion.
+- Clarified address deletion confirmations in all seven languages: the message includes the outage group and explains that its schedule archive is retained without a link to the address. Addresses with no known group use wording without a group number.
+- Removed the status line’s minimum height so empty messages no longer reserve extra space.
+
 ## 0.7.2 — 2026-11-26
 
 - Added configurable archive retention in days, defaulting to **365 days**. Older schedule dates, all their saved versions and linked address history entries are removed when schedules are read or saved; changing the retention period applies immediately. Today's and future schedules are preserved.
