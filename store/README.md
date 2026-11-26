@@ -24,7 +24,10 @@ Detailed listing descriptions cover every interface language shipped in version 
 | Store icon | `images/icon-128.png` |
 | Privacy policy URL | https://github.com/yuriyapostol/ua-shutdowns/blob/main/PRIVACY.md |
 | Privacy practices | [English submission text](privacy-practices.md) · [Ukrainian guidance](privacy-practices.uk.md) |
-| Screenshots | Capture the real interface in each listing language; supplied separately |
+| Screenshots | [Schedule](uk/screenshot-01-schedule.png) · [Sharing](uk/screenshot-02-share.png) · [Date selection](uk/screenshot-03-date.png) · [Settings](uk/screenshot-04-settings.png) · [Archives](uk/screenshot-05-archive.png) — Ukrainian, 1280 × 800 |
+| Promotional banner | [Ukrainian banner, 440 × 280](uk/ua-shutdowns-banner-440x280.png) |
+
+Images for the Ukrainian store listing are kept in `store/uk/`. Add images for other languages under `store/<locale>/`. Materials in `store/` are uploaded to the store dashboard separately and are not included in the extension ZIP.
 
 Upload the extension ZIP, select each supported listing language and paste its description. The manifest references the catalog name and short description. Preserve those catalog values when filling any corresponding fields. Detailed descriptions and screenshots are localized in the dashboard; Privacy practices is a declaration for the extension as a whole, rather than seven separate translations.
 
